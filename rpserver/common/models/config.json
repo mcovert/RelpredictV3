@@ -1,0 +1,43 @@
+{
+  "name": "config",
+  "plural": "configs",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "account": {
+      "type": "string",
+      "required": true
+    },
+    "account_id": {
+      "type": "string",
+      "required": true
+    },
+    "active": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "start_date": {
+      "type": "date"
+    },
+    "end_date": {
+      "type": "date"
+    },
+    "created_by": {
+      "type": "string"
+    },
+    "created_date": {
+      "type": "string"
+    },
+    "modified_date": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,39 @@
+{
+  "name": "datafile",
+  "plural": "datafiles",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "file_name": {
+      "type": "string",
+      "required": true
+    },
+    "file_type": {
+      "type": "string",
+      "required": true
+    },
+    "size": {
+      "type": "number",
+      "required": true
+    },
+    "records": {
+      "type": "number",
+      "required": true
+    },
+    "datamap_name": {
+      "type": "string",
+      "required": true
+    },
+    "batch_id": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

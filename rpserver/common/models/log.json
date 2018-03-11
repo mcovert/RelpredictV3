@@ -1,0 +1,47 @@
+{
+  "name": "log",
+  "plural": "logs",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "entry_date": {
+      "type": "date",
+      "required": true
+    },
+    "issuer": {
+      "type": "string",
+      "required": true
+    },
+    "severity": {
+      "type": "string",
+      "required": true
+    },
+    "msg_class": {
+      "type": "string",
+      "required": true
+    },
+    "msg_action": {
+      "type": "string",
+      "required": true
+    },
+    "msg_entity": {
+      "type": "string",
+      "required": true
+    },
+    "msg": {
+      "type": "string",
+      "required": true
+    },
+    "userid": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

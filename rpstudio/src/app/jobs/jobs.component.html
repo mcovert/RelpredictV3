@@ -1,0 +1,56 @@
+<ul class="nav nav-tabs" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" href="#jobs" role="tab" data-toggle="tab">Jobs</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#jobexecs" role="tab" data-toggle="tab">Job Execution</a>
+  </li>
+</ul>
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane fade in show active" id="jobs">
+   <h4 class="text-center pt-1 ">Job Definitions</h4>
+   <div class="table-responsive">
+    <table id="mytable" class="table table-bordred table-striped sortable table-sm">
+     <thead>
+        <th>Job Name</th>
+        <th class="text-center">Class</th>
+        <th class="text-center">Description</th>
+        <th class="text-center">Type</th>
+        <th class="text-center">Submit</th>
+     </thead>
+     <tbody>
+       <tr *ngFor="let job of jobs">
+          <td>{{job.job_name}}</td>
+          <td class="text-center">{{job.job_class}}</td>
+          <td class="text-center">{{job.description}}</td>
+          <td class="text-center">{{job.job_type}}</td>
+          <td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Submit"><button class="btn btn-danger btn-xs center-block" data-title="Submit" data-toggle="modal" data-target="#submit" ><span class="fa fa-chevron-right"></span></button></p></td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
+  </div> 
+  <div role="tabpanel" class="tab-pane fade" id="jobexecs">
+   <h4 class="text-center pt-1 ">Job Execution</h4>
+    <div class="table-responsive">
+     <table id="mytable" class="table table-bordred table-striped sortable table-sm">
+      <thead>
+        <th>ID</th>
+        <th class="text-center">Started</th>
+        <th class="text-center">Ended</th>
+        <th class="text-center">Status</th>
+        <th class="text-center">Display</th>
+      </thead>
+      <tbody>
+       <tr *ngFor="let jobexec of jobexecs">
+          <td>{{jobexec.job_id}}</td>
+          <td class="text-center">{{jobexec.started}}</td>
+          <td class="text-center">{{jobexec.ended}}</td>
+          <td class="text-center">{{jobexec.status}}</td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Display"><button class="btn btn-info btn-xs center-block" (click)="navigate(model.id)"><span class="fa fa-eye"></span></button></p></td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+  </div>
+</div>

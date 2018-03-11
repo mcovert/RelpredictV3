@@ -1,0 +1,12 @@
+{
+  "db": {
+    "host": "ai24",
+    "port": 27017,
+    "url": "",
+    "database": "rpcontrol",
+    "password": "airocks",
+    "name": "db",
+    "user": "rpadmin",
+    "connector": "mongodb"
+  }
+}

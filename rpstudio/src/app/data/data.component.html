@@ -1,0 +1,102 @@
+<ul class="nav nav-tabs" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" href="#batches" role="tab" data-toggle="tab">Batches and Files</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#datamaps" role="tab" data-toggle="tab">Data Maps</a>
+  </li>
+</ul>
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane fade in show active" id="batches">
+   <h4 class="text-center">Batches</h4>
+   <div class="table-responsive">
+    <table id="mytable" class="table table-bordred table-striped sortable table-sm">
+     <thead>
+        <th>Identifier</th>
+        <th>File name</th>
+        <th class="text-center">Type</th>
+        <th class="text-center">Created</th>
+        <th class="text-center">Size</th>
+        <th class="text-center">Status</th>
+        <th class="text-center">Delete</th>
+        <th class="text-center">Action</th>
+     </thead>
+     <tbody>
+       <tr *ngFor="let batch of batches">
+          <td>{{batch.batch_id}}</td>
+          <td>{{batch.file_name}}</td>
+          <td class="text-center">{{batch.batch_type}}</td>
+          <td class="text-center">{{batch.create_date}}</td>
+          <td class="text-center">{{batch.size}}</td>
+          <td class="text-center">{{batch.status}}</td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs center-block" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Action">
+          	<button class="btn btn-success btn-xs center-block" data-title="Action" data-toggle="modal" data-target="#action" id="ddAction">
+          		<span class="fa fa-cog"></span> 
+          	</button> 
+          	<div class="dropdown-menu" aria-labeledby="ddAction" data-toggle="dropdown" aria-haspopup="true" aria-expandible="false">
+          		<a class="dropdown-item" href="#">Data files"</a>
+          		<a class="dropdown-item" href="#">Release"</a>
+          		<a class="dropdown-item" href="#">Hold"</a>
+          		<a class="dropdown-item" href="#">Reject"</a>
+          	</div>
+            <!--/p-->  
+         </td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
+   <h4 class="text-center pt-1 ">Data Files</h4>
+   <div class="table-responsive">
+    <table id="mytable" class="table table-bordred table-striped sortable table-sm">
+     <thead>
+        <th>File name</th>
+        <th class="text-center">Type</th>
+        <th class="text-center">Size</th>
+        <th class="text-center">Records</th>
+        <th class="text-center">Data map</th>
+        <th class="text-center">Batch</th>
+        <th class="text-center">Delete</th>
+     </thead>
+     <tbody>
+       <tr *ngFor="let datafile of datafiles">
+          <td>{{datafile.file_name}}</td>
+          <td class="text-center">{{datafile.file_type}}</td>
+          <td class="text-center">{{datafile.size}}</td>
+          <td class="text-center">{{datafile.records}}</td>
+          <td class="text-center">{{datafile.datamap_name}}</td>
+          <td class="text-center">{{datafile.batch_id}}</td>
+          <td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs center-block" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
+  </div> 
+  <div role="tabpanel" class="tab-pane fade" id="datamaps">
+    <div class="row pb-1">
+	  <div class="col-2"></div>
+      <div class="col-8 text-center"><h4>Data Maps</h4></div>
+      <div class="col-2"><button class="btn btn-primary btn-xs" data-title="New Model"><span class="fa fa-plus">New Data Map</span></button></div>
+    </div>
+    <div class="table-responsive">
+     <table id="mytable" class="table table-bordred table-striped sortable table-sm">
+      <thead>
+        <th>Datamap name</th>
+        <th class="text-center">Type</th>
+        <th class="text-center">Display</th>
+        <th class="text-center">Edit</th>
+        <th class="text-center">Delete</th>
+      </thead>
+      <tbody>
+       <tr *ngFor="let datamap of datamaps">
+          <td>{{datamap.datamap_name}}</td>
+          <td class="text-center">{{datamap.datamap_type}}</td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Display"><button class="btn btn-info btn-xs center-block" (click)="navigate(model.id)"><span class="fa fa-eye"></span></button></p></td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs center-block" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-pencil"></span></button></p></td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs center-block" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+  </div>
+</div>

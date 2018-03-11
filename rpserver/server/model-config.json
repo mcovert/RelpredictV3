@@ -1,0 +1,98 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "db"
+  },
+  "AccessToken": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "datatype": {
+    "dataSource": "db",
+    "public": true
+  },
+  "model": {
+    "dataSource": "db",
+    "public": true
+  },
+  "algorithm": {
+    "dataSource": "db",
+    "public": true
+  },
+  "config": {
+    "dataSource": "db",
+    "public": true
+  },
+  "role": {
+    "dataSource": "db",
+    "public": true
+  },
+  "log": {
+    "dataSource": "db",
+    "public": true
+  },
+  "batch": {
+    "dataSource": "db",
+    "public": true
+  },
+  "datafile": {
+    "dataSource": "db",
+    "public": true
+  },
+  "job": {
+    "dataSource": "db",
+    "public": true
+  },
+  "jobexec": {
+    "dataSource": "db",
+    "public": true
+  },
+  "datamap": {
+    "dataSource": "db",
+    "public": true
+  },
+  "trainedmodel": {
+    "dataSource": "db",
+    "public": true
+  },
+  "modelclass": {
+    "dataSource": "db",
+    "public": true
+  },
+  "submittedjob": {
+    "dataSource": "db",
+    "public": true
+  },
+  "scheduledjob": {
+    "dataSource": "db",
+    "public": true
+  }
+}

@@ -1,0 +1,61 @@
+  <div class="row">
+    <div class="col-5">
+      <form class="p-1 border rpcontent">
+      <h4 class="text-center">Model Information</h4>
+      <div class="row">
+         <div class="col-1"></div>
+         <div class="col-3">Name</div>
+         <div class="col-7">{{model.name}}<span *ngIf="model.current" class="fa fa-star" style="color:gold"></span></div>
+         <div class="col-1"></div>
+      </div>
+      <div class="row">
+         <div class="col-1"></div>
+         <div class="col-3">Class</div>
+         <div class="col-7">{{model.model_class}}</div>
+         <div class="col-1"></div>
+      </div>
+      <div class="row">
+         <div class="col-1"></div>
+         <div class="col-3">Version</div>
+         <div class="col-7">{{model.version}}</div>
+         <div class="col-1"></div>
+      </div>
+      <div class="row">
+         <div class="col-1"></div>
+         <div class="col-3">Description</div>
+         <div class="col-7">{{model.description}}</div>
+         <div class="col-1"></div>
+      </div>
+      <div class="row">
+         <div class="col-1"></div>
+         <div class="col-3">Result ID</div>
+         <div class="col-7">{{model.identifier}}</div>
+         <div class="col-1"></div>
+      </div>
+      <div class="row text-center pt-1">
+         <div class="col-3"></div>
+         <div class="col-3 text-center">
+           <button class="btn btn-primary btn-sm btn-block" type="submit">Edit</button>
+         </div>
+         <div class="col-3 text-center">
+           <button class="btn btn-danger btn-sm btn-block" type="submit">Delete</button>
+         </div>
+         <div class="col-3"></div>
+      </div>
+      </form>
+      <div class="p-1 border rpcontent">
+      	<div class="col-12">
+         <app-target-list [targets]="model.targets"></app-target-list>
+        </div>
+      </div>
+      <div class="p-1 border rpcontent">
+        <div class="col-12">
+         <app-trainedmodel-list [trained_models]="trained_models"></app-trainedmodel-list>
+        </div>
+      </div>
+    </div>
+    <div class="col-7 border p-2 rpcontent">
+       <app-feature-list [features]="model.features"></app-feature-list>
+       <div class="col-1"></div>
+    </div>
+  </div>

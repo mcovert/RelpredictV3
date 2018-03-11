@@ -1,0 +1,57 @@
+{
+  "name": "model",
+  "plural": "models",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "version": {
+      "type": "number",
+      "required": true,
+      "default": 1
+    },
+    "model_class": {
+      "type": "string",
+      "required": true
+    },
+    "current": {
+      "type": "boolean",
+      "required": true
+    },
+    "identifier": {
+      "type": "string",
+      "required": true
+    },
+    "features": {
+      "type": [
+        "object"
+      ],
+      "required": true
+    },
+    "targets": {
+      "type": [
+        "object"
+      ],
+      "required": true
+    },
+    "notes": {
+      "type": [
+        "object"
+      ],
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

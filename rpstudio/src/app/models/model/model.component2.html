@@ -1,0 +1,70 @@
+<div class="row p-1">
+    <div class="col-2">Name</div>
+    <div class="col-2">Class</div>
+    <div class="col-2">Version</div>
+    <div class="col-4">Description</div>
+    <div class="col-2">Result ID</div>
+</div>
+<div class="row p-1">
+    <div class="col-2">{{model.name}}<span *ngIf="model.current" class="fa fa-star" style="color:gold"></span></div>
+    <div class="col-2">{{model.model_class}}</div>
+    <div class="col-2">{{model.version}}</div>
+    <div class="col-4">{{model.description}}</div>
+    <div class="col-2">{{model.identifier}}</div>
+</div>
+<p-accordion [multiple]="true">
+  <p-accordionTab header="Features">
+   <div class="table-responsive">
+    <table id="mytable" class="table table-bordred table-striped sortable table-sm">
+     <thead>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th align="center">Display</th>
+        <th align="center">Edit</th>
+        <th align="center">Delete</th>
+        <th align="center">Parms</th>
+     </thead>
+     <tbody>
+       <tr *ngFor="let feature of model.features">
+          <td>{{feature.name}}</td>
+          <td>{{feature.type}}</td>
+          <td>{{feature.label}}</td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Display"><button class="btn btn-info btn-xs center-block" data-title="Display" data-toggle="modal" data-target="#display" ><span class="fa fa-eye"></span></button></p></td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs center-block" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-pencil"></span></button></p></td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs center-block" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Parameters"><button class="btn btn-success btn-xs center-block" data-title="Parameters" data-toggle="modal" data-target="#parameters" ><span class="fa fa-crosshairs"></span></button></p></td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
+  </p-accordionTab>
+  <p-accordionTab header="Targets">
+<div class="table-responsive">
+   <table id="mytable" class="table table-bordred table-striped sortable table-sm">
+     <thead>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th align="center">Display</th>
+        <th align="center">Edit</th>
+        <th align="center">Delete</th>
+        <th align="center">Parms</th>
+     </thead>
+     <tbody>
+       <tr *ngFor="let target of model.targets">
+          <td>{{target.name}}</td>
+          <td>{{target.type}}</td>
+          <td>{{target.description}}</td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Display"><button class="btn btn-info btn-xs center-block" data-title="Display" data-toggle="modal" data-target="#display" ><span class="fa fa-eye"></span></button></p></td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs center-block" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-pencil"></span></button></p></td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs center-block" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Parameters"><button class="btn btn-success btn-xs center-block" data-title="Parameters" data-toggle="modal" data-target="#parameters" ><span class="fa fa-crosshairs"></span></button></p></td>
+      </tr>
+    </tbody>
+</table>
+</div>  </p-accordionTab>
+  <p-accordionTab header="Trained Models">
+     Trained Models
+  </p-accordionTab>
+</p-accordion>

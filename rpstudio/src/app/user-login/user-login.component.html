@@ -1,0 +1,14 @@
+<div class="wrapper" *ngIf="isLoggedIn() == false">
+<form name="form" novalidate class="form-signin" (ngSubmit)="login()">
+  <h2 class="form-signin-heading">Please login</h2>
+  <div class="form-group">
+    <label for="username">Userid</label>
+    <input type="text" class="form-control" id= "username" name="username" required [(ngModel)]="model.username"/>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" name="password" required [(ngModel)]="model.password" />
+  </div>
+  <button class="btn btn-lg btn-primary btn-block" type="submit" >Login</button>
+</form>
+</div>

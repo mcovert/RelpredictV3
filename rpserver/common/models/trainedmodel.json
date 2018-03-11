@@ -1,0 +1,58 @@
+{
+  "name": "trainedmodel",
+  "plural": "trainedmodels",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "model_class": {
+      "type": "string",
+      "required": true
+    },
+    "model_name": {
+      "type": "string",
+      "required": true
+    },
+    "model_version": {
+      "type": "number",
+      "required": true
+    },
+    "target_name": {
+      "type": "string",
+      "required": true
+    },
+    "alg_name": {
+      "type": "string",
+      "required": true
+    },
+    "alg_type": {
+      "type": "string",
+      "required": true
+    },
+    "job_name": {
+      "type": "string",
+      "required": true
+    },
+    "run_date": {
+      "type": "string",
+      "required": true
+    },
+    "records_train": {
+      "type": "number"
+    },
+    "records_test": {
+      "type": "number"
+    },
+    "results": {
+      "type": [
+        "object"
+      ]
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

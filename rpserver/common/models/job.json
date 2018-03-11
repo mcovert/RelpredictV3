@@ -1,0 +1,46 @@
+{
+  "name": "job",
+  "plural": "jobs",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "job_name": {
+      "type": "string",
+      "required": true
+    },
+    "job_class": {
+      "type": "string",
+      "required": true
+    },
+    "job_version": {
+      "type": "number",
+      "required": true
+    },
+    "create_date": {
+      "type": "date",
+      "required": true
+    },
+    "created_by": {
+      "type": "string",
+      "required": true
+    },
+    "parms": {
+      "type": "object",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "required": true
+    },
+    "job_type": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,33 @@
+{
+  "name": "scheduledjob",
+  "plural": "scheduledjobs",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "jobname": {
+      "type": "string",
+      "required": true
+    },
+    "jobparms": {
+      "type": "string",
+      "required": true
+    },
+    "scheduleparms": {
+      "type": "string",
+      "required": true
+    },
+    "scheduledby": {
+      "type": "string"
+    },
+    "scheduleddate": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

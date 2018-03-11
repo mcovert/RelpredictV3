@@ -1,0 +1,39 @@
+{
+  "name": "batch",
+  "plural": "batches",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "batch_id": {
+      "type": "string",
+      "required": true
+    },
+    "file_name": {
+      "type": "string",
+      "required": true
+    },
+    "create_date": {
+      "type": "date",
+      "required": true
+    },
+    "batch_type": {
+      "type": "string",
+      "required": true
+    },
+    "status": {
+      "type": "string",
+      "required": true
+    },
+    "size": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

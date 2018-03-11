@@ -1,0 +1,29 @@
+{
+  "name": "submittedjob",
+  "plural": "submittedjobs",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "jobname": {
+      "type": "string",
+      "required": true
+    },
+    "jobparms": {
+      "type": "string",
+      "required": true
+    },
+    "submittedby": {
+      "type": "string"
+    },
+    "submitteddate": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

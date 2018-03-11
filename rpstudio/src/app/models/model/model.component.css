@@ -1,0 +1,99 @@
+body {
+  background: #eee !important;
+}
+.bg {
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    background-color: #43464B;
+}
+.rpcontent {
+    background-color: #ffffff;    
+}
+.wrapper {
+  display: flex;
+  align-items: stretch;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.form-model {
+  max-width: 675px;
+  padding: 15px 35px 45px;
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.form-model .form-model-heading,
+.form-model .checkbox {
+  margin-bottom: 30px;
+}
+.form-model .checkbox {
+  font-weight: normal;
+}
+.form-model .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.form-control-row {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.form-control-row-stretch {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  width: 100%;
+  padding: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.form-model .form-control:focus {
+  z-index: 2;
+}
+.form-model input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-model input[type="password"] {
+  margin-bottom: 20px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.div-row {
+  display: inlines;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+}
+.div-row-center {
+  display: flex;
+  margin-top: 5px;
+  justify-content: center;
+  align-items: center;
+}
+.div-row-stretch {
+  display: inline;
+  margin-top: 5px;
+  width: 100%;
+}
+.btn-space {
+  margin-right: 5px;
+}

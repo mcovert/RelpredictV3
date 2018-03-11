@@ -1,0 +1,31 @@
+{
+  "name": "datamap",
+  "plural": "datamaps",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "datamap_name": {
+      "type": "string",
+      "required": true
+    },
+    "datamap_type": {
+      "type": "string",
+      "required": true
+    },
+    "fields": {
+      "type": "object",
+      "required": true
+    },
+    "xlate": {
+      "type": "object",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,36 @@
+{
+  "name": "jobexec",
+  "plural": "jobexecs",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "job_id": {
+      "type": "string",
+      "required": true
+    },
+    "parms": {
+      "type": "object",
+      "required": true
+    },
+    "started": {
+      "type": "date",
+      "required": true
+    },
+    "ended": {
+      "type": "date"
+    },
+    "status": {
+      "type": "string"
+    },
+    "result": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
