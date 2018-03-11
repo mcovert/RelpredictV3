@@ -173,15 +173,28 @@
   </wizard-step>
 </wizard>
 <app-modal-dialog [(visible)]="showParm">
-  <div class="container">
-     <div class="row bg-info">Enter Parameters</div>
-        <div class="row col-12" *ngFor="let c of content; let index=index">
-          <input type="text" id="parm_name" class="col-6" [(ngModel)]="c.parm_name" name=pname{{index}}>
-          <select class="col-6 pt-1"> 
-            <option *ngFor="let v of c.parm_values" value="v">{{v}}</option>
-          </select>
-        </div>
-        <div class="row p-1">
+  <form>
+      <h3 class="bg-info text-center">Enter Parameters</h3>
+      <div class="table-responsive">
+        <table id="mytable2" class="table table-bordered table-striped sortable table-sm">
+          <thead>
+               <th class="text-center">Parameter Name</th>
+               <th class="text-center">Parameter Value</th>
+          </thead>
+          <tbody>
+               <tr *ngFor="let c of content; let index=index;">
+                   <td>{{c.parm_name}}</td>
+                   <td>
+                       <select class="form-control text-center"> 
+                           <option *ngFor="let v of c.parm_values" value="v">{{v}}</option>
+                       </select>
+                   </td>
+               </tr>
+          </tbody>
+        </table>
+      </div>
+  </form>
+   <div class="row p-1">
          <div class="col-5 pt-3"></div>
          <p data-placement="top" data-toggle="tooltip" title="Discard Changes">
           <button class="btn btn-danger btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#cancel" (click)="cancelDialog()">
@@ -199,41 +212,5 @@
           </button>
          </p>
          <div class="col-4"></div>
-        </div>
    </div>
-</app-modal-dialog>
-<app-modal-dialog [(visible)]="showAlg">
-  <div class="container">
-  <div class="panel-group">
-  <div class="panel panel-info">
-     <div class="panel-heading">Enter Parameters
-  </div>
-  <div style="padding-top:30px" class="panel-body" >
-    <div class="row col-12" *ngFor="let c of content; let index=index">
-       <input type="text" id="parm_name" class="col-6 p-1" [(ngModel)]="c.parm_name" name=pname{{index}}>
-       <select class="col-6 p-1"> 
-         <option *ngFor="let v of c.parm_values" value="v">{{v}}</option>
-       </select>
-    </div>
-    <div class="row" style="float:right">
-      <p data-placement="top" data-toggle="tooltip" title="Discard Changes">
-          <button class="btn btn-danger btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#cancel" (click)="cancelDialog()">
-                  <span class="fa fa-ban"></span>
-          </button>
-      </p>
-      <p data-placement="top" data-toggle="tooltip" title="Discard Changes">
-          <button class="btn btn-info btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#save" (click)="saveDialog()">
-                  <span class="fa fa-floppy-o"></span>
-          </button>
-      </p>
-      <p data-placement="top" data-toggle="tooltip" title="Discard Changes">
-          <button class="btn btn-danger btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#reset" (click)="resetDialog()">
-                  <span class="fa fa-refresh"></span>
-          </button>
-      </p>
-    </div>
-  </div>
-</div>
-</div>
-</div>
 </app-modal-dialog>
