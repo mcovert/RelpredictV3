@@ -37,6 +37,7 @@ export class RPFeature {
   type : string;
   label        : string;
   parms        : RPParameter[];
+  isTarget     : boolean;
 }
 export class RPTargetAlgorithm {
   short_name  : string;

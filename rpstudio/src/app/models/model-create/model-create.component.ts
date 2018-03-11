@@ -50,6 +50,7 @@ export class ModelCreateComponent implements OnInit {
     console.log("Adding new feature");
     var feature = new RPFeature();
     feature.parms = [];
+    feature.isTarget = false;
     this.model.features.push(feature);
     console.log(this.model);
   }
@@ -79,6 +80,12 @@ export class ModelCreateComponent implements OnInit {
   	console.log("Model saved");
   	console.log(this.model);
     this.router.navigate(['models']);
+  }
+  cancelModel() {
+    if (confirm("Are you sure you want to discard this model?")) {
+       console.log("Model canceled");
+       this.router.navigate(['models']);      
+    }
   }
   saveDialog() {
     this.showParm = false;    

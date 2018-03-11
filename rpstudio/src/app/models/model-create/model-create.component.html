@@ -40,7 +40,7 @@
       <br>
       <div class="row">
         <div class="col-2"></div>
-        <h2 class="text-center col-8">Add features to the model</h2>
+        <h2 class="text-center col-8">Add features and targets to the model</h2>
         <div class="dropdown col-2" style="float:right">
          <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">Add Feature<span class="caret"></span></button>
          <div class="dropdown-menu">
@@ -54,6 +54,7 @@
         <div class="table-responsive">
         <table id="mytable" class="table table-bordered table-striped sortable table-sm">
           <thead>
+               <th class="text-center">Target</th>
                <th class="text-center">Name</th>
                <th class="text-center">Type</th>
                <th class="text-center">Label</th>
@@ -63,6 +64,9 @@
           </thead>
           <tbody>
             <tr *ngFor="let f of model.features; let index = index; trackBy:trackByIndex">
+               <td class="text-center">
+                 <input type="checkbox" [(ngModel)]="model.features[index].isTarget" name=isTraget{{index}} ngModel>
+               </td>
                <td >
                  <input class="form-control" type="text" [(ngModel)]="model.features[index].name" name=name{{index}} ngModel>
                </td>
@@ -101,10 +105,10 @@
     <br>
     <div class="text-center">
       <button type="button" previousStep class="btn btn-sm btn-danger">Go to previous step</button>
-      <button type="button" nextStep class="btn btn-sm btn-primary">Go to next step</button>
+      <button type="button" nextStep class="btn btn-sm btn-primary">Finish</button>
     </div>
   </wizard-step>
-  <wizard-step stepTitle="Add Targets" navigationSymbol="&#xf140;" navigationSymbolFontFamily="FontAwesome">
+  <!--wizard-step stepTitle="Add Targets" navigationSymbol="&#xf140;" navigationSymbolFontFamily="FontAwesome">
     <form>
       <br>
       <div class="row">
@@ -159,11 +163,12 @@
       <button type="button" previousStep class="btn btn-sm btn-danger">Previous Step</button>
       <button type="button" nextStep class="btn btn-sm btn-primary">Go to next step</button>
     </div>
-  </wizard-step>
+  </wizard-step-->
   <wizard-step stepTitle="Complete" navigationSymbol="&#xf00c;" navigationSymbolFontFamily="FontAwesome">
     <div class="text-center">
       <button type="button" previousStep class="btn btn-sm btn-primary">Previous Step</button>
-      <button type="button" class="btn btn-sm btn-success" resetWizard (click)="saveModel()">Finish</button>
+      <button type="button" class="btn btn-sm btn-success" resetWizard (click)="saveModel()">Save Model</button>
+      <button type="button" class="btn btn-sm btn-danger" resetWizard (click)="cancelModel()">Discard and Exit</button>
     </div>
   </wizard-step>
 </wizard>
