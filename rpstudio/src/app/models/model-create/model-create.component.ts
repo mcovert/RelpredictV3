@@ -35,11 +35,7 @@ export class ModelCreateComponent implements OnInit {
     this.addFeature();
     this.addTarget();
     console.log(this.model);
-
-    this.modelService.getDataTypes().subscribe(resultArray => {
-        this.dataTypes = resultArray as RPDataType[];
-        console.log(this.dataTypes);
-    })
+    this.dataTypes = this.modelService.getDataTypes();
     this.modelService.getAlgorithmDefs().subscribe(resultArray => {
         this.algDefs = resultArray as RPAlgorithmDef[];
         console.log(this.algDefs);

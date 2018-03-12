@@ -17,7 +17,6 @@ export class RPDataType {
   datatype_name : string;
   short_name    : string;
   description   : string;
-  id            : string;
 }
 export class RPParameter {
   parm_name   : string;

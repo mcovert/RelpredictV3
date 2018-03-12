@@ -35,10 +35,6 @@
     "dataSource": "db",
     "public": false
   },
-  "datatype": {
-    "dataSource": "db",
-    "public": true
-  },
   "model": {
     "dataSource": "db",
     "public": true

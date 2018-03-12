@@ -10,7 +10,13 @@ import { RPDataType, RPParameter,    RPFeature,      RPTargetAlgorithm,
 export class ModelService {
 
 httpService    : HttpClient;
-datatypes      : Observable<RPDataType[]>;
+datatypes      : RPDataType[] = [
+   { datatype_name : "integer", short_name : "int",     description : "Long integer"},
+   { datatype_name : "double",  short_name : "double",  description : "Double precision floating point number"},
+   { datatype_name : "boolean", short_name : "boolean", description : "true or false boolean"},
+   { datatype_name : "string",  short_name : "string",  description : "Single string value"},
+   { datatype_name : "text",    short_name : "text",    description : "Multiple delimited string values"}
+];
 algorithms     : Observable<RPAlgorithmDef[]>;
 modelclasses   : Observable<RPModelClass[]>;
 models         : Observable<RPModel[]>;
@@ -27,8 +33,7 @@ httpOptions = {
       console.log("Model service created...");
   }
 
-  getDataTypes()  : Observable<RPDataType[]> { 
-    this.datatypes = this.httpService.get('http://ai25:3000/api/datatypes') as Observable<RPDataType[]>;
+  getDataTypes()  : RPDataType[] { 
     return this.datatypes;
   }
   getAlgorithmDefs()  : Observable<RPAlgorithmDef[]> { 

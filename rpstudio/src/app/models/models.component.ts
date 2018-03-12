@@ -26,11 +26,7 @@ export class ModelsComponent implements OnInit {
   }
 
   ngOnInit() {
-     this.modelService.getDataTypes().subscribe(resultArray => {
-        this.datatypes = resultArray;
-        console.log('Data Types:');
-        console.log(this.datatypes);
-     });
+     this.datatypes = this.modelService.getDataTypes();
 
      this.modelService.getAlgorithmDefs().subscribe(resultArray => {
         this.algorithms = resultArray;
