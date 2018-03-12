@@ -4,14 +4,14 @@
 export class RPParameterDef {
   parm_name    : string;
   parm_type    : string;       // value (text box), choose (dropdonw), multichoose (dropdown checkbox), range (spinner), date, daterange, time, timerange
-  description  : string;       // fly-by
-  parm_default : string;       // default value
+  description?  : string;       // fly-by
+  parm_default? : string;       // default value
   data_type    : string;       // integer, string, double, date, time
-  min          : number;       // if zero, no min
-  max          : number;       // if zero, no max
-  step         : number;       // range only, must be greater than zero
-  label        : string;
-  choose       : string[];     // list of chooseable values
+  min?          : number;       // if zero, no min
+  max?          : number;       // if zero, no max
+  step?         : number;       // range only, must be greater than zero
+  label?        : string;
+  choose?       : string[];     // list of chooseable values
 }
 export class RPDataType {
   datatype_name : string;

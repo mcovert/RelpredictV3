@@ -2,7 +2,7 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { ModelService } from '../../services/model.service';
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
-import { RPDataType, RPParameter, RPFeature, RPTargetAlgorithm, RPTarget, RPModel, RPAlgorithmDef, RPCurrentModel, RPLogEntry, RPTrainedModel,
+import { RPDataType, RPParameter, RPParameterDef, RPFeature, RPTargetAlgorithm, RPTarget, RPModel, RPAlgorithmDef, RPCurrentModel, RPLogEntry, RPTrainedModel,
          RPModelClass } from '../../shared/db-classes';
 
 @Component({
@@ -27,6 +27,10 @@ export class ModelCreateComponent implements OnInit {
     this.modelService.getModelClasses().subscribe(resultArray => {
         this.modelClasses = resultArray as RPModelClass[];
     });
+    this.dataTypes = this.modelService.getDataTypes();
+    console.log(this.dataTypes);
+    this.algDefs = this.modelService.getAlgorithmDefs();
+    console.log(this.algDefs);
     this.model = new RPModel();
     this.model.version = 1;
     this.model.features = [];
@@ -35,18 +39,20 @@ export class ModelCreateComponent implements OnInit {
     this.addFeature();
     this.addTarget();
     console.log(this.model);
-    this.dataTypes = this.modelService.getDataTypes();
-    this.modelService.getAlgorithmDefs().subscribe(resultArray => {
-        this.algDefs = resultArray as RPAlgorithmDef[];
-        console.log(this.algDefs);
-    })
   }
-
+  getParms(dt: string) : RPDataType {
+    console.log("Looking for data type " + dt);
+    for (var dtype of this.dataTypes) {
+      if (dtype.datatype_name == dt)
+         return dtype;
+    }
+    return this.dataTypes[0];
+  }
   addFeature() {
     console.log("Adding new feature");
     var feature = new RPFeature();
     feature.parms = [];
-    feature.isTarget = false;
+    feature.type = this.dataTypes[0].datatype_name;
     this.model.features.push(feature);
     console.log(this.model);
   }
@@ -59,6 +65,7 @@ export class ModelCreateComponent implements OnInit {
     var target = new RPTarget();
     target.algorithms = [];
     target.parms = [];
+    target.type = this.dataTypes[0].datatype_name;
     this.model.targets.push(target);
     console.log(this.model);
   }
@@ -66,10 +73,15 @@ export class ModelCreateComponent implements OnInit {
     console.log("Deleting target");
     this.model.targets.splice(i, 1);
   }
-  showParmEditor(i : number) {
-    this.content = [ { parm_name: "encode", parm_values: [ "category", "one-hot" ]},
-                     { parm_name: "delimiter", parm_values: [ "comma", "pipe", "tab", "spaces"] },
-                     { parm_name: "scale", parm_values: [ "none", "min-max"]}];
+  changeFeatureDataType(dt: string, i: number) {
+    console.log("setting feature " + i + " to " + dt);
+    this.model.features[i].type = dt;
+  }
+  changeTargetDataType(dt: string, i: number) {
+    this.model.targets[i].type = dt;
+  }
+  showParmEditor(dt : string) {
+    this.content = this.getParms(dt).parms;
     this.showParm = true;
   }
   showAlgEditor(i : number) {

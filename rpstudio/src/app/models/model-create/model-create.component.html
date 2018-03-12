@@ -71,8 +71,8 @@
                  <input class="form-control" type="text" [(ngModel)]="model.features[index].name" name=name{{index}} ngModel>
                </td>
                <td >
-                 <select class="form-control"> 
-                   <option *ngFor="let dt of dataTypes" value="dt.name">{{dt.name}}</option>
+                 <select class="form-control" (change)="changeFeatureDataType($event.target.value, index)"> 
+                   <option *ngFor="let dt of dataTypes" value="{{dt.datatype_name}}">{{dt.datatype_name}}</option>
                  </select>
                </td>
                <td >
@@ -83,7 +83,7 @@
                </td>
                <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Show Parameter Editor">
-                       <button class="btn btn-info btn-xs center-block" (click)="showParmEditor()">
+                       <button class="btn btn-info btn-xs center-block" (click)="showParmEditor(f.type)">
                         <span class="fa fa-bars"></span>
                       </button>
                     </p>
@@ -140,8 +140,8 @@
                  <input class="form-control" type="text" [(ngModel)]="t.name" name=name{{index}} ngModel>
                </td>
                <td >
-                 <select class="form-control"> 
-                   <option *ngFor="let dt of dataTypes" value="dt.name">{{dt.name}}</option>
+                 <select class="form-control" (change)="changeTargetDataType($event.target.value, index)"> 
+                   <option *ngFor="let dt of dataTypes" value="dt.name">{{dt.datatype_name}}</option>
                  </select>
                </td>
                <td >
@@ -152,7 +152,7 @@
                </td>
                <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Show Parameter Editor">
-                       <button class="btn btn-info btn-xs center-block" (click)="showParmEditor()">
+                       <button class="btn btn-info btn-xs center-block" (click)="showParmEditor(t.parms)">
                         <span class="fa fa-bars"></span>
                       </button>
                     </p>
@@ -206,11 +206,19 @@
           </thead>
           <tbody>
                <tr *ngFor="let c of content; let index=index;">
-                   <td>{{c.parm_name}}</td>
+                   <td>{{c.label}}</td>
                    <td>
-                       <select class="form-control text-center"> 
-                           <option *ngFor="let v of c.parm_values" value="v">{{v}}</option>
-                       </select>
+                       <div *ngIf="c.parm_type=='choose'">
+                           <select class="form-control text-center"> 
+                               <option *ngFor="let v of c.choose" value="v">{{v}}</option>
+                           </select>
+                       </div>
+                       <div *ngIf="c.parm_type=='value'">
+                           <input class="form-control"  type="text" [value]="c.parm_default">
+                       </div>
+                       <div *ngIf="c.parm_type=='range'">
+                           <input class="form-control"  type="text" [value]="c.parm_default">
+                       </div>
                    </td>
                </tr>
           </tbody>
