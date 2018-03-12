@@ -11,11 +11,16 @@ export class ModelService {
 
 httpService    : HttpClient;
 datatypes      : RPDataType[] = [
-   { datatype_name : "integer", short_name : "int",     description : "Long integer"},
-   { datatype_name : "double",  short_name : "double",  description : "Double precision floating point number"},
-   { datatype_name : "boolean", short_name : "boolean", description : "true or false boolean"},
-   { datatype_name : "string",  short_name : "string",  description : "Single string value"},
-   { datatype_name : "text",    short_name : "text",    description : "Multiple delimited string values"}
+   { datatype_name : "integer", short_name : "int",     description : "Long integer",
+     parms: [] },
+   { datatype_name : "double",  short_name : "double",  description : "Double precision floating point number",
+     parms: [] },
+   { datatype_name : "boolean", short_name : "boolean", description : "true or false boolean",
+     parms: [] },
+   { datatype_name : "string",  short_name : "string",  description : "Single string value",
+     parms: [] },
+   { datatype_name : "text",    short_name : "text",    description : "Multiple delimited string values",
+     parms: [] }
 ];
 algorithms     : Observable<RPAlgorithmDef[]>;
 modelclasses   : Observable<RPModelClass[]>;

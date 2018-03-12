@@ -17,12 +17,12 @@ export class RPDataType {
   datatype_name : string;
   short_name    : string;
   description   : string;
+  parms         : RPParameterDef[];
 }
 export class RPParameter {
   parm_name   : string;
   parm_value  : string;
   parm_type   : string;
-  id          : string;
 }
 /*
  *   Database model definition classes
@@ -37,7 +37,6 @@ export class RPFeature {
   type : string;
   label        : string;
   parms        : RPParameter[];
-  isTarget     : boolean;
 }
 export class RPTargetAlgorithm {
   short_name  : string;
