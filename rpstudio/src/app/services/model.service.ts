@@ -24,51 +24,51 @@ datatypes      : RPDataType[] = [
              { parm_name: "case", parm_type: "choose", data_type: "string",  description: "Change case", label: "Change Case to", choose: ["none", "upper", "lower"], parm_default: "none"}]}
 ];
 algorithms     : RPAlgorithmDef[] = [
-   { name: "Decision Tree", short_name: "dt", description: "Single decision tree", model_class: "classifier",
+   { name: "Decision Tree", short_name: "dt", description: "Single decision tree", alg_class: "classifier",
      parms: [ {parm_name: "depth", parm_type: "range", data_type: "integer", description: "Maximum tree depth", 
-               min:2, max:9999, step: 1, default: "5"},
+               min:2, max:9999, step: 1, parm_default: "5"},
               {parm_name: "bins",  parm_type: "range", data_type: "integer", description: "Impurity calculation method", 
-               min:8, max:9999, step: 1, default:"32"},
+               min:8, max:9999, step: 1, parm_default:"32"},
               {parm_name: "impurity", parm_type: "choose", data_type: "string", description: "Number of bins to discretize continuous features (>= max categories)", 
-               choose: [ "gini", "entropy", "variance"], default: "gini" }
+               choose: [ "gini", "entropy", "variance"], parm_default: "gini" }
             ]
    },
-   { name: "Random Forest", short_name: "rf", description: "A set of independent decision trees", model_class: "classifier",
-     parms: [ {parm_name: "depth", data_type: "integer", description: "Maximum tree depth", 
-               min:2, max:9999, default: "5"},
-              {parm_name: "trees", type: "integer", description: "Number of trees", 
-               min:2, max:9999, default: "5"}
-            ]
-   },
-   { name: "Gradient Boosted Trees", short_name: "gbt", description: "A sequence of decision trees", model_class: "classifier",
+   { name: "Random Forest", short_name: "rf", description: "A set of independent decision trees", alg_class: "classifier",
      parms: [ {parm_name: "depth", parm_type: "range", data_type: "integer", description: "Maximum tree depth", 
-               min:2, max:9999, default: "5"},
-              {parm_name: "iterations", parm_type: "range", type: "integer", description: "Number of iterations (will define the number of trees)", 
-               min:2,max:9999,default: "5"}
+               min:2, max:9999, parm_default: "5"},
+              {parm_name: "trees", parm_type: "range", data_type: "integer", description: "Number of trees", 
+               min:2, max:9999, parm_default: "5"}
             ]
    },
-   { name: "Support Vector Machine", short_name: "svm", description: "Multi-class support vector machine", model_class: "classifier",
+   { name: "Gradient Boosted Trees", short_name: "gbt", description: "A sequence of decision trees", alg_class: "classifier",
+     parms: [ {parm_name: "depth", parm_type: "range", data_type: "integer", description: "Maximum tree depth", 
+               min:2, max:9999, parm_default: "5"},
+              {parm_name: "iterations", parm_type: "range", data_type: "integer", description: "Number of iterations (will define the number of trees)", 
+               min:2,max:9999,parm_default: "5"}
+            ]
+   },
+   { name: "Support Vector Machine", short_name: "svm", description: "Multi-class support vector machine", alg_class: "classifier",
      parms: [ {parm_name: "iterations", parm_type: "range", data_type: "integer", description: "Number of iterations", 
-               min:2,max:9999,default:100},
+               min:2,max:9999,parm_default: "100"},
               {parm_name: "regularization", parm_type: "choose", data_type: "string", description: "Regularization method", 
-               choose: ["L1", "L2", "ElasticNet"], default: "L2"}
+               choose: ["L1", "L2", "ElasticNet"], parm_default: "L2"}
             ]
    },
-   { name: "Logistic Regression", short_name: "lr", description: "Logistic regression", model_class: "classifier",
+   { name: "Logistic Regression", short_name: "lr", description: "Logistic regression", alg_class: "classifier",
      parms: [ {parm_name: "iterations", parm_type: "range", data_type: "integer", description: "Number of iterations", 
-               min:2, max:9999, default: "100"}
+               min:2, max:9999, parm_default: "100"}
             ]
    },
-   { name: "Naive Bayes", short_name: "nb", description: "Multinomial Naive Bayes", model_class: "classifier",
+   { name: "Naive Bayes", short_name: "nb", description: "Multinomial Naive Bayes", alg_class: "classifier",
      parms: [ {parm_name: "smoothing", parm_type: "range", data_type: "double", description: "Lambda smoothing", 
-               min:0.1, max:5.0, default:1.0},
-              {parm_name: "model_type", data_type: "string", description: "Distribution estimation method", 
-               choose: ["bernoulli", "multinomial"], default: "bernoulli"}
+               min:0.1, max:5.0, parm_default: "1.0"},
+              {parm_name: "model_type", parm_type: "choose", data_type: "string", description: "Distribution estimation method", 
+               choose: ["bernoulli", "multinomial"], parm_default: "bernoulli"}
             ]
    },
-   { name: "Neural Network", short_name: "nn", description: "Neural Network", model_class: "classifier",
+   { name: "Neural Network", short_name: "nn", description: "Neural Network", alg_class: "classifier",
      parms: [ {parm_name: "network", parm_type: "value", data_type: "string", description: "Network shape (level/size,leve/size...)", 
-               default: "1/100"}
+               parm_default: "1/100"}
             ]
    },
 ]; 

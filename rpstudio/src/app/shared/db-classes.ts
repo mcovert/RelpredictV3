@@ -49,6 +49,15 @@ export class RPTarget {
   type        : string;
   parms       : RPParameter[];
   algorithms  : RPTargetAlgorithm[];
+  getAlgorithms() : string {
+    var retList = "";
+    for (var alg of this.algorithms) {
+       if (retList.length > 0)
+         retList = retList + "," + alg.short_name;
+       else retList = alg.short_name;
+    }
+    return retList;
+  }
 }
 export class RPModelClass {
   class_name  : string;
@@ -74,7 +83,6 @@ export class RPAlgorithmDef {
   description : string;
   alg_class   : string;
   parms       : RPParameterDef[];
-  id          : string;  
 }
 export class RPCurrentModel {
   model_class : string;

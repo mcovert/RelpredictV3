@@ -48,6 +48,14 @@ export class ModelCreateComponent implements OnInit {
     }
     return this.dataTypes[0];
   }
+  getAlg(algname: string) : RPAlgorithmDef {
+    console.log("Looking for algorithm " + alg);
+    for (var alg of this.algDefs) {
+      if (alg.name == algname)
+         return alg;
+    }
+    return this.algDefs[0];
+  }
   addFeature() {
     console.log("Adding new feature");
     var feature = new RPFeature();
@@ -64,6 +72,7 @@ export class ModelCreateComponent implements OnInit {
     console.log("Adding new feature");
     var target = new RPTarget();
     target.algorithms = [];
+    target.algorithms.push();
     target.parms = [];
     target.type = this.dataTypes[0].datatype_name;
     this.model.targets.push(target);
@@ -80,14 +89,15 @@ export class ModelCreateComponent implements OnInit {
   changeTargetDataType(dt: string, i: number) {
     this.model.targets[i].type = dt;
   }
+  changeAlgorithm(alg: string) {
+    this.content = this.getAlg(alg).parms;
+  }
   showParmEditor(dt : string) {
     this.content = this.getParms(dt).parms;
     this.showParm = true;
   }
-  showAlgEditor(i : number) {
-    this.content = [ { parm_name: "encode", parm_values: [ "category", "one-hot" ]},
-                     { parm_name: "delimiter", parm_values: [ "comma", "pipe", "tab", "spaces"] },
-                     { parm_name: "scale", parm_values: [ "none", "min-max"]}];
+  showAlgEditor() {
+    this.content = this.algDefs[0].parms;
     this.showAlg = true;
   }
   saveModel() {

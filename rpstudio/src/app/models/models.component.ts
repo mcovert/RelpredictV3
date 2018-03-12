@@ -28,11 +28,7 @@ export class ModelsComponent implements OnInit {
   ngOnInit() {
      this.datatypes = this.modelService.getDataTypes();
 
-     this.modelService.getAlgorithmDefs().subscribe(resultArray => {
-        this.algorithms = resultArray;
-        console.log('Algorithms:');
-        console.log(this.algorithms);
-     });
+     this.algorithms = this.modelService.getAlgorithmDefs();
      
      this.modelService.getModelClasses().subscribe(resultArray => {
         this.modelclasses = resultArray as RPModelClass[];
