@@ -22,6 +22,7 @@ export class RPDataType {
 export class RPParameter {
   parm_name   : string;
   parm_value  : string;
+  parm_type   : string;
   id          : string;
 }
 /*
@@ -73,7 +74,7 @@ export class RPAlgorithmDef {
   name        : string;
   short_name  : string;
   description : string;
-  model_class : string;
+  alg_class   : string;
   parms       : RPParameterDef[];
   id          : string;  
 }

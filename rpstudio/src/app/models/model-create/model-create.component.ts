@@ -76,6 +76,12 @@ export class ModelCreateComponent implements OnInit {
                      { parm_name: "scale", parm_values: [ "none", "min-max"]}];
     this.showParm = true;
   }
+  showAlgEditor(i : number) {
+    this.content = [ { parm_name: "encode", parm_values: [ "category", "one-hot" ]},
+                     { parm_name: "delimiter", parm_values: [ "comma", "pipe", "tab", "spaces"] },
+                     { parm_name: "scale", parm_values: [ "none", "min-max"]}];
+    this.showAlg = true;
+  }
   saveModel() {
   	console.log("Model saved");
   	console.log(this.model);
@@ -88,10 +94,12 @@ export class ModelCreateComponent implements OnInit {
     }
   }
   saveDialog() {
-    this.showParm = false;    
+    this.showParm = false; 
+    this.showAlg  = false;   
   }
   cancelDialog() {
     this.showParm = false;
+    this.showAlg  = false;   
   }
   resetDialog() {
     
