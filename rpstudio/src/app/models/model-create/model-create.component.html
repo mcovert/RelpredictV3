@@ -83,7 +83,7 @@
                </td>
                <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Show Parameter Editor">
-                       <button class="btn btn-info btn-xs center-block" (click)="showParmEditor(f.type)">
+                       <button class="btn btn-info btn-xs center-block" (click)="showParmEditor(f.type, 'feature', index)">
                         <span class="fa fa-bars"></span>
                       </button>
                     </p>
@@ -152,7 +152,7 @@
                </td>
                <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Show Parameter Editor">
-                       <button class="btn btn-info btn-xs center-block" (click)="showParmEditor(t.type)">
+                       <button class="btn btn-info btn-xs center-block" (click)="showParmEditor(t.type, 'target', index)">
                         <span class="fa fa-bars"></span>
                       </button>
                     </p>
@@ -194,7 +194,7 @@
   </wizard-step>
 </wizard>
 <app-modal-dialog [(visible)]="showParm">
-  <form>
+  <form #parmform="ngForm">
       <h3 class="bg-info text-center">Enter Parameters</h3>
       <div class="table-responsive">
         <table id="mytable2" class="table table-bordered table-striped sortable table-sm">
@@ -207,15 +207,15 @@
                    <td>{{c.label}}</td>
                    <td>
                        <div *ngIf="c.parm_type=='choose'">
-                           <select class="form-control text-center"> 
-                               <option *ngFor="let v of c.choose" value="v">{{v}}</option>
+                           <select class="form-control text-center" [(ngModel)]="parm_storage[index].parm_value" name=val{{index}}> 
+                               <option *ngFor="let v of c.choose">{{v}}</option>
                            </select>
                        </div>
                        <div *ngIf="c.parm_type=='value'">
-                           <input class="form-control"  type="text" [value]="c.parm_default">
+                           <input class="form-control"  type="text" [value]="c.parm_default"  [(ngModel)]="parm_storage[index].parm_value" name=val{{index}}>
                        </div>
                        <div *ngIf="c.parm_type=='range'">
-                           <input class="form-control"  type="text" [value]="c.parm_default">
+                           <input class="form-control"  type="text" [value]="c.parm_default"  [(ngModel)]="parm_storage[index].parm_value" name=val{{index}}>
                        </div>
                    </td>
                </tr>
@@ -226,17 +226,17 @@
    <div class="row p-1">
          <div class="col-5 pt-3"></div>
          <p data-placement="top" data-toggle="tooltip" title="Discard Changes">
-          <button class="btn btn-danger btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#cancel" (click)="cancelDialog()">
+          <button class="btn btn-danger btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#cancel" (click)="cancelParmDialog()">
                   <span class="fa fa-ban"></span>
           </button>
          </p>
          <p data-placement="top" data-toggle="tooltip" title="Save Changes">
-          <button class="btn btn-info btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#save" (click)="saveDialog()">
+          <button class="btn btn-info btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#save" (click)="saveParmDialog()">
                   <span class="fa fa-floppy-o"></span>
           </button>
          </p>
          <p data-placement="top" data-toggle="tooltip" title="Reset to defaults">
-          <button class="btn btn-danger btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#reset" (click)="resetDialog()">
+          <button class="btn btn-danger btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#reset" (click)="resetParmDialog()">
                   <span class="fa fa-refresh"></span>
           </button>
          </p>
@@ -244,7 +244,7 @@
    </div>
 </app-modal-dialog>
 <app-modal-dialog [(visible)]="showAlg">
-  <form>
+  <form #algform="ngForm">
       <h3 class="bg-info text-center">Add Algorithm</h3>
       <select class="form-control"  (change)="changeAlgorithm($event.target.value)"> 
            <option *ngFor="let ad of algDefs" value="{{ad.name}}">{{ad.name}}</option>
@@ -279,17 +279,17 @@
    <div class="row p-1">
          <div class="col-5 pt-3"></div>
          <p data-placement="top" data-toggle="tooltip" title="Discard Changes">
-          <button class="btn btn-danger btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#cancel" (click)="cancelDialog()">
+          <button class="btn btn-danger btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#cancel" (click)="cancelAlgDialog(algform)">
                   <span class="fa fa-ban"></span>
           </button>
          </p>
          <p data-placement="top" data-toggle="tooltip" title="Save Changes">
-          <button class="btn btn-info btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#save" (click)="saveDialog()">
+          <button class="btn btn-info btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#save" (click)="saveAlgDialog(algform)">
                   <span class="fa fa-floppy-o"></span>
           </button>
          </p>
          <p data-placement="top" data-toggle="tooltip" title="Reset to defaults">
-          <button class="btn btn-danger btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#reset" (click)="resetDialog()">
+          <button class="btn btn-danger btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#reset" (click)="resetAlgDialog(algform)">
                   <span class="fa fa-refresh"></span>
           </button>
          </p>

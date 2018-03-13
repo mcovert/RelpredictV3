@@ -4,6 +4,7 @@ import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
 import { RPDataType, RPParameter, RPParameterDef, RPFeature, RPTargetAlgorithm, RPTarget, RPModel, RPAlgorithmDef, RPCurrentModel, RPLogEntry, RPTrainedModel,
          RPModelClass } from '../../shared/db-classes';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-model-create',
@@ -17,8 +18,12 @@ export class ModelCreateComponent implements OnInit {
   dataTypes    : RPDataType[];
   algDefs      : RPAlgorithmDef[];
   showParm     : boolean = false;
-  showAlg     : boolean = false;
-  content      : any;
+  showAlg      : boolean = false;
+  content      : RPParameterDef[];
+  f_or_t       : string;
+  curr_index   : number;
+  curr_type    : string;
+  parm_storage : RPParameter[];
 
   constructor(private modelService : ModelService, private router: Router /* , private modalService: ModalService*/) { 
   }
@@ -56,6 +61,13 @@ export class ModelCreateComponent implements OnInit {
     }
     return this.algDefs[0];
   }
+  setupStorage(plist: RPParameterDef[]) {
+    console.log(plist);
+    this.parm_storage = [];
+    for (var p of plist) {
+      this.parm_storage.push({ parm_name: p.parm_name, parm_value: p.parm_default, parm_type: p.data_type});
+    }
+  }
   addFeature() {
     console.log("Adding new feature");
     var feature = new RPFeature();
@@ -92,8 +104,19 @@ export class ModelCreateComponent implements OnInit {
   changeAlgorithm(alg: string) {
     this.content = this.getAlg(alg).parms;
   }
-  showParmEditor(dt : string) {
+  showParmEditor(dt : string, f_or_t: string, i: number) {
     this.content = this.getParms(dt).parms;
+    if (f_or_t == 'feature' && this.model.features[i].parms.length > 0) {
+        this.parm_storage = this.model.features[i].parms;
+    }
+    else if (f_or_t == 'target' && this.model.targets[i].parms.length > 0) 
+        this.parm_storage = this.model.targets[i].parms;
+    else {
+        this.setupStorage(this.content);
+    }
+    console.log(this.parm_storage);
+    this.curr_type = f_or_t;
+    this.curr_index = i;
     this.showParm = true;
   }
   showAlgEditor() {
@@ -111,16 +134,26 @@ export class ModelCreateComponent implements OnInit {
        this.router.navigate(['models']);      
     }
   }
-  saveDialog() {
+  saveParmDialog() {
+    if (this.curr_type == 'feature') this.model.features[this.curr_index].parms = this.parm_storage;
+    else if (this.curr_type == 'target') this.model.targets[this.curr_index].parms = this.parm_storage;
+    console.log(this.parm_storage);
     this.showParm = false; 
-    this.showAlg  = false;   
   }
-  cancelDialog() {
+  cancelParmDialog() {
+    console.log(this.parm_storage);
     this.showParm = false;
+  }
+  resetParmDialog() {
+    console.log(this.parm_storage);
+  }
+  saveAlgDialog() {
     this.showAlg  = false;   
   }
-  resetDialog() {
-    
+  cancelAlgDialog() {
+    this.showAlg  = false;   
+  }
+  resetAlgDialog() {
   }
   trackByIndex(index: number, value: number) {
     console.log(index);
