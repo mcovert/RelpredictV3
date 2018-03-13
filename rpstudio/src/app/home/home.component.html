@@ -1,31 +1,33 @@
 <div class="wrapper bg container-fluid">
   <div *ngIf="authService.isLoggedIn()" class="rpcontent">
+    <div class="container" style="display: flex; justify-content: center; margin-top: 10%">
   	<div class="card-deck pt-2">
-       <div class="card">
+       <div class="card" style="max-width: 400px">
          <img class="card-img-top" src="https://www.infousa.com/wp-content/uploads/2015/03/DataProcessingImage11.jpg" alt="Jobs" style="max-height:240px">
          <div class="card-block">
             <h4 class="card-title">Alerts</h4>
-            <p class="card-text">View alerts             <a class="btn btn-danger fa fa-eye" [routerLink]=""></a></p>
+            <p class="card-text">View alerts     <a class="btn btn-danger fa fa-eye" [routerLink]=""></a></p>
             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
         </div>
       </div>
-       <div class="card">
+       <div class="card" style="max-width: 400px">
          <img class="card-img-top" src="https://blog.exscudo.com/wp-content/uploads/2017/10/sitemap_tutorial_2.jpg" alt="Models" style="min-height:240px">
          <div class="card-block">
            <h4 class="card-title">Tutorial</h4>
-           <p class="card-text">Learn how to use RelPredict             <a class="btn btn-info fa fa-graduation-cap" [routerLink]=""></a></p>
+           <p class="card-text">Learn how to use RelPredict     <a class="btn btn-info fa fa-graduation-cap" [routerLink]=""></a></p>
            <p class="card-text"><small class="text-muted">Last updated 14 days ago</small></p>
          </div>
        </div>
-       <div class="card">
-         <img class="card-img-top" src="http://whatsnewpodcast.org/wp-content/uploads/2017/09/whats_new_logo_NU-white-background.png" alt="Models" style="max-height:240px">
+       <div class="card" style="max-width: 400px">
+         <img class="card-img-top" src="http://whatsnewpodcast.org/wp-content/uploads/2017/09/whats_new_logo_NU-white-background.png" alt="Models" style="min-height:240px">
          <div class="card-block">
            <h4 class="card-title">What's new in version 1.1</h4>
-           <p class="card-text">Find out about recent additions to RelPredict             <a class="btn btn-info fa fa-question-circle" [routerLink]=""></a></p>
+           <p class="card-text">See what's new in RelPredict     <a class="btn btn-info fa fa-question-circle" [routerLink]=""></a></p>
            <p class="card-text"><small class="text-muted">Last updated 14 days ago</small></p>
          </div>
        </div>
     </div>
+  </div>
      <!-- app-log-browser [logentries]='log'></app-log-browser -->
   </div>
   <div *ngIf="!authService.isLoggedIn()">
