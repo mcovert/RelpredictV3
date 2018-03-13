@@ -20,7 +20,7 @@ datatypes      : RPDataType[] = [
      parms: [{ parm_name: "case", parm_type: "choose", data_type: "string",  description: "Change case", label: "Translate Case", choose: ["none", "upper", "lower"], parm_default: "none"},
              { parm_name: "encode", parm_type: "choose", data_type: "string",description: "Encoding option", label: "Encode as", choose: ["category", "one-hot"], parm_default: "category"}]},
    { datatype_name : "text",    short_name : "text",    description : "Multiple delimited string values",
-     parms: [{ parm_name: "dlm", parm_type: "choose", data_type: "integer",   description: "Bucket numbers", label: "Delimiter", choose: ["comma", "space", "pipe", "tab"], parm_default: "tab"},
+     parms: [{ parm_name: "dlm", parm_type: "choose", data_type: "integer",   description: "Bucket numbers", label: "Delimiter", choose: ["tab", "comma", "space", "pipe"], parm_default: "tab"},
              { parm_name: "case", parm_type: "choose", data_type: "string",  description: "Change case", label: "Change Case to", choose: ["none", "upper", "lower"], parm_default: "none"}]}
 ];
 algorithms     : RPAlgorithmDef[] = [
@@ -51,7 +51,7 @@ algorithms     : RPAlgorithmDef[] = [
      parms: [ {parm_name: "iterations", parm_type: "range", data_type: "integer", description: "Number of iterations", 
                min:2,max:9999,parm_default: "100"},
               {parm_name: "regularization", parm_type: "choose", data_type: "string", description: "Regularization method", 
-               choose: ["L1", "L2", "ElasticNet"], parm_default: "L2"}
+               choose: ["L2", "L1", "ElasticNet"], parm_default: "L2"}
             ]
    },
    { name: "Logistic Regression", short_name: "lr", description: "Logistic regression", alg_class: "classifier",
