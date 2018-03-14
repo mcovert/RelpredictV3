@@ -46,7 +46,6 @@ export class ModelCreateComponent implements OnInit {
     console.log(this.model);
   }
   getParms(dt: string) : RPDataType {
-    console.log("Looking for data type " + dt);
     for (var dtype of this.dataTypes) {
       if (dtype.datatype_name == dt)
          return dtype;
@@ -54,7 +53,6 @@ export class ModelCreateComponent implements OnInit {
     return this.dataTypes[0];
   }
   getAlg(algname: string) : RPAlgorithmDef {
-    console.log("Looking for algorithm " + alg);
     for (var alg of this.algDefs) {
       if (alg.name == algname)
          return alg;
@@ -62,7 +60,6 @@ export class ModelCreateComponent implements OnInit {
     return this.algDefs[0];
   }
   setupStorage(plist: RPParameterDef[]) {
-    console.log(plist);
     this.parm_storage = [];
     for (var p of plist) {
       this.parm_storage.push({ parm_name: p.parm_name, parm_value: p.parm_default, parm_type: p.data_type});
@@ -80,11 +77,28 @@ export class ModelCreateComponent implements OnInit {
     console.log("Deleting feature");
     this.model.features.splice(i, 1);
   }
+  makeAlgorithm(algd: RPAlgorithmDef) : RPTargetAlgorithm {
+    var ta = new RPTargetAlgorithm();
+    ta.short_name = algd.short_name;
+    ta.description = algd.description;
+    ta.parms = [];
+    for (var p of algd.parms) {
+      var ap = new RPParameter();
+      ap.parm_name = p.parm_name;
+      ap.parm_value = p.parm_default;
+      ap.parm_type = p.data_type;
+      ta.parms.push(ap);
+    }
+    return ta;
+  }
+  addAlgorithm(i: index) {
+    this.model.targets[i].algorithms.push(this.makeAlgorithm(this.algDefs[0]));
+  }
   addTarget() {
     console.log("Adding new feature");
     var target = new RPTarget();
     target.algorithms = [];
-    target.algorithms.push();
+    target.algorithms.push(this.makeAlgorithm(this.algDefs[0]));
     target.parms = [];
     target.type = this.dataTypes[0].datatype_name;
     this.model.targets.push(target);
@@ -95,7 +109,6 @@ export class ModelCreateComponent implements OnInit {
     this.model.targets.splice(i, 1);
   }
   changeFeatureDataType(dt: string, i: number) {
-    console.log("setting feature " + i + " to " + dt);
     this.model.features[i].type = dt;
   }
   changeTargetDataType(dt: string, i: number) {
@@ -119,8 +132,20 @@ export class ModelCreateComponent implements OnInit {
     this.curr_index = i;
     this.showParm = true;
   }
-  showAlgEditor() {
+  getParmString(plist: RPParameter[]) : string {
+    var pret = "";
+    for (var p of plist)
+      pret = pret + p.parm_name + "=" + p.parm_value + "; ";
+    return pret;
+  }
+  getAlgString(ta: RPTargetAlgorithm) : string {
+    return "alg=" + ta.short_name+ "; " + this.getParmString(ta.parms);
+  }
+  showAlgEditor(i: number, j: number) {
+    this.curr_index = i;
     this.content = this.algDefs[0].parms;
+    //if (this.model.targets[i].algorithms[j].length > 0)
+    this.setupStorage(this.content);
     this.showAlg = true;
   }
   saveModel() {
@@ -137,17 +162,15 @@ export class ModelCreateComponent implements OnInit {
   saveParmDialog() {
     if (this.curr_type == 'feature') this.model.features[this.curr_index].parms = this.parm_storage;
     else if (this.curr_type == 'target') this.model.targets[this.curr_index].parms = this.parm_storage;
-    console.log(this.parm_storage);
     this.showParm = false; 
   }
   cancelParmDialog() {
-    console.log(this.parm_storage);
     this.showParm = false;
   }
   resetParmDialog() {
-    console.log(this.parm_storage);
   }
   saveAlgDialog() {
+    this.model.targets[this.curr_index].parms = this.parm_storage;
     this.showAlg  = false;   
   }
   cancelAlgDialog() {
@@ -156,7 +179,6 @@ export class ModelCreateComponent implements OnInit {
   resetAlgDialog() {
   }
   trackByIndex(index: number, value: number) {
-    console.log(index);
     return index;
   }
 }
