@@ -274,7 +274,7 @@
 <app-modal-dialog [(visible)]="showAlg">
   <form #algform="ngForm">
       <h3 class="bg-info text-center">Algorithms</h3>
-      <select class="form-control"  (change)="changeAlgorithm($event.target.value)"> 
+      <select class="form-control"  (change)="changeAlgorithm($event.target.value)" > 
            <option *ngFor="let ad of algDefs" value="{{ad.name}}">{{ad.name}}</option>
       </select>
       <div class="table-responsive pt-1">
@@ -293,10 +293,10 @@
                            </select>
                        </div>
                        <div *ngIf="c.parm_type=='value'">
-                           <input class="form-control"  type="text" [value]="c.parm_default" [(ngModel)]="parm_storage[index].parm_value" name=val{{index}}>
+                           <input class="form-control"  type="text" [value]="parm_storage[index].parm_value" [(ngModel)]="parm_storage[index].parm_value" name=val{{index}}>
                        </div>
                        <div *ngIf="c.parm_type=='range'">
-                           <input class="form-control"  type="text" [value]="c.parm_default"  [(ngModel)]="parm_storage[index].parm_value" name=val{{index}}>
+                           <input class="form-control"  type="text" [value]="parm_storage[index].parm_value"  [(ngModel)]="parm_storage[index].parm_value" name=val{{index}}>
                        </div>
                    </td>
                </tr>

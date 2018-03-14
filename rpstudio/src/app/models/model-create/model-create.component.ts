@@ -22,8 +22,10 @@ export class ModelCreateComponent implements OnInit {
   content      : RPParameterDef[];
   f_or_t       : string;
   curr_index   : number;
+  curr_index2  : number;
   curr_type    : string;
   parm_storage : RPParameter[];
+  curr_alg     : RPAlgorithmDef;
 
   constructor(private modelService : ModelService, private router: Router /* , private modalService: ModalService*/) { 
   }
@@ -55,6 +57,13 @@ export class ModelCreateComponent implements OnInit {
   getAlg(algname: string) : RPAlgorithmDef {
     for (var alg of this.algDefs) {
       if (alg.name == algname)
+         return alg;
+    }
+    return this.algDefs[0];
+  }
+  getAlgByShortName(algname: string) : RPAlgorithmDef {
+    for (var alg of this.algDefs) {
+      if (alg.short_name == algname)
          return alg;
     }
     return this.algDefs[0];
@@ -115,7 +124,12 @@ export class ModelCreateComponent implements OnInit {
     this.model.targets[i].type = dt;
   }
   changeAlgorithm(alg: string) {
-    this.content = this.getAlg(alg).parms;
+    console.log(alg);
+    this.curr_alg = this.getAlg(alg);
+    console.log("Looking for long name " + alg + " and found:");   
+    console.log(this.curr_alg);
+    this.content = this.curr_alg.parms;
+    this.setupStorage(this.content);
   }
   showParmEditor(dt : string, f_or_t: string, i: number) {
     this.content = this.getParms(dt).parms;
@@ -142,9 +156,13 @@ export class ModelCreateComponent implements OnInit {
     return "alg=" + ta.short_name+ "; " + this.getParmString(ta.parms);
   }
   showAlgEditor(i: number, j: number) {
-    this.curr_index = i;
-    this.content = this.algDefs[0].parms;
-    //if (this.model.targets[i].algorithms[j].length > 0)
+    this.curr_index  = i;
+    this.curr_index2 = j;
+    this.parm_storage = this.model.targets[i].algorithms[j].parms;
+    this.curr_alg = this.getAlgByShortName(this.model.targets[i].algorithms[j].short_name);
+    console.log("Looking for short name " + this.model.targets[i].algorithms[j].short_name + " and found:");   
+    console.log(this.curr_alg);
+    this.content = this.curr_alg.parms;
     this.setupStorage(this.content);
     this.showAlg = true;
   }
@@ -170,8 +188,10 @@ export class ModelCreateComponent implements OnInit {
   resetParmDialog() {
   }
   saveAlgDialog() {
-    this.model.targets[this.curr_index].parms = this.parm_storage;
-    this.showAlg  = false;   
+   this.model.targets[this.curr_index].algorithms[this.curr_index2].parms = this.parm_storage;
+   console.log(this.curr_alg);
+   this.model.targets[this.curr_index].algorithms[this.curr_index2].short_name = this.curr_alg.short_name;
+   this.showAlg  = false;   
   }
   cancelAlgDialog() {
     this.showAlg  = false;   
