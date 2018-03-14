@@ -26,6 +26,8 @@ export class ModelCreateComponent implements OnInit {
   curr_type    : string;
   parm_storage : RPParameter[];
   curr_alg     : RPAlgorithmDef;
+  curr_alg_name : string;
+  alg          : RPTargetAlgorithm;
 
   constructor(private modelService : ModelService, private router: Router /* , private modalService: ModalService*/) { 
   }
@@ -45,6 +47,8 @@ export class ModelCreateComponent implements OnInit {
     this.model.notes = [];
     this.addFeature();
     this.addTarget();
+    this.alg = this.model.targets[0].algorithms[0];
+    console.log(this.alg);
     console.log(this.model);
   }
   getParms(dt: string) : RPDataType {
@@ -71,7 +75,8 @@ export class ModelCreateComponent implements OnInit {
   setupStorage(plist: RPParameterDef[]) {
     this.parm_storage = [];
     for (var p of plist) {
-      this.parm_storage.push({ parm_name: p.parm_name, parm_value: p.parm_default, parm_type: p.data_type});
+      var parm = new RPParameter(p.parm_name, p.parm_default, p.data_type);
+      this.parm_storage.push(parm);
     }
   }
   addFeature() {
@@ -92,22 +97,19 @@ export class ModelCreateComponent implements OnInit {
     ta.description = algd.description;
     ta.parms = [];
     for (var p of algd.parms) {
-      var ap = new RPParameter();
-      ap.parm_name = p.parm_name;
-      ap.parm_value = p.parm_default;
-      ap.parm_type = p.data_type;
+      var ap = new RPParameter(p.parm_name, p.parm_default, p.data_type);
       ta.parms.push(ap);
     }
     return ta;
   }
-  addAlgorithm(i: index) {
-    this.model.targets[i].algorithms.push(this.makeAlgorithm(this.algDefs[0]));
+  addAlgorithm(i: number) {
+    this.model.targets[i].algorithms.push(this.modelService.createTargetAlgorithm(this.modelService.getDefaultAlgorithmDef()));
   }
   addTarget() {
     console.log("Adding new feature");
     var target = new RPTarget();
     target.algorithms = [];
-    target.algorithms.push(this.makeAlgorithm(this.algDefs[0]));
+    target.algorithms.push(this.modelService.createTargetAlgorithm(this.modelService.getDefaultAlgorithmDef()));
     target.parms = [];
     target.type = this.dataTypes[0].datatype_name;
     this.model.targets.push(target);
@@ -152,20 +154,6 @@ export class ModelCreateComponent implements OnInit {
       pret = pret + p.parm_name + "=" + p.parm_value + "; ";
     return pret;
   }
-  getAlgString(ta: RPTargetAlgorithm) : string {
-    return "alg=" + ta.short_name+ "; " + this.getParmString(ta.parms);
-  }
-  showAlgEditor(i: number, j: number) {
-    this.curr_index  = i;
-    this.curr_index2 = j;
-    this.parm_storage = this.model.targets[i].algorithms[j].parms;
-    this.curr_alg = this.getAlgByShortName(this.model.targets[i].algorithms[j].short_name);
-    console.log("Looking for short name " + this.model.targets[i].algorithms[j].short_name + " and found:");   
-    console.log(this.curr_alg);
-    this.content = this.curr_alg.parms;
-    this.setupStorage(this.content);
-    this.showAlg = true;
-  }
   saveModel() {
   	console.log("Model saved");
   	console.log(this.model);
@@ -186,6 +174,32 @@ export class ModelCreateComponent implements OnInit {
     this.showParm = false;
   }
   resetParmDialog() {
+  }
+  getAlgString(ta: RPTargetAlgorithm) : string {
+    return "alg=" + ta.short_name+ "; " + this.getParmString(ta.parms);
+  }
+  showAlgEditor(i: number, j: number) {
+    this.curr_index  = i;
+    this.curr_index2 = j;
+    console.log("Target=" + i + " Alg=" + j);
+    this.alg = this.model.targets[i].algorithms[j];
+    console.log("Current algorithm is:")
+    console.log(this.alg);
+    console.log(this.model.targets[i].algorithms);
+    this.showAlg = true;
+  }
+  saveAlgorithm(alg: RPTargetAlgorithm) {
+    console.log("Saving algorithm:");
+    console.log("Target=" + this.curr_index + " Alg=" + this.curr_index2);
+    console.log(alg);
+    this.model.targets[this.curr_index].algorithms[this.curr_index2] = alg;
+    console.log(this.model.targets[this.curr_index].algorithms);
+    this.showAlg=false;
+  }
+  cancelAlgorithm() {
+    this.showAlg=false;
+    //if (!confirm("You will loose any changes if you reply YES")) 
+    //  this.showAlg=true;
   }
   saveAlgDialog() {
    this.model.targets[this.curr_index].algorithms[this.curr_index2].parms = this.parm_storage;

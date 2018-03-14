@@ -23,6 +23,15 @@ export class RPParameter {
   parm_name   : string;
   parm_value  : string;
   parm_type   : string;
+  constructor(_name: string, _val: string, _type: string) {
+    this.parm_name = _name;
+    this.parm_value = _val;
+    this.parm_type = _type;
+  }
+  clone() {
+     var p2 = new RPParameter(this.parm_name, this.parm_value, this.parm_type);
+     return p2;
+  }
 }
 /*
  *   Database model definition classes
@@ -39,9 +48,20 @@ export class RPFeature {
   parms        : RPParameter[];
 }
 export class RPTargetAlgorithm {
+  name        : string;
   short_name  : string;
   description : string;
   parms       : RPParameter[];
+  clone() {
+    var ta2 = new RPTargetAlgorithm();
+    ta2.name        = this.name;
+    ta2.short_name  = this.short_name;
+    ta2.description = this.description;
+    ta2.parms       = [];
+    for (var p of this.parms)
+      ta2.parms.push(p.clone());
+    return ta2;
+  }
 }
 export class RPTarget {
   name : string;

@@ -120,4 +120,37 @@ httpOptions = {
        this.httpService.post('http://ai25:3000/api/models/' + model.id, JSON.stringify(model), this.httpOptions);
     }
   }
+
+  getDefaultAlgorithmDef() : RPAlgorithmDef {
+    return this.algorithms[0];
+  }
+  getAlgorithmDef(algname: string) : RPAlgorithmDef {
+    for (var alg of this.algorithms) {
+      if (alg.name == algname)
+         return alg;
+    }
+    return this.getDefaultAlgorithmDef();
+  }
+  getAlgorithmDefByShortName(algname: string) : RPAlgorithmDef {
+    for (var alg of this.algorithms) {
+      if (alg.short_name == algname)
+         return alg;
+    }
+    return this.getDefaultAlgorithmDef();
+  }
+  createTargetAlgorithm(algd: RPAlgorithmDef) : RPTargetAlgorithm {
+    var ta = new RPTargetAlgorithm();
+    ta.name        = algd.name;
+    ta.short_name  = algd.short_name;
+    ta.description = algd.description;
+    ta.parms       = [];
+    for (var p of algd.parms) {
+      var ap = new RPParameter(p.parm_name, p.parm_default, p.data_type);
+      ta.parms.push(ap);
+    }
+    console.log("CreateTargetAlgorithm:")
+    console.log(algd);
+    console.log(ta);
+    return ta;    
+  }
  }

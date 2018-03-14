@@ -46,6 +46,7 @@ import { TrainedmodelListComponent } from './trainedmodel-list/trainedmodel-list
 import { ModelClassPipe } from './models/model-class.pipe';
 import { HelpComponent } from './help/help.component';
 import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
+import { AlgEditorComponent } from './models/alg-editor/alg-editor.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
     TrainedmodelListComponent,
     ModelClassPipe,
     HelpComponent,
-    ModalDialogComponent
+    ModalDialogComponent,
+    AlgEditorComponent
   ],
   imports: [
     BrowserModule,
