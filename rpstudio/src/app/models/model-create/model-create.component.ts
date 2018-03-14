@@ -17,17 +17,15 @@ export class ModelCreateComponent implements OnInit {
   modelClasses : RPModelClass[];
   dataTypes    : RPDataType[];
   algDefs      : RPAlgorithmDef[];
+  alg          : RPTargetAlgorithm;
   showParm     : boolean = false;
   showAlg      : boolean = false;
-  content      : RPParameterDef[];
+  parmDefs     : RPParameterDef[];
+  parms        : RPParameter[];
   f_or_t       : string;
   curr_index   : number;
   curr_index2  : number;
   curr_type    : string;
-  parm_storage : RPParameter[];
-  curr_alg     : RPAlgorithmDef;
-  curr_alg_name : string;
-  alg          : RPTargetAlgorithm;
 
   constructor(private modelService : ModelService, private router: Router /* , private modalService: ModalService*/) { 
   }
@@ -37,9 +35,7 @@ export class ModelCreateComponent implements OnInit {
         this.modelClasses = resultArray as RPModelClass[];
     });
     this.dataTypes = this.modelService.getDataTypes();
-    console.log(this.dataTypes);
     this.algDefs = this.modelService.getAlgorithmDefs();
-    console.log(this.algDefs);
     this.model = new RPModel();
     this.model.version = 1;
     this.model.features = [];
@@ -48,10 +44,11 @@ export class ModelCreateComponent implements OnInit {
     this.addFeature();
     this.addTarget();
     this.alg = this.model.targets[0].algorithms[0];
-    console.log(this.alg);
-    console.log(this.model);
+    this.parmDefs = this.dataTypes[0].parms;
+    this.parms = this.createParms(this.parmDefs);
   }
   getParms(dt: string) : RPDataType {
+    console.log(this.dataTypes);
     for (var dtype of this.dataTypes) {
       if (dtype.datatype_name == dt)
          return dtype;
@@ -72,12 +69,13 @@ export class ModelCreateComponent implements OnInit {
     }
     return this.algDefs[0];
   }
-  setupStorage(plist: RPParameterDef[]) {
-    this.parm_storage = [];
+  createParms(plist: RPParameterDef[]) {
+    var ps = [];
     for (var p of plist) {
-      var parm = new RPParameter(p.parm_name, p.parm_default, p.data_type);
-      this.parm_storage.push(parm);
-    }
+      var pp = new RPParameter(p.parm_name, p.parm_default, p.data_type);
+      ps.push(pp);
+    }    
+    return ps;
   }
   addFeature() {
     console.log("Adding new feature");
@@ -91,22 +89,13 @@ export class ModelCreateComponent implements OnInit {
     console.log("Deleting feature");
     this.model.features.splice(i, 1);
   }
-  makeAlgorithm(algd: RPAlgorithmDef) : RPTargetAlgorithm {
-    var ta = new RPTargetAlgorithm();
-    ta.short_name = algd.short_name;
-    ta.description = algd.description;
-    ta.parms = [];
-    for (var p of algd.parms) {
-      var ap = new RPParameter(p.parm_name, p.parm_default, p.data_type);
-      ta.parms.push(ap);
-    }
-    return ta;
-  }
   addAlgorithm(i: number) {
     this.model.targets[i].algorithms.push(this.modelService.createTargetAlgorithm(this.modelService.getDefaultAlgorithmDef()));
   }
+  deleteAlgorithm(i: number, j: number) {
+    this.model.targets[i].algorithms.splice(j, 1);
+  }
   addTarget() {
-    console.log("Adding new feature");
     var target = new RPTarget();
     target.algorithms = [];
     target.algorithms.push(this.modelService.createTargetAlgorithm(this.modelService.getDefaultAlgorithmDef()));
@@ -116,7 +105,6 @@ export class ModelCreateComponent implements OnInit {
     console.log(this.model);
   }
   deleteTarget(i : number) {
-    console.log("Deleting target");
     this.model.targets.splice(i, 1);
   }
   changeFeatureDataType(dt: string, i: number) {
@@ -125,25 +113,20 @@ export class ModelCreateComponent implements OnInit {
   changeTargetDataType(dt: string, i: number) {
     this.model.targets[i].type = dt;
   }
-  changeAlgorithm(alg: string) {
-    console.log(alg);
-    this.curr_alg = this.getAlg(alg);
-    console.log("Looking for long name " + alg + " and found:");   
-    console.log(this.curr_alg);
-    this.content = this.curr_alg.parms;
-    this.setupStorage(this.content);
-  }
   showParmEditor(dt : string, f_or_t: string, i: number) {
-    this.content = this.getParms(dt).parms;
+    console.log("Finding parms for " + dt);
+    this.parmDefs = this.getParms(dt).parms;
     if (f_or_t == 'feature' && this.model.features[i].parms.length > 0) {
-        this.parm_storage = this.model.features[i].parms;
+        this.parms = this.model.features[i].parms;
     }
-    else if (f_or_t == 'target' && this.model.targets[i].parms.length > 0) 
-        this.parm_storage = this.model.targets[i].parms;
+    else if (f_or_t == 'target' && this.model.targets[i].parms.length > 0) {
+      this.parms = this.model.targets[i].parms;
+    }
     else {
-        this.setupStorage(this.content);
+      this.parms = this.createParms(this.parmDefs);
     }
-    console.log(this.parm_storage);
+    console.log(this.parmDefs);
+    console.log(this.parms);
     this.curr_type = f_or_t;
     this.curr_index = i;
     this.showParm = true;
@@ -165,15 +148,13 @@ export class ModelCreateComponent implements OnInit {
        this.router.navigate(['models']);      
     }
   }
-  saveParmDialog() {
-    if (this.curr_type == 'feature') this.model.features[this.curr_index].parms = this.parm_storage;
-    else if (this.curr_type == 'target') this.model.targets[this.curr_index].parms = this.parm_storage;
+  saveParms(plist : RPParameters[]) {
+    if (this.curr_type == 'feature') this.model.features[this.curr_index].parms = plist;
+    else if (this.curr_type == 'target') this.model.targets[this.curr_index].parms = this.plist;
     this.showParm = false; 
   }
-  cancelParmDialog() {
+  cancelParms() {
     this.showParm = false;
-  }
-  resetParmDialog() {
   }
   getAlgString(ta: RPTargetAlgorithm) : string {
     return "alg=" + ta.short_name+ "; " + this.getParmString(ta.parms);
@@ -181,11 +162,7 @@ export class ModelCreateComponent implements OnInit {
   showAlgEditor(i: number, j: number) {
     this.curr_index  = i;
     this.curr_index2 = j;
-    console.log("Target=" + i + " Alg=" + j);
     this.alg = this.model.targets[i].algorithms[j];
-    console.log("Current algorithm is:")
-    console.log(this.alg);
-    console.log(this.model.targets[i].algorithms);
     this.showAlg = true;
   }
   saveAlgorithm(alg: RPTargetAlgorithm) {
@@ -200,17 +177,6 @@ export class ModelCreateComponent implements OnInit {
     this.showAlg=false;
     //if (!confirm("You will loose any changes if you reply YES")) 
     //  this.showAlg=true;
-  }
-  saveAlgDialog() {
-   this.model.targets[this.curr_index].algorithms[this.curr_index2].parms = this.parm_storage;
-   console.log(this.curr_alg);
-   this.model.targets[this.curr_index].algorithms[this.curr_index2].short_name = this.curr_alg.short_name;
-   this.showAlg  = false;   
-  }
-  cancelAlgDialog() {
-    this.showAlg  = false;   
-  }
-  resetAlgDialog() {
   }
   trackByIndex(index: number, value: number) {
     return index;

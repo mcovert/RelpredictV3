@@ -47,6 +47,7 @@ import { ModelClassPipe } from './models/model-class.pipe';
 import { HelpComponent } from './help/help.component';
 import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
 import { AlgEditorComponent } from './models/alg-editor/alg-editor.component';
+import { ParmEditorComponent } from './parm-editor/parm-editor.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { AlgEditorComponent } from './models/alg-editor/alg-editor.component';
     ModelClassPipe,
     HelpComponent,
     ModalDialogComponent,
-    AlgEditorComponent
+    AlgEditorComponent,
+    ParmEditorComponent
   ],
   imports: [
     BrowserModule,

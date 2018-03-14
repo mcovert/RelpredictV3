@@ -130,16 +130,11 @@
                <th class="text-center">Type</th>
                <th class="text-center">Description</th>
                <th class="text-center">Parameters</th>
-               <!--th class="text-center">Parameter Editor</th-->
                <th class="text-center">Algorithms</th>
-               <!--th class="text-center">Add Algorithm</th-->
                <th class="text-center">Delete</th>
           </thead>
           <tbody>
             <tr *ngFor="let t of model.targets; let i = index; trackBy:trackByIndex">
-               <!--td class="text-center">
-                 <input type="checkbox" [(ngModel)]="model.features[index].isTarget" name=isTraget{{index}} ngModel>
-               </td-->
                <td >
                  <input class="form-control" type="text" [(ngModel)]="t.name" name=name{{i}} ngModel>
                </td>
@@ -169,16 +164,23 @@
                   <div *ngFor="let ad of t.algorithms; let j = index; trackBy:trackByIndex">
                   <div class="row col-12">
                   <div class="input-group">
-                    <input class="col-8" type="text" name=parms{{i}}{{j}} style="height:38px" readonly [value]="getAlgString(t.algorithms[j])">
-                    <span class="input-group-btn col-2">
-                    <p data-placement="top" data-toggle="tooltip" title="Show Parameter Editor">
+                    <input class="col-6" type="text" name=parms{{i}}{{j}} style="height:38px" readonly [value]="getAlgString(t.algorithms[j])">
+                    <span class="input-group-btn col-2 plr-0">
+                    <p data-placement="top" data-toggle="tooltip" title="Show algorithm editor">
                        <button class="btn btn-info btn-xs center-block" (click)="showAlgEditor(i, j)">
                         <span class="fa fa-bars"></span>
                       </button>
                     </p>
                     </span>
-                    <span *ngIf="j==0" class="input-group-btn col-2">
-                    <p data-placement="top" data-toggle="tooltip" title="Show Parameter Editor">
+                    <span class="input-group-btn col-2 plr-0">
+                    <p data-placement="top" data-toggle="tooltip" title="Remove algorithm">
+                       <button class="btn btn-danger btn-xs center-block" (click)="deleteAlgorithm(i, j)">
+                        <span class="fa fa-minus"></span>
+                      </button>
+                    </p>
+                    </span>
+                    <span *ngIf="j==0" class="input-group-btn col-2 plr-0">
+                    <p data-placement="top" data-toggle="tooltip" title="Add new algorithm">
                        <button class="btn btn-info btn-xs center-block" (click)="addAlgorithm(i)">
                         <span class="fa fa-plus"></span>
                       </button>
@@ -188,12 +190,6 @@
                 </div>
                 </div>
               </td> 
-              <!--td class="text-center">
-                    <p data-placement="top" data-toggle="tooltip" title="Add Algorithm">
-                        <button class="btn btn-info btn-xs center-block" (click)="showAlgEditor(index)">
-                        <span class="fa fa-plus"></span>
-                    </button></p>
-              </td-->
               <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Delete Target">
                         <button class="btn btn-danger btn-xs center-block" data-title="Delete" data-toggle="modal" data-target="#delete" (click)="deleteTarget(i)">
@@ -222,106 +218,8 @@
   </wizard-step>
 </wizard>
 <app-modal-dialog [(visible)]="showParm">
-  <form #parmform="ngForm">
-      <h3 class="bg-info text-center">Enter Parameters</h3>
-      <div class="table-responsive">
-        <table id="mytable2" class="table table-bordered table-striped sortable table-sm">
-          <thead>
-               <th class="text-center">Parameter Name</th>
-               <th class="text-center">Parameter Value</th>
-          </thead>
-          <tbody>
-               <tr *ngFor="let c of content; let index=index;">
-                   <td>{{c.label}}</td>
-                   <td>
-                       <div *ngIf="c.parm_type=='choose'">
-                           <select class="form-control text-center" [(ngModel)]="parm_storage[index].parm_value" name=val{{index}}> 
-                               <option *ngFor="let v of c.choose">{{v}}</option>
-                           </select>
-                       </div>
-                       <div *ngIf="c.parm_type=='value'">
-                           <input class="form-control"  type="text" [value]="c.parm_default"  [(ngModel)]="parm_storage[index].parm_value" name=val{{index}}>
-                       </div>
-                       <div *ngIf="c.parm_type=='range'">
-                           <input class="form-control"  type="text" [value]="c.parm_default"  [(ngModel)]="parm_storage[index].parm_value" name=val{{index}}>
-                       </div>
-                   </td>
-               </tr>
-          </tbody>
-        </table>
-      </div>
-  </form>
-   <div class="row p-1">
-         <div class="col-5 pt-3"></div>
-         <p data-placement="top" data-toggle="tooltip" title="Discard Changes">
-          <button class="btn btn-danger btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#cancel" (click)="cancelParmDialog()">
-                  <span class="fa fa-ban"></span>
-          </button>
-         </p>
-         <p data-placement="top" data-toggle="tooltip" title="Save Changes">
-          <button class="btn btn-info btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#save" (click)="saveParmDialog()">
-                  <span class="fa fa-floppy-o"></span>
-          </button>
-         </p>
-         <p data-placement="top" data-toggle="tooltip" title="Reset to defaults">
-          <button class="btn btn-danger btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#reset" (click)="resetParmDialog()">
-                  <span class="fa fa-refresh"></span>
-          </button>
-         </p>
-         <div class="col-4"></div>
-   </div>
+    <app-parm-editor [parms]="parms" [parmDefs]="parmDefs" (saveParms)="saveParms($event)" (cancelParms)="cancelParms()"></app-parm-editor>
 </app-modal-dialog>
 <app-modal-dialog [(visible)]="showAlg">
   <app-alg-editor [alg]="alg" (saveAlgorithm)="saveAlgorithm($event)" (cancelAlgorithm)="cancelAlgorithm()"></app-alg-editor>
-  <!--form #algform="ngForm">
-      <h3 class="bg-info text-center">Algorithms</h3>
-      <select class="form-control"  [(ngModel)]="curr_alg_name" (change)="changeAlgorithm($event.target.value)" > 
-           <option *ngFor="let ad of algDefs" value="{{ad.name}}">{{ad.name}}</option>
-      </select>
-      <div class="table-responsive pt-1">
-        <table id="mytable2" class="table table-bordered table-striped sortable table-sm">
-          <thead>
-               <th class="text-center">Parameter Name</th>
-               <th class="text-center">Parameter Value</th>
-          </thead>
-          <tbody>
-               <tr *ngFor="let c of content; let index=index;">
-                   <td>{{c.parm_name}}</td>
-                   <td>
-                       <div *ngIf="c.parm_type=='choose'">
-                           <select class="form-control text-center" [(ngModel)]="parm_storage[index].parm_value" name=val{{index}}> 
-                               <option *ngFor="let v of c.choose" value="{{v}}" [selected]="parm_storage[index].parm_value==v">{{v}}</option>
-                           </select>
-                       </div>
-                       <div *ngIf="c.parm_type=='value'">
-                           <input class="form-control"  type="text" [value]="c.parm_default" [(ngModel)]="parm_storage[index].parm_value" name=val{{index}}>
-                       </div>
-                       <div *ngIf="c.parm_type=='range'">
-                           <input class="form-control"  type="text" [value]="c.parm_default"  [(ngModel)]="parm_storage[index].parm_value" name=val{{index}}>
-                       </div>
-                   </td>
-               </tr>
-          </tbody>
-        </table>
-      </div>
-  </form>
-   <div class="row p-1">
-         <div class="col-5 pt-3"></div>
-         <p data-placement="top" data-toggle="tooltip" title="Discard Changes">
-          <button class="btn btn-danger btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#cancel" (click)="cancelAlgDialog()">
-                  <span class="fa fa-ban"></span>
-          </button>
-         </p>
-         <p data-placement="top" data-toggle="tooltip" title="Save Changes">
-          <button class="btn btn-info btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#save" (click)="saveAlgDialog()">
-                  <span class="fa fa-floppy-o"></span>
-          </button>
-         </p>
-         <p data-placement="top" data-toggle="tooltip" title="Reset to defaults">
-          <button class="btn btn-danger btn-xs center-block" data-title="Cancel" data-toggle="modal" data-target="#reset" (click)="resetAlgDialog()">
-                  <span class="fa fa-refresh"></span>
-          </button>
-         </p>
-         <div class="col-4"></div>
-   </div-->
 </app-modal-dialog>

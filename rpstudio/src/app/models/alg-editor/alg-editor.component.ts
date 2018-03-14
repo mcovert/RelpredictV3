@@ -25,9 +25,6 @@ export class AlgEditorComponent implements OnInit {
 
   ngOnInit() {
   	this.reset();
-  	console.log("AE init");
-    console.log(this.curr_algdef);
-    console.log(this.newalg);
   }
 
   ngOnChanges() {
@@ -35,8 +32,6 @@ export class AlgEditorComponent implements OnInit {
   }
 
   save() {
-  	console.log("AE save:");
-  	console.log(this.newalg);
   	this.saveAlgorithm.emit(this.newalg);
   }
 
@@ -48,9 +43,6 @@ export class AlgEditorComponent implements OnInit {
   	this.newalg = this.alg.clone();
     this.curr_algdef = this.modelService.getAlgorithmDef(this.newalg.name);
     this.algname = this.newalg.name;
-  	console.log("AE reset");
-    console.log(this.curr_algdef);
-    console.log(this.newalg);
   }
 
   setAlgorithmDef(algName : string) {
@@ -60,9 +52,6 @@ export class AlgEditorComponent implements OnInit {
     	this.curr_algdef = this.modelService.getAlgorithmDef(algName);
     	this.newalg = this.modelService.createTargetAlgorithm(this.curr_algdef); 
     }
-  	console.log("AE set");
-    console.log(this.curr_algdef);
-    console.log(this.newalg);
   }
 
 }
