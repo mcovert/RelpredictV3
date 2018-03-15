@@ -134,7 +134,7 @@ export class ModelCreateComponent implements OnInit {
   getParmString(plist: RPParameter[]) : string {
     var pret = "";
     for (var p of plist)
-      pret = pret + p.parm_name + "=" + p.parm_value + "; ";
+      pret = pret + p.parm_name + "=" + p.parm_value + "\n ";
     return pret;
   }
   saveModel() {
@@ -148,16 +148,16 @@ export class ModelCreateComponent implements OnInit {
        this.router.navigate(['models']);      
     }
   }
-  saveParms(plist : RPParameters[]) {
+  saveParms(plist : RPParameter[]) {
     if (this.curr_type == 'feature') this.model.features[this.curr_index].parms = plist;
-    else if (this.curr_type == 'target') this.model.targets[this.curr_index].parms = this.plist;
+    else if (this.curr_type == 'target') this.model.targets[this.curr_index].parms = plist;
     this.showParm = false; 
   }
   cancelParms() {
     this.showParm = false;
   }
   getAlgString(ta: RPTargetAlgorithm) : string {
-    return "alg=" + ta.short_name+ "; " + this.getParmString(ta.parms);
+    return "alg=" + ta.short_name+ "\n" + this.getParmString(ta.parms);
   }
   showAlgEditor(i: number, j: number) {
     this.curr_index  = i;

@@ -12,7 +12,7 @@
                    <td>
                        <div *ngIf="pd.parm_type=='choose'">
                            <select class="form-control text-center" [(ngModel)]="newparms.parm_value" name=val{{i}}> 
-                               <option *ngFor="let v of pd.choose">{{v}}</option>
+                               <option *ngFor="let v of pd.choose" [selected]="newparms.parm_value==v">{{v}}</option>
                            </select>
                        </div>
                        <div *ngIf="pd.parm_type=='value'">
