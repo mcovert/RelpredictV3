@@ -13,6 +13,7 @@ import { DataService} from './services/data.service';
 import { JobService} from './services/job.service';
 import { ModelService} from './services/model.service';
 import { AdminService} from './services/admin.service';
+import { OnlyLoggedInGuard } from './guards/only-logged-in.guard';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -93,7 +94,7 @@ import { ParmEditorComponent } from './parm-editor/parm-editor.component';
   exports: [
     RouterModule
   ],
-  providers: [ AuthService, DataService, JobService, ModelService, AdminService ],
+  providers: [ AuthService, DataService, JobService, ModelService, AdminService, OnlyLoggedInGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

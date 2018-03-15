@@ -18,8 +18,10 @@
         <th class="text-center">Created</th>
         <th class="text-center">Size</th>
         <th class="text-center">Status</th>
+        <th class="text-center">Display</th>
+        <th class="text-center">Hold</th>
+        <th class="text-center">Release</th>
         <th class="text-center">Delete</th>
-        <th class="text-center">Action</th>
      </thead>
      <tbody>
        <tr *ngFor="let batch of batches">
@@ -29,24 +31,34 @@
           <td class="text-center">{{batch.create_date}}</td>
           <td class="text-center">{{batch.size}}</td>
           <td class="text-center">{{batch.status}}</td>
-          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs center-block" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
-          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Action">
-          	<button class="btn btn-success btn-xs center-block" data-title="Action" data-toggle="modal" data-target="#action" id="ddAction">
-          		<span class="fa fa-cog"></span> 
-          	</button> 
-          	<div class="dropdown-menu" aria-labeledby="ddAction" data-toggle="dropdown" aria-haspopup="true" aria-expandible="false">
-          		<a class="dropdown-item" href="#">Data files"</a>
-          		<a class="dropdown-item" href="#">Release"</a>
-          		<a class="dropdown-item" href="#">Hold"</a>
-          		<a class="dropdown-item" href="#">Reject"</a>
-          	</div>
-            <!--/p-->  
-         </td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Display data files">
+            <button class="btn btn-info btn-xs center-block" data-title="Show" data-toggle="modal" data-target="#display" (click)="showDatafilesForBatch(batch.batch_id)">  <span class="fa fa-eye"></span>
+             </button></p></td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Hold">
+            <button class="btn btn-warning btn-xs center-block" data-title="Hold" data-toggle="modal" data-target="#hold"  (click)="holdBatch(batch.batch_id)">
+              <span class="fa fa-hand-paper-o"></span>
+            </button></p></td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Release">
+            <button class="btn btn-success btn-xs center-block" data-title="Release" data-toggle="modal" data-target="#release" (click)="releaseBatch(batch.batch_id)">
+              <span class="fa fa-arrow-right"></span>
+            </button></p></td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Delete" (click)="deleteBatch(batch.batch_id)">
+            <button class="btn btn-danger btn-xs center-block" data-title="Delete" data-toggle="modal" data-target="#delete" >
+              <span class="fa fa-trash"></span>
+            </button></p></td>
       </tr>
      </tbody>
     </table>
    </div>
-   <h4 class="text-center pt-1 ">Data Files</h4>
+   <div class="row">
+      <div class="col-5"></div>
+      <h4 class="text-center col-2">Data Files</h4>
+      <p data-placement="top" data-toggle="tooltip" title="Display all data files">
+      <button class="btn btn-info btn-xs center-block" data-title="Show All" data-toggle="modal" data-target="#showall" (click)="showAllDatafiles()">  
+         <span class="fa fa-eye"></span>
+      </button></p>
+      <div class="col-4"></div>
+   </div>
    <div class="table-responsive">
     <table id="mytable" class="table table-bordred table-striped sortable table-sm">
      <thead>
@@ -59,7 +71,7 @@
         <th class="text-center">Delete</th>
      </thead>
      <tbody>
-       <tr *ngFor="let datafile of datafiles">
+       <tr *ngFor="let datafile of filteredDatafiles">
           <td>{{datafile.file_name}}</td>
           <td class="text-center">{{datafile.file_type}}</td>
           <td class="text-center">{{datafile.size}}</td>

@@ -11,12 +11,13 @@ import { Router } from "@angular/router";
 })
 export class DataComponent implements OnInit {
 
-  batches     : RPBatch[];
-  datafiles   : RPDatafile[];
-  datamaps    : RPDatamap[];
-  oBatch : Observable<RPBatch[]>;
-  oDF    : Observable<RPDatafile[]>;
-  oDM    : Observable<RPDatamap[]>;
+  batches           : RPBatch[];
+  datafiles         : RPDatafile[];
+  datamaps          : RPDatamap[];
+  oBatch            : Observable<RPBatch[]>;
+  oDF               : Observable<RPDatafile[]>;
+  oDM               : Observable<RPDatamap[]>;
+  filteredDatafiles : RPDataFile[];
 
   constructor(private dataservice : DataService, private router: Router) {
      this.oBatch = dataservice.getBatches();
@@ -27,18 +28,22 @@ export class DataComponent implements OnInit {
   ngOnInit() {
      this.oBatch.subscribe(resultArray => {
         this.batches = resultArray;
-        console.log('Batches:');
-        console.log(this.batches);
      });
      this.oDF.subscribe(resultArray => {
         this.datafiles = resultArray;
-        console.log('Datafiles:');
-        console.log(this.datafiles);
+        this.filteredDataFiles = this.datafiles;
      });
      this.oDM.subscribe(resultArray => {
         this.datamaps = resultArray;
-        console.log('Datamaps:');
-        console.log(this.datamaps);
      });
   }
+  showDatafilesForBatch(batch_id: string) {
+    this.filteredDatafiles = this.datafiles.filter(df => df.batch_id === batch_id);
+  }
+  showAllDatafiles() {
+    this.filteredDatafiles = this.datafiles;
+  }
+  releaseBatch(id: string) {}
+  holdBatch(id: string) {}
+  deleteBatch(id: string) {}
 }

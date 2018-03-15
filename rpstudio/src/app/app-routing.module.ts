@@ -12,20 +12,21 @@ import { DataComponent } from './data/data.component';
 import { AdminComponent } from './admin/admin.component';
 import { HelpComponent } from './help/help.component';
 import { LogBrowserComponent } from './log-browser/log-browser.component';
+import { OnlyLoggedInGuard } from './guards/only-logged-in.guard';
 
 const routes: Routes = [
  { path: '', component: HomeComponent },
  { path: 'home', component: HomeComponent },
- { path: 'profile', component: ProfileComponent },
- { path: 'model-create', component: ModelCreateComponent },
+ { path: 'profile', component: ProfileComponent, canActivate: [OnlyLoggedInGuard] },
+ { path: 'model-create', component: ModelCreateComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'about', component: AboutComponent },
- { path: 'log', component: LogBrowserComponent },
- { path: 'models', component: ModelsComponent },
- { path: 'models/:id', component: ModelComponent },
- { path: 'jobs', component: JobsComponent },
- { path: 'help', component: HelpComponent },
- { path: 'data', component: DataComponent },
- { path: 'admin', component: AdminComponent }
+ { path: 'log', component: LogBrowserComponent, canActivate: [OnlyLoggedInGuard] },
+ { path: 'models', component: ModelsComponent, canActivate: [OnlyLoggedInGuard] },
+ { path: 'models/:id', component: ModelComponent, canActivate: [OnlyLoggedInGuard] },
+ { path: 'jobs', component: JobsComponent, canActivate: [OnlyLoggedInGuard] },
+ { path: 'help', component: HelpComponent, canActivate: [OnlyLoggedInGuard] },
+ { path: 'data', component: DataComponent, canActivate: [OnlyLoggedInGuard] },
+ { path: 'admin', component: AdminComponent, canActivate: [OnlyLoggedInGuard] }
 ];
 
 @NgModule({
