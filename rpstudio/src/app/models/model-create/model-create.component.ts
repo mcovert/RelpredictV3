@@ -48,7 +48,6 @@ export class ModelCreateComponent implements OnInit {
     this.parms = this.createParms(this.parmDefs);
   }
   getParms(dt: string) : RPDataType {
-    console.log(this.dataTypes);
     for (var dtype of this.dataTypes) {
       if (dtype.datatype_name == dt)
          return dtype;
@@ -78,15 +77,12 @@ export class ModelCreateComponent implements OnInit {
     return ps;
   }
   addFeature() {
-    console.log("Adding new feature");
     var feature = new RPFeature();
     feature.parms = [];
     feature.type = this.dataTypes[0].datatype_name;
     this.model.features.push(feature);
-    console.log(this.model);
   }
   deleteFeature(i : number) {
-    console.log("Deleting feature");
     this.model.features.splice(i, 1);
   }
   addAlgorithm(i: number) {
@@ -102,19 +98,19 @@ export class ModelCreateComponent implements OnInit {
     target.parms = [];
     target.type = this.dataTypes[0].datatype_name;
     this.model.targets.push(target);
-    console.log(this.model);
   }
   deleteTarget(i : number) {
     this.model.targets.splice(i, 1);
   }
   changeFeatureDataType(dt: string, i: number) {
     this.model.features[i].type = dt;
+    this.model.features[i].parms = [];
   }
   changeTargetDataType(dt: string, i: number) {
     this.model.targets[i].type = dt;
+    this.model.targets[i].parms = [];
   }
   showParmEditor(dt : string, f_or_t: string, i: number) {
-    console.log("Finding parms for " + dt);
     this.parmDefs = this.getParms(dt).parms;
     if (f_or_t == 'feature' && this.model.features[i].parms.length > 0) {
         this.parms = this.model.features[i].parms;
@@ -125,8 +121,6 @@ export class ModelCreateComponent implements OnInit {
     else {
       this.parms = this.createParms(this.parmDefs);
     }
-    console.log(this.parmDefs);
-    console.log(this.parms);
     this.curr_type = f_or_t;
     this.curr_index = i;
     this.showParm = true;
@@ -134,7 +128,7 @@ export class ModelCreateComponent implements OnInit {
   getParmString(plist: RPParameter[]) : string {
     var pret = "";
     for (var p of plist)
-      pret = pret + p.parm_name + "=" + p.parm_value + "\n ";
+      pret = pret + p.parm_name + "=" + p.parm_value + "\n";
     return pret;
   }
   saveModel() {

@@ -81,7 +81,7 @@
                <td >
                   <div class="row col-12">
                   <div class="input-group">
-                    <input class="col-10" type="text" name="parms" style="height:38px" readonly [value]="getParmString(f.parms)">
+                    <textarea class="col-10" type="text" name="parms" style="height:50px" readonly [value]="getParmString(f.parms)"></textarea>
                     <span class="input-group-btn col-2">
                     <p data-placement="top" data-toggle="tooltip" title="Show Parameter Editor">
                        <button class="btn btn-info btn-xs center-block" (click)="showParmEditor(f.type, 'feature', index)">
@@ -149,7 +149,7 @@
                <td >
                   <div class="row col-12">
                   <div class="input-group">
-                    <input class="col-10" type="text" name="parms" style="height:38px" readonly [value]="getParmString(t.parms)">
+                    <textarea class="col-10" type="text" name="parms" style="height:50px" readonly [value]="getParmString(t.parms)"></textarea>
                     <span class="input-group-btn col-2">
                     <p data-placement="top" data-toggle="tooltip" title="Show Parameter Editor">
                        <button class="btn btn-info btn-xs center-block" (click)="showParmEditor(t.type, 'target', i)">
@@ -164,7 +164,7 @@
                   <div *ngFor="let ad of t.algorithms; let j = index; trackBy:trackByIndex">
                   <div class="row col-12">
                   <div class="input-group">
-                    <textarea class="col-6" type="text" name=parms{{i}}{{j}} readonly [value]="getAlgString(t.algorithms[j])"></textarea>
+                    <textarea class="col-6" type="text" name=parms{{i}}{{j}} style="height:50px"  readonly [value]="getAlgString(t.algorithms[j])"></textarea>
                     <span class="input-group-btn col-2 plr-0">
                     <p data-placement="top" data-toggle="tooltip" title="Show algorithm Editor">
                        <button class="btn btn-info btn-xs center-block" (click)="showAlgEditor(i, j)">

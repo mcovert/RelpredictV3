@@ -148,9 +148,6 @@ httpOptions = {
       var ap = new RPParameter(p.parm_name, p.parm_default, p.data_type);
       ta.parms.push(ap);
     }
-    console.log("CreateTargetAlgorithm:")
-    console.log(algd);
-    console.log(ta);
     return ta;    
   }
  }

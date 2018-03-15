@@ -19,14 +19,10 @@ export class ParmEditorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	console.log(this.parmDefs);
-  	console.log(this.parms);
   	this.reset();
   }
 
   ngOnChanges() {
-  	console.log(this.parmDefs);
-  	console.log(this.parms);
   	this.reset();
   }
 
@@ -44,5 +40,4 @@ export class ParmEditorComponent implements OnInit {
   		this.newparms.push(p.clone());
   	}
   }
-
 }

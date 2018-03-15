@@ -14,15 +14,15 @@
                    <td>{{c.parm_name}}</td>
                    <td>
                        <div *ngIf="c.parm_type=='choose'">
-                           <select class="form-control text-center" [value]="newalg.parms[index].parm_value" [(ngModel)]="newalg.parms[index].parm_value" name=val{{index}}> 
+                         <select class="form-control text-center" [value]="newalg.parms[index].parm_value" [(ngModel)]="newalg.parms[index].parm_value" name=val{{index}}> 
                                <option *ngFor="let v of c.choose" value="{{v}}" [selected]="newalg.parms[index].parm_value==v">{{v}}</option>
-                           </select>
+                         </select>
                        </div>
                        <div *ngIf="c.parm_type=='value'">
-                           <input class="form-control"  type="text" [value]="newalg.parms[index].parm_value" [(ngModel)]="newalg.parms[index].parm_value" name=val{{index}}>
+                         <input class="form-control"  type="text" [value]="newalg.parms[index].parm_value" [(ngModel)]="newalg.parms[index].parm_value" name=val{{index}}>
                        </div>
                        <div *ngIf="c.parm_type=='range'">
-                           <input class="form-control"  type="text" [value]="newalg.parms[index].parm_value" [(ngModel)]="newalg.parms[index].parm_value" name=val{{index}}>
+                         <input class="form-control"  type="text" [value]="newalg.parms[index].parm_value" [(ngModel)]="newalg.parms[index].parm_value" name=val{{index}}>
                        </div>
                    </td>
                </tr>
