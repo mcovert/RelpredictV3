@@ -49,6 +49,13 @@ import { HelpComponent } from './help/help.component';
 import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
 import { AlgEditorComponent } from './models/alg-editor/alg-editor.component';
 import { ParmEditorComponent } from './parm-editor/parm-editor.component';
+import { DatamapEditorComponent } from './data/datamap-editor/datamap-editor.component';
+import { JobSchedulerComponent } from './jobs/job-scheduler/job-scheduler.component';
+import { JobSubmitterComponent } from './jobs/job-submitter/job-submitter.component';
+import { JobEditorComponent } from './jobs/job-editor/job-editor.component';
+import { JobStatusComponent } from './jobs/job-status/job-status.component';
+import { DatafileUploaderComponent } from './data/datafile-uploader/datafile-uploader.component';
+import { DatafileViewerComponent } from './data/datafile-viewer/datafile-viewer.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +88,14 @@ import { ParmEditorComponent } from './parm-editor/parm-editor.component';
     HelpComponent,
     ModalDialogComponent,
     AlgEditorComponent,
-    ParmEditorComponent
+    ParmEditorComponent,
+    DatamapEditorComponent,
+    JobSchedulerComponent,
+    JobSubmitterComponent,
+    JobEditorComponent,
+    JobStatusComponent,
+    DatafileUploaderComponent,
+    DatafileViewerComponent
   ],
   imports: [
     BrowserModule,
