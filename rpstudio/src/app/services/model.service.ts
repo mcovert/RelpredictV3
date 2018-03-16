@@ -109,6 +109,7 @@ httpOptions    : HttpHeaders;
     return this.trained_models;
   }
   createModel(model : RPModel) {
+    delete model.id;
     let body = JSON.stringify(model);
     // return this.httpService.post('http://ai25:3000/api/models?access_token=' + this.authService.getUserToken(), body, this.httpOptions);
     return this.httpService.post(this.url + 'models', body, this.authService.getHttpHeader());

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
-import { RPdatamap, RPFieldmap, RPDataType, RPParameterDef } from '../../shared/db-classes';
+import { RPDatamap, RPFieldmap, RPDataType, RPParameterDef } from '../../shared/db-classes';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -9,8 +9,8 @@ import { NgForm } from '@angular/forms';
 })
 export class DatamapEditorComponent implements OnInit {
   @Input()   datamap : RPDatamap;
-  @Output()  save    : EventEmitter<RPDatamap> = new EventEmitter<RPDatamap>();
-  @Output()  cancel  : EventEmitter<RPDatamap> = new EventEmitter<RPDatamap>();
+  @Output()  saveDatamap    : EventEmitter<RPDatamap> = new EventEmitter<RPDatamap>();
+  @Output()  cancelDatamap  : EventEmitter<RPDatamap> = new EventEmitter<RPDatamap>();
 
   newdm : RPDatamap;
 
@@ -26,11 +26,11 @@ export class DatamapEditorComponent implements OnInit {
   }
 
   save() {
-  	this.save.emit(this.newdm);
+  	this.saveDatamap.emit(this.newdm);
   }
 
   cancel() {
-  	this.cancel.emit();
+  	this.cancelDatamap.emit();
   }
 
   reset() {
