@@ -5,6 +5,16 @@ var boot = require('loopback-boot');
 
 var app = module.exports = loopback();
 
+var bodyParser = require('body-parser');
+/* Logger */
+app.use(bodyParser.urlencoded( { extended: false}));
+app.use(bodyParser.json());
+var logger = function(req, res, next) {
+  console.log(JSON.stringify(req.body, null, 2));
+  next();
+}
+app.use(logger);
+/* end logger */
 app.start = function() {
   // start the web server
   return app.listen(function() {
@@ -17,6 +27,13 @@ app.start = function() {
     }
   });
 };
+
+// app.middleware('initial', function logResponse(req, res, next) {
+//   res.on('finish', function() {
+//     console.log(res.body, req.originalUrl, res.statusCode);
+//   });
+//   next();
+// });
 
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.

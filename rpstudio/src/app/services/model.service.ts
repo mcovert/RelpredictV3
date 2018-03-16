@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from "rxjs/Observable";
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { catchError, retry } from 'rxjs/operators';
 import { RPDataType, RPParameter,    RPFeature,      RPTargetAlgorithm, 
 	     RPTarget,   RPModel,        RPAlgorithmDef, RPCurrentModel, 
 	     RPLogEntry, RPTrainedModel, RPModelClass} 
     from '../shared/db-classes';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class ModelService {
@@ -83,7 +86,7 @@ httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient, private authService: AuthService) { 
       this.httpService = http;
       console.log("Model service created...");
   }
@@ -110,7 +113,11 @@ httpOptions = {
     return this.trained_models;
   }
   createModel(model : RPModel) {
-    this.httpService.post('http://ai25:3000/api/models', JSON.stringify(model), this.httpOptions);
+    let body = JSON.stringify(model);
+    return this.httpService.post('http://ai25:3000/api/models?access_token=' + this.authService.getUserToken(), body, this.httpOptions);
+    //     .pipe(
+    //       catchError(this.handleError));
+    // this.getModels();
   }
   updateModel(model : RPModel) {
     this.httpService.put('http://ai25:3000/api/models/' + model.id, JSON.stringify(model), this.httpOptions);
@@ -149,5 +156,15 @@ httpOptions = {
       ta.parms.push(ap);
     }
     return ta;    
+  }
+  private handleError(error: HttpErrorResponse) {
+    console.log('inhandleError');
+    if (error.error instanceof ErrorEvent) {
+      console.error(`An error occurred: $(error.error.message)`);
+    }
+    else {
+      console.error(`Server returned error $(error.status), ` + `body was: $(error.error)`);
+    }
+    return new ErrorObservable('An error occurred');
   }
  }

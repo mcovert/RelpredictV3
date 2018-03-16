@@ -32,24 +32,17 @@ export class ModelsComponent implements OnInit {
      
      this.modelService.getModelClasses().subscribe(resultArray => {
         this.modelclasses = resultArray as RPModelClass[];
-        console.log('Model classes:');
-        console.log(this.modelclasses);
         if (this.model_classes.indexOf('Current Models') == -1) 
           this.model_classes.unshift("Current Models");
         if (this.model_classes.indexOf('All Models') == -1) 
           this.model_classes.unshift("All Models");
-        console.log("MC loop:");
         for (var mc of this.modelclasses) {
              this.model_classes.push(mc.label);
         }
-        console.log('Model classes:');
-        console.log(this.model_classes);
      });
 
      this.modelService.getModels().subscribe(resultArray => {
         this.models = resultArray;
-        console.log('Models:');
-        console.log(this.models);
         this.models.sort((m1 : RPModel, m2 : RPModel) : number => {
             let m1x = m1.model_class + '.' + m1.name + '.' + m1.version;
             let m2x = m2.model_class + '.' + m2.name + '.' + m2.version;
@@ -71,14 +64,12 @@ export class ModelsComponent implements OnInit {
       this.currentClass = this.modelclasses[pos - 2].class_name;
     else
       this.currentClass = currClass;
-    console.log('Setting model class filter to ' + this.currentClass);
     //if (this.currentClass == "All")
     //  this.models.filter(m2 => m2);
     //else
     //  this.models.filter(m2 => m2.model_class === this.currentClass);
   }
   navigate(id : string) {
-     console.log('Navigating to model ' + id);
      this.router.navigate(['models', id]);
   }
   newModelName(i : number) : boolean {

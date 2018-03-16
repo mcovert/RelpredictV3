@@ -29,7 +29,7 @@
     },
     "identifier": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "features": {
       "type": [
@@ -47,7 +47,7 @@
       "type": [
         "object"
       ],
-      "required": true
+      "required": false
     }
   },
   "validations": [],

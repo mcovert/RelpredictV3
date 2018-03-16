@@ -7,7 +7,6 @@ import { RPDataType, RPParameter, RPFeature, RPTargetAlgorithm, RPTarget, RPMode
 export class ModelClassPipe implements PipeTransform {
 
   transform(models: RPModel[], args: string): RPModel[] {
-  	console.log('Model class filter is ' + args);
   	if (args === 'All Models')
   		return models;
   	else if (args === 'Current Models')

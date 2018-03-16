@@ -42,6 +42,9 @@ export class AuthService {
           });
     }
   }
+  getUserToken() {
+    return this.user.token;
+  }
   getUsername() {
     if (!this.loggedIn)
      return "Not logged in";

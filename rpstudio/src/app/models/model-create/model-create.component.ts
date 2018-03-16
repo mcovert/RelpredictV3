@@ -41,6 +41,9 @@ export class ModelCreateComponent implements OnInit {
     this.model.features = [];
     this.model.targets = [];
     this.model.notes = [];
+    this.model.description = "";
+    this.model.identifier = "";
+    this.model.current = false;
     this.addFeature();
     this.addTarget();
     this.alg = this.model.targets[0].algorithms[0];
@@ -80,6 +83,7 @@ export class ModelCreateComponent implements OnInit {
     var feature = new RPFeature();
     feature.parms = [];
     feature.type = this.dataTypes[0].datatype_name;
+    feature.label = "";
     this.model.features.push(feature);
   }
   deleteFeature(i : number) {
@@ -97,6 +101,7 @@ export class ModelCreateComponent implements OnInit {
     target.algorithms.push(this.modelService.createTargetAlgorithm(this.modelService.getDefaultAlgorithmDef()));
     target.parms = [];
     target.type = this.dataTypes[0].datatype_name;
+    target.description = "";
     this.model.targets.push(target);
   }
   deleteTarget(i : number) {
@@ -132,13 +137,18 @@ export class ModelCreateComponent implements OnInit {
     return pret;
   }
   saveModel() {
-  	console.log("Model saved");
-  	console.log(this.model);
+    this.modelService.createModel(this.model).subscribe(
+      data => {
+        return true;
+      },
+      error => {
+        console.error("Error saving Model");
+        return Observable.throw(error);
+      });
     this.router.navigate(['models']);
   }
   cancelModel() {
     if (confirm("Are you sure you want to discard this model?")) {
-       console.log("Model canceled");
        this.router.navigate(['models']);      
     }
   }
@@ -160,11 +170,7 @@ export class ModelCreateComponent implements OnInit {
     this.showAlg = true;
   }
   saveAlgorithm(alg: RPTargetAlgorithm) {
-    console.log("Saving algorithm:");
-    console.log("Target=" + this.curr_index + " Alg=" + this.curr_index2);
-    console.log(alg);
     this.model.targets[this.curr_index].algorithms[this.curr_index2] = alg;
-    console.log(this.model.targets[this.curr_index].algorithms);
     this.showAlg=false;
   }
   cancelAlgorithm() {

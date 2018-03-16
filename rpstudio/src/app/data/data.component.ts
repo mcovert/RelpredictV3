@@ -17,7 +17,7 @@ export class DataComponent implements OnInit {
   oBatch            : Observable<RPBatch[]>;
   oDF               : Observable<RPDatafile[]>;
   oDM               : Observable<RPDatamap[]>;
-  filteredDatafiles : RPDataFile[];
+  filteredDatafiles : RPDatafile[];
 
   constructor(private dataservice : DataService, private router: Router) {
      this.oBatch = dataservice.getBatches();
@@ -31,7 +31,7 @@ export class DataComponent implements OnInit {
      });
      this.oDF.subscribe(resultArray => {
         this.datafiles = resultArray;
-        this.filteredDataFiles = this.datafiles;
+        this.filteredDatafiles = this.datafiles;
      });
      this.oDM.subscribe(resultArray => {
         this.datamaps = resultArray;

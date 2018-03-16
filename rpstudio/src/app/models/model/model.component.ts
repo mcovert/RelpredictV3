@@ -19,14 +19,12 @@ export class ModelComponent implements OnInit {
   constructor(private modelService : ModelService, private route: ActivatedRoute) { 
      this.route.params.subscribe( params => { 
       	this.id = params['id']; 
-     	  console.log('ID=' + this.id); 
      });
   }
 
   ngOnInit() {
   	this.modelService.getModelById(this.id).subscribe(result => {
   		  this.model = result as RPModel; 
-  		  console.log(this.model); 
         //this.trained_models = this.modelService.getTrainedModels(this.model.model_class, this.model.model_name, this.model.model_version); 
         //console.log(this.trained_models);
   	});
