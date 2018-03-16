@@ -52,14 +52,22 @@ export class RPTargetAlgorithm {
   short_name  : string;
   description : string;
   parms       : RPParameter[];
+  constructor() {
+    this.name = "";
+    this.short_name = "";
+    this.description = "";
+    this.parms = [];
+  }
   clone() {
     var ta2 = new RPTargetAlgorithm();
     ta2.name        = this.name;
     ta2.short_name  = this.short_name;
     ta2.description = this.description;
     ta2.parms       = [];
-    for (var p of this.parms)
-      ta2.parms.push(p.clone());
+    if (this.parms != null) {
+      for (var p of this.parms)
+        ta2.parms.push(p.clone());
+    }
     return ta2;
   }
 }
@@ -96,6 +104,18 @@ export class RPModel {
   notes       : RPNote[];
   current     : boolean;
   id          : string;
+  constructor() {
+    this.name = "";
+    this.description = "";
+    this.version = 0;
+    this.model_class = "";
+    this.identifier = "";
+    this.features = [];
+    this.targets = [];
+    this.notes = [];
+    this.current = false;
+    this.id = "";
+  }
 }
 export class RPAlgorithmDef {
   name        : string;

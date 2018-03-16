@@ -33,20 +33,21 @@ export class ModelCreateComponent implements OnInit {
   ngOnInit() {
     this.modelService.getModelClasses().subscribe(resultArray => {
         this.modelClasses = resultArray as RPModelClass[];
+        this.model = new RPModel();
+        this.model.model_class = this.modelClasses[0].label;
+        this.model.version = 1;
+        this.model.features = [];
+        this.model.targets = [];
+        this.model.notes = [];
+        this.model.description = "";
+        this.model.identifier = "";
+        this.model.current = false;
+        this.addFeature();
+        this.addTarget();
+        this.alg = this.model.targets[0].algorithms[0];
     });
     this.dataTypes = this.modelService.getDataTypes();
     this.algDefs = this.modelService.getAlgorithmDefs();
-    this.model = new RPModel();
-    this.model.version = 1;
-    this.model.features = [];
-    this.model.targets = [];
-    this.model.notes = [];
-    this.model.description = "";
-    this.model.identifier = "";
-    this.model.current = false;
-    this.addFeature();
-    this.addTarget();
-    this.alg = this.model.targets[0].algorithms[0];
     this.parmDefs = this.dataTypes[0].parms;
     this.parms = this.createParms(this.parmDefs);
   }

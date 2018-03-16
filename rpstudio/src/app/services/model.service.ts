@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs/Observable";
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { catchError, retry } from 'rxjs/operators';
 import { RPDataType, RPParameter,    RPFeature,      RPTargetAlgorithm, 
-	     RPTarget,   RPModel,        RPAlgorithmDef, RPCurrentModel, 
-	     RPLogEntry, RPTrainedModel, RPModelClass} 
-    from '../shared/db-classes';
+	       RPTarget,   RPModel,        RPAlgorithmDef, RPCurrentModel, 
+	       RPLogEntry, RPTrainedModel, RPModelClass} from '../shared/db-classes';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -81,14 +78,13 @@ models         : Observable<RPModel[]>;
 current_models : Observable<RPCurrentModel[]>;
 log            : Observable<RPLogEntry[]>;
 trained_models : Observable<RPTrainedModel[]>;
-
-httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+url            : string;
+httpOptions    : HttpHeaders; 
 
   constructor(private http: HttpClient, private authService: AuthService) { 
       this.httpService = http;
-      console.log("Model service created...");
+      this.url = this.authService.getServerUrl();
+      console.log("Model service created using server at " + this.url );
   }
 
   getDataTypes()  : RPDataType[] { 
@@ -98,34 +94,30 @@ httpOptions = {
     return this.algorithms;
   }
   getModels() : Observable<RPModel[]> { 
-    this.models = this.httpService.get('http://ai25:3000/api/models') as Observable<RPModel[]>;
+    this.models = this.httpService.get(this.url + 'models', this.authService.getHttpHeader()) as Observable<RPModel[]>;
     return this.models;
   }
   getModelClasses() : Observable<RPModelClass[]> {
-    this.modelclasses = this.httpService.get('http://ai25:3000/api/modelclasses') as Observable<RPModelClass[]>;
+    this.modelclasses = this.httpService.get(this.url + 'modelclasses', this.authService.getHttpHeader()) as Observable<RPModelClass[]>;
     return this.modelclasses;
   }
   getModelById(id : string) : Observable<RPModel> {
-     return this.httpService.get('http://ai25:3000/api/models/' + id) as Observable<RPModel>;
+     return this.httpService.get(this.url + 'models/' + id, this.authService.getHttpHeader()) as Observable<RPModel>;
   }
   getTrainedModels() : Observable<RPTrainedModel[]> {
-    this.trained_models = this.httpService.get('http://ai25:3000/api/trainedmodels') as Observable<RPTrainedModel[]>;
+    this.trained_models = this.httpService.get(this.url + 'trainedmodels', this.authService.getHttpHeader()) as Observable<RPTrainedModel[]>;
     return this.trained_models;
   }
   createModel(model : RPModel) {
     let body = JSON.stringify(model);
-    return this.httpService.post('http://ai25:3000/api/models?access_token=' + this.authService.getUserToken(), body, this.httpOptions);
-    //     .pipe(
-    //       catchError(this.handleError));
-    // this.getModels();
+    // return this.httpService.post('http://ai25:3000/api/models?access_token=' + this.authService.getUserToken(), body, this.httpOptions);
+    return this.httpService.post(this.url + 'models', body, this.authService.getHttpHeader());
   }
   updateModel(model : RPModel) {
-    this.httpService.put('http://ai25:3000/api/models/' + model.id, JSON.stringify(model), this.httpOptions);
+    return this.httpService.put(this.url + 'models/' + model.id, JSON.stringify(model), this.authService.getHttpHeader());
   }
-  deleteModel(model : RPModel) {
-    if (confirm("Are you sure you want to delete this model?")) {
-       this.httpService.post('http://ai25:3000/api/models/' + model.id, JSON.stringify(model), this.httpOptions);
-    }
+  deleteModel(id : string) {
+    return this.httpService.delete(this.url + 'models/' + id, this.authService.getHttpHeader());
   }
 
   getDefaultAlgorithmDef() : RPAlgorithmDef {
@@ -156,15 +148,5 @@ httpOptions = {
       ta.parms.push(ap);
     }
     return ta;    
-  }
-  private handleError(error: HttpErrorResponse) {
-    console.log('inhandleError');
-    if (error.error instanceof ErrorEvent) {
-      console.error(`An error occurred: $(error.error.message)`);
-    }
-    else {
-      console.error(`Server returned error $(error.status), ` + `body was: $(error.error)`);
-    }
-    return new ErrorObservable('An error occurred');
   }
  }

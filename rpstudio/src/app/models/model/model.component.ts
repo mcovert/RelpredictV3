@@ -11,7 +11,7 @@ import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 })
 export class ModelComponent implements OnInit {
 
-  model : RPModel;
+  model : RPModel = new RPModel();
   trained_models : RPTrainedModel[];
   id    : string;
   modelForm: FormGroup;
@@ -19,14 +19,16 @@ export class ModelComponent implements OnInit {
   constructor(private modelService : ModelService, private route: ActivatedRoute) { 
      this.route.params.subscribe( params => { 
       	this.id = params['id']; 
+        console.log("Finding model " + this.id);
+        this.modelService.getModelById(this.id).subscribe(result => {
+            this.model = result as RPModel; 
+            console.log(this.model);
+        //this.trained_models = this.modelService.getTrainedModels(this.model.model_class, this.model.model_name, this.model.model_version); 
+        //console.log(this.trained_models);
+        });
      });
   }
 
   ngOnInit() {
-  	this.modelService.getModelById(this.id).subscribe(result => {
-  		  this.model = result as RPModel; 
-        //this.trained_models = this.modelService.getTrainedModels(this.model.model_class, this.model.model_name, this.model.model_version); 
-        //console.log(this.trained_models);
-  	});
   }
 }

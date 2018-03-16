@@ -13,7 +13,7 @@
             </div>    
             <div class="form-group">
               <label class="col-2" for="modelClass">Model Class</label>
-              <select [(ngModel)]="model.model_class" name="modelcls">
+              <select>
                  <option *ngFor="let mc of modelClasses" value={{mc.label}}>{{mc.label}}</option>
               </select>
                  <!--input class="col-4" type="text" id="modelClass" [(ngModel)]="model.model_class" name="model_class"-->

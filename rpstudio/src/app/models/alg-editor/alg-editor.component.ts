@@ -15,16 +15,18 @@ export class AlgEditorComponent implements OnInit {
   @Output()  cancelAlgorithm : EventEmitter<RPTargetAlgorithm> = new EventEmitter<RPTargetAlgorithm>();
 
   algDefs     : RPAlgorithmDef[];
-  newalg      : RPTargetAlgorithm;
+  newalg      : RPTargetAlgorithm = new RPTargetAlgorithm();
   curr_algdef : RPAlgorithmDef;
   algname     : string;
 
   constructor(private modelService : ModelService) {
   	this.algDefs = this.modelService.getAlgorithmDefs();
+    this.curr_algdef = this.algDefs[0];
+    this.newalg = this.modelService.createTargetAlgorithm(this.curr_algdef); 
   }
 
   ngOnInit() {
-  	this.reset();
+  	//this.reset();
   }
 
   ngOnChanges() {
@@ -40,6 +42,7 @@ export class AlgEditorComponent implements OnInit {
   }
 
   reset() {
+    if (this.alg == null) return;
   	this.newalg = this.alg.clone();
     this.curr_algdef = this.modelService.getAlgorithmDef(this.newalg.name);
     this.algname = this.newalg.name;

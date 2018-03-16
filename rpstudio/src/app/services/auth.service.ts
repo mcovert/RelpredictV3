@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 interface LoginResponse {
   id: string;
@@ -17,6 +17,11 @@ export class AuthService {
 
   user : LoggedInUser;
   loggedIn = false;
+  url = 'http://ai25:3000/api/';
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
 
   constructor(private http: HttpClient) { console.log("New auth service created"); }
 
@@ -39,31 +44,36 @@ export class AuthService {
             this.user.role = "admin";
             this.user.token = login_resp.id;
             this.loggedIn = true;
+            this.httpOptions.headers.set('Authorization', this.user.token);
           });
     }
   }
-  getUserToken() {
-    return this.user.token;
+  getServerUrl() {
+    return this.url;
+  }
+  getHttpHeader() {
+    return this.httpOptions;
   }
   getUsername() {
-    if (!this.loggedIn)
+    if (!this.isLoggedIn())
      return "Not logged in";
     else return this.user.username;
   }
   getRole() {
-    if (!this.loggedIn)
+    if (!this.isLoggedIn())
      return "";
     else return this.user.role;
   }
 
   getUsernameAndRole() {
-    if (!this.loggedIn)
+    if (!this.isLoggedIn())
      return "Not logged in";
     else return this.user.username + " (" + this.user.role + ")";
   }
 
   logout() {
     this.loggedIn = false;
+    this.httpOptions.headers.delete('Authoriztion');
   }
 
   isLoggedIn() : boolean {
