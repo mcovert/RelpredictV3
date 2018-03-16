@@ -206,6 +206,34 @@
     <br>
     <div class="text-center">
       <button type="button" previousStep class="btn btn-sm btn-danger">Previous Step</button>
+      <button type="button" nextStep class="btn btn-sm btn-primary">Next Step</button>
+    </div>
+  </wizard-step>
+  <wizard-step stepTitle="Identifiers" navigationSymbol="&#xf005;" navigationSymbolFontFamily="FontAwesome">
+    <br><br>
+    <h3 class="text-center">What features uniquely identify each record?</h3>
+    <br>
+    <div class="table-responsive">
+        <table id="mytable2" class="table table-bordered table-striped sortable table-sm" style="width: 50%; margin: auto">
+          <thead>
+               <th class="text-center">Use</th>
+               <th class="text-center">Feature Name</th>
+               <th class="text-center">Feature Type</th>
+               <th class="text-center">Feature Label</th>
+          </thead>
+          <tbody>
+              <tr *ngFor="let f of model.features; let i=index">
+                   <td class="align-middle"><input type="checkbox" style="float: left; margin: 0 auto; width: 100%;"></td>
+                   <td class="text-center">{{f.name}}</td>
+                   <td class="text-center">{{f.type}}</td>
+                   <td class="text-center">{{f.label}}</td>
+               </tr>
+          </tbody>
+        </table>
+    </div>
+    <br><br>
+    <div class="text-center">
+      <button type="button" previousStep class="btn btn-sm btn-danger">Previous Step</button>
       <button type="button" nextStep class="btn btn-sm btn-primary">Finish</button>
     </div>
   </wizard-step>

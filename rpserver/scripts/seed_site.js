@@ -5,8 +5,9 @@ var config = {
 	start_date:    "2016-10-01",
 	end_date:      "2055-12-21",
 	created_by:    "mcovert",
-    created_date:  "2018-01-15",
-    modified_date: "2018-01-15"
+  created_date:  "2018-01-15",
+  modified_date: "2018-01-15",
+  base_dir:      "/home/relpredict/QDX"
 };
 db.config.drop();
 db.createCollection('config');

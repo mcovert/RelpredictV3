@@ -28,4 +28,7 @@ datamaps       : Observable<RPDatamap[]>;
       this.datamaps = this.httpService.get('http://ai25:3000/api/datamaps') as Observable<RPDatamap[]>;
       return this.datamaps;
   }
+  createDatamap(datamap: RPDatamap) {}
+  updateDatamap(datamap: RPDatamap) {}
+  deleteDatamap(id: string) {}
 }
