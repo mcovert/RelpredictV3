@@ -88,7 +88,7 @@
     <div class="row pb-1">
 	  <div class="col-2"></div>
       <div class="col-8 text-center"><h4>Data Maps</h4></div>
-      <div class="col-2"><button class="btn btn-primary btn-xs" data-title="New Model"><span class="fa fa-plus">New Data Map</span></button></div>
+      <div class="col-2"><button class="btn btn-primary btn-xs" data-title="New Datamap" (click)="newDatamap()"><span class="fa fa-plus">New Data Map</span></button></div>
     </div>
     <div class="table-responsive">
      <table id="mytable" class="table table-bordred table-striped sortable table-sm">
@@ -112,3 +112,6 @@
     </div>
   </div>
 </div>
+<app-modal-dialog [(visible)]="showDMDialog">
+   <app-datamap-editor  (saveDatamap)="saveDM($event)" (cancelDatamap)="cancelDM()"></app-datamap-editor>
+</app-modal-dialog>

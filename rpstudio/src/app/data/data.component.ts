@@ -19,6 +19,8 @@ export class DataComponent implements OnInit {
   oDM               : Observable<RPDatamap[]>;
   filteredDatafiles : RPDatafile[];
 
+  showDMDialog      : boolean = false;
+
   constructor(private dataservice : DataService, private router: Router) {
      this.oBatch = dataservice.getBatches();
      this.oDF    = dataservice.getDatafiles();
@@ -46,4 +48,14 @@ export class DataComponent implements OnInit {
   releaseBatch(id: string) {}
   holdBatch(id: string) {}
   deleteBatch(id: string) {}
+
+  newDatamap() {
+     this.showDMDialog = true;
+  }
+  saveDM() {
+    this.showDMDialog = false;
+  }
+  cancelDM() {
+    this.showDMDialog = false;
+  }
 }

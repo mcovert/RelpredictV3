@@ -2,6 +2,8 @@ import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angu
 import { FileLoaderComponent } from '../../file-loader/file-loader.component';
 import { RPDatamap, RPFieldmap, RPDataType, RPParameterDef } from '../../shared/db-classes';
 import { NgForm } from '@angular/forms';
+import { GlobalService } from '../../services/global.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-datamap-editor',
@@ -14,8 +16,12 @@ export class DatamapEditorComponent implements OnInit {
   @Output()  cancelDatamap  : EventEmitter<RPDatamap> = new EventEmitter<RPDatamap>();
 
   newdm : RPDatamap = new RPDatamap();
+  dataTypes : RPDataType[];
+  datamapTypes: string[];
 
-  constructor() {
+  constructor(private globalService: GlobalService, private dataService: DataService ) {
+  	this.dataTypes = globalService.getDataTypes();
+  	this.datamapTypes = dataService.getDatamapTypes();
   }
 
   ngOnInit() {
@@ -44,5 +50,7 @@ export class DatamapEditorComponent implements OnInit {
   	console.log("file load canceled");
   	this.cancel();
   }
-
+  newField() {
+  	this.newdm.fields.push(new RPDatamap());
+  }
 }
