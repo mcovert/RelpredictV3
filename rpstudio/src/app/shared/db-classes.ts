@@ -187,6 +187,10 @@ export class RPDatafile {
 export class RPFieldmap {
   fieldmap_name : string;
   fieldmap_type : string;
+  constructor() {
+    this.fieldmap_name = "field-1";
+    this.fieldmap_type = "";
+  }
 }
 export class RPDatamap {
   datamap_name  : string;
@@ -194,6 +198,13 @@ export class RPDatamap {
   fields        : RPFieldmap[];
   xlate         : RPFieldmap[];
   id            : string;
+  constructor() {
+    this.datamap_name = "datamap";
+    this.datamap_type = "Map";
+    this.fields = [];
+    this.fields.push(new RPFieldmap());
+    this.xlate  = [];
+  }
 }
 /*
  *   Database job definition classes

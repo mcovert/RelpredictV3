@@ -19,7 +19,7 @@ export class FileLoaderComponent implements OnInit {
 
   loadFile(event) {
   	var reader = new FileReader();
-  	var file: file = event.target.files[0];
+  	var file: File = event.target.files[0];
   	console.log(file.name);
   	if (file.name === '')
        this.cancelFile.emit();

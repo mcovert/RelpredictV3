@@ -13,7 +13,7 @@ export class DatamapEditorComponent implements OnInit {
   @Output()  saveDatamap    : EventEmitter<RPDatamap> = new EventEmitter<RPDatamap>();
   @Output()  cancelDatamap  : EventEmitter<RPDatamap> = new EventEmitter<RPDatamap>();
 
-  newdm : RPDatamap;
+  newdm : RPDatamap = new RPDatamap();
 
   constructor() {
   }
