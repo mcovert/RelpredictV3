@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs/Observable";
 import { RPDataType, RPParameter, RPBatch, RPDatafile, RPFieldmap, RPDatamap} from '../shared/db-classes';
+import { GlobalService } from './global.service';
 
 @Injectable()
 export class DataService {
@@ -11,7 +12,7 @@ batches        : Observable<RPBatch[]>;
 datafiles      : Observable<RPDatafile[]>;
 datamaps       : Observable<RPDatamap[]>;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient, private globalService: GlobalService) { 
       this.httpService = http;
       console.log("Data service created...");
   }

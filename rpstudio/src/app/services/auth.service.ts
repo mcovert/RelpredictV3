@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { GlobalService } from './global.service';
 
 interface LoginResponse {
   id: string;
@@ -17,20 +18,23 @@ export class AuthService {
 
   user : LoggedInUser;
   loggedIn = false;
-  url = 'http://ai25:3000/api/';
+  url : string;
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
 
-  constructor(private http: HttpClient) { console.log("New auth service created"); }
+  constructor(private http: HttpClient, private globalService: GlobalService) { 
+    console.log("New auth service created"); 
+    this.url = this.globalService.getServerUrl();
+  }
 
   login(email: string, password: string) {
     if (this.loggedIn == true) {
        return;
     }
     else {
-       this.http.post<LoginResponse>('http://ai25:3000/api/Users/login', {
+       this.http.post<LoginResponse>(this.url + 'Users/login', {
              email: email, password: password
        }).subscribe(data => {
             console.log(data);
@@ -49,7 +53,7 @@ export class AuthService {
     }
   }
   getServerUrl() {
-    return this.url;
+    return this.globalService.getServerUrl();
   }
   getHttpHeader() {
     return this.httpOptions;

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs/Observable";
 import { RPDataType, RPParameter, RPFeature, RPTargetAlgorithm, RPTarget, RPModel, RPAlgorithmDef, RPCurrentModel, RPLogEntry} from '../shared/db-classes';
+import { GlobalService } from './global.service';
 
 @Injectable()
 export class AdminService {
@@ -14,14 +15,14 @@ export class AdminService {
         enabled: true
       }
   ];
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private globalService: GlobalService) { }
 
   getAccounts() {
     return this.accounts;
   }
 
   getLog() {
-      return this.http.get('http://ai25:3000/api/logs') as Observable<RPLogEntry[]>;
+      return this.http.get(this.globalService.getServerUrl() + 'logs') as Observable<RPLogEntry[]>;
 
   }
 

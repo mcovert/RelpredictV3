@@ -8,6 +8,7 @@ import { AppRoutingModule  } from './app-routing.module';
 
 import { ArchwizardModule } from 'ng2-archwizard';
 
+import { GlobalService} from './services/global.service';
 import { AuthService} from './services/auth.service';
 import { DataService} from './services/data.service';
 import { JobService} from './services/job.service';
@@ -110,7 +111,7 @@ import { FileLoaderComponent } from './file-loader/file-loader.component';
   exports: [
     RouterModule
   ],
-  providers: [ AuthService, DataService, JobService, ModelService, AdminService, OnlyLoggedInGuard ],
+  providers: [ GlobalService, AuthService, DataService, JobService, ModelService, AdminService, OnlyLoggedInGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

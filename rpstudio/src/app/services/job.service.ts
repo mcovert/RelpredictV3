@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RPJob, RPJobExec} from '../shared/db-classes';
 import { Observable } from "rxjs/Observable";
+import { GlobalService } from './global.service';
 
 @Injectable()
 export class JobService {
@@ -10,7 +11,7 @@ export class JobService {
  jobs           : Observable<RPJob[]>;
  jobexecs       : Observable<RPJobExec[]>;
 
- constructor(private http: HttpClient) { 
+ constructor(private http: HttpClient, private globalService: GlobalService) { 
       this.httpService = http;
       console.log("Job service created...");
   }
