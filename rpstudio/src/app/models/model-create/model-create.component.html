@@ -45,7 +45,7 @@
          <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">Add Feature<span class="caret"></span></button>
          <div class="dropdown-menu">
            <a class="dropdown-item" (click)="addFeature()">New Feature</a>
-           <a class="dropdown-item" href="#">From DataMap</a>
+           <a class="dropdown-item" (click)="showDatamapEditor()" >From DataMap</a>
            <a class="dropdown-item" href="#">From file</a>
          </div>
        </div>
@@ -250,4 +250,7 @@
 </app-modal-dialog>
 <app-modal-dialog [(visible)]="showAlg">
   <app-alg-editor [alg]="alg" (saveAlgorithm)="saveAlgorithm($event)" (cancelAlgorithm)="cancelAlgorithm()"></app-alg-editor>
+</app-modal-dialog>
+<app-modal-dialog [(visible)]="showDMDialog">
+   <app-datamap-editor  (saveDatamap)="saveDM($event)" (cancelDatamap)="cancelDM()"></app-datamap-editor>
 </app-modal-dialog>

@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
+import { FileLoaderComponent } from '../../file-loader/file-loader.component';
 import { RPDatamap, RPFieldmap, RPDataType, RPParameterDef } from '../../shared/db-classes';
 import { NgForm } from '@angular/forms';
 
@@ -34,6 +35,14 @@ export class DatamapEditorComponent implements OnInit {
   }
 
   reset() {
+  }
+  readFile(event) {
+  	console.log(event);
+  	this.save();
+  }
+  cancelFile() {
+  	console.log("file load canceled");
+  	this.cancel();
   }
 
 }

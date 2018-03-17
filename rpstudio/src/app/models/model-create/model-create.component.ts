@@ -20,6 +20,7 @@ export class ModelCreateComponent implements OnInit {
   alg          : RPTargetAlgorithm;
   showParm     : boolean = false;
   showAlg      : boolean = false;
+  showDMDialog : boolean = false;
   parmDefs     : RPParameterDef[];
   parms        : RPParameter[];
   f_or_t       : string;
@@ -115,6 +116,15 @@ export class ModelCreateComponent implements OnInit {
   changeTargetDataType(dt: string, i: number) {
     this.model.targets[i].type = dt;
     this.model.targets[i].parms = [];
+  }
+  showDatamapEditor() {
+    this.showDMDialog = true;
+  }
+  saveDM(event) {
+    this.showDMDialog = false;    
+  }
+  cancelDM(event) {
+    this.showDMDialog = false;    
   }
   showParmEditor(dt : string, f_or_t: string, i: number) {
     this.parmDefs = this.getParms(dt).parms;
