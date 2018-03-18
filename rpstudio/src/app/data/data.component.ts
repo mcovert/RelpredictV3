@@ -62,7 +62,7 @@ export class DataComponent implements OnInit {
   }
   createDatamap() {
      this.datamap = new RPDatamap();
-     this.mode = 'edit';
+     this.mode = 'file';
      this.showDMDialog = true;
   }
   editDatamap(i : number) {

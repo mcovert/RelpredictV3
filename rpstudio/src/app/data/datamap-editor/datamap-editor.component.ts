@@ -53,13 +53,24 @@ export class DatamapEditorComponent implements OnInit {
   reset() {
   }
   readFile(event) {
-  	this.save();
+  	this.newdm = new RPDatamap();
+  	//this.newdm.fields.splice(1, 0);
+  	var lines = event.split('\n');
+  	var cols = lines[0].split(',');
+  	for (var col of cols) {
+  		console.log(col);
+  		let fm = new RPFieldmap();
+  		fm.fieldmap_name = col;
+  		fm.fieldmap_type = this.dataTypes[0].datatype_name;
+  		this.newdm.fields.push(fm);
+  	}
+  	console.log(this.newdm);
   }
   cancelFile() {
   	this.cancel();
   }
   newField() {
-  	this.newdm.fields.push(new RPDatamap());
+  	this.newdm.fields.push(new RPFieldmap());
   }
   isDisplay() {
   	return this.mode === 'display';

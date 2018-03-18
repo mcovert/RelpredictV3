@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { RPDataType, RPParameter, RPLogEntry} from '../shared/db-classes';
 
 @Injectable()
 export class GlobalService {

@@ -202,7 +202,7 @@ export class RPDatamap {
     this.datamap_name = "datamap";
     this.datamap_type = "Map";
     this.fields = [];
-    this.fields.push(new RPFieldmap());
+    //this.fields.push(new RPFieldmap());
     this.xlate  = [];
   }
 }

@@ -28,15 +28,15 @@
           <tbody>
                <tr *ngFor="let fd of newdm.fields; let i=index;">
                    <td>
-                     <input type="text" class="form-control col-12" id= fn{{i}} value="fd.field_name" name=fdn{{i}} [(ngModel)]="fd.field_name" [readonly]="isDisplay()">
+                     <input type="text" class="form-control col-12" id= fn{{i}} value="fd.fieldmap_name" name=fdn{{i}} [(ngModel)]="fd.fieldmap_name" [readonly]="isDisplay()">
                   </td>
                    <td *ngIf="!isDisplay()" >
-                      <select class="form-control" name=ftsel{{i}} [(ngModel)]="fd.field_type"> 
-                        <option *ngFor="let dt of dataTypes" value="{{dt.datatype_name}}" [selected]="fd.field_type==dt.datatype_name">{{dt.datatype_name}}</option>
+                      <select class="form-control" name=ftsel{{i}} [(ngModel)]="fd.fieldmap_type"> 
+                        <option *ngFor="let dt of dataTypes" value="{{dt.datatype_name}}" [selected]="fd.fieldmap_type==dt.datatype_name">{{dt.datatype_name}}</option>
                       </select>
                    </td>
                    <td *ngIf="isDisplay()">
-                      <input type="text" class="form-control" readonly value="{{fd.field_type}}"/>
+                      <input type="text" class="form-control" readonly value="{{fd.fieldmap_type}}"/>
                    </td>
                </tr>
           </tbody>
