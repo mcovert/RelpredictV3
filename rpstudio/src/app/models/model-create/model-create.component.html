@@ -252,5 +252,5 @@
   <app-alg-editor [alg]="alg" (saveAlgorithm)="saveAlgorithm($event)" (cancelAlgorithm)="cancelAlgorithm()"></app-alg-editor>
 </app-modal-dialog>
 <app-modal-dialog [(visible)]="showDMDialog">
-   <app-datamap-editor  (saveDatamap)="saveDM($event)" (cancelDatamap)="cancelDM()"></app-datamap-editor>
+   <app-datamap-editor  [mode]="'file'" (saveDatamap)="saveDM($event)" (cancelDatamap)="cancelDM()"></app-datamap-editor>
 </app-modal-dialog>

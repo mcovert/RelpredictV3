@@ -20,6 +20,8 @@ export class DataComponent implements OnInit {
   filteredDatafiles : RPDatafile[];
 
   showDMDialog      : boolean = false;
+  datamap           : RPDatamap = new RPDatamap();
+  mode              : string;
 
   constructor(private dataservice : DataService, private router: Router) {
      this.oBatch = dataservice.getBatches();
@@ -49,7 +51,23 @@ export class DataComponent implements OnInit {
   holdBatch(id: string) {}
   deleteBatch(id: string) {}
 
-  newDatamap() {
+  deleteDatamap(i : number) {
+     console.log('delete data map ' + this.datamaps[i].datamap_name)
+     //this.showDMDialog = true;
+  }
+  displayDatamap(i : number) {
+     this.mode = 'display';
+     this.datamap = this.datamaps[i];
+     this.showDMDialog = true;
+  }
+  createDatamap() {
+     this.datamap = new RPDatamap();
+     this.mode = 'edit';
+     this.showDMDialog = true;
+  }
+  editDatamap(i : number) {
+     this.datamap = this.datamaps[i];
+     this.mode = 'edit';
      this.showDMDialog = true;
   }
   saveDM() {

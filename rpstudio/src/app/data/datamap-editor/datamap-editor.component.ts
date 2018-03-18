@@ -5,12 +5,20 @@ import { NgForm } from '@angular/forms';
 import { GlobalService } from '../../services/global.service';
 import { DataService } from '../../services/data.service';
 
+/*
+*   Mode - load from file (csv)
+*          create new datamap
+*          edit existing
+*          display existing (no edit)
+*/
+
 @Component({
   selector: 'app-datamap-editor',
   templateUrl: './datamap-editor.component.html',
   styleUrls: ['./datamap-editor.component.css']
 })
 export class DatamapEditorComponent implements OnInit {
+  @Input()   mode    : string;     // file, edit, display
   @Input()   datamap : RPDatamap;
   @Output()  saveDatamap    : EventEmitter<RPDatamap> = new EventEmitter<RPDatamap>();
   @Output()  cancelDatamap  : EventEmitter<RPDatamap> = new EventEmitter<RPDatamap>();
@@ -29,6 +37,8 @@ export class DatamapEditorComponent implements OnInit {
   }
 
   ngOnChanges() {
+  	this.newdm = this.datamap;
+  	console.log(this.newdm);
   	this.reset();
   }
 
@@ -43,14 +53,18 @@ export class DatamapEditorComponent implements OnInit {
   reset() {
   }
   readFile(event) {
-  	console.log(event);
   	this.save();
   }
   cancelFile() {
-  	console.log("file load canceled");
   	this.cancel();
   }
   newField() {
   	this.newdm.fields.push(new RPDatamap());
+  }
+  isDisplay() {
+  	return this.mode === 'display';
+  }
+  isFile() {
+  	return this.mode === 'file';
   }
 }
