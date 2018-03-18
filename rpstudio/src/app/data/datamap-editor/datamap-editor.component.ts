@@ -55,14 +55,26 @@ export class DatamapEditorComponent implements OnInit {
   readFile(event) {
   	this.newdm = new RPDatamap();
   	//this.newdm.fields.splice(1, 0);
-  	var lines = event.split('\n');
-  	var cols = lines[0].split(',');
+  	let lines = event.split('\n');
+  	let coldata: [];
+  	let cols = lines[0].split(',');
+  	if (lines.length > 1)
+  	  coldata = lines[1].split(','); 
+  	console.log(coldata);
+  	let i = 0;
   	for (var col of cols) {
   		console.log(col);
   		let fm = new RPFieldmap();
   		fm.fieldmap_name = col;
-  		fm.fieldmap_type = this.dataTypes[0].datatype_name;
+  		if (lines.length > 1) {
+  			let dt = this.globalService.guessDataType(coldata[i]);
+  			console.log(dt);
+  			fm.fieldmap_type = dt;
+  		}
+  		else
+  		    fm.fieldmap_type = this.dataTypes[0].datatype_name;
   		this.newdm.fields.push(fm);
+  		i += 1;
   	}
   	console.log(this.newdm);
   }

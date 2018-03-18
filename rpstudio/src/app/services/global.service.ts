@@ -31,5 +31,14 @@ datatypes      : RPDataType[] = [
   getDataTypes()  : RPDataType[] { 
     return this.datatypes;
   }
+  guessDataType(s: string) {
+    console.log(s);
+    if (s.match(/^[0-9]*$/)) return "integer";
+    if (s.match(/^([0-9]*)\.([0-9]*)$/)) return "double";
+    var s2 = s.toLowerCase();
+    if (s2 == "true" || s2 == "false") return "boolean";
+    if (s.indexOf("|") != -1) return "text";
+    return "string";
+  }
 
 }
