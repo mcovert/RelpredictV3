@@ -58,6 +58,7 @@ import { JobStatusComponent } from './jobs/job-status/job-status.component';
 import { DatafileUploaderComponent } from './data/datafile-uploader/datafile-uploader.component';
 import { DatafileViewerComponent } from './data/datafile-viewer/datafile-viewer.component';
 import { FileLoaderComponent } from './file-loader/file-loader.component';
+import { ModelEditorComponent } from './models/model-editor/model-editor.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +99,8 @@ import { FileLoaderComponent } from './file-loader/file-loader.component';
     JobStatusComponent,
     DatafileUploaderComponent,
     DatafileViewerComponent,
-    FileLoaderComponent
+    FileLoaderComponent,
+    ModelEditorComponent
   ],
   imports: [
     BrowserModule,

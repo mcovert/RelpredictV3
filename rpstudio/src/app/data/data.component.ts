@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { DataService } from '../services/data.service';
-import { RPDatafile, RPBatch, RPDataType, RPDatamap, RPFieldmap} from '../shared/db-classes';
+import { RPDatafile, RPBatch, RPDataType, RPDatamap, RPFieldmap, RPModel, RPFeature, RPTarget} from '../shared/db-classes';
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
 
@@ -19,9 +19,12 @@ export class DataComponent implements OnInit {
   oDM               : Observable<RPDatamap[]>;
   filteredDatafiles : RPDatafile[];
 
+  showMEDialog      : boolean = false;
+
   showDMDialog      : boolean = false;
   datamap           : RPDatamap = new RPDatamap();
   mode              : string;
+  model             : RPModel = new RPModel();
 
   constructor(private dataservice : DataService, private router: Router) {
      this.oBatch = dataservice.getBatches();
@@ -41,6 +44,28 @@ export class DataComponent implements OnInit {
         this.datamaps = resultArray;
      });
   }
+  createModel(i: number) {
+    console.log(this.datamaps[i]);
+    this.model = new RPModel();
+    this.model.name = this.datamaps[i].datamap_name;
+    this.model.version = 1;
+    for (var fm of this.datamaps[i].fields) {
+      let f = new RPFeature();
+      f.name = fm.field_name;
+      f.type = fm.field_type;
+      f.label = fm.field_name;
+      this.model.features.push(f);
+    }
+    console.log(this.model);
+    this.showMEDialog = true;
+  }
+  saveModel() {
+    this.showMEDialog = false;
+  }
+  cancelModel() {
+    this.showMEDialog = false;
+  }
+
   showDatafilesForBatch(batch_id: string) {
     this.filteredDatafiles = this.datafiles.filter(df => df.batch_id === batch_id);
   }

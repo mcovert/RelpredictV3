@@ -1,0 +1,71 @@
+    <form>
+      <br>
+      <h2 class="text-center">Define the model</h2>
+      <br>
+      <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+              <label class="col-3" for="modelName">Model Name</label>
+              <input class="col-6" type="text" id="modelName" [(ngModel)]="model.name" name="name">
+            </div>    
+            <div class="form-group">
+              <label class="col-3" for="modelClass">Model Class</label>
+              <select class="col-6">
+                 <option *ngFor="let mc of modelClasses" value={{mc.label}}>{{mc.label}}</option>
+              </select>
+                 <!--input class="col-4" type="text" id="modelClass" [(ngModel)]="model.model_class" name="model_class"-->
+            </div>    
+            <div class="form-group">
+              <label class="col-3" for="modelVersion">Version</label>
+              <input class="col-1" type="text" id="modelVersion" [(ngModel)]="model.version" disabled="true" name="version">
+            </div>    
+            <div class="form-group">
+              <label class="col-3" for="modelDescription" >Description</label>
+              <textarea class="col-6" id="modelDescription" [(ngModel)]="model.description" name="description"></textarea>
+            </div>  
+        </div>
+        <div class="col-1"></div>  
+      </div>
+    </form>
+<div class="row">
+	<div class="col-2"></div>
+    <h4 class="text-center col-6">Assign Columns</h4>
+    <div class="col-1"></div>
+    <button type="button" class="btn btn-sm btn-primary" (click)="addColumn()">Add Column</button>
+    <div class="col-1"></div>
+</div>
+<div class="table-responsive">
+   <table id="mytable" class="table table-bordred table-striped sortable table-sm">
+     <thead>
+        <th>Model Member</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th align="center">Delete</th>
+     </thead>
+     <tbody>
+       <tr *ngFor="let feature of model.features; let i= index">
+       	  <td>
+              <select class="form-control" name=mf{{i}}> 
+                  <option value="'Feature'">Feature</option>
+                  <option value="'Target'">Target</option>
+                  <option value="'Identifier'">Identifier</option>
+              </select>
+       	  </td>
+          <td>{{feature.name}}</td>
+          <td>{{feature.type}}</td>
+          <td>{{feature.label}}</td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs center-block" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
+       </tr>
+     </tbody>
+   </table>
+</div>
+<div class="row">
+    <div class="text-center">
+       <button type="button" class="btn btn-sm btn-primary">Save</button>
+    </div>
+    <div class="text-center">
+       <button type="button" class="btn btn-sm btn-danger">Cancel</button>
+    </div>
+</div>
+

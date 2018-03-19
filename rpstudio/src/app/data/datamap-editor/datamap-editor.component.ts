@@ -56,7 +56,7 @@ export class DatamapEditorComponent implements OnInit {
   	this.newdm = new RPDatamap();
   	//this.newdm.fields.splice(1, 0);
   	let lines = event.split('\n');
-  	let coldata: [];
+  	let coldata: string[] = [];
   	let cols = lines[0].split(',');
   	if (lines.length > 1)
   	  coldata = lines[1].split(','); 
