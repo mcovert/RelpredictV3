@@ -65,14 +65,14 @@ export class DatamapEditorComponent implements OnInit {
   	for (var col of cols) {
   		console.log(col);
   		let fm = new RPFieldmap();
-  		fm.fieldmap_name = col;
+  		fm.field_name = col;
   		if (lines.length > 1) {
   			let dt = this.globalService.guessDataType(coldata[i]);
   			console.log(dt);
-  			fm.fieldmap_type = dt;
+  			fm.field_type = dt;
   		}
   		else
-  		    fm.fieldmap_type = this.dataTypes[0].datatype_name;
+  		    fm.field_type = this.dataTypes[0].datatype_name;
   		this.newdm.fields.push(fm);
   		i += 1;
   	}

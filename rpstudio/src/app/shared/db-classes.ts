@@ -185,11 +185,11 @@ export class RPDatafile {
   id           : string;
 }
 export class RPFieldmap {
-  fieldmap_name : string;
-  fieldmap_type : string;
+  field_name : string;
+  field_type : string;
   constructor() {
-    this.fieldmap_name = "field-1";
-    this.fieldmap_type = "";
+    this.field_name = "";
+    this.field_type = "";
   }
 }
 export class RPDatamap {

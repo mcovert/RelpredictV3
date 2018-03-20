@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
 import { ModelService } from '../../services/model.service';
-import { RPModel, RPFeature, RPTarget } from '../../shared/db-classes';
+import { RPModel, RPFeature, RPTarget, RPModelClass } from '../../shared/db-classes';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -11,6 +11,8 @@ import { NgForm } from '@angular/forms';
 export class ModelEditorComponent implements OnInit {
 
   @Input() model : RPModel;
+
+  modelClasses   : RPModelClass[];
 
   constructor(private modelService: ModelService) { 
     this.modelService.getModelClasses().subscribe(resultArray => {
