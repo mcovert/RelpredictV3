@@ -15,7 +15,7 @@ export class ModelEditorComponent implements OnInit {
 
   dataTypes      : RPDataType[];
   modelClasses   : RPModelClass[];
-  newModel       : RPModel;
+  newModel       : RPModel; 
 
   constructor(private modelService: ModelService, private globalService : GlobalService) { 
     this.modelService.getModelClasses().subscribe(resultArray => {

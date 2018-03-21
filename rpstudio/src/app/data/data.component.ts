@@ -1,6 +1,8 @@
 import { Component, OnInit, Injectable } from '@angular/core';
+import { GlobalService } from '../services/global.service';
 import { DataService } from '../services/data.service';
-import { RPDatafile, RPBatch, RPDataType, RPDatamap, RPFieldmap, RPModelTemplate, RPFieldTemplate} from '../shared/db-classes';
+import { ModelService } from '../services/model.service';
+import { RPDatafile, RPBatch, RPDataType, RPDatamap, RPFieldmap, RPModelTemplate, RPFieldTemplate, RPModelClass} from '../shared/db-classes';
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
 
@@ -17,7 +19,9 @@ export class DataComponent implements OnInit {
   oBatch            : Observable<RPBatch[]>;
   oDF               : Observable<RPDatafile[]>;
   oDM               : Observable<RPDatamap[]>;
+  dataTypes         : RPDataType[];
   filteredDatafiles : RPDatafile[];
+  modelClasses      : RPModelClass[];
 
   showMEDialog      : boolean = false;
 
@@ -26,10 +30,15 @@ export class DataComponent implements OnInit {
   mode              : string;
   modelTemplate     : RPModelTemplate = new RPModelTemplate();
 
-  constructor(private dataservice : DataService, private router: Router) {
+  constructor(private dataservice : DataService, private router: Router, private modelService: ModelService, private globalService : GlobalService) {
      this.oBatch = dataservice.getBatches();
      this.oDF    = dataservice.getDatafiles();
      this.oDM    = dataservice.getDatamaps();
+     this.dataTypes = this.globalService.getDataTypes();
+     this.modelService.getModelClasses().subscribe(resultArray => {
+        this.modelClasses = resultArray as RPModelClass[];
+    });
+
   }
 
   ngOnInit() {
@@ -49,11 +58,14 @@ export class DataComponent implements OnInit {
     this.modelTemplate = new RPModelTemplate();
     this.modelTemplate.model_name = this.datamaps[i].datamap_name;
     this.modelTemplate.model_version = 1;
+    this.modelTemplate.model_class = this.modelClasses[0].label;
+    this.modelTemplate.fields = [];
     for (var fm of this.datamaps[i].fields) {
       let f = new RPFieldTemplate();
       f.field_name = fm.field_name;
-      f.field_type = fm.field_type;
+      f.field_type = "Feature";
       f.field_label = fm.field_name;
+      f.field_datatype = this.dataTypes[0].datatype_name;
       this.modelTemplate.fields.push(f);
     }
     console.log(this.modelTemplate);

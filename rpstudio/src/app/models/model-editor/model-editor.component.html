@@ -11,7 +11,7 @@
             <div class="form-group">
               <label class="col-3" for="modelClass">Model Class</label>
               <select class="col-6" [(ngModel)]="modelTemplate.model_class" name="mclass">
-                 <option *ngFor="let mc of modelClasses" value={{mc.label}}>{{mc.label}}</option>
+                 <option *ngFor="let mc of modelClasses" value={{mc.label}} [selected]="modelTemplate.model_class==mc.label">{{mc.label}}</option>
               </select>
                  <!--input class="col-4" type="text" id="modelClass" [(ngModel)]="model.model_class" name="model_class"-->
             </div>    
@@ -47,17 +47,15 @@
        <tr *ngFor="let f of modelTemplate.fields; let i= index">
        	  <td>
               <select class="form-control" name=ft{{i}} [(ngModel)]="f.field_type"> 
-                  <option value="'Feature'">Feature</option>
-                  <option value="'Target'">Target</option>
-                  <option value="'Identifier'">Identifier</option>
+                  <option value="Feature" selected=true >Feature</option>
+                  <option value="Target" >Target</option>
+                  <option value="Identifier" >Identifier</option>
               </select>
        	  </td>
-          <td>{{f.field_name}}</td>
+          <td><input class="form-control" type="text" [(ngModel)]="f.field_name" [value]="f.field_name" name=fname{{i}}></td>
           <td>
-              <select class="form-control" name=dt{{i}} [(ngModel)]="f.field_datatype"> 
-                  <option value="'Feature'" selected="true">Feature</option>
-                  <option value="'Target'">Target</option>
-                  <option value="'Identifier'">Identifier</option>
+              <select class="form-control" name=ftsel{{i}} [(ngModel)]="f.field_datatype"> 
+                  <option *ngFor="let dt of dataTypes" value="{{dt.datatype_name}}" [selected]="f.field_datatype==dt.datatype_name">{{dt.datatype_name}}</option>
               </select>
           </td>
           <td><input class="form-control" type="text" [(ngModel)]="f.field_label" [value]="f.field_label" name=flabel{{i}}></td>
@@ -67,11 +65,13 @@
    </table>
 </div>
 <div class="row">
+    <div class="pt-3 col-5"></div>
     <div class="text-center">
        <button type="button" class="btn btn-sm btn-primary">Save</button>
     </div>
     <div class="text-center">
        <button type="button" class="btn btn-sm btn-danger">Cancel</button>
     </div>
+    <div class="col-5"></div>
 </div>
 
