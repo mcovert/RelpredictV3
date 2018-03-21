@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { DataService } from '../services/data.service';
-import { RPDatafile, RPBatch, RPDataType, RPDatamap, RPFieldmap, RPModel, RPFeature, RPTarget} from '../shared/db-classes';
+import { RPDatafile, RPBatch, RPDataType, RPDatamap, RPFieldmap, RPModelTemplate, RPFieldTemplate} from '../shared/db-classes';
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
 
@@ -24,7 +24,7 @@ export class DataComponent implements OnInit {
   showDMDialog      : boolean = false;
   datamap           : RPDatamap = new RPDatamap();
   mode              : string;
-  model             : RPModel = new RPModel();
+  modelTemplate     : RPModelTemplate = new RPModelTemplate();
 
   constructor(private dataservice : DataService, private router: Router) {
      this.oBatch = dataservice.getBatches();
@@ -46,17 +46,17 @@ export class DataComponent implements OnInit {
   }
   createModel(i: number) {
     console.log(this.datamaps[i]);
-    this.model = new RPModel();
-    this.model.name = this.datamaps[i].datamap_name;
-    this.model.version = 1;
+    this.modelTemplate = new RPModelTemplate();
+    this.modelTemplate.model_name = this.datamaps[i].datamap_name;
+    this.modelTemplate.model_version = 1;
     for (var fm of this.datamaps[i].fields) {
-      let f = new RPFeature();
-      f.name = fm.field_name;
-      f.type = fm.field_type;
-      f.label = fm.field_name;
-      this.model.features.push(f);
+      let f = new RPFieldTemplate();
+      f.field_name = fm.field_name;
+      f.field_type = fm.field_type;
+      f.field_label = fm.field_name;
+      this.modelTemplate.fields.push(f);
     }
-    console.log(this.model);
+    console.log(this.modelTemplate);
     this.showMEDialog = true;
   }
   saveModel() {

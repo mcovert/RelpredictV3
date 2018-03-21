@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
 import { ModelService } from '../../services/model.service';
-import { RPModel, RPFeature, RPTarget, RPModelClass } from '../../shared/db-classes';
+import { GlobalService } from '../../services/global.service';
+import { RPModel, RPFeature, RPTarget, RPModelClass, RPModelTemplate, RPDataType, RPFieldTemplate } from '../../shared/db-classes';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -10,31 +11,37 @@ import { NgForm } from '@angular/forms';
 })
 export class ModelEditorComponent implements OnInit {
 
-  @Input() model : RPModel;
+  @Input() modelTemplate : RPModelTemplate;
 
+  dataTypes      : RPDataType[];
   modelClasses   : RPModelClass[];
+  newModel       : RPModel;
 
-  constructor(private modelService: ModelService) { 
+  constructor(private modelService: ModelService, private globalService : GlobalService) { 
     this.modelService.getModelClasses().subscribe(resultArray => {
         this.modelClasses = resultArray as RPModelClass[];
     });
+    this.dataTypes = this.globalService.getDataTypes();
 
   }
 
   ngOnInit() {
   }
   ngOnchanges() {
-    this.model.model_class = this.modelClasses[0].label;
-    this.model.version = 1;
-    this.model.features = [];
-    this.model.targets = [];
-    this.model.notes = [];
-    this.model.description = "";
-    this.model.identifier = "";
-    this.model.current = false; 	
   }
   addColumn() {
-  	this.model.features.push(new RPFeature());
+  	let ft = new RPFieldTemplate();
+  	ft.field_type = "Feature";
+  	ft.field_name = "field-" + this.modelTemplate.fields.length;
+  	ft.field_datatype = this.dataTypes[0].datatype_name;
+  	ft.field_label = "";
+  	this.modelTemplate.fields.push(ft);
   }
-
+  deleteColumn(i : number) {
+  	this.modelTemplate.fields.splice(i, 1);
+  }
+  saveModel() {
+  	this.newModel = new RPModel();
+  }
+  cancelModel() {}
 }

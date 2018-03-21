@@ -117,6 +117,24 @@ export class RPModel {
     this.id = "";
   }
 }
+export class RPFieldTemplate {
+  field_type       : string;
+  field_name       : string;
+  field_datatype   : string;
+  field_label      : string;  
+}
+export class RPModelTemplate {
+  model_name        : string;
+  model_class       : string;
+  model_version     : number;
+  model_description : string;
+  model_identifier  : string;
+  fields            : RPFieldTemplate[];
+  constructor() {
+    this.fields = [];
+  }
+}
+
 export class RPAlgorithmDef {
   name        : string;
   short_name  : string;

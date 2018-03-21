@@ -118,5 +118,5 @@
    <app-datamap-editor  [mode]="mode" [datamap]="datamap" (saveDatamap)="saveDM($event)" (cancelDatamap)="cancelDM()"></app-datamap-editor>
 </app-modal-dialog>
 <app-modal-dialog [(visible)]="showMEDialog">
-   <app-model-editor  [model]="model" (saveModel)="saveModel($event)" (cancelModel)="cancelModel()"></app-model-editor>
+   <app-model-editor  [modelTemplate]="modelTemplate" (saveModel)="saveModel($event)" (cancelModel)="cancelModel()"></app-model-editor>
 </app-modal-dialog>
