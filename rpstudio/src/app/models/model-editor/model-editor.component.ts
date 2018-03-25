@@ -12,6 +12,8 @@ import { NgForm } from '@angular/forms';
 export class ModelEditorComponent implements OnInit {
 
   @Input() modelTemplate : RPModelTemplate;
+  @Output saveModel : EventEmitter<RPModel> = new EventEmitter<RPModel>();
+  @Output cancelModel : EventEmitter<RPModel> = new EventEmitter<RPModel>();
 
   dataTypes      : RPDataType[];
   modelClasses   : RPModelClass[];
@@ -40,8 +42,11 @@ export class ModelEditorComponent implements OnInit {
   deleteColumn(i : number) {
   	this.modelTemplate.fields.splice(i, 1);
   }
-  saveModel() {
+  save() {
   	this.newModel = new RPModel();
+  	this.saveModel.emit(this.newModel);
   }
-  cancelModel() {}
+  cancel() {
+  	this.cancelModel.emit();
+  }
 }

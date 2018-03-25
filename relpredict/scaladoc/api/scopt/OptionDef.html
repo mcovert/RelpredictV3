@@ -1,0 +1,808 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>OptionDef - scopt.OptionDef</title>
+          <meta name="description" content="OptionDef - scopt.OptionDef" />
+          <meta name="keywords" content="OptionDef scopt.OptionDef" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../lib/template.js"></script>
+      <script type="text/javascript" src="../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../index.html';
+            var hash = 'scopt.OptionDef';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <img alt="Class" src="../lib/class_big.png" />
+        <p id="owner"><a href="package.html" class="extype" name="scopt">scopt</a></p>
+        <h1>OptionDef</h1><h3><span class="morelinks"><div>Related Doc:
+            <a href="package.html" class="extype" name="scopt">package scopt</a>
+          </div></span></h3><span class="permalink">
+      <a href="../index.html#scopt.OptionDef" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">OptionDef</span><span class="tparams">[<span name="A">A</span>, <span name="C">C</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By Inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="scopt.OptionDef"><span>OptionDef</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show All</span></li>
+            </ol>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="scopt.OptionDef#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(parser:scopt.OptionParser[C],kind:scopt.OptionDefKind,name:String)(implicitevidence$14:scopt.Read[A]):scopt.OptionDef[A,C]"></a>
+      <a id="&lt;init&gt;:OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">OptionDef</span><span class="params">(<span name="parser">parser: <a href="OptionParser.html" class="extype" name="scopt.OptionParser">OptionParser</a>[<span class="extype" name="scopt.OptionDef.C">C</span>]</span>, <span name="kind">kind: <span class="extype" name="scopt.OptionDefKind">OptionDefKind</span></span>, <span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="Read.html" class="extype" name="scopt.Read">Read</a>[<span class="extype" name="scopt.OptionDef.A">A</span>]</span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@&lt;init&gt;(parser:scopt.OptionParser[C],kind:scopt.OptionDefKind,name:String)(implicitevidence$14:scopt.Read[A]):scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scopt.OptionDef#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(_parser:scopt.OptionParser[C],_id:Int,_kind:scopt.OptionDefKind,_name:String,_shortOpt:Option[String],_keyName:Option[String],_valueName:Option[String],_desc:String,_action:(A,C)=&gt;C,_validations:Seq[A=&gt;Either[String,Unit]],_configValidations:Seq[C=&gt;Either[String,Unit]],_parentId:Option[Int],_minOccurs:Int,_maxOccurs:Int,_isHidden:Boolean)(implicitevidence$13:scopt.Read[A]):scopt.OptionDef[A,C]"></a>
+      <a id="&lt;init&gt;:OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">OptionDef</span><span class="params">(<span name="_parser">_parser: <a href="OptionParser.html" class="extype" name="scopt.OptionParser">OptionParser</a>[<span class="extype" name="scopt.OptionDef.C">C</span>]</span>, <span name="_id">_id: <span class="extype" name="scala.Int">Int</span></span>, <span name="_kind">_kind: <span class="extype" name="scopt.OptionDefKind">OptionDefKind</span></span>, <span name="_name">_name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="_shortOpt">_shortOpt: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="_keyName">_keyName: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="_valueName">_valueName: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="_desc">_desc: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="_action">_action: (<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>) ⇒ <span class="extype" name="scopt.OptionDef.C">C</span></span>, <span name="_validations">_validations: <span class="extype" name="scala.Seq">Seq</span>[(<span class="extype" name="scopt.OptionDef.A">A</span>) ⇒ <span class="extype" name="scala.Either">Either</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Unit">Unit</span>]]</span>, <span name="_configValidations">_configValidations: <span class="extype" name="scala.Seq">Seq</span>[(<span class="extype" name="scopt.OptionDef.C">C</span>) ⇒ <span class="extype" name="scala.Either">Either</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Unit">Unit</span>]]</span>, <span name="_parentId">_parentId: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="_minOccurs">_minOccurs: <span class="extype" name="scala.Int">Int</span></span>, <span name="_maxOccurs">_maxOccurs: <span class="extype" name="scala.Int">Int</span></span>, <span name="_isHidden">_isHidden: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="Read.html" class="extype" name="scopt.Read">Read</a>[<span class="extype" name="scopt.OptionDef.A">A</span>]</span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@&lt;init&gt;(_parser:scopt.OptionParser[C],_id:Int,_kind:scopt.OptionDefKind,_name:String,_shortOpt:Option[String],_keyName:Option[String],_valueName:Option[String],_desc:String,_action:(A,C)=&gt;C,_validations:Seq[A=&gt;Either[String,Unit]],_configValidations:Seq[C=&gt;Either[String,Unit]],_parentId:Option[Int],_minOccurs:Int,_maxOccurs:Int,_isHidden:Boolean)(implicitevidence$13:scopt.Read[A]):scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@##():Int" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scopt.OptionDef#abbr" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="abbr(x:String):scopt.OptionDef[A,C]"></a>
+      <a id="abbr(String):OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">abbr</span><span class="params">(<span name="x">x: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@abbr(x:String):scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Adds short option -x.</p>
+    </li><li name="scopt.OptionDef#action" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="action(f:(A,C)=&gt;C):scopt.OptionDef[A,C]"></a>
+      <a id="action((A,C)⇒C):OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">action</span><span class="params">(<span name="f">f: (<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>) ⇒ <span class="extype" name="scopt.OptionDef.C">C</span></span>)</span><span class="result">: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@action(f:(A,C)=&gt;C):scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Adds a callback function.</p>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scopt.OptionDef#children" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="children(xs:scopt.OptionDef[_,C]*):scopt.OptionDef[A,C]"></a>
+      <a id="children(OptionDef[_,C]*):OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">children</span><span class="params">(<span name="xs">xs: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[_, <span class="extype" name="scopt.OptionDef.C">C</span>]*</span>)</span><span class="result">: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@children(xs:scopt.OptionDef[_,C]*):scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Adds opt/arg under this command.</p>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@clone():Object" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@finalize():Unit" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scopt.OptionDef#foreach" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="foreach(f:A=&gt;Unit):scopt.OptionDef[A,C]"></a>
+      <a id="foreach((A)⇒Unit):OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">foreach</span><span class="params">(<span name="f">f: (<span class="extype" name="scopt.OptionDef.A">A</span>) ⇒ <span class="extype" name="scala.Unit">Unit</span></span>)</span><span class="result">: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@foreach(f:A=&gt;Unit):scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Adds a callback function.</p>
+    </li><li name="scopt.OptionDef#fullName" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="fullName:String"></a>
+      <a id="fullName:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fullName</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@fullName:String" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@hashCode():Int" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scopt.OptionDef#hidden" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="hidden():scopt.OptionDef[A,C]"></a>
+      <a id="hidden():OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hidden</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@hidden():scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Hides the option in any usage text.</p>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scopt.OptionDef#keyName" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="keyName(x:String):scopt.OptionDef[A,C]"></a>
+      <a id="keyName(String):OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">keyName</span><span class="params">(<span name="x">x: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@keyName(x:String):scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Adds key name used in the usage text.</p>
+    </li><li name="scopt.OptionDef#keyValueName" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="keyValueName(k:String,v:String):scopt.OptionDef[A,C]"></a>
+      <a id="keyValueName(String,String):OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">keyValueName</span><span class="params">(<span name="k">k: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="v">v: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@keyValueName(k:String,v:String):scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Adds key and value names used in the usage text.</p>
+    </li><li name="scopt.OptionDef#maxOccurs" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="maxOccurs(n:Int):scopt.OptionDef[A,C]"></a>
+      <a id="maxOccurs(Int):OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">maxOccurs</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@maxOccurs(n:Int):scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Allows the argument to appear at most <code>n</code> times.</p>
+    </li><li name="scopt.OptionDef#minOccurs" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="minOccurs(n:Int):scopt.OptionDef[A,C]"></a>
+      <a id="minOccurs(Int):OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">minOccurs</span><span class="params">(<span name="n">n: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@minOccurs(n:Int):scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Requires the option to appear at least <code>n</code> times.</p>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@notify():Unit" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scopt.OptionDef#optional" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="optional():scopt.OptionDef[A,C]"></a>
+      <a id="optional():OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">optional</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@optional():scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Chanages the option to be optional.</p>
+    </li><li name="scopt.OptionDef#required" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="required():scopt.OptionDef[A,C]"></a>
+      <a id="required():OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">required</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@required():scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Requires the option to appear at least once.</p>
+    </li><li name="scopt.OptionDef#shortDescription" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="shortDescription:String"></a>
+      <a id="shortDescription:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">shortDescription</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@shortDescription:String" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scopt.OptionDef#text" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="text(x:String):scopt.OptionDef[A,C]"></a>
+      <a id="text(String):OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">text</span><span class="params">(<span name="x">x: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@text(x:String):scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Adds description in the usage text.</p>
+    </li><li name="scopt.OptionDef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@toString():String" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="scopt.OptionDef">OptionDef</a> → AnyRef → Any</dd></dl></div>
+    </li><li name="scopt.OptionDef#unbounded" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="unbounded():scopt.OptionDef[A,C]"></a>
+      <a id="unbounded():OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">unbounded</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@unbounded():scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Allows the argument to appear multiple times.</p>
+    </li><li name="scopt.OptionDef#validate" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="validate(f:A=&gt;Either[String,Unit]):scopt.OptionDef[A,C]"></a>
+      <a id="validate((A)⇒Either[String,Unit]):OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">validate</span><span class="params">(<span name="f">f: (<span class="extype" name="scopt.OptionDef.A">A</span>) ⇒ <span class="extype" name="scala.Either">Either</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Unit">Unit</span>]</span>)</span><span class="result">: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@validate(f:A=&gt;Either[String,Unit]):scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Adds custom validation.</p>
+    </li><li name="scopt.OptionDef#valueName" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="valueName(x:String):scopt.OptionDef[A,C]"></a>
+      <a id="valueName(String):OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">valueName</span><span class="params">(<span name="x">x: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="" class="extype" name="scopt.OptionDef">OptionDef</a>[<span class="extype" name="scopt.OptionDef.A">A</span>, <span class="extype" name="scopt.OptionDef.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@valueName(x:String):scopt.OptionDef[A,C]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Adds value name used in the usage text.</p>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@wait():Unit" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.OptionDef@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>

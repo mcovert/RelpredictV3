@@ -59,7 +59,11 @@
               </select>
           </td>
           <td><input class="form-control" type="text" [(ngModel)]="f.field_label" [value]="f.field_label" name=flabel{{i}}></td>
-          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs center-block" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Delete">
+            <button class="btn btn-danger btn-xs center-block" data-title="Delete" data-toggle="modal" data-target="#delete" (click)="deleteColumn(i)">
+              <span class="fa fa-trash"></span>
+            </button>
+          </p></td>
        </tr>
      </tbody>
    </table>
@@ -67,10 +71,10 @@
 <div class="row">
     <div class="pt-3 col-5"></div>
     <div class="text-center">
-       <button type="button" class="btn btn-sm btn-primary">Save</button>
+       <button type="button" class="btn btn-sm btn-primary" (click)="save()">Save</button>
     </div>
     <div class="text-center">
-       <button type="button" class="btn btn-sm btn-danger">Cancel</button>
+       <button type="button" class="btn btn-sm btn-danger" (click)="cancel()">Cancel</button>
     </div>
     <div class="col-5"></div>
 </div>

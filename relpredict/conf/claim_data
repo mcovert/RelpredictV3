@@ -1,0 +1,8 @@
+name claim_query
+description Build claim vector for training and testing
+key claim_id
+query select claim_id, account, claim_amount, paid_amount, claim_state, filing_npi, place_of_service from claims
+encode diag_code using mhc from select claim_id, diag_code from claim_diag_codes
+encode cpt_code using mhc from select claim_id, cpt_code from claim_cpt_codes
+encode payer using mhc from select claim_id, payer_id from claim_payers
+
