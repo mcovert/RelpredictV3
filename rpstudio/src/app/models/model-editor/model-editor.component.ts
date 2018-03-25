@@ -12,8 +12,8 @@ import { NgForm } from '@angular/forms';
 export class ModelEditorComponent implements OnInit {
 
   @Input() modelTemplate : RPModelTemplate;
-  @Output saveModel : EventEmitter<RPModel> = new EventEmitter<RPModel>();
-  @Output cancelModel : EventEmitter<RPModel> = new EventEmitter<RPModel>();
+  @Output() saveModel : EventEmitter<RPModel> = new EventEmitter<RPModel>();
+  @Output() cancelModel : EventEmitter<RPModel> = new EventEmitter<RPModel>();
 
   dataTypes      : RPDataType[];
   modelClasses   : RPModelClass[];
