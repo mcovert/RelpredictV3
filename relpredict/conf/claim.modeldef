@@ -1,0 +1,30 @@
+{
+   model: "claims",
+   model_class: "claim",
+   version: 1, 
+   description: "Model to predict claim status",
+   identifier: "casenumber",
+   features: [
+      { name: "account",          data_type: "string",  description: "Account",                              parameters: [ { parm_name: "encode", parm_value: "category"} ] },
+      { name: "claim_amt",        data_type: "double"   description: "Amount of the claim",                  parameters: [] },
+      { name: "appeal_count",     data_type: "integer"  description: "Number of appeals",                    parameters: [] },
+      { name: "cpt_codes",        data_type: "text"     description: "List of CPT codes",                    parameters: [ { parm_name: "delimiter", parm_vale: "pipe"} ] },
+      { name: "diag_codes",       data_type: "text"     description: "List of diagnosis codes",              parameters: [ { parm_name: "delimiter", parm_vale: "pipe"} ] },
+      { name: "payors",           data_type: "text"     description: "List of payors (insurers)",            parameters: [ { parm_name: "delimiter", parm_vale: "pipe"} ] },
+      { name: "plans",            data_type: "text"     description: "List of insurance plans",              parameters: [ { parm_name: "delimiter", parm_vale: "pipe"} ] },
+      { name: "npi",              data_type: "string"   description: "Provider number",                      parameters: [ { parm_name: "encode", parm_value: "category"} ] },
+      { name: "paid_amt",         data_type: "double"   description: "Amount of the claim paid",             parameters: [] },
+      { name: "place_of_service", data_type: "string"   description: "Facility where service was performed", parameters: [ { parm_name: "encode", parm_value: "category"} ] },
+      { name: "state",            data_type: "string"   description: "State where claim was filed",          parameters: [ { parm_name: "encode", parm_value: "category"} ] }
+   ],
+   targets: [
+      { name: "status", data_type: "string", description: "Claim outcome status", 
+          algorithms: [ { algorithm: "dt", ,parameters: [ { parm_name: "iterations", parm_value" "100" } ]},
+                        { algorithm: "gbt", parameters: [] },
+                        { algorithm: "rf",  parameters [] }
+                      ]
+      }
+   ],
+   parameters: []
+}
+
