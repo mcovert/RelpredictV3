@@ -114,9 +114,9 @@
     </div>
   </div>
 </div>
-<app-modal-dialog [(visible)]="showDMDialog">
+<app-modal-dialog *ngIf="showDMDialog" [(visible)]="showDMDialog">
    <app-datamap-editor  [mode]="mode" [datamap]="datamap" (saveDatamap)="saveDM($event)" (cancelDatamap)="cancelDM()"></app-datamap-editor>
 </app-modal-dialog>
-<app-modal-dialog [(visible)]="showMEDialog">
+<app-modal-dialog *ngIf="showMEDialog" [(visible)]="showMEDialog">
    <app-model-editor  [modelTemplate]="modelTemplate" (saveModel)="saveModel($event)" (cancelModel)="cancelModel()"></app-model-editor>
 </app-modal-dialog>

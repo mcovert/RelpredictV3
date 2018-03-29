@@ -22,6 +22,7 @@ datatypes      : RPDataType[] = [
 ];
 
   url = 'http://ai25:3000/api/';
+  basedir = '/home/relpredict';
 
   constructor() { }
 

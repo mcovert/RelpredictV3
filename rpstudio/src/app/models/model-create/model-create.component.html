@@ -16,7 +16,7 @@
               <select>
                  <option *ngFor="let mc of modelClasses" value={{mc.label}}>{{mc.label}}</option>
               </select>
-                 <!--input class="col-4" type="text" id="modelClass" [(ngModel)]="model.model_class" name="model_class"-->
+              <button type="button" class="btn btn-sm btn-primary" (click)="showModelClassDialog()">Add Model Class</button>
             </div>    
             <div class="form-group">
               <label class="col-2" for="modelVersion">Version</label>
@@ -245,12 +245,31 @@
     </div>
   </wizard-step>
 </wizard>
-<app-modal-dialog [(visible)]="showParm">
+<app-modal-dialog *ngIf="showParm" [(visible)]="showParm">
     <app-parm-editor [parms]="parms" [parmDefs]="parmDefs" (saveParms)="saveParms($event)" (cancelParms)="cancelParms()"></app-parm-editor>
 </app-modal-dialog>
-<app-modal-dialog [(visible)]="showAlg">
+<app-modal-dialog *ngIf="showAlg" [(visible)]="showAlg">
   <app-alg-editor [alg]="alg" (saveAlgorithm)="saveAlgorithm($event)" (cancelAlgorithm)="cancelAlgorithm()"></app-alg-editor>
 </app-modal-dialog>
-<app-modal-dialog [(visible)]="showDMDialog">
+<app-modal-dialog *ngIf="showDMDialog" [(visible)]="showDMDialog">
    <app-datamap-editor  [mode]="'file'" (saveDatamap)="saveDM($event)" (cancelDatamap)="cancelDM()"></app-datamap-editor>
+</app-modal-dialog>
+<app-modal-dialog *ngIf="showMCDialog" [(visible)]="showMCDialog">
+  <h3 class="col-12">Enter New Model Class</h3>  
+  <div class="row" class="col-12">
+     <div class="col-3"></div>
+     <label class="col-2" for="mcName">Model Class</label>
+     <input class="col-4" type="text" id="mcName" [(ngModel)]="model_class_name" name="mcname">
+     <div class="col-3"></div>
+  </div>
+  <div class="row" class="col-12">
+     <div class="col-3"></div>
+     <label class="col-2" for="mcDesc">Model Name</label>
+     <input class="col-4" type="text" id="mcDesc" [(ngModel)]="model_class_desc" name="mcdesc">
+     <div class="col-3"></div>
+  </div>
+  <div class="text-center">
+    <button type="button" class="btn btn-sm btn-success" (click)="saveMC()">Save</button>
+    <button type="button" class="btn btn-sm btn-danger"  (click)="cancelMC()">Cancel</button>
+  </div>
 </app-modal-dialog>

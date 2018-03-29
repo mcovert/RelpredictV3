@@ -18,6 +18,9 @@ export class ModelCreateComponent implements OnInit {
   dataTypes    : RPDataType[];
   algDefs      : RPAlgorithmDef[];
   alg          : RPTargetAlgorithm;
+  showMCDialog : boolean = false;
+  model_class_name : string;
+  model_class_desc : string;
   showParm     : boolean = false;
   showAlg      : boolean = false;
   showDMDialog : boolean = false;
@@ -191,5 +194,17 @@ export class ModelCreateComponent implements OnInit {
   }
   trackByIndex(index: number, value: number) {
     return index;
+  }
+  showModelClassDialog() {
+    this.model_class_name = "";
+    this.model_class_desc = "";
+    this.showMCDialog = true;
+  }
+  saveMC() {
+    console.log("Adding: " + this.model_class_name + "/" + this.model_class_desc);
+    this.showMCDialog = false;
+  }
+  cancelMC() {
+    this.showMCDialog = false;
   }
 }
