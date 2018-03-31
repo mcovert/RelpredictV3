@@ -1,5 +1,11 @@
 'use strict';
 
+for (let j = 0; j < process.argv.length; j++) {  
+    console.log(j + ' -> ' + (process.argv[j]));
+}
+
+global.baseDir = '/home/mcovert/' + process.argv[2] + '/';
+
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 
@@ -10,7 +16,7 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded( { extended: false}));
 app.use(bodyParser.json());
 var logger = function(req, res, next) {
-  console.log(JSON.stringify(req.body, null, 2));
+  console.log("REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
   next();
 }
 app.use(logger);

@@ -2,10 +2,21 @@
 
 var fs = require('fs');
 
+var getFiles = function(dirName) {
+   var files = fs.readdirSync(dirName);
+   var fstat = [];
+   for (var i = 0; i < files.length; i++) {
+   	  	var fileName = dirName + files[i]; 
+   	  	var stat = fs.statSync(fileName);
+   	  	if (stat.isDirectory()) fstat.push(getFiles(fileName + "/"));
+   	  	else fstat.push({ dir_name: dirName, file_name: files[i], stats: stat});
+   }
+   return fstat;	
+} 
+
 module.exports = function(Datafile) {
    Datafile.listAll = function(cb) {
-   	  var files = fs.readdirSync('/home/mcovert/testfiles');
-   	  cb(null, files);
+   	  cb(null, getFiles(global.baseDir + 'data/datafiles/'));
    } 	
    Datafile.remoteMethod(
    	'listAll', {
@@ -19,8 +30,8 @@ module.exports = function(Datafile) {
    		}
    	})
    Datafile.listAllForBatch = function(batch, cb) {
-   	  var files = fs.readdirSync('/home/mcovert/testfiles/' + batch);
-   	  cb(null, files);
+   	  //var files = fs.readdirSync('/home/mcovert/testfiles/' + batch);
+   	  cb(null, getFiles(global.baseDir + 'data/datafiles/' + batch + "/"));
    } 	
    Datafile.remoteMethod(
    	'listAllForBatch', {
