@@ -97,7 +97,22 @@ export class DataComponent implements OnInit {
      this.datamap = this.datamaps[i];
      this.showDMDialog = true;
   }
-  createDatamap() {
+  createNewDatamap() {
+     this.datamap = new RPDatamap();
+     this.mode = 'file';
+     this.showDMDialog = true;
+  }
+  createDatamapFromFile() {
+     this.datamap = new RPDatamap();
+     this.mode = 'file';
+     this.showDMDialog = true;
+  }
+  createDatamapFromModel() {
+     this.datamap = new RPDatamap();
+     this.mode = 'file';
+     this.showDMDialog = true;
+  }
+  createDatamapFromDatamap() {
      this.datamap = new RPDatamap();
      this.mode = 'file';
      this.showDMDialog = true;

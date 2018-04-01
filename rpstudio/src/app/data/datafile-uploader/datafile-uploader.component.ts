@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from '../../services/global.service';
 import { DataService } from '../../services/data.service';
+import { RPDatafile, RPBatch, RPDataType, RPDatamap, RPFieldmap, RPModelTemplate, RPFieldTemplate, RPModelClass} from '../../shared/db-classes';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-datafile-uploader',
@@ -10,15 +12,29 @@ import { DataService } from '../../services/data.service';
 export class DatafileUploaderComponent implements OnInit {
 
   filesToUpload: Array<File> = [];	
-  fMsg: string = "No files selected";
+  fMsg: string = "";
+  dm: RPDatamap = new RPDatamap();
+  showDMDialog: boolean = false;
+  mode: string = 'file';
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private router: Router) { }
 
   ngOnInit() {
   }
 
   upload() {
-  	this.dataService.uploadFiles(this.filesToUpload);
+  	this.fMsg = "Upload started...";
+  	this.dataService.uploadFiles(this.filesToUpload).subscribe(
+           res => {
+              console.log(res);
+              this.fMsg = "Upload completed successfully";
+              setTimeout(() => this.router.navigate(['data']), 2000);      
+           },
+           err => {
+              console.log("Error occured");
+              this.fMsg = "Upload failed";
+           });
+
   }
 
   fileChangeEvent(fileInput: any) {

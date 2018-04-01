@@ -88,7 +88,16 @@
     <div class="row pb-1">
 	  <div class="col-2"></div>
       <div class="col-8 text-center"><h4>Data Maps</h4></div>
-      <div class="col-2"><button class="btn btn-primary btn-xs" data-title="New Datamap" (click)="createDatamap()"><span class="fa fa-plus">New Data Map</span></button></div>
+        <div class="dropdown col-2" style="float:right">
+         <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">Create Datamap<span class="caret"></span></button>
+         <div class="dropdown-menu">
+           <a class="dropdown-item" (click)="createNewDatamap()">New</a>
+           <a class="dropdown-item" (click)="createDatamapFromModel()">From model</a>
+           <a class="dropdown-item" (click)="createDatamapFromFile()">From file</a>
+           <a class="dropdown-item" (click)="createDatamapFromDatamap()">From existing</a>
+         </div>
+       </div>
+      <!--div class="col-2"><button class="btn btn-primary btn-xs" data-title="New Datamap" (click)="createDatamap()"><span class="fa fa-plus">New Data Map</span></button></div-->
     </div>
     <div class="table-responsive">
      <table id="mytable" class="table table-bordred table-striped sortable table-sm">
@@ -106,7 +115,7 @@
           <td class="text-center">{{datamap.datamap_type}}</td>
           <td align="center"><p data-placement="top" data-toggle="tooltip" title="Display"><button class="btn btn-info btn-xs center-block" (click)="displayDatamap(i)"><span class="fa fa-eye"></span></button></p></td>
           <td align="center"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs center-block" data-title="Edit" data-toggle="modal" data-target="#edit"  (click)=editDatamap(i)><span class="fa fa-pencil"></span></button></p></td>
-          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Create Model"><button class="btn btn-primary btn-xs center-block" data-title="Create Model" data-toggle="modal" data-target="#createmodel"  (click)=createModel(i)><span class="fa fa-pencil"></span></button></p></td>
+          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Create Model"><button class="btn btn-success btn-xs center-block" data-title="Create Model" data-toggle="modal" data-target="#createmodel"  (click)=createModel(i)><span class="fa fa-pencil"></span></button></p></td>
           <td align="center"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs center-block" data-title="Delete" data-toggle="modal" data-target="#delete" (click)="deleteDatamap(i)"><span class="fa fa-trash"></span></button></p></td> 
        </tr>
       </tbody>
