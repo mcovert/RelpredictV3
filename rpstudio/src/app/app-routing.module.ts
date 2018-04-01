@@ -9,6 +9,7 @@ import { ModelsComponent } from './models/models.component';
 import { ModelComponent } from './models/model/model.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { DataComponent } from './data/data.component';
+import { DatafileUploaderComponent } from './data/datafile-uploader/datafile-uploader.component';
 import { AdminComponent } from './admin/admin.component';
 import { HelpComponent } from './help/help.component';
 import { LogBrowserComponent } from './log-browser/log-browser.component';
@@ -26,6 +27,7 @@ const routes: Routes = [
  { path: 'jobs', component: JobsComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'help', component: HelpComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'data', component: DataComponent, canActivate: [OnlyLoggedInGuard] },
+ { path: 'data-upload', component: DatafileUploaderComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'admin', component: AdminComponent, canActivate: [OnlyLoggedInGuard] }
 ];
 

@@ -58,16 +58,17 @@ module.exports = function(Datafile) {
     });
     Datafile.upload = function (req, res, cb) {
     	console.log('Uploading...');
+    	console.log(req);
         var upload = multer({
             storage: storage
-        }).array('file', 12);
+        }).array('file[]', 12);
         upload(req, res, function (err) {
             if (err) {
                 // An error occurred when uploading
                 res.json(err);
             }
             res.json(uploadedFileName);
-        });        
+        });   
     };
 
     Datafile.remoteMethod('upload',   {

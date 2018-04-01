@@ -1,3 +1,45 @@
-<p>
-  datafile-uploader works!
-</p>
+<div class="container p-2">
+<h1>Upload files...</h1>
+<br>
+<h4>Selected files:</h4>
+<!--br>
+<ul class="list-group">
+	<li class="list-group-item" *ngFor="let f of filesToUpload">{{f.name}}</li>
+</ul>
+<br-->
+<div class="table-responsive">
+   <table id="mytable2" class="table table-bordered table-striped sortable table-sm">
+        <thead>
+               <th class="text-center">Name</th>
+               <th class="text-center">Size</th>
+               <th class="text-center">Modified</th>
+               <th class="text-center">Remove</th>
+        </thead>
+          <tbody>
+               <tr *ngFor="let f of filesToUpload; let i=index">
+                   <td>{{f.name}}</td>
+                   <td class="text-center">{{f.size}}</td>
+                   <td class="text-center">{{f.lastModifiedDate}}</td>
+                   <td align="center">
+                   	  <p data-placement="top" data-toggle="tooltip" title="Remove from list">
+                   	    <button class="btn btn-danger btn-xs center-block" data-title="Remove" data-toggle="modal" data-target="#remove" (click)="removeFile(i)" >
+                   	   	  <span class="fa fa-times-circle"></span>
+                   	   	</button>
+                      </p>
+                   </td>
+               </tr>
+          </tbody>
+    </table>
+</div>
+<br>
+<!--input id="cin" name="cin" type="file" (change)="fileChangeEvent($event)" placeholder="Upload a file..." multiple/-->
+<div class="row pt-0" style="float:right">
+<label class="btn btn-primary btn-s pt-1">Select files...
+   <input id="cin" name="cin" multiple type="file" (change)="fileChangeEvent($event)" style="display: none;">
+</label>
+<div class="col-1"></div>
+<button type="button" class="btn btn-success btn-s pl-1" style="height: 36px" (click)="upload()">
+    <i class="fa fa-open-file"></i>&nbsp;Upload files
+</button>
+</div>
+</div>

@@ -37,4 +37,23 @@ datamapTypes   : string[] = [ "Map", "Xlate" ];
   createDatamap(datamap: RPDatamap) {}
   updateDatamap(datamap: RPDatamap) {}
   deleteDatamap(id: string) {}
+
+  uploadFiles(files : Array<File>) {
+    let formData: any = new FormData();
+    console.log(files);
+
+    for(let i =0; i < files.length; i++){
+        formData.append("file[]", files[i], files[i]['name']);
+    }
+    console.log('form data variable :   '+ formData.toString());
+
+    this.httpService.post(this.globalService.getServerUrl() + 'datafiles/upload', formData)
+        .subscribe(
+           res => {
+              console.log(res);
+           },
+           err => {
+              console.log("Error occured");
+           });
+  }
 }
