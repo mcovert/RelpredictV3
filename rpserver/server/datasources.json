@@ -8,5 +8,12 @@
     "name": "db",
     "user": "rpadmin",
     "connector": "mongodb"
+  },
+  "storage": {
+    "name": "storage",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "/home/mcovert/ai/data/uploads/",
+    "maxFileSize": "5000000000"
   }
 }
