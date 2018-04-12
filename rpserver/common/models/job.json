@@ -15,10 +15,6 @@
       "type": "string",
       "required": true
     },
-    "job_version": {
-      "type": "number",
-      "required": true
-    },
     "create_date": {
       "type": "date",
       "required": true
@@ -27,8 +23,8 @@
       "type": "string",
       "required": true
     },
-    "parms": {
-      "type": "object",
+    "job_parms": {
+      "type": "string",
       "required": true
     },
     "description": {

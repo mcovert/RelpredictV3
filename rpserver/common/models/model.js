@@ -34,15 +34,15 @@ module.exports = function(Model) {
     	console.log('Setting current version for ' + model_class + "/" + model_name + " to " + model_version);
     	var version = 1;
         Model.findOne({where: {and: [{model_class: model_class}, {name: model_name}, {current: true}]}}, function(err, model) {
-            console.log('old'); console.log(model);
+            //console.log('old'); console.log(model);
             if (!!model) model.updateAttribute('current', false, function(err, model) {
-                console.log(model);
+                //console.log(model);
             });
         });
         Model.findOne({where: {and: [{model_class: model_class}, {name: model_name}, {version: model_version}]}}, function(err, model) {
-            console.log('new'); console.log(model);
+            //console.log('new'); console.log(model);
             if (!!model) model.updateAttribute('current',  true, function(err, model) {
-                console.log(model);
+                //console.log(model);
             });
         });
         cb(null, "OK");
