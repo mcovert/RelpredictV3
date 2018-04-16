@@ -1,0 +1,440 @@
+2018-04-16 15:14:00,149 - [INFO] - from org.nd4j.linalg.factory.Nd4jBackend in main
+                
+Loaded [CpuBackend] backend
+
+2018-04-16 15:14:00,824 - [INFO] - from org.nd4j.nativeblas.NativeOpsHolder in main
+                
+Number of threads used for NativeOps: 4
+
+2018-04-16 15:14:01,207 - [INFO] - from org.nd4j.nativeblas.Nd4jBlas in main
+                
+Number of threads used for BLAS: 4
+
+2018-04-16 15:14:01,213 - [INFO] - from org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner in main
+                
+Backend used: [CPU]; OS: [Linux]
+
+2018-04-16 15:14:01,213 - [INFO] - from org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner in main
+                
+Cores: [16]; Memory: [15.7GB];
+
+2018-04-16 15:14:01,213 - [INFO] - from org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner in main
+                
+Blas vendor: [OPENBLAS]
+
+2018-04-16 15:14:01,457 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Starting vocabulary building...
+
+2018-04-16 15:14:03,684 - [INFO] - from org.deeplearning4j.models.word2vec.wordstore.VocabConstructor in main
+                
+Sequences checked: [30], Current vocabulary size: [2291]; Sequences/sec: [13.47];
+
+2018-04-16 15:14:03,703 - [INFO] - from org.deeplearning4j.models.embeddings.loader.WordVectorSerializer in main
+                
+Projected memory use for model: [1.75 MB]
+
+2018-04-16 15:14:03,753 - [INFO] - from org.deeplearning4j.models.embeddings.inmemory.InMemoryLookupTable in main
+                
+Initializing syn1...
+
+2018-04-16 15:14:03,753 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Building learning algorithms:
+
+2018-04-16 15:14:03,754 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+          building SequenceLearningAlgorithm: [PV-DBOW]
+
+2018-04-16 15:14:03,758 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+          building ElementsLearningAlgorithm: [SkipGram]
+
+2018-04-16 15:14:03,758 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Starting learning process...
+
+2018-04-16 15:14:07,342 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [1] finished; Elements processed so far: [7590];  Sequences processed: [30]
+
+2018-04-16 15:14:10,602 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [2] finished; Elements processed so far: [15180];  Sequences processed: [30]
+
+2018-04-16 15:14:13,926 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [3] finished; Elements processed so far: [22770];  Sequences processed: [30]
+
+2018-04-16 15:14:17,119 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [4] finished; Elements processed so far: [30360];  Sequences processed: [30]
+
+2018-04-16 15:14:20,387 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [5] finished; Elements processed so far: [37950];  Sequences processed: [30]
+
+2018-04-16 15:14:23,673 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [6] finished; Elements processed so far: [45540];  Sequences processed: [30]
+
+2018-04-16 15:14:26,958 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [7] finished; Elements processed so far: [53130];  Sequences processed: [30]
+
+2018-04-16 15:14:30,231 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [8] finished; Elements processed so far: [60720];  Sequences processed: [30]
+
+2018-04-16 15:14:33,480 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [9] finished; Elements processed so far: [68310];  Sequences processed: [30]
+
+2018-04-16 15:14:36,762 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [10] finished; Elements processed so far: [75900];  Sequences processed: [30]
+
+2018-04-16 15:14:40,053 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [11] finished; Elements processed so far: [83490];  Sequences processed: [30]
+
+2018-04-16 15:14:43,336 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [12] finished; Elements processed so far: [91080];  Sequences processed: [30]
+
+2018-04-16 15:14:46,603 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [13] finished; Elements processed so far: [98670];  Sequences processed: [30]
+
+2018-04-16 15:14:49,901 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [14] finished; Elements processed so far: [106260];  Sequences processed: [30]
+
+2018-04-16 15:14:53,181 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [15] finished; Elements processed so far: [113850];  Sequences processed: [30]
+
+2018-04-16 15:14:56,472 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [16] finished; Elements processed so far: [121440];  Sequences processed: [30]
+
+2018-04-16 15:14:59,760 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [17] finished; Elements processed so far: [129030];  Sequences processed: [30]
+
+2018-04-16 15:15:03,070 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [18] finished; Elements processed so far: [136620];  Sequences processed: [30]
+
+2018-04-16 15:15:06,343 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [19] finished; Elements processed so far: [144210];  Sequences processed: [30]
+
+2018-04-16 15:15:09,616 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [20] finished; Elements processed so far: [151800];  Sequences processed: [30]
+
+2018-04-16 15:15:09,616 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Time spent on training: 65858 ms
+
+2018-04-16 15:49:39,573 - [INFO] - from org.nd4j.linalg.factory.Nd4jBackend in main
+                
+Loaded [CpuBackend] backend
+
+2018-04-16 15:49:40,195 - [INFO] - from org.nd4j.nativeblas.NativeOpsHolder in main
+                
+Number of threads used for NativeOps: 4
+
+2018-04-16 15:49:40,585 - [INFO] - from org.nd4j.nativeblas.Nd4jBlas in main
+                
+Number of threads used for BLAS: 4
+
+2018-04-16 15:49:40,591 - [INFO] - from org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner in main
+                
+Backend used: [CPU]; OS: [Linux]
+
+2018-04-16 15:49:40,591 - [INFO] - from org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner in main
+                
+Cores: [16]; Memory: [15.7GB];
+
+2018-04-16 15:49:40,592 - [INFO] - from org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner in main
+                
+Blas vendor: [OPENBLAS]
+
+2018-04-16 15:49:40,815 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Starting vocabulary building...
+
+2018-04-16 15:49:43,043 - [INFO] - from org.deeplearning4j.models.word2vec.wordstore.VocabConstructor in main
+                
+Sequences checked: [30], Current vocabulary size: [2291]; Sequences/sec: [13.47];
+
+2018-04-16 15:49:43,060 - [INFO] - from org.deeplearning4j.models.embeddings.loader.WordVectorSerializer in main
+                
+Projected memory use for model: [1.75 MB]
+
+2018-04-16 15:49:43,109 - [INFO] - from org.deeplearning4j.models.embeddings.inmemory.InMemoryLookupTable in main
+                
+Initializing syn1...
+
+2018-04-16 15:49:43,109 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Building learning algorithms:
+
+2018-04-16 15:49:43,109 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+          building SequenceLearningAlgorithm: [PV-DBOW]
+
+2018-04-16 15:49:43,113 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+          building ElementsLearningAlgorithm: [SkipGram]
+
+2018-04-16 15:49:43,113 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Starting learning process...
+
+2018-04-16 15:49:46,745 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [1] finished; Elements processed so far: [7590];  Sequences processed: [30]
+
+2018-04-16 15:49:50,158 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [2] finished; Elements processed so far: [15180];  Sequences processed: [30]
+
+2018-04-16 15:49:53,412 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [3] finished; Elements processed so far: [22770];  Sequences processed: [30]
+
+2018-04-16 15:49:56,673 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [4] finished; Elements processed so far: [30360];  Sequences processed: [30]
+
+2018-04-16 15:49:59,939 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [5] finished; Elements processed so far: [37950];  Sequences processed: [30]
+
+2018-04-16 15:50:03,210 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [6] finished; Elements processed so far: [45540];  Sequences processed: [30]
+
+2018-04-16 15:50:06,487 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [7] finished; Elements processed so far: [53130];  Sequences processed: [30]
+
+2018-04-16 15:50:09,764 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [8] finished; Elements processed so far: [60720];  Sequences processed: [30]
+
+2018-04-16 15:50:13,026 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [9] finished; Elements processed so far: [68310];  Sequences processed: [30]
+
+2018-04-16 15:50:16,267 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [10] finished; Elements processed so far: [75900];  Sequences processed: [30]
+
+2018-04-16 15:50:16,267 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Time spent on training: 33154 ms
+
+2018-04-16 15:55:08,674 - [INFO] - from org.nd4j.linalg.factory.Nd4jBackend in main
+                
+Loaded [CpuBackend] backend
+
+2018-04-16 15:55:09,322 - [INFO] - from org.nd4j.nativeblas.NativeOpsHolder in main
+                
+Number of threads used for NativeOps: 4
+
+2018-04-16 15:55:09,710 - [INFO] - from org.nd4j.nativeblas.Nd4jBlas in main
+                
+Number of threads used for BLAS: 4
+
+2018-04-16 15:55:09,715 - [INFO] - from org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner in main
+                
+Backend used: [CPU]; OS: [Linux]
+
+2018-04-16 15:55:09,716 - [INFO] - from org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner in main
+                
+Cores: [16]; Memory: [15.7GB];
+
+2018-04-16 15:55:09,716 - [INFO] - from org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner in main
+                
+Blas vendor: [OPENBLAS]
+
+2018-04-16 15:55:09,941 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Starting vocabulary building...
+
+2018-04-16 15:55:12,187 - [INFO] - from org.deeplearning4j.models.word2vec.wordstore.VocabConstructor in main
+                
+Sequences checked: [30], Current vocabulary size: [2291]; Sequences/sec: [13.36];
+
+2018-04-16 15:55:12,206 - [INFO] - from org.deeplearning4j.models.embeddings.loader.WordVectorSerializer in main
+                
+Projected memory use for model: [1.75 MB]
+
+2018-04-16 15:55:12,255 - [INFO] - from org.deeplearning4j.models.embeddings.inmemory.InMemoryLookupTable in main
+                
+Initializing syn1...
+
+2018-04-16 15:55:12,256 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Building learning algorithms:
+
+2018-04-16 15:55:12,256 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+          building SequenceLearningAlgorithm: [PV-DBOW]
+
+2018-04-16 15:55:12,260 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+          building ElementsLearningAlgorithm: [SkipGram]
+
+2018-04-16 15:55:12,260 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Starting learning process...
+
+2018-04-16 15:55:15,826 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [1] finished; Elements processed so far: [7590];  Sequences processed: [30]
+
+2018-04-16 15:55:19,131 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [2] finished; Elements processed so far: [15180];  Sequences processed: [30]
+
+2018-04-16 15:55:22,474 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [3] finished; Elements processed so far: [22770];  Sequences processed: [30]
+
+2018-04-16 15:55:25,713 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [4] finished; Elements processed so far: [30360];  Sequences processed: [30]
+
+2018-04-16 15:55:28,920 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [5] finished; Elements processed so far: [37950];  Sequences processed: [30]
+
+2018-04-16 15:55:32,140 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [6] finished; Elements processed so far: [45540];  Sequences processed: [30]
+
+2018-04-16 15:55:35,420 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [7] finished; Elements processed so far: [53130];  Sequences processed: [30]
+
+2018-04-16 15:55:38,672 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [8] finished; Elements processed so far: [60720];  Sequences processed: [30]
+
+2018-04-16 15:55:41,970 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [9] finished; Elements processed so far: [68310];  Sequences processed: [30]
+
+2018-04-16 15:55:45,268 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [10] finished; Elements processed so far: [75900];  Sequences processed: [30]
+
+2018-04-16 15:55:45,268 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Time spent on training: 33008 ms
+
+2018-04-16 15:56:59,384 - [INFO] - from org.nd4j.linalg.factory.Nd4jBackend in main
+                
+Loaded [CpuBackend] backend
+
+2018-04-16 15:56:59,999 - [INFO] - from org.nd4j.nativeblas.NativeOpsHolder in main
+                
+Number of threads used for NativeOps: 4
+
+2018-04-16 15:57:00,376 - [INFO] - from org.nd4j.nativeblas.Nd4jBlas in main
+                
+Number of threads used for BLAS: 4
+
+2018-04-16 15:57:00,382 - [INFO] - from org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner in main
+                
+Backend used: [CPU]; OS: [Linux]
+
+2018-04-16 15:57:00,382 - [INFO] - from org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner in main
+                
+Cores: [16]; Memory: [15.7GB];
+
+2018-04-16 15:57:00,382 - [INFO] - from org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner in main
+                
+Blas vendor: [OPENBLAS]
+
+2018-04-16 15:57:00,630 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Starting vocabulary building...
+
+2018-04-16 15:57:02,871 - [INFO] - from org.deeplearning4j.models.word2vec.wordstore.VocabConstructor in main
+                
+Sequences checked: [30], Current vocabulary size: [2291]; Sequences/sec: [13.40];
+
+2018-04-16 15:57:02,888 - [INFO] - from org.deeplearning4j.models.embeddings.loader.WordVectorSerializer in main
+                
+Projected memory use for model: [1.75 MB]
+
+2018-04-16 15:57:02,937 - [INFO] - from org.deeplearning4j.models.embeddings.inmemory.InMemoryLookupTable in main
+                
+Initializing syn1...
+
+2018-04-16 15:57:02,938 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Building learning algorithms:
+
+2018-04-16 15:57:02,938 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+          building SequenceLearningAlgorithm: [PV-DBOW]
+
+2018-04-16 15:57:02,942 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+          building ElementsLearningAlgorithm: [SkipGram]
+
+2018-04-16 15:57:02,942 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Starting learning process...
+
+2018-04-16 15:57:06,544 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [1] finished; Elements processed so far: [7590];  Sequences processed: [30]
+
+2018-04-16 15:57:09,901 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [2] finished; Elements processed so far: [15180];  Sequences processed: [30]
+
+2018-04-16 15:57:13,113 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [3] finished; Elements processed so far: [22770];  Sequences processed: [30]
+
+2018-04-16 15:57:16,407 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [4] finished; Elements processed so far: [30360];  Sequences processed: [30]
+
+2018-04-16 15:57:19,648 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [5] finished; Elements processed so far: [37950];  Sequences processed: [30]
+
+2018-04-16 15:57:22,955 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [6] finished; Elements processed so far: [45540];  Sequences processed: [30]
+
+2018-04-16 15:57:26,199 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [7] finished; Elements processed so far: [53130];  Sequences processed: [30]
+
+2018-04-16 15:57:29,484 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [8] finished; Elements processed so far: [60720];  Sequences processed: [30]
+
+2018-04-16 15:57:32,758 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [9] finished; Elements processed so far: [68310];  Sequences processed: [30]
+
+2018-04-16 15:57:36,041 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Epoch [10] finished; Elements processed so far: [75900];  Sequences processed: [30]
+
+2018-04-16 15:57:36,041 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in main
+                
+Time spent on training: 33099 ms
+

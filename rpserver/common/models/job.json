@@ -24,7 +24,7 @@
       "required": true
     },
     "job_parms": {
-      "type": "string",
+      "type": "object",
       "required": true
     },
     "description": {
