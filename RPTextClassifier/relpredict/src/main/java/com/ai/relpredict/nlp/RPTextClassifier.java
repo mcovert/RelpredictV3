@@ -14,8 +14,6 @@ import org.deeplearning4j.text.tokenization.tokenizer.preprocessor.CommonPreproc
 import org.deeplearning4j.text.tokenization.tokenizerfactory.DefaultTokenizerFactory;
 import org.deeplearning4j.text.tokenization.tokenizerfactory.TokenizerFactory;
 import org.nd4j.linalg.api.ndarray.INDArray;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,13 +25,11 @@ public class RPTextClassifier {
     LabelAwareIterator iterator;
     TokenizerFactory tokenizerFactory;
 
-    private static final Logger log = LoggerFactory.getLogger(RPTextClassifier.class);
-
     public static void main(String[] args) throws Exception {
-
+      System.out.println("Labeled data: " + args[0] + "\nUnlabeled data: " + args[1]);
       RPTextClassifier app = new RPTextClassifier();
-      app.makeParagraphVectors("/home/mcovert/nlp/labeled");
-      app.checkUnlabeledData("/home/mcovert/nlp/unlabeled");
+      app.makeParagraphVectors(args[0]);
+      app.checkUnlabeledData(args[1]);
     }
 
     void makeParagraphVectors(String fileName)  throws Exception {
