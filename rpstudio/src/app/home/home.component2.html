@@ -1,0 +1,212 @@
+<div class="wrapper bg container-fluid">
+  <div *ngIf="authService.isLoggedIn()" class="rpcontent">
+  <div class="clearfix"><br /></div>
+  <div class="container">
+    <div id="fancy-list-group">
+      <div class="row">
+        <div class="list-group col-lg-6">
+            <li class="list-group-item list-group-item-success">
+              <div class="list-group-item-addon">
+                <span class="fa fa-cubes"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">Create a new model</a></h5>
+                <p class="list-group-item-text">Create a new model. You can use a data set, a data map, or another model as a template</p>
+              </div>
+            </li>  
+            <li class="list-group-item list-group-item-success">
+              <div class="list-group-item-addon">
+                <span class="fa fa-cogs"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">Train and test a model</a></h5>
+                <p class="list-group-item-text">Train a model using uploaded data and determine its accuracy</p>
+              </div>
+            </li>  
+            <li class="list-group-item list-group-item-success">
+              <div class="list-group-item-addon">
+                <span class="fa fa-puzzle-piece"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">Predict outcomes using a model</a></h5>
+                <p class="list-group-item-text">Use a trained model and uploaded data to predict data outcomes</p>
+              </div>
+            </li>  
+            <li class="list-group-item list-group-item-success">
+              <div class="list-group-item-addon">
+                <span class="fa fa-edit"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">Manage models</a></h5>
+                <p class="list-group-item-text">Rename, delete, promote, view, or edit your defined models</p>
+              </div>
+            </li>  
+        </div>
+        <div class="list-group col-lg-6">
+            <li class="list-group-item list-group-item-info">
+              <div class="list-group-item-addon">
+                <span class="fa fa-chevron-circle-up"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">Upload data</a></h5>
+                <p class="list-group-item-text">Upload data into a single dataset or from a batched set of data sets</p>
+              </div>
+            </li>  
+            <li class="list-group-item list-group-item-info">
+              <div class="list-group-item-addon">
+                <span class="fa fa-database"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">Create a data map</a></h5>
+                <p class="list-group-item-text">Provide field names, and types, and other parameters for your datasets</p>
+              </div>
+            </li>  
+            <li class="list-group-item list-group-item-info">
+              <div class="list-group-item-addon">
+                <span class="fa fa-exchange"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">Create a data transformation</a></h5>
+                <p class="list-group-item-text">Specify how to combine data using computations, merges, and other mapppings </p>
+              </div>
+            </li>  
+            <li class="list-group-item list-group-item-info">
+              <div class="list-group-item-addon">
+                <span class="fa fa-edit"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">Manage your data</a></h5>
+                <p class="list-group-item-text">Rename, copy, and delete datasets. Hold, and release them for usage</p>
+              </div>
+            </li>  
+          </div>        
+      </div>
+      <div class="row">
+        <div class="list-group col-lg-6">
+            <li class="list-group-item list-group-item-warning">
+              <div class="list-group-item-addon">
+                <span class="fa fa-caret-right"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">Submit a job</a></h5>
+                <p class="list-group-item-text">Create a job. Assign job parameters, and submit it for execution</p>
+              </div>
+            </li>  
+            <li class="list-group-item list-group-item-warning">
+              <div class="list-group-item-addon">
+                <span class="fa fa-clock-o"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">Set up a job schedule</a></h5>
+                <p class="list-group-item-text">Define a schedule for automated sequences of job executions</p>
+              </div>
+            </li>  
+            <li class="list-group-item list-group-item-warning">
+              <div class="list-group-item-addon">
+                <span class="fa fa-eye"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">View job status</a></h5>
+                <p class="list-group-item-text">View job status (waiting, running, and completed) and job log output</p>
+              </div>
+            </li>  
+            <li class="list-group-item list-group-item-warning">
+              <div class="list-group-item-addon">
+                <span class="fa fa-edit"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">Manage jobs</a></h5>
+                <p class="list-group-item-text">Rename, copy, delete, view, or edit your jobs and schedules</p>
+              </div>
+            </li>  
+        </div>
+        <div class="list-group col-lg-6">
+            <li class="list-group-item list-group-item-danger">
+              <div class="list-group-item-addon">
+                <span class="fa fa-users"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">Manage users</a></h5>
+                <p class="list-group-item-text">Add or suspend user accounts and manage their permissions and roles</p>
+              </div>
+            </li>  
+            <li class="list-group-item list-group-item-danger">
+              <div class="list-group-item-addon">
+                <span class="fa fa-cog"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">Manage settings</a></h5>
+                <p class="list-group-item-text">Manage system settings such as categories, data retention periods, etc.</p>
+              </div>
+            </li>  
+            <li class="list-group-item list-group-item-danger">
+              <div class="list-group-item-addon">
+                <span class="fa fa-eye"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">View system log</a></h5>
+                <p class="list-group-item-text">View the system log - logins, jobs, models, data uploads, and other statistics</p>
+              </div>
+            </li>  
+            <li class="list-group-item list-group-item-danger">
+              <div class="list-group-item-addon">
+                <span class="fa fa-exclamation"></span>
+              </div>
+              <div class="list-group-item-content">
+                <h5 class="list-group-item-heading"><a routerLink="/model-create" routerLinkActive="active">System shutdown and restart</a></h5>
+                <p class="list-group-item-text">Schedule system shutown, system restarts, or other maintenance tasks</p>
+              </div>
+            </li>  
+          </div>        
+      </div>  </div>
+  </div>
+  </div>
+    <!--div class="row">
+      <div class="row col-6">
+        <h3 class="text-center col-12">Models</h3>
+        <ul>
+           <li><a routerLink="/model-create" routerLinkActive="active">Create a new model</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">Create a new model from a dataset</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">Create a new model from a datamap</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">Create a new model version</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">Create a new model from an existing model</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">Train and test a model</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">Predict outcomes based on a model</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">Promote model to current</a></li>
+        </ul>
+      </div>
+      <div class="row col-6">
+        <h3 class="text-center col-12">Data</h3>
+        <ul>
+           <li><a routerLink="/model-create" routerLinkActive="active">Upload data</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">Create a data map</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">Create a data transformation</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">Manage data</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="row col-6">
+        <h3 class="text-center col-12">Jobs</h3>
+        <ul>
+           <li><a routerLink="/model-create" routerLinkActive="active">Submit a job</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">Create a job schedule</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">View job status</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">Manage jobs</a></li>
+        </ul>
+      </div>
+      <div class="row col-6">
+        <h3 class="text-center col-12">Configuration</h3>
+        <ul>
+           <li><a routerLink="/model-create" routerLinkActive="active">Manage users</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">Manage the system</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">View system log</a></li>
+           <li><a routerLink="/model-create" routerLinkActive="active">Manage settings</a></li>
+        </ul>
+      </div>
+    </div>
+  </div-->
+  <div *ngIf="!authService.isLoggedIn()">
+    <user-login></user-login>
+  </div>
+</div>
