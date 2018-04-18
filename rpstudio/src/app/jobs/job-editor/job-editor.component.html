@@ -1,42 +1,29 @@
-<h3 *ngIf="!isDisplay()" class="bg-info text-center">Edit Job</h3>
-<div class="row" *ngIf="!isDisplay()">
- <label class="col-2 text-center" for="dmname">Name</label>
- <input type="text" class="form-control col-3" id= "dmnameid" name="dmname" [(ngModel)]="newdm.datamap_name"/>
- <label class="col-2 text-center" for="dmtype">Type</label>
- <select class="form-control col-2" name=dmtype [(ngModel)]="newdm.datamap_type"> 
-      <option *ngFor="let dmt of datamapTypes" value="{{dmt}}" [selected]="newdm.datamap_type==dmt">{{dmt}}</option>
- </select>
- <button class="btn btn-primary btn-sm col-2" style="float:right" (click)="newField()">New Field</button>
- <div class="col-1"></div>
-</div>
-<h3 *ngIf="isDisplay()" class="bg-info text-center">Display Datamap</h3>
-<div class="row" *ngIf="isDisplay()">
- <label class="col-2 text-center" for="dmname">Name</label>
- <input type="text" class="form-control col-3" id= "dmnameid" name="dmname" readonly [(ngModel)]="newdm.datamap_name"/>
- <label class="col-2 text-center" for="dmtype">Type</label>
- <input type="text" class="form-control col-3" id= "dmtypeid" name="dmtype" readonly [(ngModel)]="newdm.datamap_type"/>
-</div>
-<br>
-<div class="table-responsive">
-<table id="mytable2" class="table table-bordered table-striped sortable table-sm">
-  <thead>
-       <th class="text-center">Field Name</th>
-       <th class="text-center">Field Type</th>
-  </thead>
-  <tbody>
-       <tr *ngFor="let fd of newdm.fields; let i=index;">
-           <td>
-             <input type="text" class="form-control col-12" id= fn{{i}} value="fd.fieldmap_name" name=fdn{{i}} [(ngModel)]="fd.fieldmap_name" [readonly]="isDisplay()">
-          </td>
-           <td *ngIf="!isDisplay()" >
-              <select class="form-control" name=ftsel{{i}} [(ngModel)]="fd.fieldmap_type"> 
-                <option *ngFor="let dt of dataTypes" value="{{dt.datatype_name}}" [selected]="fd.fieldmap_type==dt.datatype_name">{{dt.datatype_name}}</option>
+    <form>
+      <br>
+      <h2 class="text-center">Job Editor</h2>
+      <br>
+      <div class="row col-12">
+              <div class="col-4"></div>
+              <label class="col-2" for="mode">Select a job</label>
+              <select class="col-2" (change)="setIndex($event.target.value)">
+                 <option *ngFor="let job of jobs; let i=index" [value]="i">{{job.job_name}}</option>
               </select>
-           </td>
-           <td *ngIf="isDisplay()">
-              <input type="text" class="form-control" readonly value="{{fd.fieldmap_type}}"/>
-           </td>
-       </tr>
-  </tbody>
-</table>
-</div>
+              <div class="col-4"></div>
+      </div> 
+      <div *ngIf="jobIndex >= 0">
+      <div class="table-responsive">
+        <table id="mytable" class="table table-bordered table-striped sortable table-sm">
+          <thead>
+            <th>Name</th>
+            <th>Value</th>
+          </thead>
+          <tbody>
+          <tr *ngFor="let p of jobs[jobIndex].parms">
+            <td>{{p.parm}}</td>
+            <td><input class="col-12" type="text" value="{{p.parm_value}}"></td>
+          </tr>
+        </tbody>
+        </table>
+      </div>
+    </div>
+    </form>

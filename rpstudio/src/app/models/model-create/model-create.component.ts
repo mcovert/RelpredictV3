@@ -30,6 +30,7 @@ export class ModelCreateComponent implements OnInit {
   curr_index   : number;
   curr_index2  : number;
   curr_type    : string;
+  mode         : string = 'none';
 
   constructor(private modelService : ModelService, private router: Router /* , private modalService: ModalService*/) { 
   }

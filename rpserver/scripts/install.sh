@@ -7,7 +7,9 @@ if [ "$(whoami)" != "root"]; then
 	exit -1
 fi
 useradd rpadmin
-mkdir /home/relpredict
+mkdir -p /home/relpredict/lib
+mkdir -p /home/relpredict/conf
+mkdir -p /home/relpredict/bin
 chown rpadmin:rpadmin /home/relpredict
 su hdfs 
 hdfs dfs -mkdir /relpredict

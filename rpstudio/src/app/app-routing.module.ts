@@ -8,6 +8,7 @@ import { ModelCreateComponent } from './models/model-create/model-create.compone
 import { ModelsComponent } from './models/models.component';
 import { ModelComponent } from './models/model/model.component';
 import { JobsComponent } from './jobs/jobs.component';
+import { JobEditorComponent } from './jobs/job-editor/job-editor.component';
 import { DataComponent } from './data/data.component';
 import { DatafileUploaderComponent } from './data/datafile-uploader/datafile-uploader.component';
 import { AdminComponent } from './admin/admin.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
  { path: 'models', component: ModelsComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'models/:id', component: ModelComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'jobs', component: JobsComponent, canActivate: [OnlyLoggedInGuard] },
+ { path: 'job-editor', component: JobEditorComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'help', component: HelpComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'data', component: DataComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'data-upload', component: DatafileUploaderComponent, canActivate: [OnlyLoggedInGuard] },

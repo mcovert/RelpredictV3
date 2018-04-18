@@ -11,11 +11,19 @@ import { Router } from "@angular/router";
 })
 export class JobEditorComponent implements OnInit {
 
-  @Input() job : RPJob;
+  jobs: RPJob[] = [];
+  jobIndex: number = -1;
 
   constructor(private jobservice : JobService, private router: Router) {}
 
   ngOnInit() {
+  	this.jobservice.getJobs().subscribe(result => {
+  		this.jobs = result as RPJob[];
+  		console.log(this.jobs);
+  	})
   }
-
+  setIndex(i: number) {
+  	this.jobIndex = i;
+  	console.log(i);
+  }
 }
