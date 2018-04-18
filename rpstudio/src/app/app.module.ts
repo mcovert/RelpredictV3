@@ -59,6 +59,7 @@ import { DatafileUploaderComponent } from './data/datafile-uploader/datafile-upl
 import { DatafileViewerComponent } from './data/datafile-viewer/datafile-viewer.component';
 import { FileLoaderComponent } from './file-loader/file-loader.component';
 import { ModelEditorComponent } from './models/model-editor/model-editor.component';
+import { BatchViewerComponent } from './data/batch-viewer/batch-viewer.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import { ModelEditorComponent } from './models/model-editor/model-editor.compone
     DatafileUploaderComponent,
     DatafileViewerComponent,
     FileLoaderComponent,
-    ModelEditorComponent
+    ModelEditorComponent,
+    BatchViewerComponent
   ],
   imports: [
     BrowserModule,

@@ -43,7 +43,7 @@ module.exports = function(Datafile) {
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
             // checking and creating uploads folder where files will be uploaded
-            var dirPath = global.baseDir + 'data/uploads/';
+            var dirPath = global.baseDir + 'data/datafiles/uploads/';
             console.log(dirPath);
             cb(null, dirPath + '/');
         },

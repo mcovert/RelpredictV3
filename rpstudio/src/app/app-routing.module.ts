@@ -11,6 +11,7 @@ import { JobsComponent } from './jobs/jobs.component';
 import { JobEditorComponent } from './jobs/job-editor/job-editor.component';
 import { DataComponent } from './data/data.component';
 import { DatafileUploaderComponent } from './data/datafile-uploader/datafile-uploader.component';
+import { BatchViewerComponent } from './data/batch-viewer/batch-viewer.component';
 import { AdminComponent } from './admin/admin.component';
 import { HelpComponent } from './help/help.component';
 import { LogBrowserComponent } from './log-browser/log-browser.component';
@@ -30,6 +31,7 @@ const routes: Routes = [
  { path: 'help', component: HelpComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'data', component: DataComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'data-upload', component: DatafileUploaderComponent, canActivate: [OnlyLoggedInGuard] },
+ { path: 'batch-viewer', component: BatchViewerComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'admin', component: AdminComponent, canActivate: [OnlyLoggedInGuard] }
 ];
 

@@ -19,11 +19,13 @@ export class JobEditorComponent implements OnInit {
   ngOnInit() {
   	this.jobservice.getJobs().subscribe(result => {
   		this.jobs = result as RPJob[];
-  		console.log(this.jobs);
+  		this.setIndex(0);
   	})
   }
   setIndex(i: number) {
   	this.jobIndex = i;
-  	console.log(i);
+  }
+  submitJob(job: RPJob) {
+  	console.log("job submitted");
   }
 }

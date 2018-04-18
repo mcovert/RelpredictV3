@@ -1,3 +1,33 @@
-<p>
-  datafile-viewer works!
-</p>
+   <div class="row">
+      <div class="col-5"></div>
+      <h4 class="text-center col-2">Data Files</h4>
+      <p data-placement="top" data-toggle="tooltip" title="Display all data files">
+      <button class="btn btn-info btn-xs center-block" data-title="Show All" data-toggle="modal" data-target="#showall" (click)="showAllDatafiles()">  
+         <span class="fa fa-eye"></span>
+      </button></p>
+      <div class="col-4"></div>
+   </div>
+   <div class="table-responsive">
+    <table id="mytable" class="table table-bordred table-striped sortable table-sm">
+     <thead>
+        <th>File name</th>
+        <th class="text-center">Type</th>
+        <th class="text-center">Size</th>
+        <th class="text-center">Records</th>
+        <th class="text-center">Data map</th>
+        <th class="text-center">Batch</th>
+        <th class="text-center">Delete</th>
+     </thead>
+     <tbody>
+       <tr *ngFor="let datafile of filteredDatafiles">
+          <td>{{datafile.file_name}}</td>
+          <td class="text-center">{{datafile.file_type}}</td>
+          <td class="text-center">{{datafile.size}}</td>
+          <td class="text-center">{{datafile.records}}</td>
+          <td class="text-center">{{datafile.datamap_name}}</td>
+          <td class="text-center">{{datafile.batch_id}}</td>
+          <td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs center-block" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
+      </tr>
+     </tbody>
+    </table>
+   </div>

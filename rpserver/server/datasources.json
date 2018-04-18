@@ -13,7 +13,7 @@
     "name": "storage",
     "connector": "loopback-component-storage",
     "provider": "filesystem",
-    "root": "/home/mcovert/ai/data/uploads/",
+    "root": "/home/mcovert/ai/data/datafiles/uploads/",
     "maxFileSize": "5000000000"
   }
 }

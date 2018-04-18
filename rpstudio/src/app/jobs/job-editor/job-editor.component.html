@@ -1,16 +1,16 @@
     <form>
       <br>
-      <h2 class="text-center">Job Editor</h2>
+      <h2 class="text-center">Submit a job</h2>
       <br>
       <div class="row col-12">
               <div class="col-4"></div>
               <label class="col-2" for="mode">Select a job</label>
               <select class="col-2" (change)="setIndex($event.target.value)">
-                 <option *ngFor="let job of jobs; let i=index" [value]="i">{{job.job_name}}</option>
+                 <option *ngFor="let job of jobs; let i=index" [value]="i" [selected]="i==0">{{job.job_name}}</option>
               </select>
               <div class="col-4"></div>
       </div> 
-      <div *ngIf="jobIndex >= 0">
+      <div *ngIf="jobIndex >= 0" class="p-5">
       <div class="table-responsive">
         <table id="mytable" class="table table-bordered table-striped sortable table-sm">
           <thead>
