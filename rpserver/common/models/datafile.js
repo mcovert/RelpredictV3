@@ -2,39 +2,41 @@
 
 var multer = require('multer');
 var fs = require('fs');
+var path = require('path');
 
-var makeFileObject = function(file_type, file_format, dir_name, file_name, file_stat) {
-	var retObj = { 'file_type':   file_type,
-	               'file_format': file_format,
-	               'directory':   dir_name,
-	               'file_name':   file_name,
-	               'stat':        file_stat
-	             };
-	return retObj;
+var batchDir    = global.baseDir + 'batches/';
+var datafileDir = global.baseDir + 'datafiles/';
+var uploadDir   = global.baseDir + 'uploads/';
+
+var makeFileEntry = function(fullFileName, fileStat) {
+  var fPath = path.parse(fullFileName);
+  var fileName = fPath.base;
+  var fileFormat = fPath.ext.toUpperCase();
+  var fileType = '?';
+  if (fullFileName.indexOf('predict')) fileType = 'Predict';
+  else if (fullFileName.indexOf('train')) fileType = 'Train';
+  else if (fullFileName.indexOf('lookup')) fileType = 'Lookup';
+  else if (fullFileName.indexOf('vocab')) fileType = 'Vocabulary';
+  var entry = { 'file_name'  : fileName,
+                'file_type'  : fileType,
+                'file_format': fileFormat,
+                'file_stats' : fileStat};
+  return entry;
 }
-
-var getFiles = function(baseDir, dirName, fileType) {
-   var files = fs.readdirSync(baseDir + "/" + dirName);
-   var fstat = [];
-   for (var i = 0; i < files.length; i++) {
-   	  	var fileName = dirName + "/" + files[i]; 
-   	  	var stat = fs.statSync(baseDir + "/" + fileName);
-   	  	if (stat.isDirectory()) {
-   	  		var file_type = '';
-   	  		if (files[i] === 'train') file_type = 'Train';
-   	  		else if (files[i] === 'predict') file_type = 'Predict';
-   	  		else if (files[i] === 'master_data') file_type = 'Master Data';
-   	  		fstat.push(getFiles(baseDir, fileName, file_type));
-   	  	} else {
-   	  		var dotpos = fileName.indexOf("."); 
-   	  		var	file_format = "?";
-   	  		if (dotpos != -1 && dotpos < (fileName.length - 2)) {
-   	  			file_format = fileName.substring(dotpos + 1);
-   	  		}
-   	  		fstat.push(makeFileObject(fileType, file_format, dirName, files[i], stat));
-   	  	}
-   }
-   return fstat;	
+var getAllFiles = function(dirName) {
+  var entries = [];
+  var files = fs.readdirSync(dirName);
+  for (var i = 0; i < files.length; i++) {
+    var fullFileName = dirName + '/' + files[i];
+    var fileStat = fs.statSync(fullFileName);
+    if (stat.isDirectory()) entries.push(getAllFiles(fullFileName));
+    else entries.push(makeFileEntry(fullFileName);)
+  }
+  return entries;
+}
+var getAllBatches = function() {
+} 
+var getAllBatchesAndFiles = function() {
 } 
 
 module.exports = function(Datafile) {
@@ -43,7 +45,7 @@ module.exports = function(Datafile) {
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
             // checking and creating uploads folder where files will be uploaded
-            var dirPath = global.baseDir + 'data/datafiles/uploads/';
+            var dirPath = global.baseDir + 'data/uploads/';
             console.log(dirPath);
             cb(null, dirPath + '/');
         },
@@ -56,8 +58,8 @@ module.exports = function(Datafile) {
             cb(null, fileName);
         }
     });
-    Datafile.upload = function (req, res, cb) {
-    	console.log('Uploading...');
+    Datafile.uploadbatch = function (req, res, cb) {
+    	console.log('Uploading batch...');
     	console.log(req);
         var upload = multer({
             storage: storage
@@ -67,11 +69,16 @@ module.exports = function(Datafile) {
                 // An error occurred when uploading
                 res.json(err);
             }
+            var fromPath = global.baseDir + 'data/uploads/' + uploadedFileName;
+            var toPath = global.baseDir + 'data/batches/hold/' + uploadedFileName;
+            fs.rename(fromPath, toPath , function(err) {
+                    if ( err ) console.log('ERROR: ' + err);
+            });
             res.json(uploadedFileName);
         });   
     };
 
-    Datafile.remoteMethod('upload',   {
+    Datafile.remoteMethod('uploadbatch',   {
         accepts: [{
             arg: 'req',
             type: 'object',
@@ -90,16 +97,75 @@ module.exports = function(Datafile) {
              type: 'string'
         }
     });
+    Datafile.uploaddatafile = function (req, res, cb) {
+      console.log('Uploading data file...');
+      console.log(req);
+        var upload = multer({
+            storage: storage
+        }).array('file[]', 12);
+        upload(req, res, function (err) {
+            if (err) {
+                // An error occurred when uploading
+                res.json(err);
+            }
+            else {
+                var fromPath = uploadDir + uploadedFileName;
+                var toPath = datafileDir + uploadedFileName;
+                fs.rename(fromPath, toPath , function(err) {
+                    if ( err ) console.log('ERROR: ' + err);
+                });
+                res.json('OK - ' + uploadedFileName);
+            }
+        });   
+    };
 
-   Datafile.listAll = function(cb) {
+    Datafile.remoteMethod('uploaddatafile',   {
+        accepts: [{
+            arg: 'req',
+            type: 'object',
+            http: {
+                source: 'req'
+            }
+        }, {
+            arg: 'res',
+            type: 'object',
+            http: {
+                source: 'res'
+            }
+        }],
+        returns: {
+             arg: 'result',
+             type: 'string'
+        }
+    });
+   Datafile.listbatches = function(cb) {
+      var retFiles = [];
+      retFiles.push(getFiles(global.baseDir + 'data/batches/hold', '', ''));
+      retFiles.push(getFiles(global.baseDir + 'data/batches/release', '', ''));
+      cb(null, retFiles);
+   }  
+   Datafile.remoteMethod(
+    'listbatches', {
+      http: {
+        path: '/listbatches',
+        verb: 'get'
+      },
+      returns: {
+        arg:  'files',
+        type: 'array'
+      }
+    })
+
+   Datafile.listdatafiles = function(cb) {
    	  var retFiles = [];
-   	  retFiles.push(getFiles(global.baseDir + 'data/datafiles', '', ''));
+   	  retFiles.push(getFiles(global.baseDir + 'data/datafiles/hold', '', ''));
+      retFiles.push(getFiles(global.baseDir + 'data/datafiles/release', '', ''));
    	  cb(null, retFiles);
    } 	
    Datafile.remoteMethod(
-   	'listAll', {
+   	'listdatafiles', {
    		http: {
-   			path: '/listAll',
+   			path: '/files',
    			verb: 'get'
    		},
    		returns: {
@@ -107,7 +173,7 @@ module.exports = function(Datafile) {
    			type: 'array'
    		}
    	})
-   Datafile.listAllForBatch = function(batch, cb) {
+   Datafile.listbatchfiles = function(batch, cb) {
    	  //var files = fs.readdirSync('/home/mcovert/testfiles/' + batch);
    	  cb(null, getFiles(global.baseDir + 'data/datafiles/' + batch + "/", 'batches', 'Batch'));
    } 	
