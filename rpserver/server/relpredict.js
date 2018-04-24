@@ -3,9 +3,20 @@ var path = require('path')
 var node_ssh = require('node-ssh')
 var ssh = new node_ssh()
 
-exports.jobservers = [ 'ai24', 'ai25', 'ai26', 'ai27'];
-exports.running = [0, 0, 0, 0];
-var serverNum = 0;
+var config = {
+	home:       process.env.RELPREDICT_HOME,
+    uploads:    process.env.RP_UPLOADDIR,
+	archives:   process.env.RP_ARCHIVEDIR,
+	datafiles:  process.env.RP_DATAFILEDIR,
+	batches:    process.env.RP_BATCHDIR,
+	datamaps:   process.env.RP_DATAMAPDIR,
+	jobs:       process.env.RP_JOBDIR,
+	models:     process.env.RP_MODELDIR
+};
+
+var jobservers = process.env.RP_JOBSERVERS.split(",");
+var running    = new Array(jobservers.length).fill(0);
+var serverNum  = 0;
 acquireServer = function() {
 	var runServer = jobservers[serverNum];
 	running[serverNum] += 1;
@@ -17,6 +28,10 @@ releaseServer = function(server) {
 	var i = jobServers.indexOf(server);
 	if (i != -1)
 		running[i] -= 1;
+}
+getCommandMonitor(cmd, server) {
+	/* Want to use command name to handle this - i.e. spark is port 4040 */
+	return server + ':4040';
 }
 exports.runcmd = (cmd) => {
     var server = acquireServer();
@@ -30,5 +45,5 @@ exports.runcmd = (cmd) => {
             );
             releaseServer(server);
         });
-    return server;
+    return { 'server': server, 'monitor': getCommandMonitor(cmd.command, server});
 }
