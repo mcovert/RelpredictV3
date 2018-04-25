@@ -9,6 +9,8 @@ var rp = require('../../server/relpredict.js');
 console.log(rp.config);
 console.log(rp.getBatches());
 console.log(rp.getDatafiles());
+console.log(rp.getDatamaps());
+
 
 var batchDir    = global.baseDir + 'batches/';
 var datafileDir = global.baseDir + 'datafiles/';

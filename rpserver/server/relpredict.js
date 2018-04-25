@@ -155,9 +155,9 @@ exports.getDatamaps = () => {
     var fileStat = fs.statSync(fullFileName);
     var dmType = "?";
     if (fullFileName.endsWith('.dmap')) dmType = 'Datamap';
-    else if (fullFileName.endsWith('.xlate')) dmType = 'Xlate';
-    if (fileStat.isDirectory()) {
-    	entries.push( { 'datamap_name' : files[i],
+    else if (fullFileName.endsWith('.xlate')) dmType = 'Translation';
+    if (fileStat.isFile()) {
+    	entries.push( { 'datamap_name' : path.parse(files[i]).name,
                         'datamap_type' : dmType
                       }
                     );
@@ -170,7 +170,7 @@ exports.getDatamap = (map_id) => {
 	var fullFileName = path.join(config.datamaps, map_id);
 	if (path.existsSync(fullFileName)) {
        var fileStat = fs.statSync(fullFileName);
-       return [ { 'datamap_name' : files[i],
+       return [ { 'datamap_name' : path.parse(files[i]).name,
                   'datamap_type' : dmType
                 }
               ];
