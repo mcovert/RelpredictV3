@@ -7,7 +7,7 @@ var multer   = require('multer');
 /*******************************************************************************/
 /*    RelPredict system configuration taken from environment variables         */
 /*******************************************************************************/
-exports.config = {
+var config = {
 	home:       process.env.RELPREDICT_HOME,
     uploads:    process.env.RP_UPLOADDIR,
 	archives:   process.env.RP_ARCHIVEDIR,
@@ -17,6 +17,8 @@ exports.config = {
 	jobs:       process.env.RP_JOBDIR,
 	models:     process.env.RP_MODELDIR
 };
+exports.config = config;
+
 /*******************************************************************************/
 /*                   Job server management functions                           */
 /*******************************************************************************/
@@ -31,40 +33,39 @@ acquireServer = function() {
 	serverNum += 1;
 	if (serverNum >= jobservers.length) serverNum = 0;
     return runServer;
-}
+};
 releaseServer = function(server) {
 	var i = jobServers.indexOf(server);
 	if (i != -1)
 		running[i] -= 1;
-}
+};
 exports.getJobServerStatus = () => {
 	var result = [];
 	for (var i = 0; i < jobservers.length; i++) {
         result.push( { 'server'     : jobservers[i],
                        'running'    : running[i],
                        'total_jobs' : total[i]
-                     });
+                     }
+                   );
 	}
 	return results;
-}
-getCommandMonitor(cmd, server) {
+};
+
+getCommandMonitor = function(cmd, server) {
 	/* TO-DO: Want to use command name to handle this - i.e. spark is port 4040 */
 	return server + ':4040';
-}
+};
 exports.runJob = (cmd) => {
     var server = acquireServer();
     ssh.connect({ host: server, username: cmd.username, privateKey: '/home/' + cmd.username + '/.ssh/id_rsa'})
         .then(function() {
             ssh.execCommand(cmd.command, 
-                { cwd:'/home/' + cmd.username,     
-       	               onStdout(chunk) { console.log('stdoutChunk', chunk.toString('utf8'))},
-                       onStderr(chunk) { console.log('stderrChunk', chunk.toString('utf8'))}
-                }
+                { cwd:'/home/' + cmd.username }
             );
             releaseServer(server);
         });
-    return { 'server': server, 'monitor': getCommandMonitor(cmd.command, server});
-}
+    return { 'server': server, 'monitor': getCommandMonitor(cmd.command, server)};
+}; 
 /*******************************************************************************/
 /*                         Data management functions                           */
 /*******************************************************************************/
@@ -83,7 +84,7 @@ var makeFileEntry = function(fullFileName, fileStat) {
                 'file_format': fileFormat,
                 'file_stats' : fileStat};
   return entry;
-}
+};
 /* Recursively count all files below a directory path */
 var fileCount = function(dirName) {
   var num = 0;
@@ -91,18 +92,18 @@ var fileCount = function(dirName) {
   for (var i = 0; i < files.length; i++) {
     var fullFileName = path.join(dirName, files[i]);
     var fileStat = fs.statSync(fullFileName);
-    if (stat.isDirectory()) num += fileCount(fullFileName);
+    if (fileStat.isDirectory()) num += fileCount(fullFileName);
     else num += 1;
   }
   return num;
-}
+};
 exports.getBatches = () => {
   var entries = [];
   var files = fs.readdirSync(config.batches);
   for (var i = 0; i < files.length; i++) {
     var fullFileName = path.join(config.batches, files[i]);
     var fileStat = fs.statSync(fullFileName);
-    if (stat.isDirectory()) {
+    if (fileStat.isDirectory()) {
     	entries.push( { 'batch_name' : files[i],
                         'size'       : fileStat.size,
                         'created'    : fileStat.ctime,
@@ -112,8 +113,8 @@ exports.getBatches = () => {
     }
   }
   return entries;
-}
-exports.getDatafiles = (datafileDir) => {
+};
+getDatafilesForDir = (datafileDir) => {
   var entries = [];
   var files = fs.readdirSync(datafileDir);
   for (var i = 0; i < files.length; i++) {
@@ -122,16 +123,18 @@ exports.getDatafiles = (datafileDir) => {
     var dmType = "?";
     if (fullFileName.endsWith('.csv')) dmType = 'Comma delimited';
     else if (fullFileName.endsWith('.tsv')) dmType = 'Tab delimited';
-    if (stat.isDirectory()) {
+    if (fileStat.isFile()) {
     	entries.push( { 'datafile_name' : files[i],
                         'datafile_type' : dmType,
                         'size'          : fileStat.size,
-                        'created'       : fileStat.ctime,                        
+                        'created'       : fileStat.ctime                       
                       }
                     );
     }
-
-}
+  }
+  return entries;
+};
+exports.getDatafiles = () => { return getDatafilesForDir(config.datafiles); }
 exports.getBatch = (batch_id) => {
 	var fullFileName = path.join(config.batches, batch_id);
 	if (path.existsSync(fullFileName)) {
@@ -143,16 +146,17 @@ exports.getBatch = (batch_id) => {
                }];
     }
     else return [];
-}
+};
 exports.getDatamaps = () => {
   var entries = [];
   var files = fs.readdirSync(config.datamaps);
   for (var i = 0; i < files.length; i++) {
     var fullFileName = path.join(config.datamaps, files[i]);
+    var fileStat = fs.statSync(fullFileName);
     var dmType = "?";
     if (fullFileName.endsWith('.dmap')) dmType = 'Datamap';
     else if (fullFileName.endsWith('.xlate')) dmType = 'Xlate';
-    if (stat.isDirectory()) {
+    if (fileStat.isDirectory()) {
     	entries.push( { 'datamap_name' : files[i],
                         'datamap_type' : dmType
                       }
@@ -161,23 +165,24 @@ exports.getDatamaps = () => {
   }
   return entries;
 
-}
+};
 exports.getDatamap = (map_id) => {
 	var fullFileName = path.join(config.datamaps, map_id);
 	if (path.existsSync(fullFileName)) {
        var fileStat = fs.statSync(fullFileName);
-       return [{ 'datamap_name' : files[i],
-                 'datamap_type' : dmType
-              }];
+       return [ { 'datamap_name' : files[i],
+                  'datamap_type' : dmType
+                }
+              ];
     }
     else return [];
 	
-}
+};
 /*******************************************************************************/
 /*                         Model management functions                          */
 /*******************************************************************************/
-/* Convert a JSON model to a relpredict modeldef file                          */
+/*           Convert a JSON model to a relpredict modeldef file                */                         
 exports.convertModel = (model) => {
 	var modelStr = '';
     return modelStr;
-}
+} 

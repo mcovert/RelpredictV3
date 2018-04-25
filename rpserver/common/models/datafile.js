@@ -4,6 +4,12 @@ var multer = require('multer');
 var fs = require('fs');
 var path = require('path');
 
+var rp = require('../../server/relpredict.js');
+
+console.log(rp.config);
+console.log(rp.getBatches());
+console.log(rp.getDatafiles());
+
 var batchDir    = global.baseDir + 'batches/';
 var datafileDir = global.baseDir + 'datafiles/';
 var uploadDir   = global.baseDir + 'uploads/';
@@ -30,7 +36,7 @@ var getAllFiles = function(dirName) {
     var fullFileName = dirName + '/' + files[i];
     var fileStat = fs.statSync(fullFileName);
     if (stat.isDirectory()) entries.push(getAllFiles(fullFileName));
-    else entries.push(makeFileEntry(fullFileName);)
+    else entries.push(makeFileEntry(fullFileName));
   }
   return entries;
 }
