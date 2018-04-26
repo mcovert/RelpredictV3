@@ -52,10 +52,12 @@ var models = [
          { name: "status", type: "string", description: "Claim outcome",
            algorithms: [
               { algorithm: "dt",  parms: [ { parm: "depth", parm_value: "5" } ] }
-           ]
+           ],
+           parms: []
          }
       ],
-      notes: []
+      notes: [],
+      parms: []
     },
     { name: "claim_denial", description: "Claims likely to be denied",  version: 2, model_class: "claim", identifier: "claim_id", current: false,
       features: [
@@ -76,10 +78,12 @@ var models = [
               { algorithm: "rf",  parms: [ { parm: "depth", parm_value: "5"}, {parm: "trees", parm_value: "7" } ] },
               { algorithm: "gbt", parms: [ { parm: "depth", parm_value: "5 "} ] },
               { algorithm: "lr",  parms: [ { parm: "iterations", parm_value: "5" } ] }                           
-           ]
+           ],
+           parms: []
         }
       ],
-      notes: []
+      notes: [],
+      parms: []
     },
     { name: "claim_denial", description: "Claims likely to be denied",  version: 3, model_class: "claim", identifier: "claim_id", current: false,
       features: [
@@ -103,10 +107,12 @@ var models = [
               { algorithm: "svm", parms: [ { parm: "iterations", parm_value: "1000"},{ parm: "regularization", parm_value: "L2" } ] },                            
               { algorithm: "nb",  parms: [ { parm: "smoothing", parm_value: "1.0"}, { parm: "model_type", parm_value: "bernoulli" } ] },                            
               { algorithm: "nn",  parms: [ { parm: "network", parm_value: "1/50,2/100,3/50" } ] }                            
-           ]
+           ],
+           parms: []
         }
       ],
-      notes: []
+      notes: [],
+      parms: []
     },
     { name: "claim_denial", description: "Claims likely to be denied",  version: 4, model_class: "claim", identifier: "claim_id",  current: true,
       features: [
@@ -131,7 +137,8 @@ var models = [
               { algorithm: "svm", parms: [ { parm: "iterations", parm_value: "1000"},{ parm: "regularization", parm_value: "L2" } ] },                            
               { algorithm: "nb",  parms: [ { parm: "smoothing", parm_value: "1.0"}, { parm: "model_type", parm_value: "bernoulli" } ] },                            
               { algorithm: "nn",  parms: [ { parm: "network", parm_value: "1/50,2/100,3/50" } ] }                            
-           ]
+           ],
+           parms: []
         },
         { name: "days_to_pay", type: "string", description: "Days to pay",
            algorithms: [
@@ -142,7 +149,8 @@ var models = [
               { algorithm: "svm", parms: [ { parm: "iterations", parm_value: "1000" },{ parm: "regularization", parm_value: "L2" } ] },                            
               { algorithm: "nb",  parms: [ { parm: "smoothing", parm_value: "1.0" },{ parm: "model_type", parm_value: "bernoulli" } ] },                            
               { algorithm: "nn",  parms: [ { parm: "network", parm_value: "1/50,2/100,3/50" } ] }                           
-           ]
+           ],
+           parms: []
         },
         { name: "payment", type: "string", description: "Expected payment",
            algorithms: [
@@ -153,10 +161,12 @@ var models = [
               { algorithm: "svm", parms: [ { parm: "iterations", parm_value: "1000" },{ parm: "regularization", parm_value: "L2" } ] },                            
               { algorithm: "nb",  parms: [ { parm: "smoothing", parm_value: "1.0"},{ parm: "model_type", parm_value: "bernoulli" } ] },                            
               { algorithm: "nn",  parms: [ { parm: "network", parm_value: "1/50,2/100,3/50" } ] }                          
-           ]
+           ],
+           parms: []
         }
       ],
-      notes: []
+      notes: [],
+      parms: []
     },
     { name: "claim_appeal", description: "Claims likely to be appealed",  version: 1, model_class: "claim", identifier: "claim_id",  current: false,
       features: [
@@ -176,10 +186,12 @@ var models = [
               { algorithm: "dt",  parms: [ { parm: "depth", parm_value: "5" } ] },
               { algorithm: "rf",  parms: [ { parm: "depth", parm_value: "5"},{ parm: "trees", parm_value: "7" } ] },
               { algorithm: "gbt", parms: [ { parm: "depth", parm_value: "5" } ] }
-           ]
+           ],
+           parms: []
         }
       ],
-      notes: []
+      notes: [],
+      parms: []
     },
     { name: "claim_appeal", description: "Claims likely to be appealed",  version: 2, model_class: "claim", identifier: "claim_id",  current: true,
       features: [
@@ -204,10 +216,12 @@ var models = [
               { algorithm: "svm", parms: [ { parm: "iterations", parm_value: "1000" },{ parm: "regularization", parm_value: "L2" } ] },                            
               { algorithm: "nb",  parms: [ { parm: "smoothing", parm_value: "1.0"},{ parm: "model_type", parm_value: "bernoulli" } ] },                            
               { algorithm: "nn",  parms: [ { parm: "network", parm_value: "1/50,2/100,3/50" } ] }                    
-           ]
+           ],
+           parms: []
         }
       ],
-      notes: []
+      notes: [],
+      parms: []
     },
     { name: "workflow", description: "Workunit prioritization",  version: 1, model_class: "workflow", identifier: "claim_id",  current: true,
       features: [
@@ -232,10 +246,12 @@ var models = [
               { algorithm: "svm", parms: [ { parm: "iterations", parm_value: "1000" },{ parm: "regularization", parm_value: "L2" } ] },                            
               { algorithm: "nb",  parms: [ { parm: "smoothing", parm_value: "1.0"},{ parm: "model_type", parm_value: "bernoulli" } ] },                            
               { algorithm: "nn",  parms: [ { parm: "network", parm_value: "1/50,2/100,3/50" } ] }                    
-           ]
+           ],
+           parms: []
         }
       ],
-      notes: []
+      notes: [],
+      parms: []
     },
     { name: "financial_performance", description: "Financial forecast",  version: 1, model_class: "financial", identifier: "claim_id",  current: true,
       features: [
@@ -260,10 +276,12 @@ var models = [
               { algorithm: "svm", parms: [ { parm: "iterations", parm_value: "1000" },{ parm: "regularization", parm_value: "L2" } ] },                            
               { algorithm: "nb",  parms: [ { parm: "smoothing", parm_value: "1.0"},{ parm: "model_type", parm_value: "bernoulli" } ] },                            
               { algorithm: "nn",  parms: [ { parm: "network", parm_value: "1/50,2/100,3/50" } ] }                    
-           ]
+           ],
+           parms: []
         }
       ],
-      notes: []
+      notes: [],
+      parms: []
     }
 ];
 db.model.drop();

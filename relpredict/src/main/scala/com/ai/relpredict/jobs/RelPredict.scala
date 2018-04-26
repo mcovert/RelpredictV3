@@ -37,7 +37,7 @@ import org.apache.spark.sql.SparkSession
 *        
 *  Either format can specify:
 *        --column_map column_map_filename
-*          A column map can be used to rename columns from thr input data frame to feature names
+*          A column map can be used to rename columns from the input data frame to feature names
 *        --data_map   map_name=map_file_name;map_name=map_file_name;...
 *          A data map can be sepcified with the name of a feature or target translate values. Note: only translating String (or Text) types is allowed.
 *        --jobname    "job name" (default is relpredict)

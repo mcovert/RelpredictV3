@@ -103,6 +103,7 @@ export class RPModel {
   targets     : RPTarget[];
   notes       : RPNote[];
   current     : boolean;
+  parms       : RPParameter[];
   id          : string;
   constructor() {
     this.name = "";
@@ -115,6 +116,7 @@ export class RPModel {
     this.notes = [];
     this.current = false;
     this.id = "";
+    this.parms = [];
   }
 }
 export class RPFieldTemplate {
@@ -161,6 +163,7 @@ export class RPConfig {
   created_by    : string;
   created_date  : Date;
   modified_date : Date;
+  parms         : RPParameter[];
 }
 export class RPLogEntry {
   entry_date  : string;
@@ -238,6 +241,7 @@ export class RPJobExec {
   started     : string;
   ended       : string;
   status      : string; 
+  statusMethod: string;
   id          : string;
 }
 export class RPJobSchedule {
