@@ -10,6 +10,31 @@ console.log(rp.config);
 console.log(rp.getBatches());
 console.log(rp.getDatafiles());
 console.log(rp.getDatamaps());
+console.log(rp.convertModel(
+    { name: "claim_denial", description: "Claims likely to be denied",  version: 2, model_class: "claim", identifier: "claim_id", current: false,
+      features: [
+         { name: "claim_amount", type: "double", label: "Claim Amount", parms: [] },
+         { name: "payee", type: "string", label: "Payee", parms: [] },
+         { name: "payer", type: "string", label: "Payer", parms: [] },
+         { name: "cpt_codes", type: "text", label: "CPT/HCPCS Codes", parms: [ { parm: "encode", parm_value: "ohc" } ] },
+         { name: "diagnosis_codes", type: "string", label: "Diagnosis (ICD-10) Codes", parms: [ { parm: "encode", parm_value: "mhc"} ] },
+         { name: "insurance_type", type: "string", label: "Insurance Type Code", parms: [] },
+         { name: "days_since_submitted", type: "integer", label: "Number of days since submitted", parms: [] },
+         { name: "facility_type", type: "string", label: "Place of service facility type", parms: [] },
+         { name: "location", type: "string", label: "City, state, and zip code", parms: [] }
+      ],
+      targets: [
+         { name: "status", type: "string", description: "Claim outcome",
+           algorithms: [
+              { algorithm: "dt",  parms: [ { parm: "depth", parm_value: "5" } ] },
+              { algorithm: "rf",  parms: [ { parm: "depth", parm_value: "5"}, {parm: "trees", parm_value: "7" } ] },
+              { algorithm: "gbt", parms: [ { parm: "depth", parm_value: "4"} ] },
+              { algorithm: "lr",  parms: [ { parm: "iterations", parm_value: "100" } ] }                           
+           ]
+        }
+      ],
+      notes: []
+    }));
 
 
 var batchDir    = global.baseDir + 'batches/';

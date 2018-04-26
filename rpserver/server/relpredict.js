@@ -181,8 +181,49 @@ exports.getDatamap = (map_id) => {
 /*******************************************************************************/
 /*                         Model management functions                          */
 /*******************************************************************************/
-/*           Convert a JSON model to a relpredict modeldef file                */                         
+/*           Convert a JSON model to a relpredict modeldef file                */ 
+quoted = function(str) { return '"' + str + '"'; } 
+createParms = function(parms) {
+	var parmStr = '';
+	if (parms == null) return parmStr;
+	for (var i = 0; i < parms.length; i++) {
+		if (i > 0) parmStr = parmStr + ",";
+		parmStr = parmStr + parms[i].parm + '=' + parms[i].parm_value;
+	}
+    return parmStr;
+}
+createFeature = function(feature) {
+    return '   feature '   + quoted(feature.name) +
+           ' type '        + quoted(feature.type) +
+           ' description ' + quoted(feature.label) +
+           ' parameters  ' + quoted(createParms(feature.parms)) + '\n';
+}
+createAlgorithms = function(alg) {
+	var algStr = '';
+	if (alg == null) return algStr;
+	for (var i = 0; i < alg.length; i++) {
+		algStr = algStr + "algorithm=" + alg[i].algorithm;
+		var parmStr = createParms(alg[i].parms);
+		if (parmStr != '') algStr = algStr + "," + parmStr + ";";
+		else algStr = algStr + ";";
+	}
+	return algStr;
+}                     
+createTarget = function(target) {
+    return '   target '    + quoted(target.name) +
+           ' type '        + quoted(target.type) +
+           ' description ' + quoted(target.description) +
+           ' predictedby ' + quoted(createAlgorithms(target.algorithms)) + 
+           ' parameters '  + quoted(createParms(target.parms)) + '\n';
+}                     
 exports.convertModel = (model) => {
-	var modelStr = '';
+	var modelStr = 'model '    + quoted(model.name) + 
+	               ' version ' + quoted(model.version) +
+	               ' description ' + quoted(model.description) + '\n' +
+	               '  featureset fset id ' + quoted(model.identifier) + '\n';
+	for (var i = 0; i < model.features.length; i++)
+		modelStr = modelStr + createFeature(model.features[i]);
+	for (var i = 0; i < model.targets.length; i++)
+		modelStr = modelStr + createTarget(model.targets[i]);
     return modelStr;
 } 
