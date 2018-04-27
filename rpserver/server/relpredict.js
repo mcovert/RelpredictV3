@@ -3,6 +3,7 @@ var path     = require('path');
 var node_ssh = require('node-ssh');
 var ssh      = new node_ssh();
 var multer   = require('multer');
+const { spawn }     = require('child_process');
 
 /*******************************************************************************/
 /*    RelPredict system configuration taken from environment variables         */
@@ -66,6 +67,19 @@ exports.runJob = (cmd) => {
         });
     return { 'server': server, 'monitor': getCommandMonitor(cmd.command, server)};
 }; 
+/* Run local commands from home bin directory */
+exports.runLocal = (cmd, parms) => {
+	var cmdpath = config.home + '/bin/' + cmd;
+
+	if (!fs.existsSync(cmdpath)) {
+		console.log('Command script ' + cmdpath + ' was not found');
+		return;
+	}
+    const cmdrun = spawn(cmdpath, parms);
+    cmdrun.stdout.on('data', (data) => { console.log(`${data}`); });
+    cmdrun.stderr.on('data', (data) => { console.error(`${data}`);});
+    cmdrun.on('exit', function (code, signal) { console.log('Command ' + cmd + ' exited with ' + `code ${code}`); } );
+}
 /*******************************************************************************/
 /*                         Data management functions                           */
 /*******************************************************************************/

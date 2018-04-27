@@ -5,6 +5,7 @@ var fs = require('fs');
 var path = require('path');
 
 var rp = require('../../server/relpredict.js');
+rp.runLocal('testcmd.sh', []);
 
 var batchDir    = global.baseDir + 'batches/';
 var datafileDir = global.baseDir + 'datafiles/';
