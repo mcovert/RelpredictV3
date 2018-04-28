@@ -4,8 +4,6 @@ for (let j = 0; j < process.argv.length; j++) {
     console.log(j + ' -> ' + (process.argv[j]));
 }
 
-global.baseDir = '/home/mcovert/' + process.argv[2] + '/';
-
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 

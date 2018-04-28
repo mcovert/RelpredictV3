@@ -1,25 +1,52 @@
-var fs       = require('fs');
-var path     = require('path');
-var node_ssh = require('node-ssh');
-var ssh      = new node_ssh();
-var multer   = require('multer');
-const { spawn }     = require('child_process');
+var fs          = require('fs');
+var path        = require('path');
+var node_ssh    = require('node-ssh');
+var ssh         = new node_ssh();
+var multer      = require('multer');
+var firstline   = require('firstline');
+const { spawn } = require('child_process');
+const dirTree   = require('directory-tree');
 
 /*******************************************************************************/
 /*    RelPredict system configuration taken from environment variables         */
 /*******************************************************************************/
 var config = {
 	home:       process.env.RELPREDICT_HOME,
+	scripts:    process.env.RP_SCRIPTS,
     uploads:    process.env.RP_UPLOADDIR,
 	archives:   process.env.RP_ARCHIVEDIR,
 	datafiles:  process.env.RP_DATAFILEDIR,
-	batches:    process.env.RP_BATCHDIR,
 	datamaps:   process.env.RP_DATAMAPDIR,
 	jobs:       process.env.RP_JOBDIR,
 	models:     process.env.RP_MODELDIR
 };
 exports.config = config;
+printObject = function(o, indent) {
+    var out = '';
+    if (typeof indent === 'undefined') {
+        indent = 0;
+    }
+    for (var p in o) {
+        if (o.hasOwnProperty(p)) {
+            var val = o[p];
+            out += new Array(4 * indent + 1).join(' ') + p + ': ';
+            if (typeof val === 'object') {
+                if (val instanceof Date) {
+                    out += 'Date "' + val.toISOString() + '"';
+                } else {
+                    out += '{\n' + printObject(val, indent + 1) + new Array(4 * indent + 1).join(' ') + '}';
+                }
+            } else if (typeof val === 'function') {
 
+            } else {
+                out += '"' + val + '"';
+            }
+            out += ',\n';
+        }
+    }
+    return out;
+}
+exports.printObject = printObject;
 /*******************************************************************************/
 /*                   Job server management functions                           */
 /*******************************************************************************/
@@ -83,84 +110,114 @@ exports.runLocal = (cmd, parms) => {
 /*******************************************************************************/
 /*                         Data management functions                           */
 /*******************************************************************************/
-var makeFileEntry = function(fullFileName, fileStat) {
-  var fPath = path.parse(fullFileName);
-  var fileName   = fPath.base;
-  var fileFormat = fPath.ext.replace(/\./g,' ').toUpperCase();
-  var dirName    = fPath.dir;
-  var fileType   = '?';
-  if (fullFileName.indexOf('predict')) fileType = 'Predict';
-  else if (fullFileName.indexOf('train')) fileType = 'Train';
-  else if (fullFileName.indexOf('lookup')) fileType = 'Lookup';
-  else if (fullFileName.indexOf('vocab')) fileType = 'Vocabulary';
-  var entry = { 'file_name'  : fileName,
-                'file_type'  : fileType,
-                'file_format': fileFormat,
-                'file_stats' : fileStat};
-  return entry;
-};
-/* Recursively count all files below a directory path */
-var fileCount = function(dirName) {
-  var num = 0;
-  var files = fs.readdirSync(dirName);
-  for (var i = 0; i < files.length; i++) {
-    var fullFileName = path.join(dirName, files[i]);
-    var fileStat = fs.statSync(fullFileName);
-    if (fileStat.isDirectory()) num += fileCount(fullFileName);
-    else num += 1;
-  }
-  return num;
-};
-exports.getBatches = () => {
-  var entries = [];
-  var files = fs.readdirSync(config.batches);
-  for (var i = 0; i < files.length; i++) {
-    var fullFileName = path.join(config.batches, files[i]);
-    var fileStat = fs.statSync(fullFileName);
-    if (fileStat.isDirectory()) {
-    	entries.push( { 'batch_name' : files[i],
-                        'size'       : fileStat.size,
-                        'created'    : fileStat.ctime,
-                        'files'      : fileCount(fullFileName)
-                      }
-                    );
-    }
-  }
-  return entries;
-};
-getDatafilesForDir = (datafileDir) => {
-  var entries = [];
-  var files = fs.readdirSync(datafileDir);
-  for (var i = 0; i < files.length; i++) {
-    var fullFileName = path.join(datafileDir, files[i]);
-    var fileStat = fs.statSync(fullFileName);
-    var dmType = "?";
-    if (fullFileName.endsWith('.csv')) dmType = 'Comma delimited';
-    else if (fullFileName.endsWith('.tsv')) dmType = 'Tab delimited';
-    if (fileStat.isFile()) {
-    	entries.push( { 'datafile_name' : files[i],
-                        'datafile_type' : dmType,
-                        'size'          : fileStat.size,
-                        'created'       : fileStat.ctime                       
-                      }
-                    );
-    }
-  }
-  return entries;
-};
-exports.getDatafiles = () => { return getDatafilesForDir(config.datafiles); }
-exports.getBatch = (batch_id) => {
-	var fullFileName = path.join(config.batches, batch_id);
+// var makeFileEntry = function(fullFileName, fileStat) {
+//   var fPath = path.parse(fullFileName);
+//   var fileName   = fPath.base;
+//   var fileFormat = fPath.ext.replace(/\./g,' ').toUpperCase();
+//   var dirName    = fPath.dir;
+//   var fileType   = '?';
+//   if (fullFileName.indexOf('predict')) fileType = 'Predict';
+//   else if (fullFileName.indexOf('train')) fileType = 'Train';
+//   else if (fullFileName.indexOf('lookup')) fileType = 'Lookup';
+//   else if (fullFileName.indexOf('vocab')) fileType = 'Vocabulary';
+//   var entry = { 'file_name'  : fileName,
+//                 'file_type'  : fileType,
+//                 'file_format': fileFormat,
+//                 'file_stats' : fileStat};
+//   return entry;
+// };
+// /* Recursively count all files below a directory path */
+// var fileCount = function(dirName) {
+//   var num = 0;
+//   var files = fs.readdirSync(dirName);
+//   for (var i = 0; i < files.length; i++) {
+//     var fullFileName = path.join(dirName, files[i]);
+//     var fileStat = fs.statSync(fullFileName);
+//     if (fileStat.isDirectory()) num += fileCount(fullFileName);
+//     else num += 1;
+//   }
+//   return num;
+// };
+exports.getDatafiles = () => { 
+	return JSON.parse(JSON.stringify(dirTree(config.datafiles)).replace(new RegExp(config.datafiles + '/','g'), ''));
+}
+// exports.getBatches = (getAll) => {
+//   var entries = [];
+//   var files = fs.readdirSync(config.batches);
+//   for (var i = 0; i < files.length; i++) {
+//     var fullFileName = path.join(config.batches, files[i]);
+//     var fileStat = fs.statSync(fullFileName);
+//     if (fileStat.isDirectory()) {
+//     	var batch = {   'batch_name' : files[i],
+//                         'size'       : fileStat.size,
+//                         'created'    : fileStat.ctime,
+//                         'file_count' : fileCount(fullFileName)
+//                       };
+//     	if (getAll) {
+//             batch.files = getDatafilesForDir(fullFileName);
+//     	}
+//     	entries.push(batch);
+//     }
+//   }
+//   return entries;
+// };
+// getDatafilesForDir = (datafileDir) => {
+//   var entries = [];
+//   var files = fs.readdirSync(datafileDir);
+//   for (var i = 0; i < files.length; i++) {
+//     var fullFileName = path.join(datafileDir, files[i]);
+//     var fileStat = fs.statSync(fullFileName);
+//     if (fileStat.isFile()) {
+//         var dmType = "?";
+//         if (fullFileName.endsWith('.csv')) dmType = 'Comma delimited';
+//         else if (fullFileName.endsWith('.tsv')) dmType = 'Tab delimited';
+//     	entries.push( { 'datafile_name' : files[i],
+//                         'datafile_type' : dmType,
+//                         'size'          : fileStat.size,
+//                         'created'       : fileStat.ctime                       
+//                       }
+//                     );
+//     }
+//     else entries.push(getDatafilesForDir(fullFileName));
+//   }
+//   return entries;
+// };
+// exports.getDatafiles = () => { return getDatafilesForDir(config.datafiles); }
+// exports.getBatch = (batch_id) => {
+// 	var fullFileName = path.join(config.batches, batch_id);
+// 	if (path.existsSync(fullFileName)) {
+//        var fileStat = fs.statSync(fullFileName);
+//        return [{ 'batch_name' : batch_id,
+//                  'size'       : fileStat.size,
+//                  'created'    : fileStat.ctime,
+//                  'file_count' : fileCount(fullFileName)
+//                }];
+//     }
+//     else return [];
+// };
+/* Read an entire data file */
+exports.getDatafileInfo = (fileName) => {
+	var fullFileName = path.join(config.datafiles, fileName);
 	if (path.existsSync(fullFileName)) {
        var fileStat = fs.statSync(fullFileName);
-       return [{ 'batch_name' : batch_id,
-                 'size'       : fileStat.size,
-                 'created'    : fileStat.ctime,
-                 'files'      : fileCount(fullFileName)
-               }];
+       var dmContent = fs.readfileSync(fullFileName, 'utf8');
+       return { 'datafile_name'    : path.parse(files[i]).name,
+                'datafile_content' : dmContent
+              };
     }
-    else return [];
-};
+    else return {};
+}
+exports.getDatafileHeader = (fileName) => {
+	var fullFileName = path.join(config.datafiles, fileName);
+	if (fs.existsSync(fullFileName)) {
+	  firstline(fullFileName).then( (line) => {
+         return { 'datafile_name'   : fileName,
+                  'datafile_header' : line
+              };
+	  });
+    }
+    else return {};
+}
 exports.getDatamaps = () => {
   var entries = [];
   var files = fs.readdirSync(config.datamaps);
@@ -184,8 +241,10 @@ exports.getDatamap = (map_id) => {
 	var fullFileName = path.join(config.datamaps, map_id);
 	if (path.existsSync(fullFileName)) {
        var fileStat = fs.statSync(fullFileName);
+       var dmContent = fs.readfileSync(fullFileName, 'utf8');
        return [ { 'datamap_name' : path.parse(files[i]).name,
-                  'datamap_type' : dmType
+                  'datamap_type' : dmType,
+                  'datamap'      : JSON.parse(dmContent)
                 }
               ];
     }

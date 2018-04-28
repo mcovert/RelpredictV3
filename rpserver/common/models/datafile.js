@@ -5,11 +5,9 @@ var fs = require('fs');
 var path = require('path');
 
 var rp = require('../../server/relpredict.js');
-rp.runLocal('testcmd.sh', []);
 
-var batchDir    = global.baseDir + 'batches/';
-var datafileDir = global.baseDir + 'datafiles/';
-var uploadDir   = global.baseDir + 'uploads/';
+//console.log(rp.printObject(rp.getDatafiles()));
+console.log(rp.getDatafileHeader('2018-04-23-ai.txt'));
 
 var makeFileEntry = function(fullFileName, fileStat) {
   var fPath = path.parse(fullFileName);
@@ -37,9 +35,10 @@ var getAllFiles = function(dirName) {
   }
   return entries;
 }
-var getAllBatches = function() {
+var getBatches = function() {
+  return rp.getBatches();
 } 
-var getAllBatchesAndFiles = function() {
+var getBatchesAndFiles = function() {
 } 
 
 module.exports = function(Datafile) {
@@ -48,7 +47,7 @@ module.exports = function(Datafile) {
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
             // checking and creating uploads folder where files will be uploaded
-            var dirPath = global.baseDir + 'data/uploads/';
+            var dirPath = rp.config.uploads;
             console.log(dirPath);
             cb(null, dirPath + '/');
         },
@@ -72,7 +71,7 @@ module.exports = function(Datafile) {
                 // An error occurred when uploading
                 res.json(err);
             }
-            var fromPath = global.baseDir + 'data/uploads/' + uploadedFileName;
+            var fromPath = rp.config.uploads + '/' + uploadedFileName;
             var toPath = global.baseDir + 'data/batches/hold/' + uploadedFileName;
             fs.rename(fromPath, toPath , function(err) {
                     if ( err ) console.log('ERROR: ' + err);
