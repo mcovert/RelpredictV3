@@ -7,7 +7,7 @@ var path = require('path');
 var rp = require('../../server/relpredict.js');
 
 //console.log(rp.printObject(rp.getDatafiles()));
-console.log(rp.getDatafileHeader('2018-04-23-ai.txt'));
+//console.log(rp.getDatafileHeader('2018-04-23-ai.txt'));
 
 var makeFileEntry = function(fullFileName, fileStat) {
   var fPath = path.parse(fullFileName);

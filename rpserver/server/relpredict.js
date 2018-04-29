@@ -3,7 +3,6 @@ var path        = require('path');
 var node_ssh    = require('node-ssh');
 var ssh         = new node_ssh();
 var multer      = require('multer');
-var firstline   = require('firstline');
 const { spawn } = require('child_process');
 const dirTree   = require('directory-tree');
 
@@ -207,16 +206,18 @@ exports.getDatafileInfo = (fileName) => {
     }
     else return {};
 }
+var buff_size = 8192;
+var buffer = new Buffer(buff_size);
 exports.getDatafileHeader = (fileName) => {
-	var fullFileName = path.join(config.datafiles, fileName);
-	if (fs.existsSync(fullFileName)) {
-	  firstline(fullFileName).then( (line) => {
-         return { 'datafile_name'   : fileName,
-                  'datafile_header' : line
-              };
-	  });
-    }
-    else return {};
+	let fullFileName = path.join(config.datafiles, fileName);
+    let fd = fs.openSync(fullFileName, 'r');
+    fs.readSync(fd, buffer, 0, buff_size, 0);
+    fs.closeSync(fd);
+    let inbuff = buffer.toString('utf8').split('\n');
+	return { 'datafile_name'   : fileName,
+             'datafile_header' : inbuff[0] || '',
+             'datafile_record' : inbuff[1] || ''
+           };
 }
 exports.getDatamaps = () => {
   var entries = [];
