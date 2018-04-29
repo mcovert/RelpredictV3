@@ -20,6 +20,24 @@ var config = {
 	models:     process.env.RP_MODELDIR
 };
 exports.config = config;
+writeLog = function(issuer, userid, msg, msg_class, msg_action, msg_entity, severity) {
+   var dt = new Date();	
+   Log.create({
+   	 entry_date: dt.format('yyyy-MM-dd:hh:mm:ss'),
+   	 issuer:     issuer,
+   	 severity:   severity,
+   	 msg_class:  msg_class,
+   	 msg_action: msg_action,
+   	 msg_entity: msg_entity,
+   	 userid:     userid
+   });
+}
+exports.writeLog = writeLog;
+writeLogEntries = function(entries) {
+	for (var e in entries)
+		writeLog(e);
+}
+exports.writeLogEntries = writeLogEntries;
 printObject = function(o, indent) {
     var out = '';
     if (typeof indent === 'undefined') {
