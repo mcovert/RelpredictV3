@@ -109,92 +109,10 @@ exports.runLocal = (cmd, parms) => {
 /*******************************************************************************/
 /*                         Data management functions                           */
 /*******************************************************************************/
-// var makeFileEntry = function(fullFileName, fileStat) {
-//   var fPath = path.parse(fullFileName);
-//   var fileName   = fPath.base;
-//   var fileFormat = fPath.ext.replace(/\./g,' ').toUpperCase();
-//   var dirName    = fPath.dir;
-//   var fileType   = '?';
-//   if (fullFileName.indexOf('predict')) fileType = 'Predict';
-//   else if (fullFileName.indexOf('train')) fileType = 'Train';
-//   else if (fullFileName.indexOf('lookup')) fileType = 'Lookup';
-//   else if (fullFileName.indexOf('vocab')) fileType = 'Vocabulary';
-//   var entry = { 'file_name'  : fileName,
-//                 'file_type'  : fileType,
-//                 'file_format': fileFormat,
-//                 'file_stats' : fileStat};
-//   return entry;
-// };
-// /* Recursively count all files below a directory path */
-// var fileCount = function(dirName) {
-//   var num = 0;
-//   var files = fs.readdirSync(dirName);
-//   for (var i = 0; i < files.length; i++) {
-//     var fullFileName = path.join(dirName, files[i]);
-//     var fileStat = fs.statSync(fullFileName);
-//     if (fileStat.isDirectory()) num += fileCount(fullFileName);
-//     else num += 1;
-//   }
-//   return num;
-// };
 exports.getDatafiles = () => { 
 	return JSON.parse(JSON.stringify(dirTree(config.datafiles)).replace(new RegExp(config.datafiles + '/','g'), ''));
 }
-// exports.getBatches = (getAll) => {
-//   var entries = [];
-//   var files = fs.readdirSync(config.batches);
-//   for (var i = 0; i < files.length; i++) {
-//     var fullFileName = path.join(config.batches, files[i]);
-//     var fileStat = fs.statSync(fullFileName);
-//     if (fileStat.isDirectory()) {
-//     	var batch = {   'batch_name' : files[i],
-//                         'size'       : fileStat.size,
-//                         'created'    : fileStat.ctime,
-//                         'file_count' : fileCount(fullFileName)
-//                       };
-//     	if (getAll) {
-//             batch.files = getDatafilesForDir(fullFileName);
-//     	}
-//     	entries.push(batch);
-//     }
-//   }
-//   return entries;
-// };
-// getDatafilesForDir = (datafileDir) => {
-//   var entries = [];
-//   var files = fs.readdirSync(datafileDir);
-//   for (var i = 0; i < files.length; i++) {
-//     var fullFileName = path.join(datafileDir, files[i]);
-//     var fileStat = fs.statSync(fullFileName);
-//     if (fileStat.isFile()) {
-//         var dmType = "?";
-//         if (fullFileName.endsWith('.csv')) dmType = 'Comma delimited';
-//         else if (fullFileName.endsWith('.tsv')) dmType = 'Tab delimited';
-//     	entries.push( { 'datafile_name' : files[i],
-//                         'datafile_type' : dmType,
-//                         'size'          : fileStat.size,
-//                         'created'       : fileStat.ctime                       
-//                       }
-//                     );
-//     }
-//     else entries.push(getDatafilesForDir(fullFileName));
-//   }
-//   return entries;
-// };
-// exports.getDatafiles = () => { return getDatafilesForDir(config.datafiles); }
-// exports.getBatch = (batch_id) => {
-// 	var fullFileName = path.join(config.batches, batch_id);
-// 	if (path.existsSync(fullFileName)) {
-//        var fileStat = fs.statSync(fullFileName);
-//        return [{ 'batch_name' : batch_id,
-//                  'size'       : fileStat.size,
-//                  'created'    : fileStat.ctime,
-//                  'file_count' : fileCount(fullFileName)
-//                }];
-//     }
-//     else return [];
-// };
-/* Read an entire data file */
+getDatafilesForDir = (dir) => { return JSON.parse(JSON.stringify(dirTree(dir)).replace(new RegExp(dir + '/','g'), '')); }
 exports.getDatafileInfo = (fileName) => {
 	var fullFileName = path.join(config.datafiles, fileName);
 	if (path.existsSync(fullFileName)) {
@@ -219,7 +137,7 @@ exports.getDatafileHeader = (fileName) => {
              'datafile_record' : inbuff[1] || ''
            };
 }
-exports.getDatamaps = () => {
+exports.getDatamapList = () => {
   var entries = [];
   var files = fs.readdirSync(config.datamaps);
   for (var i = 0; i < files.length; i++) {
