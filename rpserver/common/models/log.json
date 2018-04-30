@@ -38,6 +38,10 @@
     "userid": {
       "type": "string",
       "required": true
+    },
+    "parms": {
+      "type": "object",
+      "required": true
     }
   },
   "validations": [],

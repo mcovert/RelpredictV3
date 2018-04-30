@@ -174,6 +174,7 @@ export class RPLogEntry {
   msg_entity  : string;
   msg         : string;
   userid      : string;
+  parms       : RPParameter[];
   id          : string;
 }
 export class RPUser {

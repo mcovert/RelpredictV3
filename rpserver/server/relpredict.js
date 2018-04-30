@@ -20,7 +20,7 @@ var config = {
 	models:     process.env.RP_MODELDIR
 };
 exports.config = config;
-writeLog = function(issuer, userid, msg, msg_class, msg_action, msg_entity, severity) {
+writeLog = function(issuer, userid, msg, msg_class, msg_action, msg_entity, severity, parms) {
    var dt = new Date();	
    Log.create({
    	 entry_date: dt.format('yyyy-MM-dd:hh:mm:ss'),
@@ -226,7 +226,7 @@ createTarget = function(target) {
            ' predictedby ' + quoted(createAlgorithms(target.algorithms)) + 
            ' parameters '  + quoted(createParms(target.parms)) + '\n';
 }                     
-exports.convertModel = (model) => {
+convertModel = (model) => {
 	var modelStr = 'model '    + quoted(model.name) + 
 	               ' version ' + quoted(model.version) +
 	               ' description ' + quoted(model.description) + '\n' +
@@ -236,4 +236,44 @@ exports.convertModel = (model) => {
 	for (var i = 0; i < model.targets.length; i++)
 		modelStr = modelStr + createTarget(model.targets[i]);
     return modelStr;
-} 
+}
+makeDir = function(dir) {
+	if (fs.existsSync) return;
+	fs.mkdirSync(dir);
+}
+makeDirP = function(base, dir) {
+	var dirList = dir.split(path.sep);
+	var dirNew = base;
+	for (int i = 0; i < dirList.length; i++) {
+		dirNew = path.join(dirNew, dirList[i]);
+		fs.makeDir(dirNew);
+	}
+}
+exports.convertModel = convertModel; 
+getModelPath = function(model) {
+	return path.join(config.models, 
+    	             model.model_class, 
+    	             model.model_name,
+    	             model.version);
+}
+exports.getModelPath = getModelPath;
+saveModel = (model) => {
+    var modelDef = convertModel(model);
+    var modelJSON = JSON.stringify(model);
+    var modelPath = getModelPath(model);
+    makeDirP(modelPath);
+    for (var i = 0; i < model.targets.length, i++) {
+    	for (var j = 0; j < model.targets[i].algorithms.length; j++) {
+    		makeDirP(path.join(modelPath, 
+    			               model.targets[i].targetName,
+    			               model.targets[i].algorithms[j].name));
+    	}
+    }
+    fs.writeFileSync(path.join(modelPath, model_name + '.modeldef'), modelDef);
+    fs.writeFileSync(path.join(modelPath, model_name + '.json'), modelJSON);
+    return modelPath;
+}
+exports.saveModel = saveModel;
+exports.makeTrainedModel = (trained_model) => {
+    var modelPath = getModelPath(model);
+}

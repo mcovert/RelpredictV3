@@ -23,12 +23,15 @@
       "type": "string",
       "required": true
     },
+    "current": {
+      "type": "boolean"
+    },
     "alg_name": {
       "type": "string",
       "required": true
     },
-    "alg_type": {
-      "type": "string",
+    "alg_run_version": {
+      "type": "number",
       "required": true
     },
     "job_name": {
