@@ -25,6 +25,7 @@ module.exports = function(Datafile) {
             var fileName = Date.now() + file.originalname;
             uploadedFileName = fileName;
             console.log(fileName);
+            var user = req.currentUser;
             cb(null, fileName);
         }
     });
@@ -37,8 +38,10 @@ module.exports = function(Datafile) {
         upload(req, res, function (err) {
             if (err) {
                 // An error occurred when uploading
+                rp.writeLog('DATAFILE', 'ERROR', 'FAILED', 'UPLOAD', 'File upload failed',  { file: uploadedFileName }, req.currentUser);
                 res.json(err);
             }
+            rp.writeLog('DATAFILE', 'INFO', 'OK', 'UPLOAD', 'File uploaded',  { file: uploadedFileName }, req.currentUser);
             res.json(uploadedFileName);
         });   
     };
@@ -50,7 +53,8 @@ module.exports = function(Datafile) {
             http: {
                 source: 'req'
             }
-        }, {
+        }, 
+        {
             arg: 'res',
             type: 'object',
             http: {
@@ -62,18 +66,23 @@ module.exports = function(Datafile) {
              type: 'string'
         }
     });
-   Datafile.listdatafiles = function(cb) {
-      rp.showModels();
-      rp.writeLog('TEST', 'mcovert@ai.com', 'Test message', 'INFO', 'none', 'datafile', 0, { seq: 0 });
+   Datafile.listdatafiles = function(req, cb) {
+      rp.writeLog('DATAFILE', 'INFO', 'OK', 'LIST', 'List data files',  {}, req.currentUser);
    	  var retFiles = rp.getDatafiles();
    	  cb(null, retFiles);
    }; 	
-   Datafile.remoteMethod(
-   	'listdatafiles', {
+   Datafile.remoteMethod('listdatafiles', {
    		http: {
    			path: '/listdatafiles',
    			verb: 'get'
    		},
+      accepts: [{
+            arg: 'req',
+            type: 'object',
+            http: {
+                source: 'req'
+            }
+      }], 
    		returns: {
    			arg:  'filedir',
    			type: 'array'
@@ -83,8 +92,7 @@ module.exports = function(Datafile) {
       var ret = rp.getDatafileHeader(filename);
       cb(null, ret);
    };   
-   Datafile.remoteMethod(
-    'getheader', {
+   Datafile.remoteMethod('getheader', {
       http: {
         path: '/getheader',
         verb: 'post'

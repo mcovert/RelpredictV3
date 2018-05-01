@@ -31,17 +31,17 @@ exports.config = config;
 /*******************************************************************************/
 /*                             Utility functions                               */
 /*******************************************************************************/
-writeLog = function(issuer, userid, msg, msg_class, msg_action, msg_entity, severity, parms) {
+getUserid = () => { return 'mcovert@ai.com'; };
+writeLog = function(issuer, severity, result, action, msg, parms, user) {
    var dt = new Date();	
    app.models.Log.create({
    	 entry_date: dt.toISOString(),
    	 issuer:     issuer,
    	 severity:   severity,
-   	 msg_class:  msg_class,
-   	 msg_action: msg_action,
-   	 msg_entity: msg_entity,
+   	 result:     result,
+   	 action:     action,
    	 msg:        msg,
-   	 userid:     userid,
+   	 userid:     user,
    	 parms:      parms
    });
 }

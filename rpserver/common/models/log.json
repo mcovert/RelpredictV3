@@ -19,15 +19,11 @@
       "type": "string",
       "required": true
     },
-    "msg_class": {
+    "result": {
       "type": "string",
       "required": true
     },
-    "msg_action": {
-      "type": "string",
-      "required": true
-    },
-    "msg_entity": {
+    "action": {
       "type": "string",
       "required": true
     },

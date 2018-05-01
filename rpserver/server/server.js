@@ -14,9 +14,21 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded( { extended: false}));
 app.use(bodyParser.json());
 var logger = function(req, res, next) {
-  console.log("REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
+  //console.log(req.accessToken);
+  if (req.accessToken) {
+    app.models.User.findById(req.accessToken.userId, function(err, user) {
+      //console.log(user);
+      req.currentUser = user.email;
+      console.log("USER: " + req.currentUser + " REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
+    });
+  }
+  else  {
+    console.log("USER: *not logged in* REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
+    req.currentUser = "*not logged in*"    
+  }
   next();
 }
+app.use(loopback.token());
 app.use(logger);
 /* end logger */
 app.start = function() {
@@ -31,14 +43,6 @@ app.start = function() {
     }
   });
 };
-
-// app.middleware('initial', function logResponse(req, res, next) {
-//   res.on('finish', function() {
-//     console.log(res.body, req.originalUrl, res.statusCode);
-//   });
-//   next();
-// });
-
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.
 boot(app, __dirname, function(err) {
