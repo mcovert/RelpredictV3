@@ -5,6 +5,14 @@ var ssh         = new node_ssh();
 var multer      = require('multer');
 const { spawn } = require('child_process');
 const dirTree   = require('directory-tree');
+var app         = require('./server.js');
+
+exports.showModels = () => {
+   var models = app.models();
+   console.log('There are ' + models.length + ' defined:');
+   models.forEach(function(m) { console.log(m.modelName)});
+}
+//var log         = app.models.Log;
 
 /*******************************************************************************/
 /*    RelPredict system configuration taken from environment variables         */
@@ -20,16 +28,21 @@ var config = {
 	models:     process.env.RP_MODELDIR
 };
 exports.config = config;
+/*******************************************************************************/
+/*                             Utility functions                               */
+/*******************************************************************************/
 writeLog = function(issuer, userid, msg, msg_class, msg_action, msg_entity, severity, parms) {
    var dt = new Date();	
-   Log.create({
-   	 entry_date: dt.format('yyyy-MM-dd:hh:mm:ss'),
+   app.models.Log.create({
+   	 entry_date: dt.toISOString(),
    	 issuer:     issuer,
    	 severity:   severity,
    	 msg_class:  msg_class,
    	 msg_action: msg_action,
    	 msg_entity: msg_entity,
-   	 userid:     userid
+   	 msg:        msg,
+   	 userid:     userid,
+   	 parms:      parms
    });
 }
 exports.writeLog = writeLog;
@@ -38,6 +51,18 @@ writeLogEntries = function(entries) {
 		writeLog(e);
 }
 exports.writeLogEntries = writeLogEntries;
+makeDir = function(dir) {
+	if (fs.existsSync) return;
+	fs.mkdirSync(dir);
+}
+makeDirP = function(base, dir) {
+	var dirList = dir.split(path.sep);
+	var dirNew = base;
+	for (var i = 0; i < dirList.length; i++) {
+		dirNew = path.join(dirNew, dirList[i]);
+		fs.makeDir(dirNew);
+	}
+}
 printObject = function(o, indent) {
     var out = '';
     if (typeof indent === 'undefined') {
@@ -237,18 +262,6 @@ convertModel = (model) => {
 		modelStr = modelStr + createTarget(model.targets[i]);
     return modelStr;
 }
-makeDir = function(dir) {
-	if (fs.existsSync) return;
-	fs.mkdirSync(dir);
-}
-makeDirP = function(base, dir) {
-	var dirList = dir.split(path.sep);
-	var dirNew = base;
-	for (int i = 0; i < dirList.length; i++) {
-		dirNew = path.join(dirNew, dirList[i]);
-		fs.makeDir(dirNew);
-	}
-}
 exports.convertModel = convertModel; 
 getModelPath = function(model) {
 	return path.join(config.models, 
@@ -262,7 +275,7 @@ saveModel = (model) => {
     var modelJSON = JSON.stringify(model);
     var modelPath = getModelPath(model);
     makeDirP(modelPath);
-    for (var i = 0; i < model.targets.length, i++) {
+    for (var i = 0; i < model.targets.length; i++) {
     	for (var j = 0; j < model.targets[i].algorithms.length; j++) {
     		makeDirP(path.join(modelPath, 
     			               model.targets[i].targetName,
@@ -274,6 +287,17 @@ saveModel = (model) => {
     return modelPath;
 }
 exports.saveModel = saveModel;
-exports.makeTrainedModel = (trained_model) => {
+makeTrainedModel = (trained_model) => {
     var modelPath = getModelPath(model);
+    var subdirs = fs.readdirSync(modelPath);
+    var newdir = 0;
+    for (var i = 0; i < subdirs.length; i++) {
+       var dirNum = parseInt(subdirs[i]);	
+       if (dirNum > newdir) newdir = dirNum;
+    }
+    newdir += 1;
+    var dirPath = path.join(modelPath, newdir.toString());
+    fs.mkdirSync(dirPath);
+    return dirPath;
 }
+exports.makeTrainedModel = makeTrainedModel;

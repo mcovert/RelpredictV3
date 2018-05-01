@@ -18,6 +18,8 @@ public class LabeledRecordIterator implements LabelAwareIterator {
 		this.fileName = fileName;
 		this.fr = new FileReader(fileName);
 		this.reader = new BufferedReader(fr);
+		build();
+		reset();
 	}
 	@Override
 	public boolean hasNext() {
@@ -83,5 +85,9 @@ public class LabeledRecordIterator implements LabelAwareIterator {
 		}
 
 	}
-
+    private void build() {
+    	while(hasNextDocument()) {
+    		ls.storeLabel(nextDocument().getLabels().get(0));
+    	}
+    }
 }

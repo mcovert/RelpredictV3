@@ -42,12 +42,6 @@
       "type": "string",
       "required": true
     },
-    "records_train": {
-      "type": "number"
-    },
-    "records_test": {
-      "type": "number"
-    },
     "results": {
       "type": [
         "object"
