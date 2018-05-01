@@ -47,7 +47,7 @@ datamapTypes   : string[] = [ "Map", "Xlate" ];
     }
     console.log('form data variable :   '+ formData.toString());
 
-    return this.httpService.post(this.globalService.getServerUrl() + 'datafiles/upload', formData);
+    return this.httpService.post(this.globalService.getServerUrl() + 'datafiles/uploadfiles', formData);
   }
 
 }
