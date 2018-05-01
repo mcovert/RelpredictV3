@@ -46,6 +46,7 @@ module.exports = function(Datafile) {
             }
             rp.writeLog('DATAFILE', 'INFO', 'OK', 'UPLOAD', 'File uploaded',  { files: uploaded_files }, req.currentUser);
             res.json(uploaded_files);
+            rp.runLocal('rpdatautil.sh', uploaded_files);
             uploaded_files = [];
         });   
     };
