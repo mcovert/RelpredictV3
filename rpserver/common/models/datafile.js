@@ -94,13 +94,13 @@ module.exports = function(Datafile) {
    			type: 'array'
    		}
    	})
-   Datafile.getheader = function(filename, cb) {
-      var ret = rp.getDatafileHeader(filename);
+   Datafile.getfileinfo = function(filename, cb) {
+      var ret = rp.getDatafileInfo(filename);
       cb(null, ret);
    };   
-   Datafile.remoteMethod('getheader', {
+   Datafile.remoteMethod('getfileinfo', {
       http: {
-        path: '/getheader',
+        path: '/getfileinfo',
         verb: 'post'
       },
       accepts: [ 
@@ -111,6 +111,26 @@ module.exports = function(Datafile) {
       returns: [
       {
         arg:  'datafile_info',
+        type: 'object'
+      }]
+    });
+   Datafile.getfileheader = function(filename, cb) {
+      var ret = rp.getDatafileHeader(filename);
+      cb(null, ret);
+   };   
+   Datafile.remoteMethod('getfileheader', {
+      http: {
+        path: '/getfileheader',
+        verb: 'post'
+      },
+      accepts: [ 
+      {
+            arg:  'filename',
+            type: 'string'
+      }],
+      returns: [
+      {
+        arg:  'datafile_content',
         type: 'object'
       }]
     });

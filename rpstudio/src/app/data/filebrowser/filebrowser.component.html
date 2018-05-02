@@ -1,7 +1,46 @@
 <div class="container">
+<div class="row p-1">
 	<div class="col-1"></div>
 	<div class="col-4">
-          <tree-root [nodes]="node" [options]="options"></tree-root>
+		  <h3>Data Directory</h3>
+          <tree-root [nodes]="node" [options]="options"
+          	   (toggleExpanded)="onEvent($event)"
+               (activate)="onActivateEvent($event)"
+               (focus)="onEvent($event)"
+               (blur)="onEvent($event)">
+          </tree-root>
     </div>
-    <div class="col-7"></div>
+    <div class="col-5">
+	  <h3>File Summary</h3>
+    	<table id="mytable" class="table table-bordred table-striped sortable table-sm">
+    		<thead>
+    			<th>File</th>
+    			<th>Value</th>
+    		</thead>
+    		<tbody>
+    			<tr>
+    				<td>Name</td>
+    				<td>{{fileInfo.datafile_name}}</td>
+    			</tr>
+    			<tr>
+    				<td>Size (bytes)</td>
+    				<td>{{fileInfo.datafile_size}}</td>
+    			</tr>
+    			<tr>
+    				<td>Created</td>
+    				<td>{{fileInfo.datafile_created}}</td>
+    			</tr>
+    			<tr>
+    				<td>Format</td>
+    				<td>{{fileInfo.datafile_format}}</td>
+    			</tr>
+    			<tr>
+    				<td>Type</td>
+    				<td>{{fileInfo.datafile_type}}</td>
+    			</tr>
+    		</tbody>
+    	</table>
+    </div>
+    <div class="col-2"></div>
+</div>
 </div>

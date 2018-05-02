@@ -13,6 +13,14 @@ class TreeNode {
 class RetObj {
   filedir: TreeNode;
 }
+class FileInfo {
+	datafile_name    : string;
+	datafile_size    : number;
+	datafile_created : string;
+    datafile_format  : string;
+    datafile_type    : string;
+    datafile_dir     : string;
+}
 
 @Component({
   selector: 'app-filebrowser',
@@ -24,8 +32,16 @@ export class FilebrowserComponent implements OnInit {
   o_node: Observable<TreeNode>;
   node  : TreeNode[];
   options = {};
+  fileInfo : FileInfo;
+  emptyFileInfo : FileInfo = { datafile_name: '---', 
+                               datafile_size: 0, 
+                               datafile_created: '---', 
+                               datafile_format: '---', 
+                               datafile_type: '---',
+                               datafile_dir: '---'}; 
 
   constructor(private dataservice : DataService) { 
+  	this.fileInfo = this.emptyFileInfo;
   }
   ngOnInit() {
   	this.dataservice.getDataDirectory().subscribe(result => {
@@ -35,5 +51,15 @@ export class FilebrowserComponent implements OnInit {
   		console.log(this.node);
   	})
   }
-
+  onEvent(event) {
+  }
+  onActivateEvent(event) {
+  	console.log(event);
+  	console.log('Path=' + event.node.data.path);
+  	this.dataservice.getDatafileInfo(event.node.data.path).subscribe(result => {
+  		console.log(result);
+  		this.fileInfo = (result.datafile_info) as FileInfo;
+  		console.log(this.fileInfo);
+  	})
+  }
 }

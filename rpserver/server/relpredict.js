@@ -164,17 +164,33 @@ exports.runLocal = (cmd, parms) => {
 //   return n;
 // }
 exports.getDatafiles = () => { 
-	console.log('Get datafiles');
-	return JSON.parse(JSON.stringify(dirTree(config.datafiles)).replace(new RegExp(config.datafiles + '/','g'), ''));
+	//console.log('Get datafiles');
+	//console.log(dirTree(config.datafiles));
+	//return JSON.parse(JSON.stringify(dirTree(config.datafiles)).replace(new RegExp(config.datafiles + '/','g'), ''));
+	return dirTree(config.datafiles);
+}
+getFileFormat = (ftype) => {
+	if (ftype === ".csv") return "CSV";
+	if (ftype === ".tsv") return "TSV";
+	if (ftype.startsWith(".")) return ftype.substring(1);
+	if (ftype === "") return "?";
+	return ftype;	
 }
 getDatafilesForDir = (dir) => { return JSON.parse(JSON.stringify(dirTree(dir)).replace(new RegExp(dir + '/','g'), '')); }
 exports.getDatafileInfo = (fileName) => {
-	var fullFileName = path.join(config.datafiles, fileName);
-	if (path.existsSync(fullFileName)) {
+	//var fullFileName = path.join(config.datafiles, fileName);
+	var fullFileName = fileName;
+	if (fs.existsSync(fullFileName)) {
        var fileStat = fs.statSync(fullFileName);
-       var dmContent = fs.readfileSync(fullFileName, 'utf8');
-       return { 'datafile_name'    : path.parse(files[i]).name,
-                'datafile_content' : dmContent
+       var fileType = "Directory";
+       if (fileStat.isFile()) fileType = "File";
+       var fparse = path.parse(fullFileName);
+       return { 'datafile_name'    : fparse.name,
+                'datafile_size'    : fileStat.size,
+                'datafile_created' : fileStat.ctime,
+                'datafile_format'  : getFileFormat(fparse.ext),
+                'datafile_dir'     : fparse.dir,
+                'datafile_type'    : fileType
               };
     }
     else return {};
