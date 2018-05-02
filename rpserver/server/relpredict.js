@@ -152,7 +152,19 @@ exports.runLocal = (cmd, parms) => {
 /*******************************************************************************/
 /*                         Data management functions                           */
 /*******************************************************************************/
+// addChildren = function(n) {
+//   if (n.children === undefined) {
+//   	n.children = [];
+//   }
+//   else {
+//   	for (var i = 0; i < n.children.length; i++) {
+//   		n.children[i] = addChildren(n.children[i]);
+//   	}
+//   }
+//   return n;
+// }
 exports.getDatafiles = () => { 
+	console.log('Get datafiles');
 	return JSON.parse(JSON.stringify(dirTree(config.datafiles)).replace(new RegExp(config.datafiles + '/','g'), ''));
 }
 getDatafilesForDir = (dir) => { return JSON.parse(JSON.stringify(dirTree(dir)).replace(new RegExp(dir + '/','g'), '')); }

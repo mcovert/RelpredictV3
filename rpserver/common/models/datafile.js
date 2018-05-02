@@ -74,6 +74,7 @@ module.exports = function(Datafile) {
    Datafile.listdatafiles = function(req, cb) {
       rp.writeLog('DATAFILE', 'INFO', 'OK', 'LIST', 'List data files',  {}, req.currentUser);
    	  var retFiles = rp.getDatafiles();
+      console.log(retFiles);
    	  cb(null, retFiles);
    }; 	
    Datafile.remoteMethod('listdatafiles', {

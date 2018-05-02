@@ -44,7 +44,7 @@ import { AccountComponent } from './admin/accounts/account/account.component';
 import { UserListComponent } from './admin/users/user-list/user-list.component';
 import { UserComponent } from './admin/users/user/user.component';
 import { TrainedmodelListComponent } from './trainedmodel-list/trainedmodel-list.component';
-
+import { TreeModule } from 'angular-tree-component';
 import { ModelClassPipe } from './models/model-class.pipe';
 import { HelpComponent } from './help/help.component';
 import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
@@ -60,6 +60,7 @@ import { DatafileViewerComponent } from './data/datafile-viewer/datafile-viewer.
 import { FileLoaderComponent } from './file-loader/file-loader.component';
 import { ModelEditorComponent } from './models/model-editor/model-editor.component';
 import { BatchViewerComponent } from './data/batch-viewer/batch-viewer.component';
+import { FilebrowserComponent } from './data/filebrowser/filebrowser.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { BatchViewerComponent } from './data/batch-viewer/batch-viewer.component
     DatafileViewerComponent,
     FileLoaderComponent,
     ModelEditorComponent,
-    BatchViewerComponent
+    BatchViewerComponent,
+    FilebrowserComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +112,8 @@ import { BatchViewerComponent } from './data/batch-viewer/batch-viewer.component
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    ArchwizardModule
+    ArchwizardModule,
+    TreeModule
   ],
   exports: [
     RouterModule

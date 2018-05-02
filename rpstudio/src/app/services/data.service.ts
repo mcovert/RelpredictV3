@@ -4,6 +4,17 @@ import { Observable } from "rxjs/Observable";
 import { RPDataType, RPParameter, RPBatch, RPDatafile, RPFieldmap, RPDatamap} from '../shared/db-classes';
 import { GlobalService } from './global.service';
 
+class TreeNode {
+  path     : string;
+  name     : string;
+  children : TreeNode[];
+  size     : number;
+  type     : string;
+}
+class RetObj {
+  filedir: TreeNode;
+}
+
 @Injectable()
 export class DataService {
 
@@ -11,6 +22,7 @@ httpService    : HttpClient;
 batches        : Observable<RPBatch[]>;
 datafiles      : Observable<RPDatafile[]>;
 datamaps       : Observable<RPDatamap[]>;
+nodes          : Observable<RetObj>;
 
 datamapTypes   : string[] = [ "Map", "Xlate" ];
 
@@ -33,6 +45,11 @@ datamapTypes   : string[] = [ "Map", "Xlate" ];
   getDatamaps()  : Observable<RPDatamap[]> { 
       this.datamaps = this.httpService.get('http://ai25:3000/api/datamaps') as Observable<RPDatamap[]>;
       return this.datamaps;
+  }
+  getDataDirectory() : Observable<RetObj> {
+     this.nodes = this.httpService.get('http://ai25:3000/api/datafiles/listdatafiles') as Observable<RetObj>;
+     console.log(this.nodes);
+     return this.nodes;
   }
   createDatamap(datamap: RPDatamap) {}
   updateDatamap(datamap: RPDatamap) {}
