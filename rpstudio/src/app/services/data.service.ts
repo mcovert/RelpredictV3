@@ -21,6 +21,18 @@ class FileInfo {
   datafile_format  : string;
   datafile_dir     : string;
   datafile_type    : string;
+  datafile_fullname: string;
+}
+class FIRetObj {
+  datafile_info    : FileInfo; 
+}
+class FileHeader {
+  datafile_name    : string;
+  datafile_header  : string;
+  datafile_record  : string;
+}
+class FHRetObj {
+  datafile_content : FileHeader;
 }
 
 @Injectable()
@@ -47,8 +59,11 @@ datamapTypes   : string[] = [ "Map", "Xlate" ];
       this.datafiles = this.httpService.get('http://ai25:3000/api/datafiles') as Observable<RPDatafile[]>;
       return this.datafiles;
   }
-  getDatafileInfo(fileName) : Observable<FileInfo> { 
-      return this.httpService.post('http://ai25:3000/api/datafiles/getfileinfo', {filename: fileName}) as Observable<FileInfo>;
+  getDatafileInfo(fileName) : Observable<FIRetObj> { 
+      return this.httpService.post('http://ai25:3000/api/datafiles/getfileinfo', {filename: fileName}) as Observable<FIRetObj>;
+  }
+  getDatafileHeader(fileName) : Observable<FHRetObj> { 
+      return this.httpService.post('http://ai25:3000/api/datafiles/getfileheader', {filename: fileName}) as Observable<FHRetObj>;
   }
   getDatamapTypes() {
     return this.datamapTypes;

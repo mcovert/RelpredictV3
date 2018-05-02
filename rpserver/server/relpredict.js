@@ -172,6 +172,7 @@ exports.getDatafiles = () => {
 getFileFormat = (ftype) => {
 	if (ftype === ".csv") return "CSV";
 	if (ftype === ".tsv") return "TSV";
+	if (ftype === ".txt") return "TXT";
 	if (ftype.startsWith(".")) return ftype.substring(1);
 	if (ftype === "") return "?";
 	return ftype;	
@@ -190,7 +191,8 @@ exports.getDatafileInfo = (fileName) => {
                 'datafile_created' : fileStat.ctime,
                 'datafile_format'  : getFileFormat(fparse.ext),
                 'datafile_dir'     : fparse.dir,
-                'datafile_type'    : fileType
+                'datafile_type'    : fileType,
+                'datafile_fullname': fullFileName
               };
     }
     else return {};
@@ -198,7 +200,8 @@ exports.getDatafileInfo = (fileName) => {
 var buff_size = 8192;
 var buffer = new Buffer(buff_size);
 exports.getDatafileHeader = (fileName) => {
-	let fullFileName = path.join(config.datafiles, fileName);
+	//let fullFileName = path.join(config.datafiles, fileName);
+	let fullFileName = fileName;
     let fd = fs.openSync(fullFileName, 'r');
     fs.readSync(fd, buffer, 0, buff_size, 0);
     fs.closeSync(fd);

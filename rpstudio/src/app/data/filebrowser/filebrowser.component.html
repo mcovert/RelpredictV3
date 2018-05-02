@@ -11,7 +11,7 @@
           </tree-root>
     </div>
     <div class="col-5">
-	  <h3>File Summary</h3>
+  	    <h3>File Summary</h3>
     	<table id="mytable" class="table table-bordred table-striped sortable table-sm">
     		<thead>
     			<th>File</th>
@@ -38,6 +38,22 @@
     				<td>Type</td>
     				<td>{{fileInfo.datafile_type}}</td>
     			</tr>
+    		</tbody>
+    	</table>
+    	<br>
+  	    <h3>File Contents</h3>
+    	<table id="mytable" class="table table-bordred table-striped sortable table-sm">
+    		<thead>
+    			<th>Name</th>
+    			<th>Value</th>
+    			<th>Type</th>
+    		</thead>
+    		<tbody>
+               <tr *ngFor="let f of fileHeader">
+                    <td>{{f.field_name}}</td>
+                    <td>{{f.field_val}}</td>
+                    <td>{{f.field_type}}</td>
+               </tr>
     		</tbody>
     	</table>
     </div>
