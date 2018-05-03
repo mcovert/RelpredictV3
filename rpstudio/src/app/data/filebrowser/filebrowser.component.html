@@ -1,7 +1,6 @@
-<div class="container">
-<div class="row p-1">
-	<div class="col-1"></div>
-	<div class="col-4">
+<div class="container-fluid">
+<div class="row" >
+	<div class="col-4 border">
 		  <h3>Data Directory</h3>
           <tree-root [nodes]="node" [options]="options"
           	   (toggleExpanded)="onEvent($event)"
@@ -10,7 +9,7 @@
                (blur)="onEvent($event)">
           </tree-root>
     </div>
-    <div class="col-5">
+    <div class="col-8 border">
   	    <h3>File Summary</h3>
     	<table id="mytable" class="table table-bordred table-striped sortable table-sm">
     		<thead>
@@ -52,11 +51,21 @@
                <tr *ngFor="let f of fileHeader">
                     <td>{{f.field_name}}</td>
                     <td>{{f.field_val}}</td>
-                    <td>{{f.field_type}}</td>
+                    <!--td>{{f.field_type}}</td-->
+                    <td><app-datatype-selector [identifier]="f.field_name" [initialType]="f.field_type" (selectedType)="newType($event)"></app-datatype-selector></td> 
                </tr>
     		</tbody>
     	</table>
+    	<div *ngIf="contentsDisplayed" class="row col-12" style="height: 52px;">
+    	<div class="col-4"></div>	
+    	<div class="col-2">	
+        <button class="btn btn-success btn-xs center-block" data-title="Create Datamap" style="vertical-align: center;"><span class="fa fa-plus"></span>Datamap</button>
+        </div>
+    	<div class="col-1"></div>	
+    	<div class="col-2">	
+        <button class="btn btn-info btn-xs center-block" data-title="Create Model" style="vertical-align: center;"><span class="fa fa-plus"></span>Model</button>
+        </div>
+    	<div class="col-3"></div>	
     </div>
-    <div class="col-2"></div>
 </div>
 </div>

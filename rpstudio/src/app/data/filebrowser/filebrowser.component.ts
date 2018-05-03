@@ -3,6 +3,7 @@ import { DataService } from '../../services/data.service';
 import { GlobalService } from '../../services/global.service';
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
+import {DatatypeSelectorComponent} from '../../shared/datatype-selector/datatype-selector.component';
 
 class TreeNode {
   path     : string;
@@ -60,6 +61,7 @@ export class FilebrowserComponent implements OnInit {
                                datafile_fullname: '---'}; 
   showFileHeader = false;
   fileHeader : Field[];
+  contentsDisplayed = false;
 
   constructor(private dataservice : DataService, private globalservice : GlobalService) { 
   	this.fileInfo = this.emptyFileInfo;
@@ -100,6 +102,8 @@ export class FilebrowserComponent implements OnInit {
   		  console.log(this.fileHeader);
   	  });
   	}
+  	else this.fileHeader = [];
+    this.contentsDisplayed = status;
   }
   onActivateEvent(event) {
   	console.log(event);
@@ -108,7 +112,28 @@ export class FilebrowserComponent implements OnInit {
   		console.log(result);
   		this.fileInfo = result.datafile_info;
   		console.log(this.fileInfo);
-  		this.displayFileHeader(true);
+  		if (this.fileInfo.datafile_type === 'File')
+  		    this.displayFileHeader(true);
+  		else
+  		    this.displayFileHeader(false);
+
   	})
+  }
+  newType(t: string) {
+  	console.log(t);
+  	let tokens = t.split("=");
+  	for (let i = 0; i < this.fileHeader.length; i++) {
+  		if (this.fileHeader[i].field_name == tokens[0]) {
+  			this.fileHeader[i].field_type = tokens[1];
+  			break;
+  		}
+  	}
+  	console.log(this.fileHeader);
+  }
+  createDatamap() {
+
+  }
+  createModel() {
+
   }
 }

@@ -1,0 +1,3 @@
+<select class="form-control selcls" (change)="changeDataType($event.target.value)"> 
+   <option *ngFor="let dt of dataTypes; let i=index" value="{{dt}}" [selected]="i==currentIndex">{{dt}}</option>
+</select>

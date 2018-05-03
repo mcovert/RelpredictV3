@@ -61,6 +61,7 @@ import { FileLoaderComponent } from './file-loader/file-loader.component';
 import { ModelEditorComponent } from './models/model-editor/model-editor.component';
 import { BatchViewerComponent } from './data/batch-viewer/batch-viewer.component';
 import { FilebrowserComponent } from './data/filebrowser/filebrowser.component';
+import { DatatypeSelectorComponent } from './shared/datatype-selector/datatype-selector.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +105,8 @@ import { FilebrowserComponent } from './data/filebrowser/filebrowser.component';
     FileLoaderComponent,
     ModelEditorComponent,
     BatchViewerComponent,
-    FilebrowserComponent
+    FilebrowserComponent,
+    DatatypeSelectorComponent
   ],
   imports: [
     BrowserModule,

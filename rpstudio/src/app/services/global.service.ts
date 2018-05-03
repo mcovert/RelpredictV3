@@ -33,21 +33,22 @@ datatypes      : RPDataType[] = [
     return this.datatypes;
   }
   isDate(d) {
+    console.log(d);
     let t = d.split("-");
     if (t.length >= 3 && 
         t[0] >= 1900  && 
         t[1] >= 1 && t[1] <= 12 &&
         t[2] >= 1 && t[2] <=31) return true;
+    if (d.length == 8 && (d.startsWith('19') || d.startsWith('20'))) return true;
     return false;
   }
   guessDataType(s: string) {
-    console.log(s);
+    if (this.isDate(s)) return "date";
     if (s.match(/^[0-9]*$/)) return "integer";
     if (s.match(/^([0-9]*)\.([0-9]*)$/)) return "double";
     var s2 = s.toLowerCase();
     if (s2 == "true" || s2 == "false") return "boolean";
     if (s.indexOf("|") != -1) return "text";
-    if (this.isDate(s)) return "date";
     return "string";
   }
 
