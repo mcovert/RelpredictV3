@@ -4,3 +4,7 @@ form-control.input {
 form-control.select {
 	width: auto;
 }
+textarea
+{
+    font: 16px 'Open Sans', sans-serif;
+}

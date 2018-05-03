@@ -32,6 +32,7 @@ export class ModelCreateComponent implements OnInit {
   curr_type    : string;
   mode         : string = 'none';
   script       : string = '';
+  checked      : boolean[] = [];
 
   constructor(private modelService : ModelService, private router: Router /* , private modalService: ModalService*/) { 
   }
@@ -92,6 +93,7 @@ export class ModelCreateComponent implements OnInit {
     feature.type = this.dataTypes[0].datatype_name;
     feature.label = "";
     this.model.features.push(feature);
+    this.checked.push(false);
   }
   deleteFeature(i : number) {
     this.model.features.splice(i, 1);
@@ -211,16 +213,45 @@ export class ModelCreateComponent implements OnInit {
   }
   fixit(s : string) {
     var r = s.substring(1, s.length - 2);
-    r = r.replace('\\n', '\n');
-    r = r.replace('\\"', '"');
-    return r;
+    var t = "";
+    var foundslash = false;
+    for (var i = 0; i < r.length; i++) {
+       if (r.charAt(i) == '\\') foundslash = true;
+       else {
+         if (foundslash && r.charAt(i) == "n") {
+           t = t + "\n";
+         }
+         else {
+           t = t + r.charAt(i);
+         }
+         foundslash = false;
+       }
+    }
+    console.log("t=" + t);
+    return t;
   }
   getScript() {
+    this.model.identifier = "";
+    var first = true;
+    console.log(this.checked);
+    for (var i = 0; i < this.model.features.length; i++) {
+      if (this.checked[i]) {
+        if (first) this.model.identifier = this.model.identifier + 
+           this.model.features[i].name;
+        else this.model.identifier = this.model.identifier + "," +
+           this.model.features[i].name; 
+        first = false;
+      }
+      console.log(this.model);
+    }
     this.modelService.getScript(this.model).subscribe(result => {
       console.log(result);
       let ret = result.returned_object;
       this.script = this.fixit(JSON.stringify(ret));
       console.log(this.script);
     })
+  }
+  setId(i: number) {
+    this.checked[i] = !this.checked[i];
   }
 }

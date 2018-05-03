@@ -259,7 +259,7 @@ createParms = function(parms) {
     return parmStr;
 }
 createFeature = function(feature) {
-    return '   feature '   + quoted(feature.name) +
+    return '     feature '   + quoted(feature.name) +
            ' type '        + quoted(feature.type) +
            ' description ' + quoted(feature.label) +
            ' parameters  ' + quoted(createParms(feature.parms)) + '\n';
@@ -276,7 +276,7 @@ createAlgorithms = function(alg) {
 	return algStr;
 }                     
 createTarget = function(target) {
-    return '   target '    + quoted(target.name) +
+    return '     target '    + quoted(target.name) +
            ' type '        + quoted(target.type) +
            ' description ' + quoted(target.description) +
            ' predictedby ' + quoted(createAlgorithms(target.algorithms)) + 
@@ -287,7 +287,7 @@ convertModel = (model) => {
 	var modelStr = 'model '    + quoted(model.name) + 
 	               ' version ' + quoted(model.version) +
 	               ' description ' + quoted(model.description) + '\n' +
-	               '  featureset fset id ' + quoted(model.identifier) + '\n';
+	               '    featureset fset id ' + quoted(model.identifier) + '\n';
 	for (var i = 0; i < model.features.length; i++)
 		modelStr = modelStr + createFeature(model.features[i]);
 	for (var i = 0; i < model.targets.length; i++)
