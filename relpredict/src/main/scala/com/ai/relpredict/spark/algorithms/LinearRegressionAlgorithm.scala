@@ -17,19 +17,19 @@ import org.apache.spark.rdd._
 import com.ai.relpredict.util.ScalaUtil
 import com.ai.relpredict.dsl._
 import org.apache.spark.mllib.regression.LinearRegressionWithSGD
+import org.apache.spark.mllib.evaluation.MulticlassMetrics
+
 /* Victoria's first commit */
 
 /**
- * The decision tree is a greedy algorithm that performs a recursive binary partitioning of the feature space. The tree predicts the same label for each leaf partition. 
- * Each partition is chosen by selecting the best split from a set of possible splits maximizing the information gain at a tree node. 
+ * 
  */
 class LinearRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val parms : Map[String, String]) extends Algorithm("linear_regression") { 
   var lirmodel : Option[LinearRegressionModel] = None
   var predicted : Option[RDD[(String, Double)]] = None
   val prefix = s"target.${target.getName()}.$name"
-  /* Allows printing any model information to a file. For a Decision Tree, this is the actual tree if/then/else logic. */
-  def printTo(file : FileWriter) {
-    if (checkAlgorithmModel(lmodel, false, "LinearRegression - Print is not possible because no model exists")) {}
+  
+    if (checkAlgorithmModel(lirmodel, false, "LinearRegression - Print is not possible because no model exists")) {}
   }
   /** 
    *  Train an RDD of LabeledPoints

@@ -1,0 +1,4 @@
+com/ai/relpredict/nlp/LabelSeeker.class
+com/ai/relpredict/nlp/MeansBuilder.class
+com/ai/relpredict/nlp/RPTextClassifier.class
+com/ai/relpredict/nlp/PairComparator.class
