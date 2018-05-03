@@ -269,3 +269,6 @@ export class RPResult {
   result_type   : string;
   result_value  : string;
 }
+export class ReturnObject {
+  returned_object : string;
+}

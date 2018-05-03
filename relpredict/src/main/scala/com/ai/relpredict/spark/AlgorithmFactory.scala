@@ -15,7 +15,7 @@ object AlgorithmFactory {
       case "gbt" => return Some(new GradientBoostedTreesAlgorithm(fs, target, parms))
       case "lsvm" => ScalaUtil.terminal_error(s"Algorithm $name was not found. Run termiinated.")
       case "lr"  => return Some(new LogisticRegressionAlgorithm(fs, target, parms))
-      case "lir" => return Some(new LinearRegressionAlgorithm(fs, target, parms))
+      //case "lir" => return Some(new LinearRegressionAlgorithm(fs, target, parms))
       case unknown => ScalaUtil.terminal_error(s"Algorithm $name was not found. Run terminated.")
     }
     None

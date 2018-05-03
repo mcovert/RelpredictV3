@@ -14,10 +14,10 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded( { extended: false}));
 app.use(bodyParser.json());
 var logger = function(req, res, next) {
-  //console.log(req.accessToken);
+  console.log(req.accessToken);
   if (req.accessToken) {
     app.models.User.findById(req.accessToken.userId, function(err, user) {
-      //console.log(user);
+      console.log(user);
       req.currentUser = user.email;
       console.log("USER: " + req.currentUser + " REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
     });

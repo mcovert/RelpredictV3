@@ -1,4 +1,5 @@
 'use strict';
+var rp = require('../../server/relpredict.js');
 
 module.exports = function(Model) {
 
@@ -70,4 +71,22 @@ module.exports = function(Model) {
    			type: 'string'
    		}
    	});
+    Model.convert = function (model, cb) {
+        cb(null, rp.convertModel(model));
+    };
+    Model.remoteMethod(
+    'convert', {
+      http: {
+        path: '/convert',
+        verb: 'post'
+      },
+      accepts: [ {
+            arg:  'model',
+            type: 'object'
+      }],
+      returns: {
+        arg:  'returned_object',
+        type: 'string'
+      }
+    });
 }

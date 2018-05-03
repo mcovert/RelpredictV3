@@ -254,7 +254,7 @@ createParms = function(parms) {
 	if (parms == null) return parmStr;
 	for (var i = 0; i < parms.length; i++) {
 		if (i > 0) parmStr = parmStr + ",";
-		parmStr = parmStr + parms[i].parm + '=' + parms[i].parm_value;
+		parmStr = parmStr + parms[i].parm_name + '=' + parms[i].parm_value;
 	}
     return parmStr;
 }
@@ -268,7 +268,7 @@ createAlgorithms = function(alg) {
 	var algStr = '';
 	if (alg == null) return algStr;
 	for (var i = 0; i < alg.length; i++) {
-		algStr = algStr + "algorithm=" + alg[i].algorithm;
+		algStr = algStr + "algorithm=" + alg[i].short_name;
 		var parmStr = createParms(alg[i].parms);
 		if (parmStr != '') algStr = algStr + "," + parmStr + ";";
 		else algStr = algStr + ";";
@@ -283,6 +283,7 @@ createTarget = function(target) {
            ' parameters '  + quoted(createParms(target.parms)) + '\n';
 }                     
 convertModel = (model) => {
+	console.log(model);
 	var modelStr = 'model '    + quoted(model.name) + 
 	               ' version ' + quoted(model.version) +
 	               ' description ' + quoted(model.description) + '\n' +
@@ -291,6 +292,7 @@ convertModel = (model) => {
 		modelStr = modelStr + createFeature(model.features[i]);
 	for (var i = 0; i < model.targets.length; i++)
 		modelStr = modelStr + createTarget(model.targets[i]);
+	console.log(modelStr);
     return modelStr;
 }
 exports.convertModel = convertModel; 

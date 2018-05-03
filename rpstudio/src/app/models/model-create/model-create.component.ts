@@ -3,7 +3,7 @@ import { ModelService } from '../../services/model.service';
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
 import { RPDataType, RPParameter, RPParameterDef, RPFeature, RPTargetAlgorithm, RPTarget, RPModel, RPAlgorithmDef, RPCurrentModel, RPLogEntry, RPTrainedModel,
-         RPModelClass } from '../../shared/db-classes';
+         RPModelClass, ReturnObject } from '../../shared/db-classes';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -31,6 +31,7 @@ export class ModelCreateComponent implements OnInit {
   curr_index2  : number;
   curr_type    : string;
   mode         : string = 'none';
+  script       : string = '';
 
   constructor(private modelService : ModelService, private router: Router /* , private modalService: ModalService*/) { 
   }
@@ -207,5 +208,19 @@ export class ModelCreateComponent implements OnInit {
   }
   cancelMC() {
     this.showMCDialog = false;
+  }
+  fixit(s : string) {
+    var r = s.substring(1, s.length - 2);
+    r = r.replace('\\n', '\n');
+    r = r.replace('\\"', '"');
+    return r;
+  }
+  getScript() {
+    this.modelService.getScript(this.model).subscribe(result => {
+      console.log(result);
+      let ret = result.returned_object;
+      this.script = this.fixit(JSON.stringify(ret));
+      console.log(this.script);
+    })
   }
 }

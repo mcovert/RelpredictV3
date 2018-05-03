@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs/Observable";
 import { RPDataType, RPParameter,    RPFeature,      RPTargetAlgorithm, 
 	       RPTarget,   RPModel,        RPAlgorithmDef, RPCurrentModel, 
-	       RPLogEntry, RPTrainedModel, RPModelClass} from '../shared/db-classes';
+	       RPLogEntry, RPTrainedModel, RPModelClass, ReturnObject} from '../shared/db-classes';
 import { GlobalService } from './global.service';
 import { AuthService } from './auth.service';
 
@@ -137,5 +137,11 @@ httpOptions    : HttpHeaders;
       ta.parms.push(ap);
     }
     return ta;    
+  }
+  getScript(model: RPModel) : Observable<ReturnObject> {
+    let body = JSON.stringify({ model: model});
+    // return this.httpService.post('http://ai25:3000/api/models?access_token=' + this.authService.getUserToken(), body, this.httpOptions);
+    return this.httpService.post(this.url + 'models/convert', body, this.authService.getHttpHeader()) as Observable<ReturnObject>;
+
   }
  }
