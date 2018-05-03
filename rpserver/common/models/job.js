@@ -6,6 +6,7 @@ var fs = require('fs')
 var path = require('path')
 var node_ssh = require('node-ssh')
 var ssh = new node_ssh()
+var rp = require('../../server/relpredict.js');
 
 module.exports = function(Job) {
     Job.submit = function (job_class, job_name, job_parms, cb) {
@@ -49,5 +50,26 @@ module.exports = function(Job) {
    	        type: 'string'
    	    }]
    	});
+    Job.getjobtemplate = function (jobtemplate_name, cb) {
+      console.log('Getting job template ' + jobtemplate_name);
+        cb(null, rp.getJobTemplate(jobtemplate_name));
+    };
+    Job.remoteMethod(
+    'getjobtemplate', {
+      http: {
+        path: '/getjobtemplate',
+        verb: 'get'
+      },
+      accepts: [ 
+      {
+            arg:  'jobtemplate_name',
+            type: 'string'
+      }],
+      returns: [
+      {
+        arg:  'returned_object',
+        type: 'object'
+      }]
+    });
 
 };

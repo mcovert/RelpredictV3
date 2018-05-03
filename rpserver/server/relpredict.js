@@ -18,14 +18,15 @@ exports.showModels = () => {
 /*    RelPredict system configuration taken from environment variables         */
 /*******************************************************************************/
 var config = {
-	home:       process.env.RELPREDICT_HOME,
-	scripts:    process.env.RP_SCRIPTS,
-    uploads:    process.env.RP_UPLOADDIR,
-	archives:   process.env.RP_ARCHIVEDIR,
-	datafiles:  process.env.RP_DATAFILEDIR,
-	datamaps:   process.env.RP_DATAMAPDIR,
-	jobs:       process.env.RP_JOBDIR,
-	models:     process.env.RP_MODELDIR
+	home:         process.env.RELPREDICT_HOME,
+	scripts:      process.env.RP_SCRIPTS,
+    uploads:      process.env.RP_UPLOADDIR,
+	archives:     process.env.RP_ARCHIVEDIR,
+	datafiles:    process.env.RP_DATAFILEDIR,
+	datamaps:     process.env.RP_DATAMAPDIR,
+	jobs:         process.env.RP_JOBDIR,
+	jobtemplates: process.env.RP_JOBTEMPLATEDIR,
+	models:       process.env.RP_MODELDIR
 };
 exports.config = config;
 /*******************************************************************************/
@@ -149,6 +150,18 @@ exports.runLocal = (cmd, parms) => {
     cmdrun.stderr.on('data', (data) => { console.error(`${data}`);});
     cmdrun.on('exit', function (code, signal) { console.log('Command ' + cmd + ' exited with ' + `code ${code}`); } );
 }
+exports.getJobTemplate = (template_name) => {
+	var fullFileName = path.join(config.jobtemplates, template_name);
+	if (fs.existsSync(fullFileName)) {
+       var fileStat = fs.statSync(fullFileName);
+       var jtContent = fs.readFileSync(fullFileName, 'utf8');
+       return [ { 'jobtemplate_name' : template_name,
+                  'jobtemplate'      : jtContent
+                }
+              ];
+    }
+    else return [];	
+}
 /*******************************************************************************/
 /*                         Data management functions                           */
 /*******************************************************************************/
@@ -232,7 +245,7 @@ exports.getDatamapList = () => {
 };
 exports.getDatamap = (map_id) => {
 	var fullFileName = path.join(config.datamaps, map_id);
-	if (path.existsSync(fullFileName)) {
+	if (fs.existsSync(fullFileName)) {
        var fileStat = fs.statSync(fullFileName);
        var dmContent = fs.readfileSync(fullFileName, 'utf8');
        return [ { 'datamap_name' : path.parse(files[i]).name,
