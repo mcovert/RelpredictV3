@@ -1,3 +1,4 @@
-/home/mcovert/rp-repo/RPTextClassifier/relpredict/src/main/java/com/ai/relpredict/nlp/LabelSeeker.java
-/home/mcovert/rp-repo/RPTextClassifier/relpredict/src/main/java/com/ai/relpredict/nlp/RPTextClassifier.java
-/home/mcovert/rp-repo/RPTextClassifier/relpredict/src/main/java/com/ai/relpredict/nlp/MeansBuilder.java
+/home/vloewengart/rp-repo/RelpredictV3/RPTextClassifier/relpredict/src/main/java/com/ai/relpredict/nlp/PairComparator.java
+/home/vloewengart/rp-repo/RelpredictV3/RPTextClassifier/relpredict/src/main/java/com/ai/relpredict/nlp/RPTextClassifier.java
+/home/vloewengart/rp-repo/RelpredictV3/RPTextClassifier/relpredict/src/main/java/com/ai/relpredict/nlp/MeansBuilder.java
+/home/vloewengart/rp-repo/RelpredictV3/RPTextClassifier/relpredict/src/main/java/com/ai/relpredict/nlp/LabelSeeker.java

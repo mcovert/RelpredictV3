@@ -1,5 +1,6 @@
 package com.ai.relpredict.spark.algorithms
 
+<<<<<<< HEAD
 // import com.ai.relpredict.jobs.Results
 // import com.ai.relpredict.spark._
 // import java.io.FileWriter
@@ -41,6 +42,51 @@ package com.ai.relpredict.spark.algorithms
 //         // Set up all parameters
 //     var categoryMap = SparkUtil.buildCategoryMap(target.featureSet)
 //     val recLen = df.take(1)(0).features.size
+=======
+import com.ai.relpredict.jobs.Results
+import com.ai.relpredict.spark._
+import java.io.FileWriter
+import org.apache.spark.SparkContext
+import org.apache.spark.sql.{SparkSession, SQLContext, DataFrame}
+import org.apache.spark.sql._
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.functions._
+import org.apache.spark.mllib.linalg.{Vector, Vectors}
+import org.apache.spark.mllib.regression.LabeledPoint
+import org.apache.spark.mllib.tree.DecisionTree
+import org.apache.spark.mllib.tree.model.DecisionTreeModel
+import org.apache.spark.mllib.util.MLUtils
+import org.apache.spark.rdd._
+import com.ai.relpredict.util.ScalaUtil
+import com.ai.relpredict.dsl._
+import org.apache.spark.mllib.regression.LinearRegressionWithSGD
+import org.apache.spark.mllib.evaluation.MulticlassMetrics
+
+/* Victoria's first commit */
+
+/**
+ * 
+ */
+class LinearRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val parms : Map[String, String]) extends Algorithm("linear_regression") { 
+  var lirmodel : Option[LinearRegressionModel] = None
+  var predicted : Option[RDD[(String, Double)]] = None
+  val prefix = s"target.${target.getName()}.$name"
+  
+    if (checkAlgorithmModel(lirmodel, false, "LinearRegression - Print is not possible because no model exists")) {}
+  }
+  /** 
+   *  Train an RDD of LabeledPoints
+   */
+  def train(df : RDD[LabeledPoint]) = {
+    lirmodel match {
+      case None =>
+      case Some(m) => ScalaUtil.writeWarning("LinearRegression - Overwriting existing trained model")
+    }
+    var results = new Results()
+        // Set up all parameters
+    var categoryMap = SparkUtil.buildCategoryMap(target.featureSet)
+    val recLen = df.take(1)(0).features.size
+>>>>>>> bb747058b7abfcaad8d01a93c172353e5910e4d2
 
 
 //     ScalaUtil.writeInfo(s"Linear Regression training with (records=${df.count}, features=$recLen)")
