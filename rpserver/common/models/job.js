@@ -50,9 +50,9 @@ module.exports = function(Job) {
    	        type: 'string'
    	    }]
    	});
-    Job.getjobtemplate = function (jobtemplate_name, cb) {
-      console.log('Getting job template ' + jobtemplate_name);
-        cb(null, rp.getJobTemplate(jobtemplate_name));
+    Job.getjobtemplate = function (cb) {
+      console.log('Getting job template');
+        cb(null, rp.getJobTemplate());
     };
     Job.remoteMethod(
     'getjobtemplate', {
@@ -60,15 +60,10 @@ module.exports = function(Job) {
         path: '/getjobtemplate',
         verb: 'get'
       },
-      accepts: [ 
-      {
-            arg:  'jobtemplate_name',
-            type: 'string'
-      }],
       returns: [
       {
         arg:  'returned_object',
-        type: 'object'
+        type: 'string'
       }]
     });
 

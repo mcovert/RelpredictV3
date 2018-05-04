@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RPJob, RPJobExec} from '../shared/db-classes';
+import { RPJob, RPJobExec, RPJobTemplate, RPJobTemplateParm, ReturnObject} from '../shared/db-classes';
 import { Observable } from "rxjs/Observable";
 import { GlobalService } from './global.service';
 
@@ -23,5 +23,8 @@ export class JobService {
   getJobExecs()  : Observable<RPJobExec[]> { 
       this.jobexecs = this.httpService.get('http://ai25:3000/api/jobexecs') as Observable<RPJobExec[]>;
       return this.jobexecs;
+  }
+  getJobTemplate()  : Observable<ReturnObject> { 
+      return this.httpService.get('http://ai25:3000/api/jobs/getjobtemplate') as Observable<ReturnObject>;
   }
 }

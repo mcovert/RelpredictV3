@@ -231,6 +231,22 @@ export class RPDatamap {
 /*
  *   Database job definition classes
  */
+ export class RPJobTemplateParm {
+   parm      : string;
+   label     : string;
+   parm_value: string;
+   hint      : string;
+ }
+ export class RPJobTemplate {
+   job_name   : string;
+   job_class  : string;
+   create_date: string;
+   created_by : string;
+   cmd        : string;
+   parms      : RPJobTemplateParm[];
+   description: string;
+   job_type   : string;  
+ }
 export class RPJob {
   job_name    : string;
   job_type    : string;

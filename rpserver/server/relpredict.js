@@ -150,17 +150,15 @@ exports.runLocal = (cmd, parms) => {
     cmdrun.stderr.on('data', (data) => { console.error(`${data}`);});
     cmdrun.on('exit', function (code, signal) { console.log('Command ' + cmd + ' exited with ' + `code ${code}`); } );
 }
-exports.getJobTemplate = (template_name) => {
-	var fullFileName = path.join(config.jobtemplates, template_name);
+exports.getJobTemplate = () => {
+	var fullFileName = path.join(config.jobtemplates, 'jobs.json');
 	if (fs.existsSync(fullFileName)) {
        var fileStat = fs.statSync(fullFileName);
-       var jtContent = fs.readFileSync(fullFileName, 'utf8');
-       return [ { 'jobtemplate_name' : template_name,
-                  'jobtemplate'      : jtContent
-                }
-              ];
+       var jtContent = fs.readFileSync(fullFileName, 'utf8').replace(/\n|\r|\t/g, " ");
+       console.log(jtContent);
+       return jtContent;
     }
-    else return [];	
+    else return '';	
 }
 /*******************************************************************************/
 /*                         Data management functions                           */
