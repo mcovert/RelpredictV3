@@ -106,7 +106,7 @@ acquireServer = function() {
     return runServer;
 };
 releaseServer = function(server) {
-	var i = jobServers.indexOf(server);
+	var i = jobservers.indexOf(server);
 	if (i != -1)
 		running[i] -= 1;
 };
@@ -123,19 +123,25 @@ exports.getJobServerStatus = () => {
 };
 
 getCommandMonitor = function(cmd, server) {
-	/* TO-DO: Want to use command name to handle this - i.e. spark is port 4040 */
-	return server + ':4040';
+	if (cmd == 'spark') return 'http://' + server + ':4040';
+	else return '';
 };
 exports.runJob = (cmd) => {
     var server = acquireServer();
+    var fullCmd = path.join(config.scripts, cmd.command);
+    console.log("Connecting to "+ server);
     ssh.connect({ host: server, username: cmd.username, privateKey: '/home/' + cmd.username + '/.ssh/id_rsa'})
         .then(function() {
-            ssh.execCommand(cmd.command, 
-                { cwd:'/home/' + cmd.username }
+            console.log("Running " + fullCmd);
+            ssh.execCommand(fullCmd, 
+                { cwd: config.home,
+	               onStdout(chunk) { console.log('stdoutChunk', chunk.toString('utf8'))},
+                   onStderr(chunk) { console.log('stderrChunk', chunk.toString('utf8'))}
+                }
             );
             releaseServer(server);
         });
-    return { 'server': server, 'monitor': getCommandMonitor(cmd.command, server)};
+    return JSON.stringify({ 'server': server, 'monitor': getCommandMonitor(cmd.jobtype, server)});
 }; 
 /* Run local commands from home bin directory */
 exports.runLocal = (cmd, parms) => {

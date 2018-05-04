@@ -288,3 +288,8 @@ export class RPResult {
 export class ReturnObject {
   returned_object : string;
 }
+export class RPJobSubmitInfo {
+  username: string;
+  command : string;
+  jobType : string;
+}
