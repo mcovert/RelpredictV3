@@ -1,9 +1,10 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { ModelService } from '../../services/model.service';
+import { GlobalService } from '../../services/global.service';
 import { Observable } from "rxjs/Observable";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { RPDataType, RPParameter, RPParameterDef, RPFeature, RPTargetAlgorithm, RPTarget, RPModel, RPAlgorithmDef, RPCurrentModel, RPLogEntry, RPTrainedModel,
-         RPModelClass, ReturnObject } from '../../shared/db-classes';
+         RPModelClass, ReturnObject, FieldModelUsage } from '../../shared/db-classes';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -30,11 +31,26 @@ export class ModelCreateComponent implements OnInit {
   curr_index   : number;
   curr_index2  : number;
   curr_type    : string;
-  mode         : string = 'none';
   script       : string = '';
   checked      : boolean[] = [];
+  mode         : string = "new";  /* new, file, datamap */
+  field_source : string = "";
+  field_string : string = "";
+  fields       : FieldModelUsage[] = [];
 
-  constructor(private modelService : ModelService, private router: Router /* , private modalService: ModalService*/) { 
+  constructor(private modelService : ModelService, private router: Router, 
+              private route: ActivatedRoute, private globalservice: GlobalService) { 
+     this.route.params.subscribe( params => { 
+        this.mode = params['mode'] || "new"; 
+        this.field_source = params['field_source'] || "";
+        this.field_string = params['fields'] || "";
+        if (this.mode == 'datamap' || this.mode == 'file')
+          this.fields = JSON.parse(this.globalservice.decode(this.field_string));        
+        console.log("mode=" + this.mode + 
+                    " field_source=" + this.globalservice.decode(this.field_source) +
+                    " field_string=" + this.globalservice.decode(this.field_string));
+        console.log(this.fields);
+     });
   }
 
   ngOnInit() {

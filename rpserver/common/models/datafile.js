@@ -183,6 +183,26 @@ module.exports = function(Datafile) {
         type: 'string'
       }]
     });
+   Datafile.deletefile = function(filename, cb) {
+      var ret = rp.deleteFile(filename);
+      cb(null, ret);
+   };   
+   Datafile.remoteMethod('deletefile', {
+      http: {
+        path: '/deletefile',
+        verb: 'post'
+      },
+      accepts: [ 
+      {
+            arg:  'filename',
+            type: 'string'
+      }],
+      returns: [
+      {
+        arg:  'returned_object',
+        type: 'string'
+      }]
+    });
 };
 
 

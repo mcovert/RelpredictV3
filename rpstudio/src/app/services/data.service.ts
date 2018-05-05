@@ -87,7 +87,10 @@ datamapTypes   : string[] = [ "Map", "Xlate" ];
        {datamap: datamap, dir: dir, overwrite: overwrite}) as Observable<ReturnObject>;    
   }
   updateDatamap(datamap: RPDatamap) {}
-  deleteDatamap(id: string) {}
+  deleteFile(file: string) {
+     return this.httpService.post('http://ai25:3000/api/datafiles/deletefile', 
+       {filename: file}) as Observable<ReturnObject>;        
+  }
 
   uploadFiles(files : Array<File>) {
     let formData: any = new FormData();

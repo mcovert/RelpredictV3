@@ -3,7 +3,7 @@ import { DataService } from '../../services/data.service';
 import { GlobalService } from '../../services/global.service';
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
-import {DatatypeSelectorComponent} from '../../shared/datatype-selector/datatype-selector.component';
+import { DatatypeSelectorComponent} from '../../shared/datatype-selector/datatype-selector.component';
 import { RPDatamap, RPFieldmap, RPDataType, RPParameterDef } from '../../shared/db-classes';
 
 class TreeNode {
@@ -65,7 +65,8 @@ export class FilebrowserComponent implements OnInit {
   contentsDisplayed = false;
   message : string = "";
 
-  constructor(private dataservice : DataService, private globalservice : GlobalService) { 
+  constructor(private dataservice : DataService, private globalservice : GlobalService,
+              private router: Router) { 
   	this.fileInfo = this.emptyFileInfo;
   }
   ngOnInit() {
@@ -99,7 +100,7 @@ export class FilebrowserComponent implements OnInit {
     this.fileHeader = [];
     for (var f of dm.fields) {
       this.fileHeader.push({field_name: f.field_name, 
-                          field_val: '---', 
+                          field_val: '', 
                           field_type: f.field_type});
     }
   }
@@ -172,10 +173,21 @@ export class FilebrowserComponent implements OnInit {
     }
     this.dataservice.createDatamap(datamap, this.fileInfo.datafile_dir, true).subscribe(result => {
       this.message = result.returned_object;
+      this.ngOnInit();
     });
-    this.ngOnInit();
   }
   createModel() {
-
+    var fenc = this.globalservice.encode(this.fileInfo.datafile_fullname);
+    var denc = this.globalservice.encode(JSON.stringify(this.fileHeader));
+    this.router.navigate(['model-create', 'datamap', fenc, denc]);
   }
+  deleteFile() {
+    console.log(this.fileInfo);
+    if (window.confirm("Are you sure you wan to delete this item?")) {
+      this.dataservice.deleteFile(this.fileInfo.datafile_fullname).subscribe(result => {
+      this.message = result.returned_object;
+      this.ngOnInit();
+    });
+  }
+}
 }

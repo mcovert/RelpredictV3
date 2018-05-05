@@ -151,7 +151,7 @@ exports.runLocal = (cmd, parms) => {
 		console.log('Command script ' + cmdpath + ' was not found');
 		return;
 	}
-    const cmdrun = spawn(cmdpath, parms);
+    const cmdrun = spawn(cmdpath, parms, { cwd: config.scripts});
     cmdrun.stdout.on('data', (data) => { console.log(`${data}`); });
     cmdrun.stderr.on('data', (data) => { console.error(`${data}`);});
     cmdrun.on('exit', function (code, signal) { console.log('Command ' + cmd + ' exited with ' + `code ${code}`); } );
@@ -235,7 +235,7 @@ exports.getDatamapList = () => {
     var fullFileName = path.join(config.datamaps, files[i]);
     var fileStat = fs.statSync(fullFileName);
     var dmType = "?";
-    if (fullFileName.endsWith('.dmap')) dmType = 'Datamap';
+    if (fullFileName.endsWith('.datamap')) dmType = 'Datamap';
     else if (fullFileName.endsWith('.xlate')) dmType = 'Translation';
     if (fileStat.isFile()) {
     	entries.push( { 'datamap_name' : path.parse(files[i]).name,
@@ -266,6 +266,25 @@ exports.saveDatamap = (datamap, dir, overwrite) => {
     }
     else return 'The datamap exists and overwrite was not specified';
 	
+};
+exports.deleteFile = (filename) => {
+	//var fullFileName = path.join(config.datamaps, map_id);
+	var fullFileName = filename;
+	console.log(fullFileName);
+    var fileStat = fs.statSync(fullFileName);
+	if (fileStat.isFile()) {
+       fs.unlinkSync(fullFileName);
+       return "File deleted"
+    }
+    else {
+    	let files = fs.readdirSync(fullFileName);
+    	for (let i = 0; i < files.length; i++) {
+    		console.log(files[i]);
+    		fs.unlinkSync(path.join(fullFileName, files[i]));
+    	}
+    	fs.rmdirSync(fullFileName);
+        return "Directory deleted";
+    }
 };
 
 /*******************************************************************************/

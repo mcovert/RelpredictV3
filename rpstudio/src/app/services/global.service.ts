@@ -51,5 +51,11 @@ datatypes      : RPDataType[] = [
     if (s.indexOf("|") != -1) return "text";
     return "string";
   }
+  encode(s: string) : string {
+      return encodeURI(s);
+  }
+  decode(s: string) : string {
+      return decodeURI(s);
+  }
 
 }

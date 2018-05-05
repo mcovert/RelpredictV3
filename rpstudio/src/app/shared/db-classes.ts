@@ -293,3 +293,8 @@ export class RPJobSubmitInfo {
   command : string;
   jobType : string;
 }
+export class FieldModelUsage {
+  field_name: string;
+  field_type: string;
+  field_use : string;
+}

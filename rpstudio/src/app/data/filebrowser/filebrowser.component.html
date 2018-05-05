@@ -40,6 +40,15 @@
     		</tbody>
     	</table>
     	<br>
+        <div class="row" *ngIf="fileInfo.datafile_type == 'Directory'">
+        <div class="col-5"></div> 
+        <div class="col-2">
+        <button class="btn btn-danger btn-xs center-block" data-title="Create Model" style="vertical-align: center;" (click)="deleteFile()"><span class="fa fa-minus-circle"></span> Delete</button>
+        </div>
+        <div class="col-5"></div>
+        <br>
+        </div>
+        <div class="row" *ngIf="fileInfo.datafile_type != 'Directory'">
   	    <h3>File Contents</h3>
     	<table id="mytable" class="table table-bordred table-striped sortable table-sm">
     		<thead>
@@ -65,7 +74,11 @@
     	<div class="col-2">	
         <button class="btn btn-info btn-xs center-block" data-title="Create Model" style="vertical-align: center;" (click)="createModel()"><span class="fa fa-plus"></span>Model</button>
         </div>
-    	<div class="col-3"></div>
+    	<div class="col-1"></div>
+        <div class="col-2"> 
+        <button class="btn btn-danger btn-xs center-block" data-title="Create Model" style="vertical-align: center;" (click)="deleteFile()"><span class="fa fa-minus-circle"></span> Delete</button>
+        </div>
+    </div>
         <br>
         <div class="row">
           <div *ngIf="message!=''" class=col-2></div>{{message}}
