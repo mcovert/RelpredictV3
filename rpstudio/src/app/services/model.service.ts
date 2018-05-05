@@ -89,6 +89,9 @@ httpOptions    : HttpHeaders;
     this.models = this.httpService.get('http://ai25:3000/api/models/listmodels', this.authService.getHttpHeader()) as Observable<ModelWrapper>;
     return this.models;
   }
+  getModels_orig() : Observable<RPModel[]> { 
+    return this.httpService.get('http://ai25:3000/api/models/models', this.authService.getHttpHeader()) as Observable<RPModel[]>;
+  }
   getModelClasses() : Observable<RPModelClass[]> {
     this.modelclasses = this.httpService.get(this.url + 'modelclasses', this.authService.getHttpHeader()) as Observable<RPModelClass[]>;
     return this.modelclasses;

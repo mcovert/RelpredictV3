@@ -75,6 +75,7 @@ export class ModelsComponent implements OnInit {
     //  this.models.filter(m2 => m2.model_class === this.currentClass);
   }
   navigate(id : string) {
+     id = '5a91e6530b25f0948b439c9e'
      this.router.navigate(['models', id]);
   }
   newModelName(i : number) : boolean {
