@@ -96,8 +96,8 @@ export class FilebrowserComponent implements OnInit {
   	}
   }
   makeDatamap(dm : RPDatamap) {
+    this.fileHeader = [];
     for (var f of dm.fields) {
-      this.fileHeader = [];
       this.fileHeader.push({field_name: f.field_name, 
                           field_val: '---', 
                           field_type: f.field_type});
