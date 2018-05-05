@@ -4,6 +4,10 @@ import { RPDataType, RPParameter, RPFeature, RPTargetAlgorithm, RPTarget, RPMode
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
 
+class ModelWrapper {
+  models: RPModel[];
+}
+
 @Component({
   selector: 'app-models',
   templateUrl: './models.component.html',

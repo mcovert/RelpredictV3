@@ -7,6 +7,10 @@ import { RPDataType, RPParameter,    RPFeature,      RPTargetAlgorithm,
 import { GlobalService } from './global.service';
 import { AuthService } from './auth.service';
 
+class ModelWrapper {
+  models: RPModel[];
+}
+
 @Injectable()
 export class ModelService {
 
@@ -62,7 +66,7 @@ algorithms     : RPAlgorithmDef[] = [
 ]; 
 
 modelclasses   : Observable<RPModelClass[]>;
-models         : Observable<RPModel[]>;
+models         : Observable<ModelWrapper>;
 current_models : Observable<RPCurrentModel[]>;
 log            : Observable<RPLogEntry[]>;
 trained_models : Observable<RPTrainedModel[]>;
@@ -81,8 +85,8 @@ httpOptions    : HttpHeaders;
   getAlgorithmDefs()  : RPAlgorithmDef[] { 
     return this.algorithms;
   }
-  getModels() : Observable<RPModel[]> { 
-    this.models = this.httpService.get('http://ai25:3000/api/models/listmodels', this.authService.getHttpHeader()) as Observable<RPModel[]>;
+  getModels() : Observable<ModelWrapper> { 
+    this.models = this.httpService.get('http://ai25:3000/api/models/listmodels', this.authService.getHttpHeader()) as Observable<ModelWrapper>;
     return this.models;
   }
   getModelClasses() : Observable<RPModelClass[]> {
