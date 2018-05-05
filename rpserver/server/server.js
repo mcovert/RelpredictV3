@@ -19,11 +19,11 @@ var logger = function(req, res, next) {
     app.models.User.findById(req.accessToken.userId, function(err, user) {
       console.log(user);
       req.currentUser = user.email;
-      console.log("USER: " + req.currentUser + " REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
+      console.log("REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
     });
   }
   else  {
-    console.log("USER: *not logged in* REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
+    console.log("REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
     req.currentUser = "*not logged in*"    
   }
   next();

@@ -134,6 +134,55 @@ module.exports = function(Datafile) {
         type: 'object'
       }]
     });
+   Datafile.createdatamap = function(datamap, dir, overwrite, cb) {
+      var ret = rp.saveDatamap(datamap, dir, overwrite);
+      console.log(ret);
+      cb(null, ret);
+   };   
+   Datafile.remoteMethod('createdatamap', {
+      http: {
+        path: '/createdatamap',
+        verb: 'post'
+      },
+      accepts: [ 
+      {
+            arg:  'datamap',
+            type: 'object'
+      },
+      {
+            arg:  'dir',
+            type: 'string'
+      },
+      {
+            arg:  'overwrite',
+            type: 'boolean'
+      }],
+      returns: [
+      {
+        arg:  'returned_object',
+        type: 'string'
+      }]
+    });
+   Datafile.getdatamap = function(datamap_name, cb) {
+      var ret = rp.getDatamap(datamap_name);
+      cb(null, ret);
+   };   
+   Datafile.remoteMethod('getdatamap', {
+      http: {
+        path: '/getdatamap',
+        verb: 'post'
+      },
+      accepts: [ 
+      {
+            arg:  'datamap_name',
+            type: 'string'
+      }],
+      returns: [
+      {
+        arg:  'returned_object',
+        type: 'string'
+      }]
+    });
 };
 
 

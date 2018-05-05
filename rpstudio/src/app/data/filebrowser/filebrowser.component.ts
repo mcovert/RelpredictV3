@@ -4,6 +4,7 @@ import { GlobalService } from '../../services/global.service';
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
 import {DatatypeSelectorComponent} from '../../shared/datatype-selector/datatype-selector.component';
+import { RPDatamap, RPFieldmap, RPDataType, RPParameterDef } from '../../shared/db-classes';
 
 class TreeNode {
   path     : string;
@@ -19,10 +20,10 @@ class FileInfo {
 	datafile_name    : string;
 	datafile_size    : number;
 	datafile_created : string;
-    datafile_format  : string;
-    datafile_type    : string;
-    datafile_dir     : string;
-    datafile_fullname: string;
+  datafile_format  : string;
+  datafile_type    : string;
+  datafile_dir     : string;
+  datafile_fullname: string;
 }
 class FIRetObj {
 	datafile_info    : FileInfo; 
@@ -37,8 +38,8 @@ class FHRetObj {
 }
 class Field {
 	field_name: string;
-    field_val:  string;
-    field_type: string;
+  field_val:  string;
+  field_type: string;
 }
 
 @Component({
@@ -62,6 +63,7 @@ export class FilebrowserComponent implements OnInit {
   showFileHeader = false;
   fileHeader : Field[];
   contentsDisplayed = false;
+  message : string = "";
 
   constructor(private dataservice : DataService, private globalservice : GlobalService) { 
   	this.fileInfo = this.emptyFileInfo;
@@ -93,6 +95,14 @@ export class FilebrowserComponent implements OnInit {
   			                  field_type: this.globalservice.guessDataType(d[i])});
   	}
   }
+  makeDatamap(dm : RPDatamap) {
+    for (var f of dm.fields) {
+      this.fileHeader = [];
+      this.fileHeader.push({field_name: f.field_name, 
+                          field_val: '---', 
+                          field_type: f.field_type});
+    }
+  }
   displayFileHeader(status) {
   	this.showFileHeader = status;
   	let file = this.fileInfo.datafile_fullname;
@@ -105,6 +115,21 @@ export class FilebrowserComponent implements OnInit {
   	else this.fileHeader = [];
     this.contentsDisplayed = status;
   }
+  displayDatamap(status) {
+    this.showFileHeader = status;
+    let file = this.fileInfo.datafile_fullname;
+    if (status == true) {
+      this.dataservice.getDatamap(file).subscribe(result => {
+        console.log(result);
+        var dm = JSON.parse(result.returned_object);
+        console.log(dm);
+        this.makeDatamap(dm);
+        console.log(this.fileHeader);
+      });
+    }
+    else this.fileHeader = [];
+    this.contentsDisplayed = status;
+  }
   onActivateEvent(event) {
   	console.log(event);
   	console.log('Path=' + event.node.data.path);
@@ -112,8 +137,12 @@ export class FilebrowserComponent implements OnInit {
   		console.log(result);
   		this.fileInfo = result.datafile_info;
   		console.log(this.fileInfo);
-  		if (this.fileInfo.datafile_type === 'File')
-  		    this.displayFileHeader(true);
+  		if (this.fileInfo.datafile_type === 'File') {
+          if (this.fileInfo.datafile_format == "datamap")
+             this.displayDatamap(true);
+          else
+  		       this.displayFileHeader(true);
+      }
   		else
   		    this.displayFileHeader(false);
 
@@ -131,7 +160,20 @@ export class FilebrowserComponent implements OnInit {
   	console.log(this.fileHeader);
   }
   createDatamap() {
+    var datamap = new RPDatamap();
+    datamap.datamap_name = this.fileInfo.datafile_name;
+    datamap.datamap_type = "map";
 
+    for (var f of this.fileHeader) {
+      var fld = new RPFieldmap();
+      fld.field_name = f.field_name;
+      fld.field_type = f.field_type;
+      datamap.fields.push(fld);
+    }
+    this.dataservice.createDatamap(datamap, this.fileInfo.datafile_dir, true).subscribe(result => {
+      this.message = result.returned_object;
+    });
+    this.ngOnInit();
   }
   createModel() {
 

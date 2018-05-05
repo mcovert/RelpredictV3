@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs/Observable";
-import { RPDataType, RPParameter, RPBatch, RPDatafile, RPFieldmap, RPDatamap} from '../shared/db-classes';
+import { RPDataType, RPParameter, RPBatch, RPDatafile, RPFieldmap, RPDatamap,
+         ReturnObject } from '../shared/db-classes';
 import { GlobalService } from './global.service';
 
 class TreeNode {
@@ -72,12 +73,19 @@ datamapTypes   : string[] = [ "Map", "Xlate" ];
       this.datamaps = this.httpService.get('http://ai25:3000/api/datamaps') as Observable<RPDatamap[]>;
       return this.datamaps;
   }
+  getDatamap(datamap : string)  : Observable<ReturnObject> { 
+      return this.httpService.post('http://ai25:3000/api/datafiles/getdatamap', { datamap_name: datamap}) as Observable<ReturnObject>;
+  }
+
   getDataDirectory() : Observable<RetObj> {
      this.nodes = this.httpService.get('http://ai25:3000/api/datafiles/listdatafiles') as Observable<RetObj>;
      console.log(this.nodes);
      return this.nodes;
   }
-  createDatamap(datamap: RPDatamap) {}
+  createDatamap(datamap: RPDatamap, dir: string, overwrite: boolean) : Observable<ReturnObject> {
+     return this.httpService.post('http://ai25:3000/api/datafiles/createdatamap', 
+       {datamap: datamap, dir: dir, overwrite: overwrite}) as Observable<ReturnObject>;    
+  }
   updateDatamap(datamap: RPDatamap) {}
   deleteDatamap(id: string) {}
 
@@ -92,5 +100,4 @@ datamapTypes   : string[] = [ "Map", "Xlate" ];
 
     return this.httpService.post(this.globalService.getServerUrl() + 'datafiles/uploadfiles', formData);
   }
-
 }

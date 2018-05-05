@@ -248,19 +248,26 @@ exports.getDatamapList = () => {
 
 };
 exports.getDatamap = (map_id) => {
-	var fullFileName = path.join(config.datamaps, map_id);
+	//var fullFileName = path.join(config.datamaps, map_id);
+	var fullFileName = map_id;
 	if (fs.existsSync(fullFileName)) {
-       var fileStat = fs.statSync(fullFileName);
-       var dmContent = fs.readfileSync(fullFileName, 'utf8');
-       return [ { 'datamap_name' : path.parse(files[i]).name,
-                  'datamap_type' : dmType,
-                  'datamap'      : JSON.parse(dmContent)
-                }
-              ];
+       var dmContent = fs.readFileSync(fullFileName, 'utf8');
+       return dmContent;
     }
-    else return [];
+    else return "{}";
 	
 };
+exports.saveDatamap = (datamap, dir, overwrite) => {
+	//var fullFileName = path.join(config.datamaps, map_id);
+	var fullFileName = path.join(dir, datamap.datamap_name + ".datamap");
+	if (!fs.existsSync(fullFileName) || overwrite) {
+       fs.writeFileSync(fullFileName, JSON.stringify(datamap));
+       return "Datamap saved";
+    }
+    else return 'The datamap exists and overwrite was not specified';
+	
+};
+
 /*******************************************************************************/
 /*                         Model management functions                          */
 /*******************************************************************************/

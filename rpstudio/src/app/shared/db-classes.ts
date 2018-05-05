@@ -222,7 +222,7 @@ export class RPDatamap {
   id            : string;
   constructor() {
     this.datamap_name = "datamap";
-    this.datamap_type = "Map";
+    this.datamap_type = "map";
     this.fields = [];
     //this.fields.push(new RPFieldmap());
     this.xlate  = [];
