@@ -89,4 +89,52 @@ module.exports = function(Model) {
         type: 'string'
       }
     });
+   Model.createmodel = function(model, overwrite, cb) {
+      var ret = rp.saveModel(model, overwrite);
+      console.log(ret);
+      cb(null, ret);
+   };   
+  Model.remoteMethod('createmodel', {
+      http: {
+        path: '/createmodel',
+        verb: 'post'
+      },
+      accepts: [ 
+      {
+            arg:  'model',
+            type: 'object'
+      },
+      {
+            arg:  'overwrite',
+            type: 'boolean'
+      }],
+      returns: [
+      {
+        arg:  'returned_object',
+        type: 'string'
+      }]
+    });
+   Model.listmodels = function(req, cb) {
+      var retFiles = rp.getModels();
+      console.log(retFiles);
+      cb(null, retFiles);
+   };   
+   Model.remoteMethod('listmodels', {
+      http: {
+        path: '/listmodels',
+        verb: 'get'
+      },
+      accepts: [{
+            arg: 'req',
+            type: 'object',
+            http: {
+                source: 'req'
+            }
+      }], 
+      returns: {
+        arg:  'models',
+        type: 'array'
+      }
+    })
+
 }

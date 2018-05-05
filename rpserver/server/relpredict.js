@@ -20,7 +20,7 @@ exports.showModels = () => {
 var config = {
 	home:         process.env.RELPREDICT_HOME,
 	scripts:      process.env.RP_SCRIPTS,
-    uploads:      process.env.RP_UPLOADDIR,
+  uploads:      process.env.RP_UPLOADDIR,
 	archives:     process.env.RP_ARCHIVEDIR,
 	datafiles:    process.env.RP_DATAFILEDIR,
 	datamaps:     process.env.RP_DATAMAPDIR,
@@ -169,21 +169,7 @@ exports.getJobTemplate = () => {
 /*******************************************************************************/
 /*                         Data management functions                           */
 /*******************************************************************************/
-// addChildren = function(n) {
-//   if (n.children === undefined) {
-//   	n.children = [];
-//   }
-//   else {
-//   	for (var i = 0; i < n.children.length; i++) {
-//   		n.children[i] = addChildren(n.children[i]);
-//   	}
-//   }
-//   return n;
-// }
 exports.getDatafiles = () => { 
-	//console.log('Get datafiles');
-	//console.log(dirTree(config.datafiles));
-	//return JSON.parse(JSON.stringify(dirTree(config.datafiles)).replace(new RegExp(config.datafiles + '/','g'), ''));
 	return dirTree(config.datafiles);
 }
 getFileFormat = (ftype) => {
@@ -340,27 +326,40 @@ convertModel = (model) => {
 }
 exports.convertModel = convertModel; 
 getModelPath = function(model) {
+  console.log(config.models + " " + model.model_class + " " + model.name + " " + model.version.toString());
 	return path.join(config.models, 
     	             model.model_class, 
-    	             model.model_name,
-    	             model.version);
+    	             model.name,
+    	             model.version.toString());
+}
+mkDir2 = (base, dirList) => {
+  var newPath = base;
+  for (var i = 0; i < dirList.length; i++) {
+    console.log(newPath + " adding " + dirList[i]);
+    newPath = path.join(newPath, dirList[i]);
+    if (!fs.existsSync(newPath))
+       fs.mkdirSync(newPath);
+  }
+  console.log(newPath);
+  return newPath;
 }
 exports.getModelPath = getModelPath;
-saveModel = (model) => {
+saveModel = (model, overwrite) => {
     var modelDef = convertModel(model);
     var modelJSON = JSON.stringify(model);
-    var modelPath = getModelPath(model);
-    makeDirP(modelPath);
+    var modelPath = mkDir2(config.models, [model.model_class, model.name, model.version.toString()]);
     for (var i = 0; i < model.targets.length; i++) {
     	for (var j = 0; j < model.targets[i].algorithms.length; j++) {
-    		makeDirP(path.join(modelPath, 
-    			               model.targets[i].targetName,
-    			               model.targets[i].algorithms[j].name));
+    		mkDir2(modelPath, [model.targets[i].name, model.targets[i].algorithms[j].short_name]);
     	}
     }
-    fs.writeFileSync(path.join(modelPath, model_name + '.modeldef'), modelDef);
-    fs.writeFileSync(path.join(modelPath, model_name + '.json'), modelJSON);
-    return modelPath;
+    var md = path.join(modelPath, model.name + '.modeldef');
+    console.log(md);
+    if (fs.existsSync(md) && !overwrite)
+      return "Model exists and overwrite was not specified";
+    fs.writeFileSync(path.join(md), modelDef);
+    fs.writeFileSync(path.join(modelPath, model.name + '.json'), modelJSON);
+    return "OK";
 }
 exports.saveModel = saveModel;
 makeTrainedModel = (trained_model) => {
@@ -377,3 +376,30 @@ makeTrainedModel = (trained_model) => {
     return dirPath;
 }
 exports.makeTrainedModel = makeTrainedModel;
+getModels = () => {
+  var models = [];
+  var model_classes = fs.readdirSync(config.models);
+  for (var i = 0; i < model_classes.length; i++) {
+    var mcdir = path.join(config.models, model_classes[i]);
+    console.log(mcdir);
+    var model_names = fs.readdirSync(mcdir);
+    for (var j = 0; j < model_names.length; j++) {
+      var mdir = path.join(mcdir, model_names[j]);
+      console.log(mdir);
+      var model_versions = fs.readdirSync(mdir);
+      for (var k = 0; k < model_versions.length; k++) {
+        var mjsondir = path.join(mdir, model_versions[k]);
+        console.log(mjsondir);
+        var fjson = path.join(mjsondir, model_names[j] + ".json");
+        console.log(fjson);
+        var model_json = fs.readFileSync(path.join(fjson));
+        var model = JSON.parse(model_json);
+        console.log(model);
+        models.push(model);
+      }
+    }
+  }
+  console.log(models);
+  return models;
+}
+exports.getModels = getModels;

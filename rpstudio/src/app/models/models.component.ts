@@ -42,7 +42,8 @@ export class ModelsComponent implements OnInit {
      });
 
      this.modelService.getModels().subscribe(resultArray => {
-        this.models = resultArray;
+        console.log(resultArray);
+        this.models = resultArray.models;
         this.models.sort((m1 : RPModel, m2 : RPModel) : number => {
             let m1x = m1.model_class + '.' + m1.name + '.' + m1.version;
             let m2x = m2.model_class + '.' + m2.name + '.' + m2.version;
@@ -81,5 +82,8 @@ export class ModelsComponent implements OnInit {
     if (i == 0) return true;
     else if (this.newModelName(i)) return true; 
     else return this.models[i].description != this.models[i - 1].description;
+  }
+  setCurrent(i: number) {
+    this.models[i].current = true;
   }
 }

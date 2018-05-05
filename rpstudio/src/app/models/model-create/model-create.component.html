@@ -1,5 +1,6 @@
+<div *ngIf="ready">
 <wizard #wizard navBarLayout="large-empty-symbols">
-  <wizard-step stepTitle="Model Building" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
+  <wizard-step *ngIf="mode=='new'" stepTitle="Model Building" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
     <form>
       <br>
       <h2 class="text-center">How would you like to build the model?</h2>
@@ -11,23 +12,58 @@
                  <option value="none" selected >Empty model</option>
                  <option value="model">Using another model</option>
                  <option value="datamap">Using a Datamap</option>
-                 <option value="dataset">Using a Dataset</option>
+                 <option value="file">Using a File</option>
               </select>
               <div class="col-4"></div>
       </div>  
-      <!--div class="row">
-            <div *ngIf="mode=='none'">None</div>  
-            <div *ngIf="mode=='model'">Model</div>  
-            <div *ngIf="mode=='datamap'">Datamap</div>  
-            <div *ngIf="mode=='dataset'">Dataset</div> 
-      </div--> 
     </form>
     <br/>
     <div class="text-center">
        <button type="button" nextStep class="btn btn-sm btn-primary">Next Step</button>
     </div>
   </wizard-step>
-  <wizard-step stepTitle="Define the new model" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
+  <wizard-step *ngIf="mode=='datamap' || mode=='file'" stepTitle="Model Building" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
+    <form>
+      <br>
+      <h2 class="text-center">Build the model using a {{mode}}</h2>
+      <h3 class="text-center">Identify how the model will use the data</h3>
+      <br>
+      <div class="row col-12">
+              <div class="col-4"></div>
+              <label class="col-2">{{mode}}:</label>
+              <label class="col-2">{{field_source}}</label>
+              <div class="col-4"></div>
+      </div>
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+        <table class="table table-bordered table-striped sortable table-sm">
+          <thead>
+            <th>Field Name</th>
+            <th>Data Type</th>
+            <th>Usage</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let f of fields; let i = index;">
+              <td>{{f.field_name}}</td>
+              <td>{{f.field_type}}</td>
+              <select class="form-control" (change)="setUsage($event.target.value,i);">
+                 <option value="Feature" selected >Feature</option>
+                 <option value="Target">Target</option>
+                 <option value="Identifier">Identifier</option>
+              </select>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="col-3"></div>
+      </div>  
+    </form>
+    <br/>
+    <div class="text-center">
+       <button type="button" nextStep class="btn btn-sm btn-primary" (click)="fillModelFromFields();">Next Step</button>
+    </div>
+  </wizard-step>  <wizard-step stepTitle="Define the new model" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
     <form>
       <br>
       <h2 class="text-center">Define the model</h2>
@@ -101,7 +137,7 @@
                </td>
                <td >
                  <select class="form-control" (change)="changeFeatureDataType($event.target.value, index)"> 
-                   <option *ngFor="let dt of dataTypes" value="{{dt.datatype_name}}">{{dt.datatype_name}}</option>
+                   <option *ngFor="let dt of dataTypes" value="{{dt.datatype_name}}" [selected]="dt.datatype_name==f.type">{{dt.datatype_name}}</option>
                  </select>
                </td>
                <td >
@@ -169,7 +205,7 @@
                </td>
                <td >
                  <select class="form-control" (change)="changeTargetDataType($event.target.value, i)"> 
-                   <option *ngFor="let dt of dataTypes" value="{{dt.datatype_name}}">{{dt.datatype_name}}</option>
+                   <option *ngFor="let dt of dataTypes" value="{{dt.datatype_name}}"[selected]="dt.dataype_name==t.type">{{dt.datatype_name}}</option>
                  </select>
                </td>
                <td >
@@ -252,7 +288,7 @@
           </thead>
           <tbody>
               <tr *ngFor="let f of model.features; let i=index">
-                   <td class="align-middle"><input type="checkbox" style="float: left; margin: 0 auto; width: 100%;" (change)="setId(i)"></td>
+                   <td class="align-middle"><input type="checkbox" style="float: left; margin: 0 auto; width: 100%;" (change)="setId(i)" [checked]="checked[i]"></td>
                    <td class="text-center">{{f.name}}</td>
                    <td class="text-center">{{f.type}}</td>
                    <td class="text-center">{{f.label}}</td>
@@ -281,6 +317,10 @@
       <button type="button" previousStep class="btn btn-sm btn-primary">Previous Step</button>
       <button type="button" class="btn btn-sm btn-success" resetWizard (click)="saveModel()">Save Model</button>
       <button type="button" class="btn btn-sm btn-danger" resetWizard (click)="cancelModel()">Discard and Exit</button>
+    </div>
+    <div class ="row">
+      <div class="col-2"></div>
+      <div class="col-10">Result: {{message}}</div>
     </div>
   </wizard-step>
 </wizard>
@@ -312,3 +352,4 @@
     <button type="button" class="btn btn-sm btn-danger"  (click)="cancelMC()">Cancel</button>
   </div>
 </app-modal-dialog>
+</div>

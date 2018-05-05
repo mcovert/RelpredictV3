@@ -13,7 +13,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./model-create.component.css']
 })
 export class ModelCreateComponent implements OnInit {
-
+  ready        : boolean = false;
   model        : RPModel = new RPModel();
   modelClasses : RPModelClass[];
   dataTypes    : RPDataType[];
@@ -37,6 +37,7 @@ export class ModelCreateComponent implements OnInit {
   field_source : string = "";
   field_string : string = "";
   fields       : FieldModelUsage[] = [];
+  message      : string = "";
 
   constructor(private modelService : ModelService, private router: Router, 
               private route: ActivatedRoute, private globalservice: GlobalService) { 
@@ -44,12 +45,13 @@ export class ModelCreateComponent implements OnInit {
         this.mode = params['mode'] || "new"; 
         this.field_source = params['field_source'] || "";
         this.field_string = params['fields'] || "";
-        if (this.mode == 'datamap' || this.mode == 'file')
-          this.fields = JSON.parse(this.globalservice.decode(this.field_string));        
-        console.log("mode=" + this.mode + 
-                    " field_source=" + this.globalservice.decode(this.field_source) +
-                    " field_string=" + this.globalservice.decode(this.field_string));
-        console.log(this.fields);
+        if (this.mode == 'datamap' || this.mode == 'file') {
+          this.fields = JSON.parse(this.globalservice.decode(this.field_string)); 
+          for (var i = 0; i < this.fields.length; i++) this.fields[i].field_use = 'Feature';       
+          this.ready = true;
+        }
+        else
+          this.ready = true;
      });
   }
 
@@ -65,9 +67,10 @@ export class ModelCreateComponent implements OnInit {
         this.model.description = "";
         this.model.identifier = "";
         this.model.current = false;
-        this.addFeature();
-        this.addTarget();
-        this.alg = this.model.targets[0].algorithms[0];
+        if (this.mode == 'datamap' || this.mode == 'file') {
+          this.model.name = this.field_source + "_model";
+          this.model.description = "Model built from " + this.mode + " " + this.field_source;
+        }
     });
     this.dataTypes = this.modelService.getDataTypes();
     this.algDefs = this.modelService.getAlgorithmDefs();
@@ -171,15 +174,13 @@ export class ModelCreateComponent implements OnInit {
     return pret;
   }
   saveModel() {
-    this.modelService.createModel(this.model).subscribe(
+    this.modelService.createModel(this.model, false).subscribe(
       data => {
-        return true;
+         this.router.navigate(['models']);
       },
       error => {
-        console.error("Error saving Model");
-        return Observable.throw(error);
+        this.message = "Error saving Model: " + error;
       });
-    this.router.navigate(['models']);
   }
   cancelModel() {
     if (confirm("Are you sure you want to discard this model?")) {
@@ -243,7 +244,6 @@ export class ModelCreateComponent implements OnInit {
          foundslash = false;
        }
     }
-    console.log("t=" + t);
     return t;
   }
   getScript() {
@@ -269,5 +269,39 @@ export class ModelCreateComponent implements OnInit {
   }
   setId(i: number) {
     this.checked[i] = !this.checked[i];
+  }
+  setUsage(usage: string, index: number) {
+    console.log("Setting " + this.fields[index].field_name + " to usage " + usage);
+    this.fields[index].field_use = usage;
+  }
+  fillModelFromFields() {
+    for (var i = 0; i < this.fields.length; i++) {
+      console.log(this.fields[i]);
+      if (this.fields[i].field_use == 'Feature' || this.fields[i].field_use == 'Identifier') {
+           var feature = new RPFeature();
+           feature.parms = [];
+           feature.name = this.fields[i].field_name;
+           feature.type = this.fields[i].field_type;
+           feature.label = this.fields[i].field_name;;
+           this.model.features.push(feature);
+           if (this.fields[i].field_use == 'Identifier') {
+               this.checked.push(true);
+           }
+           else {
+               this.checked.push(false);
+           }
+      }
+      else if (this.fields[i].field_use == 'Target') {
+           var target = new RPTarget();
+           target.name = this.fields[i].field_name;
+           target.algorithms = [];
+           target.algorithms.push(this.modelService.createTargetAlgorithm(this.modelService.getDefaultAlgorithmDef()));
+           target.parms = [];
+           target.type = this.fields[i].field_type;
+           target.description = this.fields[i].field_name;
+           this.model.targets.push(target);
+      }
+    }
+    console.log(this.model);
   }
 }

@@ -32,6 +32,7 @@
                         <th class="text-center">Display</th>
                         <th class="text-center">Edit</th>
                         <th class="text-center">Delete</th>
+                        <th class="text-center">Set Current</th>
                      </thead>
                      <tbody>
                        <tr *ngFor="let model of models | modelClass:currentClass; let i = index;">
@@ -41,7 +42,8 @@
                           <td align="center"><p data-placement="top" data-toggle="tooltip" title="Display"><button class="btn btn-info btn-xs center-block" (click)="navigate(model.id)"><span class="fa fa-eye"></span></button></p></td>
                           <td align="center"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs center-block" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-pencil"></span></button></p></td>
                           <td align="center"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs center-block" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
-                      </tr>
+                          <td align="center"><p data-placement="top" data-toggle="tooltip" title="Set Current"><button class="btn btn-danger btn-xs center-block" data-title="SetCurrent" data-toggle="modal" data-target="#setcurrent" (click)="setCurrent(i)"><span class="fa fa-exclamation-circle"></span></button></p></td>
+                       </tr>
                     </tbody>
                 </table>
                 <div class="clearfix"></div>

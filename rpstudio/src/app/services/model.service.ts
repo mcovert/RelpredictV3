@@ -82,7 +82,7 @@ httpOptions    : HttpHeaders;
     return this.algorithms;
   }
   getModels() : Observable<RPModel[]> { 
-    this.models = this.httpService.get(this.url + 'models', this.authService.getHttpHeader()) as Observable<RPModel[]>;
+    this.models = this.httpService.get('http://ai25:3000/api/models/listmodels', this.authService.getHttpHeader()) as Observable<RPModel[]>;
     return this.models;
   }
   getModelClasses() : Observable<RPModelClass[]> {
@@ -96,11 +96,9 @@ httpOptions    : HttpHeaders;
     this.trained_models = this.httpService.get(this.url + 'trainedmodels', this.authService.getHttpHeader()) as Observable<RPTrainedModel[]>;
     return this.trained_models;
   }
-  createModel(model : RPModel) {
+  createModel(model : RPModel, overwrite: boolean) {
     delete model.id;
-    let body = JSON.stringify(model);
-    // return this.httpService.post('http://ai25:3000/api/models?access_token=' + this.authService.getUserToken(), body, this.httpOptions);
-    return this.httpService.post(this.url + 'models', body, this.authService.getHttpHeader());
+    return this.httpService.post('http://ai25:3000/api/models/createmodel', {model: model, overwrite: overwrite}) as Observable<ReturnObject>;    
   }
   updateModel(model : RPModel) {
     return this.httpService.put(this.url + 'models/' + model.id, JSON.stringify(model), this.authService.getHttpHeader());
