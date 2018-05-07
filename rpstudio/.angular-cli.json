@@ -10,7 +10,8 @@
       "assets": [
         "assets",
         "favicon.png",
-        "help"
+        "help",
+        "assets/DecisionTreeViewer"
       ],
       "index": "index.html",
       "main": "main.ts",

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analytics Inside Claims Analyzer</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="http://w2ui.com/src/w2ui-1.5.rc1.min.css" />
+    <link rel="stylesheet" href="styles/cssmenu.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/examples.css">
+    <link rel="stylesheet" href="styles/vizuly.css">
+    <link rel="stylesheet" href="styles/vizuly_weightedtree.css">
+    <link rel="stylesheet" href="styles/font-awesome/css/font-awesome.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto|Raleway:600,400,200' rel='stylesheet' type='text/css'>
+    <script src="lib/jquery-2.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://w2ui.com/src/w2ui-1.5.rc1.min.js"></script>
+    <script src="lib/cssmenu.js"></script>
+    <style>
+    .w2ui-head { text-align: center; }
+    </style>
+</head>
+<body>
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#" onclick="window.print()">Print</a>
+  <a href="#" onclick="window.print()">Download</a>
+</div>
+<div id="main">
+<div id='cssmenu'>
+    <ul class="main-menu">
+        <li class='active'><a><span onclick="openNav()">Actions </span><br><span class="setting"></span></a></li>
+        <li class='active'>
+            <a><span>Display </span><br><span class="setting"></span></a>
+            <ul class="options" callback="changeSize">
+                <li id="currentDisplay" class="selected"><a></a></li>
+                <li item_value="1600,900"><a>Maximize</a></li>
+                <li item_value="1200,800"><a>1200px - 800px</a></li>
+                <li item_value="800,600"><a>800px - 600px</a></li>
+                <li item_value="375,667"><a>375px - 667px</a></li>
+                <li item_value="320,568"><a>320px - 568px</a></li>
+            </ul>
+        </li>
+        <li class='active'><a><span class="label">Navigate </span><br><span class="setting"></span></a>
+          <ul class="options" callback="changeData">
+                <li class="selected"><a href="main.html">Home</a></li>
+                <li><a href="decisionTree.html">Analyze Claims</a></li>
+            </ul>
+        </li>
+
+    </ul>
+</div>
+    <div align="center">
+      <h1 style="color:black";>Monthly Forecast - 2017</h1>
+      <div id="grid" style="width: 856px; height: 366px;"></div>
+    </div>
+</div>
+</body>
+<script>
+$(function () {
+    $('#grid').w2grid({
+        name: 'grid',
+        header: 'Forecast - 2017',
+        editing: true,
+        rowClick: function(args) {
+		    alert("Showing", args.item);
+        },
+        columns: [
+                 { field: 'Category', caption: 'Category', size: '200px', sortable: true, resizable: true, style: 'text-align: center', tooltip: 'Metric category'},
+                 { field: 'March',    caption: 'March',    size: '100px', sortable: true, resizable: true, style: 'text-align: center', tooltip: 'March 2017' },
+                 { field: 'April',    caption: 'April',    size: '100px', sortable: true, resizable: true, style: 'text-align: center', tooltip: 'April 2017' },
+                 { field: 'May',      caption: 'May',      size: '100px', sortable: true, resizable: true, style: 'text-align: center', tooltip: 'May 2017' },
+                 { field: 'June',     caption: 'June',     size: '100px', sortable: true, resizable: true, style: 'text-align: center', tooltip: 'June 2017' },
+                 { field: 'July',     caption: 'July',     size: '100px', sortable: true, resizable: true, style: 'text-align: center', tooltip: 'July 2017' },
+                 { field: 'August',   caption: 'August',   size: '100px', sortable: true, resizable: true, style: 'text-align: center', tooltip: 'August 2017' },
+                 { field: 'Show',     caption: 'Show',     size: '53px',  style: 'text-align: center', info: { icon : 'fa fa-folder-open'}, tooltip: 'Actions' }
+           ],
+        records: [{recid: 1, "Category":"Open Claims","March":"1234","April":"802","May":"658","June":"238","July":"89","August":"38"},
+                  {recid: 2, "Category":"Closing Claims","March":"432","April":"144","May":"420","June":"149","July":"51","August":"38"},
+                  {recid: 3, "Category":"Full Pay","March":"173","April":"58","May":"168","June":"60","July":"20","August":"15"},
+                  {recid: 4, "Category":"Partial Pay","March":"194","April":"65","May":"189","June":"67","July":"23","August":"17"},
+                  {recid: 5, "Category":"Denied","March":"65","April":"22","May":"63","June":"22","July":"8","August":"6"},
+                  {recid: 6, "Category":"Claim Amount","March":"3963608","April":"2576024","May":"2113496","June":"764456","July":"285868","August":"122056"},
+                  {recid: 7, "Category":"Full Paid Amount","March":"555034","April":"185011","May":"539616","June":"191435","July":"65525","August":"48822"},
+                  {recid: 8, "Category":"Partial Paid Amount","March":"449577","April":"149859","May":"437089","June":"155063","July":"53075","August":"39546"},
+                  {recid: 9, "Category":"Total Payment","March":"1004611","April":"334870","May":"976705","June":"346498","July":"118600","August":"88369"},
+                  {recid: 10, "Category":"Paid Percent","March":"0.25","April":"0.13","May":"0.46","June":"0.45","July":"0.41","August":"0.72"},
+                  {recid: 11, "Category":"Loss Due to Partial Pay","March":"2958997","April":"2241154","May":"1136791","June":"417958","July":"167268","August":"33687"},
+                  {recid: 12, "Category":"Loss Due to Denials","March":"208138","April":"69379","May":"202356","June":"71788","July":"24572","August":"18308"},
+                  {recid: 13, "Category":"Total Loss","March":"3167135","April":"2310533","May":"1339147","June":"489746","July":"191840","August":"51996"},
+                  {recid: 14, "Category":"Loss Percent","March":"0.8","April":"0.9","May":"0.63","June":"0.64","July":"0.67","August":"0.43"}]
+    });
+});
+/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+}
+function openNav2(name) {
+    document.getElementById(name).style.width = "250px";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+function closeNav2(name) {
+    document.getElementById(name).style.width = "0";
+}
+
+</script>
+</html>

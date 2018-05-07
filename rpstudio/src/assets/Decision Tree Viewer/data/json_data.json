@@ -1,0 +1,1221 @@
+{
+  "values": [
+    {
+      "key": "Payer=CMS",
+      "values": [
+        {
+          "key": "CPT=84999",
+          "values": [
+            {
+              "key": "Claim>1400",
+              "values": [
+                {
+                  "key": "Fac=MMH",
+                  "values": [
+                    {
+                      "key": "DENIED",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "Payer=CMS",
+                      "childProp_Level2": "CPT=84999",
+                      "childProp_Level3": "Claim>1400",
+                      "childProp_Level4": "Fac=MMH",
+                      "childProp_Level5": "DENIED",
+                      "childProp_Claims": "112",
+                      "childProp_Dollars": "23256",
+                      "childProp_Expense": "1246",
+                      "agg_Claims": 112,
+                      "agg_Dollars": 23256,
+                      "agg_Expense": 1246,
+                      "id": "0_0_0_0_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "Payer=CMS",
+                  "childProp_Level2": "CPT=84999",
+                  "childProp_Level3": "Claim>1400",
+                  "childProp_Level4": "Fac=MMH",
+                  "childProp_Level5": "DENIED",
+                  "childProp_Claims": "112",
+                  "childProp_Dollars": "23256",
+                  "childProp_Expense": "1246",
+                  "agg_Claims": 112,
+                  "agg_Dollars": 23256,
+                  "agg_Expense": 1246,
+                  "id": "0_0_0_0_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "Payer=CMS",
+              "childProp_Level2": "CPT=84999",
+              "childProp_Level3": "Claim>1400",
+              "childProp_Level4": "Fac=MMH",
+              "childProp_Level5": "DENIED",
+              "childProp_Claims": "112",
+              "childProp_Dollars": "23256",
+              "childProp_Expense": "1246",
+              "agg_Claims": 112,
+              "agg_Dollars": 23256,
+              "agg_Expense": 1246,
+              "id": "0_0_0_0_0"
+            }
+          ],
+          "childProp_Category": "Genomic Health",
+          "childProp_Level1": "Payer=CMS",
+          "childProp_Level2": "CPT=84999",
+          "childProp_Level3": "Claim>1400",
+          "childProp_Level4": "Fac=MMH",
+          "childProp_Level5": "DENIED",
+          "childProp_Claims": "112",
+          "childProp_Dollars": "23256",
+          "childProp_Expense": "1246",
+          "agg_Claims": 112,
+          "agg_Dollars": 23256,
+          "agg_Expense": 1246,
+          "id": "0_0_0_0"
+        },
+        {
+          "key": "CPT=84621",
+          "values": [
+            {
+              "key": "Claim<500",
+              "values": [
+                {
+                  "key": "State=KY",
+                  "values": [
+                    {
+                      "key": "PAID",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "Payer=CMS",
+                      "childProp_Level2": "CPT=84621",
+                      "childProp_Level3": "Claim<500",
+                      "childProp_Level4": "State=KY",
+                      "childProp_Level5": "PAID",
+                      "childProp_Claims": "654",
+                      "childProp_Dollars": "90358",
+                      "childProp_Expense": "3679",
+                      "agg_Claims": 654,
+                      "agg_Dollars": 90358,
+                      "agg_Expense": 3679,
+                      "id": "0_0_1_0_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "Payer=CMS",
+                  "childProp_Level2": "CPT=84621",
+                  "childProp_Level3": "Claim<500",
+                  "childProp_Level4": "State=KY",
+                  "childProp_Level5": "PAID",
+                  "childProp_Claims": "654",
+                  "childProp_Dollars": "90358",
+                  "childProp_Expense": "3679",
+                  "agg_Claims": 654,
+                  "agg_Dollars": 90358,
+                  "agg_Expense": 3679,
+                  "id": "0_0_1_0_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "Payer=CMS",
+              "childProp_Level2": "CPT=84621",
+              "childProp_Level3": "Claim<500",
+              "childProp_Level4": "State=KY",
+              "childProp_Level5": "PAID",
+              "childProp_Claims": "654",
+              "childProp_Dollars": "90358",
+              "childProp_Expense": "3679",
+              "agg_Claims": 654,
+              "agg_Dollars": 90358,
+              "agg_Expense": 3679,
+              "id": "0_0_1_0_0"
+            }
+          ],
+          "childProp_Category": "Genomic Health",
+          "childProp_Level1": "Payer=CMS",
+          "childProp_Level2": "CPT=84621",
+          "childProp_Level3": "Claim<500",
+          "childProp_Level4": "State=KY",
+          "childProp_Level5": "PAID",
+          "childProp_Claims": "654",
+          "childProp_Dollars": "90358",
+          "childProp_Expense": "3679",
+          "agg_Claims": 654,
+          "agg_Dollars": 90358,
+          "agg_Expense": 3679,
+          "id": "0_0_1_0"
+        }
+      ],
+      "childProp_Category": "Genomic Health",
+      "childProp_Level1": "Payer=CMS",
+      "childProp_Level2": "CPT=84621",
+      "childProp_Level3": "Claim<500",
+      "childProp_Level4": "State=KY",
+      "childProp_Level5": "PAID",
+      "childProp_Claims": "654",
+      "childProp_Dollars": "90358",
+      "childProp_Expense": "3679",
+      "agg_Claims": 766,
+      "agg_Dollars": 113614,
+      "agg_Expense": 4925,
+      "id": "0_0_0"
+    },
+    {
+      "key": "Payer=Ohio Health",
+      "values": [
+        {
+          "key": "CPT=84600",
+          "values": [
+            {
+              "key": "Claim>1600",
+              "values": [
+                {
+                  "key": "Fac=MMH",
+                  "values": [
+                    {
+                      "key": "DENIED",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "Payer=Ohio Health",
+                      "childProp_Level2": "CPT=84600",
+                      "childProp_Level3": "Claim>1600",
+                      "childProp_Level4": "Fac=MMH",
+                      "childProp_Level5": "DENIED",
+                      "childProp_Claims": "23",
+                      "childProp_Dollars": "18023",
+                      "childProp_Expense": "1126",
+                      "agg_Claims": 23,
+                      "agg_Dollars": 18023,
+                      "agg_Expense": 1126,
+                      "id": "0_1_0_0_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "Payer=Ohio Health",
+                  "childProp_Level2": "CPT=84600",
+                  "childProp_Level3": "Claim>1600",
+                  "childProp_Level4": "Fac=MMH",
+                  "childProp_Level5": "DENIED",
+                  "childProp_Claims": "23",
+                  "childProp_Dollars": "18023",
+                  "childProp_Expense": "1126",
+                  "agg_Claims": 23,
+                  "agg_Dollars": 18023,
+                  "agg_Expense": 1126,
+                  "id": "0_1_0_0_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "Payer=Ohio Health",
+              "childProp_Level2": "CPT=84600",
+              "childProp_Level3": "Claim>1600",
+              "childProp_Level4": "Fac=MMH",
+              "childProp_Level5": "DENIED",
+              "childProp_Claims": "23",
+              "childProp_Dollars": "18023",
+              "childProp_Expense": "1126",
+              "agg_Claims": 23,
+              "agg_Dollars": 18023,
+              "agg_Expense": 1126,
+              "id": "0_1_0_0_0"
+            }
+          ],
+          "childProp_Category": "Genomic Health",
+          "childProp_Level1": "Payer=Ohio Health",
+          "childProp_Level2": "CPT=84600",
+          "childProp_Level3": "Claim>1600",
+          "childProp_Level4": "Fac=MMH",
+          "childProp_Level5": "DENIED",
+          "childProp_Claims": "23",
+          "childProp_Dollars": "18023",
+          "childProp_Expense": "1126",
+          "agg_Claims": 23,
+          "agg_Dollars": 18023,
+          "agg_Expense": 1126,
+          "id": "0_1_0_0"
+        },
+        {
+          "key": "CPT=20101",
+          "values": [
+            {
+              "key": "Claim>1000",
+              "values": [
+                {
+                  "key": "State=OH",
+                  "values": [
+                    {
+                      "key": "PAID",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "Payer=Ohio Health",
+                      "childProp_Level2": "CPT=20101",
+                      "childProp_Level3": "Claim>1000",
+                      "childProp_Level4": "State=OH",
+                      "childProp_Level5": "PAID",
+                      "childProp_Claims": "233",
+                      "childProp_Dollars": "67284",
+                      "childProp_Expense": "45466",
+                      "agg_Claims": 233,
+                      "agg_Dollars": 67284,
+                      "agg_Expense": 45466,
+                      "id": "0_1_1_0_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "Payer=Ohio Health",
+                  "childProp_Level2": "CPT=20101",
+                  "childProp_Level3": "Claim>1000",
+                  "childProp_Level4": "State=OH",
+                  "childProp_Level5": "PAID",
+                  "childProp_Claims": "233",
+                  "childProp_Dollars": "67284",
+                  "childProp_Expense": "45466",
+                  "agg_Claims": 233,
+                  "agg_Dollars": 67284,
+                  "agg_Expense": 45466,
+                  "id": "0_1_1_0_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "Payer=Ohio Health",
+              "childProp_Level2": "CPT=20101",
+              "childProp_Level3": "Claim>1000",
+              "childProp_Level4": "State=OH",
+              "childProp_Level5": "PAID",
+              "childProp_Claims": "233",
+              "childProp_Dollars": "67284",
+              "childProp_Expense": "45466",
+              "agg_Claims": 233,
+              "agg_Dollars": 67284,
+              "agg_Expense": 45466,
+              "id": "0_1_1_0_0"
+            }
+          ],
+          "childProp_Category": "Genomic Health",
+          "childProp_Level1": "Payer=Ohio Health",
+          "childProp_Level2": "CPT=20101",
+          "childProp_Level3": "Claim>1000",
+          "childProp_Level4": "State=OH",
+          "childProp_Level5": "PAID",
+          "childProp_Claims": "233",
+          "childProp_Dollars": "67284",
+          "childProp_Expense": "45466",
+          "agg_Claims": 233,
+          "agg_Dollars": 67284,
+          "agg_Expense": 45466,
+          "id": "0_1_1_0"
+        }
+      ],
+      "childProp_Category": "Genomic Health",
+      "childProp_Level1": "Payer=Ohio Health",
+      "childProp_Level2": "CPT=20101",
+      "childProp_Level3": "Claim>1000",
+      "childProp_Level4": "State=OH",
+      "childProp_Level5": "PAID",
+      "childProp_Claims": "233",
+      "childProp_Dollars": "67284",
+      "childProp_Expense": "45466",
+      "agg_Claims": 256,
+      "agg_Dollars": 85307,
+      "agg_Expense": 46592,
+      "id": "0_1_0"
+    },
+    {
+      "key": "CPT=20101",
+      "values": [
+        {
+          "key": "Payer=Anthem",
+          "values": [
+            {
+              "key": "Claim<980",
+              "values": [
+                {
+                  "key": "State=KY",
+                  "values": [
+                    {
+                      "key": "PAID",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "CPT=20101",
+                      "childProp_Level2": "Payer=Anthem",
+                      "childProp_Level3": "Claim<980",
+                      "childProp_Level4": "State=KY",
+                      "childProp_Level5": "PAID",
+                      "childProp_Claims": "14",
+                      "childProp_Dollars": "12675",
+                      "childProp_Expense": "2083",
+                      "agg_Claims": 14,
+                      "agg_Dollars": 12675,
+                      "agg_Expense": 2083,
+                      "id": "0_2_0_0_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "CPT=20101",
+                  "childProp_Level2": "Payer=Anthem",
+                  "childProp_Level3": "Claim<980",
+                  "childProp_Level4": "State=KY",
+                  "childProp_Level5": "PAID",
+                  "childProp_Claims": "14",
+                  "childProp_Dollars": "12675",
+                  "childProp_Expense": "2083",
+                  "agg_Claims": 14,
+                  "agg_Dollars": 12675,
+                  "agg_Expense": 2083,
+                  "id": "0_2_0_0_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "CPT=20101",
+              "childProp_Level2": "Payer=Anthem",
+              "childProp_Level3": "Claim<980",
+              "childProp_Level4": "State=KY",
+              "childProp_Level5": "PAID",
+              "childProp_Claims": "14",
+              "childProp_Dollars": "12675",
+              "childProp_Expense": "2083",
+              "agg_Claims": 14,
+              "agg_Dollars": 12675,
+              "agg_Expense": 2083,
+              "id": "0_2_0_0_0"
+            },
+            {
+              "key": "Claim>981",
+              "values": [
+                {
+                  "key": "Diag=W34.00XA",
+                  "values": [
+                    {
+                      "key": "DENIED",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "CPT=20101",
+                      "childProp_Level2": "Payer=Anthem",
+                      "childProp_Level3": "Claim>981",
+                      "childProp_Level4": "Diag=W34.00XA",
+                      "childProp_Level5": "DENIED",
+                      "childProp_Claims": "6",
+                      "childProp_Dollars": "3675",
+                      "childProp_Expense": "987",
+                      "agg_Claims": 6,
+                      "agg_Dollars": 3675,
+                      "agg_Expense": 987,
+                      "id": "0_2_0_1_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "CPT=20101",
+                  "childProp_Level2": "Payer=Anthem",
+                  "childProp_Level3": "Claim>981",
+                  "childProp_Level4": "Diag=W34.00XA",
+                  "childProp_Level5": "DENIED",
+                  "childProp_Claims": "6",
+                  "childProp_Dollars": "3675",
+                  "childProp_Expense": "987",
+                  "agg_Claims": 6,
+                  "agg_Dollars": 3675,
+                  "agg_Expense": 987,
+                  "id": "0_2_0_1_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "CPT=20101",
+              "childProp_Level2": "Payer=Anthem",
+              "childProp_Level3": "Claim>981",
+              "childProp_Level4": "Diag=W34.00XA",
+              "childProp_Level5": "DENIED",
+              "childProp_Claims": "6",
+              "childProp_Dollars": "3675",
+              "childProp_Expense": "987",
+              "agg_Claims": 6,
+              "agg_Dollars": 3675,
+              "agg_Expense": 987,
+              "id": "0_2_0_1_0"
+            }
+          ],
+          "childProp_Category": "Genomic Health",
+          "childProp_Level1": "CPT=20101",
+          "childProp_Level2": "Payer=Anthem",
+          "childProp_Level3": "Claim>981",
+          "childProp_Level4": "Diag=W34.00XA",
+          "childProp_Level5": "DENIED",
+          "childProp_Claims": "6",
+          "childProp_Dollars": "3675",
+          "childProp_Expense": "987",
+          "agg_Claims": 20,
+          "agg_Dollars": 16350,
+          "agg_Expense": 3070,
+          "id": "0_2_0_0"
+        }
+      ],
+      "childProp_Category": "Genomic Health",
+      "childProp_Level1": "CPT=20101",
+      "childProp_Level2": "Payer=Anthem",
+      "childProp_Level3": "Claim>981",
+      "childProp_Level4": "Diag=W34.00XA",
+      "childProp_Level5": "DENIED",
+      "childProp_Claims": "6",
+      "childProp_Dollars": "3675",
+      "childProp_Expense": "987",
+      "agg_Claims": 20,
+      "agg_Dollars": 16350,
+      "agg_Expense": 3070,
+      "id": "0_2_0"
+    },
+    {
+      "key": "CPT=84998",
+      "values": [
+        {
+          "key": "Payer=Ohio Health",
+          "values": [
+            {
+              "key": "Fac=BHH",
+              "values": [
+                {
+                  "key": "State=OH",
+                  "values": [
+                    {
+                      "key": "DENIED",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "CPT=84998",
+                      "childProp_Level2": "Payer=Ohio Health",
+                      "childProp_Level3": "Fac=BHH",
+                      "childProp_Level4": "State=OH",
+                      "childProp_Level5": "DENIED",
+                      "childProp_Claims": "109",
+                      "childProp_Dollars": "39113",
+                      "childProp_Expense": "23229",
+                      "agg_Claims": 109,
+                      "agg_Dollars": 39113,
+                      "agg_Expense": 23229,
+                      "id": "0_3_0_0_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "CPT=84998",
+                  "childProp_Level2": "Payer=Ohio Health",
+                  "childProp_Level3": "Fac=BHH",
+                  "childProp_Level4": "State=OH",
+                  "childProp_Level5": "DENIED",
+                  "childProp_Claims": "109",
+                  "childProp_Dollars": "39113",
+                  "childProp_Expense": "23229",
+                  "agg_Claims": 109,
+                  "agg_Dollars": 39113,
+                  "agg_Expense": 23229,
+                  "id": "0_3_0_0_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "CPT=84998",
+              "childProp_Level2": "Payer=Ohio Health",
+              "childProp_Level3": "Fac=BHH",
+              "childProp_Level4": "State=OH",
+              "childProp_Level5": "DENIED",
+              "childProp_Claims": "109",
+              "childProp_Dollars": "39113",
+              "childProp_Expense": "23229",
+              "agg_Claims": 109,
+              "agg_Dollars": 39113,
+              "agg_Expense": 23229,
+              "id": "0_3_0_0_0"
+            }
+          ],
+          "childProp_Category": "Genomic Health",
+          "childProp_Level1": "CPT=84998",
+          "childProp_Level2": "Payer=Ohio Health",
+          "childProp_Level3": "Fac=BHH",
+          "childProp_Level4": "State=OH",
+          "childProp_Level5": "DENIED",
+          "childProp_Claims": "109",
+          "childProp_Dollars": "39113",
+          "childProp_Expense": "23229",
+          "agg_Claims": 109,
+          "agg_Dollars": 39113,
+          "agg_Expense": 23229,
+          "id": "0_3_0_0"
+        },
+        {
+          "key": "Payer=Anthem",
+          "values": [
+            {
+              "key": "Fac=BHH",
+              "values": [
+                {
+                  "key": "State=OH",
+                  "values": [
+                    {
+                      "key": "DENIED",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "CPT=84998",
+                      "childProp_Level2": "Payer=Anthem",
+                      "childProp_Level3": "Fac=BHH",
+                      "childProp_Level4": "State=OH",
+                      "childProp_Level5": "DENIED",
+                      "childProp_Claims": "520",
+                      "childProp_Dollars": "76987",
+                      "childProp_Expense": "52580",
+                      "agg_Claims": 520,
+                      "agg_Dollars": 76987,
+                      "agg_Expense": 52580,
+                      "id": "0_3_1_0_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "CPT=84998",
+                  "childProp_Level2": "Payer=Anthem",
+                  "childProp_Level3": "Fac=BHH",
+                  "childProp_Level4": "State=OH",
+                  "childProp_Level5": "DENIED",
+                  "childProp_Claims": "520",
+                  "childProp_Dollars": "76987",
+                  "childProp_Expense": "52580",
+                  "agg_Claims": 520,
+                  "agg_Dollars": 76987,
+                  "agg_Expense": 52580,
+                  "id": "0_3_1_0_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "CPT=84998",
+              "childProp_Level2": "Payer=Anthem",
+              "childProp_Level3": "Fac=BHH",
+              "childProp_Level4": "State=OH",
+              "childProp_Level5": "DENIED",
+              "childProp_Claims": "520",
+              "childProp_Dollars": "76987",
+              "childProp_Expense": "52580",
+              "agg_Claims": 520,
+              "agg_Dollars": 76987,
+              "agg_Expense": 52580,
+              "id": "0_3_1_0_0"
+            }
+          ],
+          "childProp_Category": "Genomic Health",
+          "childProp_Level1": "CPT=84998",
+          "childProp_Level2": "Payer=Anthem",
+          "childProp_Level3": "Fac=BHH",
+          "childProp_Level4": "State=OH",
+          "childProp_Level5": "DENIED",
+          "childProp_Claims": "520",
+          "childProp_Dollars": "76987",
+          "childProp_Expense": "52580",
+          "agg_Claims": 520,
+          "agg_Dollars": 76987,
+          "agg_Expense": 52580,
+          "id": "0_3_1_0"
+        }
+      ],
+      "childProp_Category": "Genomic Health",
+      "childProp_Level1": "CPT=84998",
+      "childProp_Level2": "Payer=Anthem",
+      "childProp_Level3": "Fac=BHH",
+      "childProp_Level4": "State=OH",
+      "childProp_Level5": "DENIED",
+      "childProp_Claims": "520",
+      "childProp_Dollars": "76987",
+      "childProp_Expense": "52580",
+      "agg_Claims": 629,
+      "agg_Dollars": 116100,
+      "agg_Expense": 75809,
+      "id": "0_3_0"
+    }
+  ]
+}  
+
+{
+  "values": [
+    {
+      "key": "DENIED",
+      "values": [
+        {
+          "key": "Payer=CMS",
+          "values": [
+            {
+              "key": "CPT=84999",
+              "values": [
+                {
+                  "key": "Claim>1400",
+                  "values": [
+                    {
+                      "key": "Fac=MMH",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "DENIED",
+                      "childProp_Level2": "Payer=CMS",
+                      "childProp_Level3": "CPT=84999",
+                      "childProp_Level4": "Claim>1400",
+                      "childProp_Level5": "Fac=MMH",
+                      "childProp_Claims": "112",
+                      "childProp_Dollars": "23256",
+                      "childProp_Expense": "1246",
+                      "agg_Claims": 112,
+                      "agg_Dollars": 23256,
+                      "agg_Expense": 1246,
+                      "id": "0_0_0_0_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "DENIED",
+                  "childProp_Level2": "Payer=CMS",
+                  "childProp_Level3": "CPT=84999",
+                  "childProp_Level4": "Claim>1400",
+                  "childProp_Level5": "Fac=MMH",
+                  "childProp_Claims": "112",
+                  "childProp_Dollars": "23256",
+                  "childProp_Expense": "1246",
+                  "agg_Claims": 112,
+                  "agg_Dollars": 23256,
+                  "agg_Expense": 1246,
+                  "id": "0_0_0_0_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "DENIED",
+              "childProp_Level2": "Payer=CMS",
+              "childProp_Level3": "CPT=84999",
+              "childProp_Level4": "Claim>1400",
+              "childProp_Level5": "Fac=MMH",
+              "childProp_Claims": "112",
+              "childProp_Dollars": "23256",
+              "childProp_Expense": "1246",
+              "agg_Claims": 112,
+              "agg_Dollars": 23256,
+              "agg_Expense": 1246,
+              "id": "0_0_0_0_0"
+            }
+          ],
+          "childProp_Category": "Genomic Health",
+          "childProp_Level1": "DENIED",
+          "childProp_Level2": "Payer=CMS",
+          "childProp_Level3": "CPT=84999",
+          "childProp_Level4": "Claim>1400",
+          "childProp_Level5": "Fac=MMH",
+          "childProp_Claims": "112",
+          "childProp_Dollars": "23256",
+          "childProp_Expense": "1246",
+          "agg_Claims": 112,
+          "agg_Dollars": 23256,
+          "agg_Expense": 1246,
+          "id": "0_0_0_0"
+        },
+        {
+          "key": "Payer=Ohio Health",
+          "values": [
+            {
+              "key": "CPT=84600",
+              "values": [
+                {
+                  "key": "Claim>1600",
+                  "values": [
+                    {
+                      "key": "Fac=MMH",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "DENIED",
+                      "childProp_Level2": "Payer=Ohio Health",
+                      "childProp_Level3": "CPT=84600",
+                      "childProp_Level4": "Claim>1600",
+                      "childProp_Level5": "Fac=MMH",
+                      "childProp_Claims": "23",
+                      "childProp_Dollars": "18023",
+                      "childProp_Expense": "1126",
+                      "agg_Claims": 23,
+                      "agg_Dollars": 18023,
+                      "agg_Expense": 1126,
+                      "id": "0_0_1_0_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "DENIED",
+                  "childProp_Level2": "Payer=Ohio Health",
+                  "childProp_Level3": "CPT=84600",
+                  "childProp_Level4": "Claim>1600",
+                  "childProp_Level5": "Fac=MMH",
+                  "childProp_Claims": "23",
+                  "childProp_Dollars": "18023",
+                  "childProp_Expense": "1126",
+                  "agg_Claims": 23,
+                  "agg_Dollars": 18023,
+                  "agg_Expense": 1126,
+                  "id": "0_0_1_0_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "DENIED",
+              "childProp_Level2": "Payer=Ohio Health",
+              "childProp_Level3": "CPT=84600",
+              "childProp_Level4": "Claim>1600",
+              "childProp_Level5": "Fac=MMH",
+              "childProp_Claims": "23",
+              "childProp_Dollars": "18023",
+              "childProp_Expense": "1126",
+              "agg_Claims": 23,
+              "agg_Dollars": 18023,
+              "agg_Expense": 1126,
+              "id": "0_0_1_0_0"
+            }
+          ],
+          "childProp_Category": "Genomic Health",
+          "childProp_Level1": "DENIED",
+          "childProp_Level2": "Payer=Ohio Health",
+          "childProp_Level3": "CPT=84600",
+          "childProp_Level4": "Claim>1600",
+          "childProp_Level5": "Fac=MMH",
+          "childProp_Claims": "23",
+          "childProp_Dollars": "18023",
+          "childProp_Expense": "1126",
+          "agg_Claims": 23,
+          "agg_Dollars": 18023,
+          "agg_Expense": 1126,
+          "id": "0_0_1_0"
+        },
+        {
+          "key": "CPT=20101",
+          "values": [
+            {
+              "key": "Payer=Anthem",
+              "values": [
+                {
+                  "key": "Claim>981",
+                  "values": [
+                    {
+                      "key": "Diag=W34.00XA",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "DENIED",
+                      "childProp_Level2": "CPT=20101",
+                      "childProp_Level3": "Payer=Anthem",
+                      "childProp_Level4": "Claim>981",
+                      "childProp_Level5": "Diag=W34.00XA",
+                      "childProp_Claims": "6",
+                      "childProp_Dollars": "3675",
+                      "childProp_Expense": "987",
+                      "agg_Claims": 6,
+                      "agg_Dollars": 3675,
+                      "agg_Expense": 987,
+                      "id": "0_0_2_0_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "DENIED",
+                  "childProp_Level2": "CPT=20101",
+                  "childProp_Level3": "Payer=Anthem",
+                  "childProp_Level4": "Claim>981",
+                  "childProp_Level5": "Diag=W34.00XA",
+                  "childProp_Claims": "6",
+                  "childProp_Dollars": "3675",
+                  "childProp_Expense": "987",
+                  "agg_Claims": 6,
+                  "agg_Dollars": 3675,
+                  "agg_Expense": 987,
+                  "id": "0_0_2_0_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "DENIED",
+              "childProp_Level2": "CPT=20101",
+              "childProp_Level3": "Payer=Anthem",
+              "childProp_Level4": "Claim>981",
+              "childProp_Level5": "Diag=W34.00XA",
+              "childProp_Claims": "6",
+              "childProp_Dollars": "3675",
+              "childProp_Expense": "987",
+              "agg_Claims": 6,
+              "agg_Dollars": 3675,
+              "agg_Expense": 987,
+              "id": "0_0_2_0_0"
+            }
+          ],
+          "childProp_Category": "Genomic Health",
+          "childProp_Level1": "DENIED",
+          "childProp_Level2": "CPT=20101",
+          "childProp_Level3": "Payer=Anthem",
+          "childProp_Level4": "Claim>981",
+          "childProp_Level5": "Diag=W34.00XA",
+          "childProp_Claims": "6",
+          "childProp_Dollars": "3675",
+          "childProp_Expense": "987",
+          "agg_Claims": 6,
+          "agg_Dollars": 3675,
+          "agg_Expense": 987,
+          "id": "0_0_2_0"
+        },
+        {
+          "key": "CPT=84998",
+          "values": [
+            {
+              "key": "Payer=Ohio Health",
+              "values": [
+                {
+                  "key": "Fac=BHH",
+                  "values": [
+                    {
+                      "key": "State=OH",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "DENIED",
+                      "childProp_Level2": "CPT=84998",
+                      "childProp_Level3": "Payer=Ohio Health",
+                      "childProp_Level4": "Fac=BHH",
+                      "childProp_Level5": "State=OH",
+                      "childProp_Claims": "109",
+                      "childProp_Dollars": "39113",
+                      "childProp_Expense": "23229",
+                      "agg_Claims": 109,
+                      "agg_Dollars": 39113,
+                      "agg_Expense": 23229,
+                      "id": "0_0_3_0_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "DENIED",
+                  "childProp_Level2": "CPT=84998",
+                  "childProp_Level3": "Payer=Ohio Health",
+                  "childProp_Level4": "Fac=BHH",
+                  "childProp_Level5": "State=OH",
+                  "childProp_Claims": "109",
+                  "childProp_Dollars": "39113",
+                  "childProp_Expense": "23229",
+                  "agg_Claims": 109,
+                  "agg_Dollars": 39113,
+                  "agg_Expense": 23229,
+                  "id": "0_0_3_0_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "DENIED",
+              "childProp_Level2": "CPT=84998",
+              "childProp_Level3": "Payer=Ohio Health",
+              "childProp_Level4": "Fac=BHH",
+              "childProp_Level5": "State=OH",
+              "childProp_Claims": "109",
+              "childProp_Dollars": "39113",
+              "childProp_Expense": "23229",
+              "agg_Claims": 109,
+              "agg_Dollars": 39113,
+              "agg_Expense": 23229,
+              "id": "0_0_3_0_0"
+            },
+            {
+              "key": "Payer=Anthem",
+              "values": [
+                {
+                  "key": "Fac=BHH",
+                  "values": [
+                    {
+                      "key": "State=OH",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "DENIED",
+                      "childProp_Level2": "CPT=84998",
+                      "childProp_Level3": "Payer=Anthem",
+                      "childProp_Level4": "Fac=BHH",
+                      "childProp_Level5": "State=OH",
+                      "childProp_Claims": "520",
+                      "childProp_Dollars": "76987",
+                      "childProp_Expense": "52580",
+                      "agg_Claims": 520,
+                      "agg_Dollars": 76987,
+                      "agg_Expense": 52580,
+                      "id": "0_0_3_1_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "DENIED",
+                  "childProp_Level2": "CPT=84998",
+                  "childProp_Level3": "Payer=Anthem",
+                  "childProp_Level4": "Fac=BHH",
+                  "childProp_Level5": "State=OH",
+                  "childProp_Claims": "520",
+                  "childProp_Dollars": "76987",
+                  "childProp_Expense": "52580",
+                  "agg_Claims": 520,
+                  "agg_Dollars": 76987,
+                  "agg_Expense": 52580,
+                  "id": "0_0_3_1_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "DENIED",
+              "childProp_Level2": "CPT=84998",
+              "childProp_Level3": "Payer=Anthem",
+              "childProp_Level4": "Fac=BHH",
+              "childProp_Level5": "State=OH",
+              "childProp_Claims": "520",
+              "childProp_Dollars": "76987",
+              "childProp_Expense": "52580",
+              "agg_Claims": 520,
+              "agg_Dollars": 76987,
+              "agg_Expense": 52580,
+              "id": "0_0_3_1_0"
+            }
+          ],
+          "childProp_Category": "Genomic Health",
+          "childProp_Level1": "DENIED",
+          "childProp_Level2": "CPT=84998",
+          "childProp_Level3": "Payer=Anthem",
+          "childProp_Level4": "Fac=BHH",
+          "childProp_Level5": "State=OH",
+          "childProp_Claims": "520",
+          "childProp_Dollars": "76987",
+          "childProp_Expense": "52580",
+          "agg_Claims": 629,
+          "agg_Dollars": 116100,
+          "agg_Expense": 75809,
+          "id": "0_0_3_0"
+        }
+      ],
+      "childProp_Category": "Genomic Health",
+      "childProp_Level1": "DENIED",
+      "childProp_Level2": "CPT=84998",
+      "childProp_Level3": "Payer=Anthem",
+      "childProp_Level4": "Fac=BHH",
+      "childProp_Level5": "State=OH",
+      "childProp_Claims": "520",
+      "childProp_Dollars": "76987",
+      "childProp_Expense": "52580",
+      "agg_Claims": 770,
+      "agg_Dollars": 161054,
+      "agg_Expense": 79168,
+      "id": "0_0_0"
+    },
+    {
+      "key": "PAID",
+      "values": [
+        {
+          "key": "Payer=CMS",
+          "values": [
+            {
+              "key": "CPT=84621",
+              "values": [
+                {
+                  "key": "Claim<500",
+                  "values": [
+                    {
+                      "key": "State=KY",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "PAID",
+                      "childProp_Level2": "Payer=CMS",
+                      "childProp_Level3": "CPT=84621",
+                      "childProp_Level4": "Claim<500",
+                      "childProp_Level5": "State=KY",
+                      "childProp_Claims": "654",
+                      "childProp_Dollars": "90358",
+                      "childProp_Expense": "3679",
+                      "agg_Claims": 654,
+                      "agg_Dollars": 90358,
+                      "agg_Expense": 3679,
+                      "id": "0_1_0_0_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "PAID",
+                  "childProp_Level2": "Payer=CMS",
+                  "childProp_Level3": "CPT=84621",
+                  "childProp_Level4": "Claim<500",
+                  "childProp_Level5": "State=KY",
+                  "childProp_Claims": "654",
+                  "childProp_Dollars": "90358",
+                  "childProp_Expense": "3679",
+                  "agg_Claims": 654,
+                  "agg_Dollars": 90358,
+                  "agg_Expense": 3679,
+                  "id": "0_1_0_0_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "PAID",
+              "childProp_Level2": "Payer=CMS",
+              "childProp_Level3": "CPT=84621",
+              "childProp_Level4": "Claim<500",
+              "childProp_Level5": "State=KY",
+              "childProp_Claims": "654",
+              "childProp_Dollars": "90358",
+              "childProp_Expense": "3679",
+              "agg_Claims": 654,
+              "agg_Dollars": 90358,
+              "agg_Expense": 3679,
+              "id": "0_1_0_0_0"
+            }
+          ],
+          "childProp_Category": "Genomic Health",
+          "childProp_Level1": "PAID",
+          "childProp_Level2": "Payer=CMS",
+          "childProp_Level3": "CPT=84621",
+          "childProp_Level4": "Claim<500",
+          "childProp_Level5": "State=KY",
+          "childProp_Claims": "654",
+          "childProp_Dollars": "90358",
+          "childProp_Expense": "3679",
+          "agg_Claims": 654,
+          "agg_Dollars": 90358,
+          "agg_Expense": 3679,
+          "id": "0_1_0_0"
+        },
+        {
+          "key": "CPT=20101",
+          "values": [
+            {
+              "key": "Payer=Anthem",
+              "values": [
+                {
+                  "key": "Claim<980",
+                  "values": [
+                    {
+                      "key": "State=KY",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "PAID",
+                      "childProp_Level2": "CPT=20101",
+                      "childProp_Level3": "Payer=Anthem",
+                      "childProp_Level4": "Claim<980",
+                      "childProp_Level5": "State=KY",
+                      "childProp_Claims": "14",
+                      "childProp_Dollars": "12675",
+                      "childProp_Expense": "2083",
+                      "agg_Claims": 14,
+                      "agg_Dollars": 12675,
+                      "agg_Expense": 2083,
+                      "id": "0_1_1_0_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "PAID",
+                  "childProp_Level2": "CPT=20101",
+                  "childProp_Level3": "Payer=Anthem",
+                  "childProp_Level4": "Claim<980",
+                  "childProp_Level5": "State=KY",
+                  "childProp_Claims": "14",
+                  "childProp_Dollars": "12675",
+                  "childProp_Expense": "2083",
+                  "agg_Claims": 14,
+                  "agg_Dollars": 12675,
+                  "agg_Expense": 2083,
+                  "id": "0_1_1_0_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "PAID",
+              "childProp_Level2": "CPT=20101",
+              "childProp_Level3": "Payer=Anthem",
+              "childProp_Level4": "Claim<980",
+              "childProp_Level5": "State=KY",
+              "childProp_Claims": "14",
+              "childProp_Dollars": "12675",
+              "childProp_Expense": "2083",
+              "agg_Claims": 14,
+              "agg_Dollars": 12675,
+              "agg_Expense": 2083,
+              "id": "0_1_1_0_0"
+            }
+          ],
+          "childProp_Category": "Genomic Health",
+          "childProp_Level1": "PAID",
+          "childProp_Level2": "CPT=20101",
+          "childProp_Level3": "Payer=Anthem",
+          "childProp_Level4": "Claim<980",
+          "childProp_Level5": "State=KY",
+          "childProp_Claims": "14",
+          "childProp_Dollars": "12675",
+          "childProp_Expense": "2083",
+          "agg_Claims": 14,
+          "agg_Dollars": 12675,
+          "agg_Expense": 2083,
+          "id": "0_1_1_0"
+        },
+        {
+          "key": "Payer=Ohio Health",
+          "values": [
+            {
+              "key": "CPT=20101",
+              "values": [
+                {
+                  "key": "Claim>1000",
+                  "values": [
+                    {
+                      "key": "State=OH",
+                      "values": [],
+                      "childProp_Category": "Genomic Health",
+                      "childProp_Level1": "PAID",
+                      "childProp_Level2": "Payer=Ohio Health",
+                      "childProp_Level3": "CPT=20101",
+                      "childProp_Level4": "Claim>1000",
+                      "childProp_Level5": "State=OH",
+                      "childProp_Claims": "233",
+                      "childProp_Dollars": "67284",
+                      "childProp_Expense": "45466",
+                      "agg_Claims": 233,
+                      "agg_Dollars": 67284,
+                      "agg_Expense": 45466,
+                      "id": "0_1_2_0_0_0_0"
+                    }
+                  ],
+                  "childProp_Category": "Genomic Health",
+                  "childProp_Level1": "PAID",
+                  "childProp_Level2": "Payer=Ohio Health",
+                  "childProp_Level3": "CPT=20101",
+                  "childProp_Level4": "Claim>1000",
+                  "childProp_Level5": "State=OH",
+                  "childProp_Claims": "233",
+                  "childProp_Dollars": "67284",
+                  "childProp_Expense": "45466",
+                  "agg_Claims": 233,
+                  "agg_Dollars": 67284,
+                  "agg_Expense": 45466,
+                  "id": "0_1_2_0_0_0"
+                }
+              ],
+              "childProp_Category": "Genomic Health",
+              "childProp_Level1": "PAID",
+              "childProp_Level2": "Payer=Ohio Health",
+              "childProp_Level3": "CPT=20101",
+              "childProp_Level4": "Claim>1000",
+              "childProp_Level5": "State=OH",
+              "childProp_Claims": "233",
+              "childProp_Dollars": "67284",
+              "childProp_Expense": "45466",
+              "agg_Claims": 233,
+              "agg_Dollars": 67284,
+              "agg_Expense": 45466,
+              "id": "0_1_2_0_0"
+            }
+          ],
+          "childProp_Category": "Genomic Health",
+          "childProp_Level1": "PAID",
+          "childProp_Level2": "Payer=Ohio Health",
+          "childProp_Level3": "CPT=20101",
+          "childProp_Level4": "Claim>1000",
+          "childProp_Level5": "State=OH",
+          "childProp_Claims": "233",
+          "childProp_Dollars": "67284",
+          "childProp_Expense": "45466",
+          "agg_Claims": 233,
+          "agg_Dollars": 67284,
+          "agg_Expense": 45466,
+          "id": "0_1_2_0"
+        }
+      ],
+      "childProp_Category": "Genomic Health",
+      "childProp_Level1": "PAID",
+      "childProp_Level2": "Payer=Ohio Health",
+      "childProp_Level3": "CPT=20101",
+      "childProp_Level4": "Claim>1000",
+      "childProp_Level5": "State=OH",
+      "childProp_Claims": "233",
+      "childProp_Dollars": "67284",
+      "childProp_Expense": "45466",
+      "agg_Claims": 901,
+      "agg_Dollars": 170317,
+      "agg_Expense": 51228,
+      "id": "0_1_0"
+    }
+  ]
+}
+
+        
+
+        

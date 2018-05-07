@@ -14,5 +14,7 @@ export class TrainedmodelListComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  showTrainedModel() {
+  	window.open("../assets/Decision%20Tree%20Viewer/main.html", '_blank'); 	  	
+  }
 }

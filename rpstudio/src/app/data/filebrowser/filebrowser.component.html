@@ -1,13 +1,23 @@
 <div class="container-fluid">
 <div class="row" >
 	<div class="col-4 border">
+        <div class="row">
 		  <h3>Data Directory</h3>
+        </div>
+        <div class="row">
           <tree-root [nodes]="node" [options]="options"
           	   (toggleExpanded)="onEvent($event)"
                (activate)="onActivateEvent($event)"
                (focus)="onEvent($event)"
                (blur)="onEvent($event)">
           </tree-root>
+        </div>
+        <div class="row">
+           <div class="col-4"></div> 
+           <button class="btn btn-primary btn-xs center-block col-4" data-title="Upload Data" style="vertical-align: center;" (click)="gotoUpload()"><span class="fa fa-upload"></span> Upload Data</button>
+           <div class="col-4"></div> 
+        </div>
+        <br>
     </div>
     <div class="col-8 border">
   	    <h3>File Summary</h3>

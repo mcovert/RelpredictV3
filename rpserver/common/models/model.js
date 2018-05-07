@@ -91,7 +91,7 @@ module.exports = function(Model) {
     });
    Model.createmodel = function(model, overwrite, cb) {
       var ret = rp.saveModel(model, overwrite);
-      console.log(ret);
+      //console.log(ret);
       cb(null, ret);
    };   
   Model.remoteMethod('createmodel', {
@@ -116,7 +116,7 @@ module.exports = function(Model) {
     });
    Model.listmodels = function(req, cb) {
       var retFiles = rp.getModels();
-      console.log(retFiles);
+      //console.log(retFiles);
       cb(null, retFiles);
    };   
    Model.remoteMethod('listmodels', {

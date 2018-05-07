@@ -9,7 +9,7 @@ var app         = require('./server.js');
 
 exports.showModels = () => {
    var models = app.models();
-   console.log('There are ' + models.length + ' defined:');
+   console.log('There are ' + models.length + ' Loopback defined:');
    models.forEach(function(m) { console.log(m.modelName)});
 }
 //var log         = app.models.Log;
@@ -126,6 +126,7 @@ getCommandMonitor = function(cmd, server) {
 	if (cmd == 'spark') return 'http://' + server + ':4040';
 	else return '';
 };
+/* Ouput log is sent back to the handlers below. They can be written to log files! */
 exports.runJob = (cmd) => {
     var server = acquireServer();
     var fullCmd = path.join(config.scripts, cmd.command);
@@ -381,25 +382,25 @@ getModels = () => {
   var model_classes = fs.readdirSync(config.models);
   for (var i = 0; i < model_classes.length; i++) {
     var mcdir = path.join(config.models, model_classes[i]);
-    console.log(mcdir);
+    //console.log(mcdir);
     var model_names = fs.readdirSync(mcdir);
     for (var j = 0; j < model_names.length; j++) {
       var mdir = path.join(mcdir, model_names[j]);
-      console.log(mdir);
+      //console.log(mdir);
       var model_versions = fs.readdirSync(mdir);
       for (var k = 0; k < model_versions.length; k++) {
         var mjsondir = path.join(mdir, model_versions[k]);
-        console.log(mjsondir);
+        //console.log(mjsondir);
         var fjson = path.join(mjsondir, model_names[j] + ".json");
-        console.log(fjson);
+        //console.log(fjson);
         var model_json = fs.readFileSync(path.join(fjson));
         var model = JSON.parse(model_json);
-        console.log(model);
+        //console.log(model);
         models.push(model);
       }
     }
   }
-  console.log(models);
+  //console.log(models);
   return models;
 }
 exports.getModels = getModels;

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Analytics Inside Claims Analyzer</title>
+    <link rel="stylesheet" href="styles/examples.css">
+    <link rel="stylesheet" href="styles/vizuly.css">
+    <link rel="stylesheet" href="styles/vizuly_weightedtree.css">
+    <link rel="stylesheet" href="styles/cssmenu.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- We use google fonts for many of the examples, but they are not necessary -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto|Raleway:600,400,200' rel='stylesheet' type='text/css'>
+    <script src="lib/jquery-2.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="lib/cssmenu.js"></script>
+    <script src="lib/d3.min.js"></script>
+    <script src="lib/vizuly_core.min.js"></script>
+	<script src="lib/vizuly_weightedtree.min.js"></script>
+    <script src="weightedtree.js"></script>
+    <script src="lib/ai.js"></script>
+</head>
+
+<body>
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#" onclick="openNav2('navOpen')">Open Model</a>
+  <a href="#" onclick="window.print()">Print Model</a>
+  <a href="#" onclick="openNav2('navSimulate')">Claim Eval</a>
+  <a href="#" onclick="openNav2('navRuleExtract')">Rule Extractor</a>
+</div>
+<div id="navOpen" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav2('navOpen')">&times;</a>
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#denials" style="width: 70px; font-size: 0.8em;">Denials</a></li>
+    <li><a data-toggle="tab" href="#appeals" style="width: 70px; font-size: 0.8em;">Appeals</a></li>
+    <li><a data-toggle="tab" href="#preauth" style="width: 70px; font-size: 0.8em;">Pre-auth</a></li>
+  </ul>
+
+<div class="tab-content">
+  <div id="denials" class="tab-pane fade in active">
+  <div class="container">
+    <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Open
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li><a onclick="openModel('XYZ-T')">XYZ Corp</a></li>
+      </ul>
+    </div>
+  </div>
+  </div>
+  <div id="appeals" class="tab-pane fade">
+  <div class="container">
+    <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Open
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li><a href="#">Siemens</a></li>
+        <li><a href="#">Baxter</a></li>
+        <li><a href="#">Stryker</a></li>
+      </ul>
+    </div>
+  </div>
+  </div>
+  <div id="preauth" class="tab-pane fade">
+  <div class="container">
+    <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Open
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li><a href="#">Fresenius</a></li>
+        <li><a href="#">Covidien</a></li>
+        <li><a href="#">Abbot</a></li>
+      </ul>
+    </div>
+  </div>
+  </div>
+</div>
+</div>
+<div id="navPrint" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav2('navPrint')">&times;</a>
+</div>
+<div id="navMerge" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav2('navMerge')">&times;</a>
+</div>
+
+
+<div id="navSimulate" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav2('navSimulate')">&times;</a>
+  <form>
+  <div class="form-group">
+  <label for="payer" style="color:#aaa">Primary Payer</label>
+  <input id="payer" type="text" class="form-control" style="margin-left: 10px; width: 230px;">
+  </div>
+  <div class="form-group">
+  <label for="diag" style="color:#aaa">Diagnosis Code</label>
+  <input id="diag" type="text" class="form-control" style="margin-left: 10px; width: 230px;">
+  </div>
+  <div class="form-group">
+  <label for="cpt" style="color:#aaa">CPT Code</label>
+  <input id="cpt" type="text" class="form-control" style="margin-left: 10px; width: 230px;">
+  </div>
+  <div class="form-group">
+  <label for="amt" style="color:#aaa">Claim Amt</label>
+  <input id="amt" type="text" class="form-control" style="margin-left: 10px; width: 230px;">
+  </div>
+  <div class="form-group">
+  <label for="facility" style="color:#aaa">Facility</label>
+  <input id="facility" type="text" class="form-control" style="margin-left: 10px; width: 230px;">
+  </div>
+  <div class="form-group">
+  <label for="state" style="color:#aaa">State</label>
+  <input id="state" type="text" class="form-control" style="margin-left: 10px; width: 230px;">
+  </div>
+  <div class="text-center">
+  <button type="button" class="btn btn-primary btn-sx" onclick="testClaim()">Run</button>
+  <button type="button" class="btn btn-primary btn-sx" onclick="clearClaim()">Clear</button>
+  </div>
+  <div class="form-group">
+  <label for="claimno" style="color:#aaa">Claim Number</label>
+  <input id="claimno" type="text" class="form-control" style="margin-left: 10px; width: 230px;">
+  </div>
+  <div class="text-center">
+  <button type="button" class="btn btn-primary btn-sx" onclick="loadClaim()">Load</button>
+  </div>
+  <div class="form-group">
+  <label for="results" style="color:#aaa">Results</label>
+  <textarea class="form-control" rows="5" id="results" style="margin-left: 10px; width: 230px;"></textarea>
+  </div>
+</div>
+<div id="navRuleExtract" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav2('navRuleExtract')">&times;</a>
+  <div class="form-group">
+  <label for="saveDir" style="color:#aaa">Save to Directory</label>
+  <input id="saveDir" type="text" class="form-control" style="width: 230px;">
+  </div>
+  <div class = "form-group">
+  <input type="checkbox" id="javaRules"><label for="javaRules" style="margin-left: 5px; color:#aaa">Java</label>
+  <input type="checkbox" id="jsRules"><label for="jsRules" style="margin-left: 5px; color:#aaa">Javascript</label>
+  <input type="checkbox" id="vbRules"><label for="vbRules" style="margin-left: 5px; color:#aaa">VB</label>
+  <input type="checkbox" id="csRules"><label for="csRules" style="margin-left: 5px; color:#aaa">C#</label>
+  </div>
+</div>
+
+<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+<div id="main">
+
+<div id='cssmenu'>
+    <ul class="main-menu">
+        <li class='active'><a><span onclick="openNav()">Actions </span><br><span class="setting"></span></a></li>
+        <li class='active'>
+            <a><span>Display </span><br><span class="setting"></span></a>
+            <ul class="options" callback="changeSize">
+                <li id="currentDisplay" class="selected"><a></a></li>
+                <li item_value="1600,900"><a>Maximize</a></li>
+                <li item_value="1200,800"><a>1200px - 800px</a></li>
+                <li item_value="800,600"><a>800px - 600px</a></li>
+                <li item_value="375,667"><a>375px - 667px</a></li>
+                <li item_value="320,568"><a>320px - 568px</a></li>
+            </ul>
+        </li>
+        <li class='active'><a><span>Theme </span><br><span class="setting"></span></a>
+            <ul class="options" callback="changeSkin">
+                <li item_value="None"><a>Gray Scale</a></li>
+                <li item_value="Axiis" class="selected"><a>Axiis</a></li>
+            </ul>
+        </li>
+        <li class='active'><a><span>View </span><br><span class="setting"></span></a>
+            <ul class="options" callback="changeSkin">
+                <li item_value="tree"  class="selected"><a href="decisionTree.html?model=XYZ-T">Tree</a></li>
+                <li item_value="path"><a href="decisionTree.html?model=XYZ-CP">Critical Path</a></li>
+            </ul>
+        </li>
+        <li class='active'><a><span class="label">Data </span><br><span class="setting"></span></a>
+          <ul class="options" callback="changeData">
+                <li item_value="0" class="selected"><a>Claim Count</a></li>
+                <li item_value="1"><a>Claim Dollars</a></li>
+                <li item_value="2"><a>Margin</a></li>
+            </ul>
+        </li>
+        <li class='active'><a><span class="label">Navigate </span><br><span class="setting"></span></a>
+          <ul class="options" callback="changeData">
+                <li class="selected"><a href="main.html">Home</a></li>
+                <li><a href="financials.html">Financials</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<!-- Our main content container-->
+<div class="container" style="width:100% height:100%">
+    <h1 align="center" height="200px" id="model_identifier">Please select a model to view from Action->Open</h1>
+    <div id="viz_container" class="z-depth-0" style="width:100% height:100%"/>
+</div>
+
+</div>
+
+<script>
+    //Once the document is ready we set javascript and page settings
+    var screenWidth;
+    var screenHeight;
+
+    var model_name = getParameterByName("model",window.location.href)
+    if (model_name) {
+       var model = "data/" + model_name + ".csv";
+       document.getElementById("model_identifier").innerHTML = "Claim status prediction and impact - " + model_name.substring(0, model_name.indexOf("-"));
+    }
+
+    $(document).ready(function () {
+
+        var rect;
+        if (self==top) {
+            rect = document.body.getBoundingClientRect();
+        }
+        else {
+            rect = document.body.getBoundingClientRect();
+        }
+
+        //Set display size based on window size.
+        screenWidth = (rect.width < 960) ? Math.round(rect.width*.95) : Math.round((rect.width - 210) *.95);
+
+        screenHeight=1000;
+
+        d3.select("#currentDisplay")
+                .attr("item_value", screenWidth + "," + screenHeight)
+                .attr("class", "selected")
+                .html("<a>" + screenWidth + "px - " + screenHeight + "px</a>");
+
+
+        $("#cssmenu").menumaker({
+            title: "Claim Advisor",
+            format: "multitoggle"
+        });
+
+        // Set the size of our container element.
+        viz_container = d3.selectAll("#viz_container")
+                .style("width", screenWidth + "px")
+                .style("height", screenHeight + "px");
+
+
+        loadData(model);
+
+
+    });
+
+/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+}
+function openNav2(name) {
+    document.getElementById(name).style.width = "250px";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+function closeNav2(name) {
+    document.getElementById(name).style.width = "0";
+}
+
+function openModel(model_name) {
+ window.location = "decisionTree.html?model=" + model_name
+}
+
+function testClaim() {
+  document.getElementById("payer").style.color="red";
+  document.getElementById("diag").style.color="red";
+  document.getElementById("cpt").style.color="red";
+  document.getElementById("amt").style.color="red";
+  document.getElementById("results").value = "Status:\t\tDENIED\nProbability:\t84%";
+}
+
+function clearClaim() {
+  document.getElementById("payer").value = "";
+  document.getElementById("diag").value = "";
+  document.getElementById("cpt").value = "";
+  document.getElementById("amt").value = "";
+  document.getElementById("facility").value = "";
+  document.getElementById("state").value = "";
+  document.getElementById("results").value = "";
+}
+function loadClaim() {
+  document.getElementById("payer").style.color="black";
+  document.getElementById("diag").style.color="black";
+  document.getElementById("cpt").style.color="black";
+  document.getElementById("amt").style.color="black";
+  document.getElementById("payer").value = "Anthem";
+  document.getElementById("diag").value = "W34.00XA";
+  document.getElementById("cpt").value = "20101";
+  document.getElementById("amt").value = "$1289.00";
+  document.getElementById("facility").value = "BHH";
+  document.getElementById("state").value = "OH";
+  document.getElementById("results").value = "";
+}
+</script>
+
+
+</body>
+
+
+</html>

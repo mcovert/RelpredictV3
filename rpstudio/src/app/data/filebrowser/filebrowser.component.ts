@@ -12,6 +12,7 @@ class TreeNode {
   children : TreeNode[];
   size     : number;
   type     : string;
+  isExpanded: boolean;
 }
 class RetObj {
   filedir: TreeNode;
@@ -75,6 +76,7 @@ export class FilebrowserComponent implements OnInit {
   		console.log(ro.filedir);
   		this.node = [ro.filedir];
   		console.log(this.node);
+      this.node[0].isExpanded = true;
   	})
   }
   onEvent(event) {
@@ -188,9 +190,12 @@ export class FilebrowserComponent implements OnInit {
     console.log(this.fileInfo);
     if (window.confirm("Are you sure you wan to delete this item?")) {
       this.dataservice.deleteFile(this.fileInfo.datafile_fullname).subscribe(result => {
-      this.message = result.returned_object;
-      this.ngOnInit();
-    });
+         this.message = result.returned_object;
+         this.ngOnInit();
+      });
+    }
   }
-}
+  gotoUpload() {
+    this.router.navigate(["data-upload"]);
+  }
 }

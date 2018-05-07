@@ -1,0 +1,9 @@
+Category,Level1,Level2,Level3,Level4,Level5,Claims,Dollars,Expense
+Genomic Health,DENIED,Payer=CMS,CPT=84999,Claim>1400,Fac=MMH,112,23256,1246
+Genomic Health,PAID,Payer=CMS,CPT=84621,Claim<500,State=KY,654,90358,3679
+Genomic Health,DENIED,Payer=Ohio Health,CPT=84600,Claim>1600,Fac=MMH,23,18023,1126
+Genomic Health,PAID,CPT=20101,Payer=Anthem,Claim<980,State=KY,14,12675,2083
+Genomic Health,DENIED,CPT=20101,Payer=Anthem,Claim>981,Diag=W34.00XA,6,3675,987
+Genomic Health,PAID,Payer=Ohio Health,CPT=20101,Claim>1000,State=OH,233,67284,45466
+Genomic Health,DENIED,CPT=84998,Payer=Ohio Health,Fac=BHH,State=OH,109,39113,23229
+Genomic Health,DENIED,CPT=84998,Payer=Anthem,Fac=BHH,State=OH,520,76987,52580
