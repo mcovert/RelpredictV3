@@ -77,6 +77,9 @@ export class ModelCreateComponent implements OnInit {
     this.parmDefs = this.dataTypes[0].parms;
     this.parms = this.createParms(this.parmDefs);
   }
+  setModelClass(mc: string) {
+    this.model.model_class = mc;
+  }
   getParms(dt: string) : RPDataType {
     for (var dtype of this.dataTypes) {
       if (dtype.datatype_name == dt)

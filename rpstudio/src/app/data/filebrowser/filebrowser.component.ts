@@ -93,6 +93,7 @@ export class FilebrowserComponent implements OnInit {
   	let h = fh.datafile_header.split(splitChar);
   	let d = fh.datafile_record.split(splitChar);
   	for (var i = 0; i < h.length; i++) {
+      if (d[i].length > 20) d[i] = d[i].substring(0,18) + "...";
   		this.fileHeader.push({field_name: h[i], 
   			                  field_val: d[i], 
   			                  field_type: this.globalservice.guessDataType(d[i])});

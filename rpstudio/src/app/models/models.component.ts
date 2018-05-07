@@ -91,4 +91,7 @@ export class ModelsComponent implements OnInit {
   setCurrent(i: number) {
     this.models[i].current = true;
   }
+  deleteModel(i: number) {
+    this.models.splice(i,1);
+  }
 }
