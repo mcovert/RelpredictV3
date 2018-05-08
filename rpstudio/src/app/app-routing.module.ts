@@ -18,6 +18,7 @@ import { HelpComponent } from './help/help.component';
 import { LogBrowserComponent } from './log-browser/log-browser.component';
 import { OnlyLoggedInGuard } from './guards/only-logged-in.guard';
 import { FilebrowserComponent } from './data/filebrowser/filebrowser.component';
+import { CreateDatamapComponent } from './data/create-datamap/create-datamap.component';
 
 const routes: Routes = [
  { path: '', component: HomeComponent },
@@ -35,6 +36,7 @@ const routes: Routes = [
  { path: 'data', component: FilebrowserComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'data-upload', component: DatafileUploaderComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'batch-viewer', component: BatchViewerComponent, canActivate: [OnlyLoggedInGuard] },
+ { path: 'create-datamap', component: CreateDatamapComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'admin', component: AdminComponent, canActivate: [OnlyLoggedInGuard] }
 ];
 

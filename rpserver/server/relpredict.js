@@ -246,6 +246,7 @@ exports.getDatamap = (map_id) => {
 };
 exports.saveDatamap = (datamap, dir, overwrite) => {
 	//var fullFileName = path.join(config.datamaps, map_id);
+  if (dir =="") dir = config.datamaps;
 	var fullFileName = path.join(dir, datamap.datamap_name + ".datamap");
 	if (!fs.existsSync(fullFileName) || overwrite) {
        fs.writeFileSync(fullFileName, JSON.stringify(datamap));

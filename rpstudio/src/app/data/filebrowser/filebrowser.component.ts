@@ -65,6 +65,8 @@ export class FilebrowserComponent implements OnInit {
   fileHeader : Field[];
   contentsDisplayed = false;
   message : string = "";
+  newDatamap : RPDatamap;
+  showDMDialog = false;
 
   constructor(private dataservice : DataService, private globalservice : GlobalService,
               private router: Router) { 
@@ -98,6 +100,10 @@ export class FilebrowserComponent implements OnInit {
   			                  field_val: d[i], 
   			                  field_type: this.globalservice.guessDataType(d[i])});
   	}
+  }
+  createNewDataMap() {
+    this.newDatamap = new RPDatamap();
+    this.showDMDialog = true;
   }
   makeDatamap(dm : RPDatamap) {
     this.fileHeader = [];
@@ -199,4 +205,15 @@ export class FilebrowserComponent implements OnInit {
   gotoUpload() {
     this.router.navigate(["data-upload"]);
   }
+  saveDM() {
+    this.dataservice.createDatamap(this.newDatamap, this.fileInfo.datafile_dir, true).subscribe(result => {
+      this.message = result.returned_object;
+      this.showDMDialog = false;
+      this.ngOnInit();
+    });
+  }
+  cancelDM() {
+    this.showDMDialog = false;
+  }
+
 }

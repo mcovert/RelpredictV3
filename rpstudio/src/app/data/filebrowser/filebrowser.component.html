@@ -52,8 +52,11 @@
     	<br>
         <div class="row" *ngIf="fileInfo.datafile_type == 'Directory'">
         <div class="col-5"></div> 
+        <!--div class="col-2">
+        <button class="btn btn-primary btn-xs center-block" data-title="Create New Datamap" style="vertical-align: center;" (click)="createNewDatamap()"><span class="fa fa-plus"></span> New Datamap</button>
+        </div-->
         <div class="col-2">
-        <button class="btn btn-danger btn-xs center-block" data-title="Create Model" style="vertical-align: center;" (click)="deleteFile()"><span class="fa fa-minus-circle"></span> Delete</button>
+        <button class="btn btn-danger btn-xs center-block" data-title="Delete Directory" style="vertical-align: center;" (click)="deleteFile()"><span class="fa fa-minus-circle"></span> Delete</button>
         </div>
         <div class="col-5"></div>
         <br>
@@ -96,3 +99,8 @@
     </div>
 </div>
 </div>
+<!--div *ngIf="showDMDialog()">
+<app-modal-dialog *ngIf="showDMDialog" [(visible)]="showDMDialog">
+   <app-datamap-editor  [mode]="edit" [datamap]="newDatamap" (saveDatamap)="saveDM($event)" (cancelDatamap)="cancelDM()"></app-datamap-editor>
+</app-modal-dialog>
+</div-->

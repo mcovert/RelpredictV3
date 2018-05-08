@@ -62,6 +62,7 @@ import { ModelEditorComponent } from './models/model-editor/model-editor.compone
 import { BatchViewerComponent } from './data/batch-viewer/batch-viewer.component';
 import { FilebrowserComponent } from './data/filebrowser/filebrowser.component';
 import { DatatypeSelectorComponent } from './shared/datatype-selector/datatype-selector.component';
+import { CreateDatamapComponent } from './data/create-datamap/create-datamap.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { DatatypeSelectorComponent } from './shared/datatype-selector/datatype-s
     ModelEditorComponent,
     BatchViewerComponent,
     FilebrowserComponent,
-    DatatypeSelectorComponent
+    DatatypeSelectorComponent,
+    CreateDatamapComponent
   ],
   imports: [
     BrowserModule,
