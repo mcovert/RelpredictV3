@@ -171,6 +171,7 @@ exports.getJobTemplate = () => {
 /*                         Data management functions                           */
 /*******************************************************************************/
 exports.getDatafiles = () => { 
+  dirTree.reset();
 	return dirTree(config.datafiles);
 }
 getFileFormat = (ftype) => {
@@ -181,7 +182,10 @@ getFileFormat = (ftype) => {
 	if (ftype === "") return "?";
 	return ftype;	
 }
-getDatafilesForDir = (dir) => { return JSON.parse(JSON.stringify(dirTree(dir)).replace(new RegExp(dir + '/','g'), '')); }
+getDatafilesForDir = (dir) => {
+  dirTree.reset(); 
+  return JSON.parse(JSON.stringify(dirTree(dir)).replace(new RegExp(dir + '/','g'), '')); 
+}
 exports.getDatafileInfo = (fileName) => {
 	//var fullFileName = path.join(config.datafiles, fileName);
 	var fullFileName = fileName;
