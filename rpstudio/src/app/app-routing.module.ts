@@ -10,6 +10,7 @@ import { ModelComponent } from './models/model/model.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { JobEditorComponent } from './jobs/job-editor/job-editor.component';
 import { JobSubmitterComponent } from './jobs/job-submitter/job-submitter.component';
+import { JobSchedulerComponent } from './jobs/job-scheduler/job-scheduler.component';
 import { DataComponent } from './data/data.component';
 import { DatafileUploaderComponent } from './data/datafile-uploader/datafile-uploader.component';
 import { BatchViewerComponent } from './data/batch-viewer/batch-viewer.component';
@@ -32,6 +33,7 @@ const routes: Routes = [
  { path: 'jobs', component: JobsComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'job-editor', component: JobEditorComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'job-submitter', component: JobSubmitterComponent, canActivate: [OnlyLoggedInGuard] },
+ { path: 'job-scheduler', component: JobSchedulerComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'help', component: HelpComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'data', component: FilebrowserComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'data-upload', component: DatafileUploaderComponent, canActivate: [OnlyLoggedInGuard] },

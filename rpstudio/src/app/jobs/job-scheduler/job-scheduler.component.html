@@ -1,3 +1,56 @@
-<p>
-  job-scheduler works!
-</p>
+<app-job-submitter></app-job-submitter>
+<br><br>
+<h3 class="text-center">Define a Job Schedule</h3>
+<br>
+<div class="row col-12">
+      <div class="col-4"></div>
+      <label class="col-2" for="freq">Select frequency</label>
+      <select id="freq" class="form-control col-2">
+         <option>Run every hour</option>
+         <option>Run every day</option>
+         <option>Run every week</option>
+         <option>Run on weekdays</option>
+      </select>
+      <div class="col-4"></div>
+</div> 
+<div class="row col-12">
+      <div class="col-4"></div>
+      <div class="col-2">Days</div>
+      <div class="col-4">
+		<div class="weekDays-selector">
+		  <input type="checkbox" id="weekday-mon" class="weekday" />
+		  <label for="weekday-mon">M</label>
+		  <input type="checkbox" id="weekday-tue" class="weekday" />
+		  <label for="weekday-tue">T</label>
+		  <input type="checkbox" id="weekday-wed" class="weekday" />
+		  <label for="weekday-wed">W</label>
+		  <input type="checkbox" id="weekday-thu" class="weekday" />
+		  <label for="weekday-thu">T</label>
+		  <input type="checkbox" id="weekday-fri" class="weekday" />
+		  <label for="weekday-fri">F</label>
+		  <input type="checkbox" id="weekday-sat" class="weekday" />
+		  <label for="weekday-sat">S</label>
+		  <input type="checkbox" id="weekday-sun" class="weekday" />
+		  <label for="weekday-sun">S</label>
+		</div>
+      </div>
+      <div class="col-2"></div>
+</div> 
+<div class="row col-12">
+      <div class="col-4"></div>
+      <label class="col-2" for="time">Select time</label>
+      <input id="time" class="col-2">
+      <div class="col-4"></div>
+</div> 
+ <br>
+ <div class="row col-12">
+	<div class="col-4"></div>	
+	<div class="col-2">	
+    <button class="btn btn-primary btn-xs center-block" data-title="Submit Job" style="vertical-align: center;" (click)="saveSchedule()"><span class="fa fa-arrow-circle-right"></span> Save Schedule</button>
+    </div>
+	<div class="col-1"></div>	
+	<div class="col-2">	
+    <button class="btn btn-danger btn-xs center-block" data-title="Cancel" style="vertical-align: center;" (click)="cancelSchedule()"><span class="fa fa-ban"></span> Cancel</button>
+    </div>
+	<div class="col-3"></div>	
+ </div>
