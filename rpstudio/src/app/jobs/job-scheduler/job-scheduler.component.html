@@ -2,18 +2,36 @@
 <br><br>
 <h3 class="text-center">Define a Job Schedule</h3>
 <br>
-<div class="row col-12">
+<div class="row col-12" style="height: 48 px;">
       <div class="col-4"></div>
       <label class="col-2" for="freq">Select frequency</label>
-      <select id="freq" class="form-control col-2">
-         <option>Run every hour</option>
-         <option>Run every day</option>
-         <option>Run every week</option>
-         <option>Run on weekdays</option>
-      </select>
-      <div class="col-4"></div>
+      <div class="btn-group btn-group-toggle" data-toggle="buttons" >
+         <label class="btn btn-secondary active col-4">
+            <input type="radio" name="options" id="option1" autocomplete="off" checked> Hourly
+         </label>
+         <label class="btn btn-secondary">
+            <input type="radio" name="options" id="option2" autocomplete="off"> Daily
+         </label>
+         <label class="btn btn-secondary">
+            <input type="radio" name="options" id="option3" autocomplete="off"> Weekly
+         </label>
+         <label class="btn btn-secondary">
+            <input type="radio" name="options" id="option3" autocomplete="off"> Monthly
+         </label>
+         <label class="btn btn-secondary">
+            <input type="radio" name="options" id="option3" autocomplete="off"> Yearly
+         </label>
+         <label class="btn btn-secondary">
+            <input type="radio" name="options" id="option3" autocomplete="off"> Once
+         </label>
+         <label class="btn btn-secondary">
+            <input type="radio" name="options" id="option3" autocomplete="off"> Continuously
+         </label>
+      </div>
+      <div class="col-2"></div>
 </div> 
-<div class="row col-12">
+<br>
+<div class="row col-12" style="height: 48px;">
       <div class="col-4"></div>
       <div class="col-2">Days</div>
       <div class="col-4">
@@ -36,10 +54,12 @@
       </div>
       <div class="col-2"></div>
 </div> 
+<br>
 <div class="row col-12">
       <div class="col-4"></div>
-      <label class="col-2" for="time">Select time</label>
-      <input id="time" class="col-2">
+      <label class="col-2" for="hh">Select time (HH:MM)</label>
+      <input id="hh" class="form-input" style="width: 60px;">:
+      <input id="mm" class="form-input" style="width: 60px;">
       <div class="col-4"></div>
 </div> 
  <br>
