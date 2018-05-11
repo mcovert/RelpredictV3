@@ -57,10 +57,15 @@
 <br>
 <div class="row col-12">
       <div class="col-4"></div>
-      <label class="col-2" for="hh">Select time (HH:MM)</label>
-      <input id="hh" class="form-input" style="width: 60px;">:
-      <input id="mm" class="form-input" style="width: 60px;">
-      <div class="col-4"></div>
+      <div class="input-wrapper col-2">
+          <label>Pick date and time:</label>
+      </div>
+      <div class="col-4">
+          <input [owlDateTimeTrigger]="dtp" [owlDateTime]="dtp" [(ngModel)]="selectedMoment">
+              <span ><i class="fa  fa-calendar"></i></span>
+          <owl-date-time #dtp></owl-date-time>
+      </div>
+      <div class="col-2"></div>
 </div> 
  <br>
  <div class="row col-12">

@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule  } from './app-routing.module';
 
 import { ArchwizardModule } from 'ng2-archwizard';
-
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { GlobalService} from './services/global.service';
 import { AuthService} from './services/auth.service';
 import { DataService} from './services/data.service';
@@ -117,7 +117,9 @@ import { CreateDatamapComponent } from './data/create-datamap/create-datamap.com
     AppRoutingModule,
     FormsModule,
     ArchwizardModule,
-    TreeModule
+    TreeModule,
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule
   ],
   exports: [
     RouterModule
