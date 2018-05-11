@@ -16,7 +16,7 @@ export class JobSchedulerComponent implements OnInit {
   times: string;
   every: string;
   type: string;	
-  mode = "O";
+  mode = "D";
   selectedDateMoment = new Date();
   selectedTimeMoment = new Date();
 
