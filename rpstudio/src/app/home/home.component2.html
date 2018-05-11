@@ -19,7 +19,7 @@
                 <span class="fa fa-cogs"></span>
               </div>
               <div class="list-group-item-content">
-                <h5 class="list-group-item-heading"><a routerLink="/model-create/new/none/none" routerLinkActive="active">Train and test a model</a></h5>
+                <h5 class="list-group-item-heading"><a routerLink="/model-create/new/none/none" routerLinkActive="active">Train, and test a model</a></h5>
                 <p class="list-group-item-text">Train a model using uploaded data and determine its accuracy</p>
               </div>
             </li>  
@@ -57,8 +57,8 @@
                 <span class="fa fa-database"></span>
               </div>
               <div class="list-group-item-content">
-                <h5 class="list-group-item-heading"><a routerLink="/create-datamap" routerLinkActive="active">Create a data map</a></h5>
-                <p class="list-group-item-text">Provide field names, and types, and other parameters for your datasets</p>
+                <h5 class="list-group-item-heading"><a routerLink="/create-datamap" routerLinkActive="active">Create a data map or transformation</a></h5>
+                <p class="list-group-item-text">Provide field names, types, and transformations for your datasets</p>
               </div>
             </li>  
             <li class="list-group-item list-group-item-info">
@@ -76,7 +76,7 @@
               </div>
               <div class="list-group-item-content">
                 <h5 class="list-group-item-heading"><a routerLink="/data" routerLinkActive="active">Manage your data</a></h5>
-                <p class="list-group-item-text">Rename, copy, and delete datasets. Hold, and release them for usage</p>
+                <p class="list-group-item-text">Examine, map, rename, copy, and delete datasets or batches of data.</p>
               </div>
             </li>  
           </div>        
@@ -85,11 +85,11 @@
         <div class="list-group col-lg-6">
             <li class="list-group-item list-group-item-warning">
               <div class="list-group-item-addon">
-                <span class="fa fa-caret-right"></span>
+                <span class="fa fa-clock-o"></span>
               </div>
               <div class="list-group-item-content">
-                <h5 class="list-group-item-heading"><a routerLink="/job-submitter" routerLinkActive="active">Submit a job</a></h5>
-                <p class="list-group-item-text">Create a job. Assign job parameters, and submit it for execution</p>
+                <h5 class="list-group-item-heading"><a routerLink="/job-scheduler" routerLinkActive="active">Submit or schedule a job</a></h5>
+                <p class="list-group-item-text">Configure and run jobs, and set up job execution schedules to run at predefined dates and times</p>
               </div>
             </li>  
             <li class="list-group-item list-group-item-warning">
@@ -144,7 +144,7 @@
                 <span class="fa fa-eye"></span>
               </div>
               <div class="list-group-item-content">
-                <h5 class="list-group-item-heading"><a routerLink="/model-create/new/none/none" routerLinkActive="active">View system log</a></h5>
+                <h5 class="list-group-item-heading"><a routerLink="/log" routerLinkActive="active">View system log</a></h5>
                 <p class="list-group-item-text">View the system log - logins, jobs, models, data uploads, and other statistics</p>
               </div>
             </li>  
@@ -161,51 +161,6 @@
       </div>  </div>
   </div>
   </div>
-    <!--div class="row">
-      <div class="row col-6">
-        <h3 class="text-center col-12">Models</h3>
-        <ul>
-           <li><a routerLink="/model-create" routerLinkActive="active">Create a new model</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">Create a new model from a dataset</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">Create a new model from a datamap</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">Create a new model version</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">Create a new model from an existing model</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">Train and test a model</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">Predict outcomes based on a model</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">Promote model to current</a></li>
-        </ul>
-      </div>
-      <div class="row col-6">
-        <h3 class="text-center col-12">Data</h3>
-        <ul>
-           <li><a routerLink="/model-create" routerLinkActive="active">Upload data</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">Create a data map</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">Create a data transformation</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">Manage data</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="row">
-      <div class="row col-6">
-        <h3 class="text-center col-12">Jobs</h3>
-        <ul>
-           <li><a routerLink="/model-create" routerLinkActive="active">Submit a job</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">Create a job schedule</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">View job status</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">Manage jobs</a></li>
-        </ul>
-      </div>
-      <div class="row col-6">
-        <h3 class="text-center col-12">Configuration</h3>
-        <ul>
-           <li><a routerLink="/model-create" routerLinkActive="active">Manage users</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">Manage the system</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">View system log</a></li>
-           <li><a routerLink="/model-create" routerLinkActive="active">Manage settings</a></li>
-        </ul>
-      </div>
-    </div>
-  </div-->
   <div *ngIf="!authService.isLoggedIn()">
     <user-login></user-login>
   </div>

@@ -16,8 +16,9 @@ export class JobSchedulerComponent implements OnInit {
   times: string;
   every: string;
   type: string;	
-  mode = "once";
-  selectedMoment = new Date();
+  mode = "O";
+  selectedDateMoment = new Date();
+  selectedTimeMoment = new Date();
 
   constructor() { }
 
@@ -26,6 +27,7 @@ export class JobSchedulerComponent implements OnInit {
   saveSchedule() {}
   cancelSchedule() {}
   setMode(mode: string) {
+  	console.log(mode);
   	this.mode = mode;
   }
 
