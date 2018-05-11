@@ -1,0 +1,3 @@
+<select (change)="selectModel($event.target.value)" class="form-control col-12" style="color: black"> 
+   <option *ngFor="let m of models; let i=index" value={{i}} [selected]="i==modelNum">{{m.model_class}}/{{m.name}}/{{m.version}}</option>
+</select>

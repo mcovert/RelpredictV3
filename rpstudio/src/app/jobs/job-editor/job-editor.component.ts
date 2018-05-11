@@ -28,4 +28,7 @@ export class JobEditorComponent implements OnInit {
   submitJob(job: RPJob) {
   	console.log("job submitted");
   }
+  showModelPicker() {
+    
+  }
 }

@@ -22,10 +22,24 @@
                       <th>Hint</th>
                   </thead>
                   <tbody>
-                      <tr *ngFor="let p of jobs[currentJob].parms">
-                          <td>{{p.label}}</td>
-                          <td><input class="col-12" type="text" value="{{p.parm_value}}"></td>
-                          <td>{{p.hint}}</td>
+                      <tr *ngFor="let p of jobs[currentJob].parms; let i=index;">
+                          <td>{{p.label}}
+                             <div *ngIf="p.label=='Model name'" style="float:right">
+                                <button class="btn btn-info btn-xs center-block">
+                                    <span class="fa fa-eye"></span>
+                                </button> 
+                              </div> 
+                          </td>
+                          <td>
+                             <div *ngIf="p.label=='Model name'">
+                                <app-model-picker (selectedModel)="selectModel($event, i)"></app-model-picker>
+                             </div>
+                             <div *ngIf="p.label!='Model name'">
+                                 <input class="col-12" type="text" value="{{p.parm_value}}">
+                             </div>
+                          </td>
+                          <td>{{p.hint}}
+                          </td>
                       </tr>
                   </tbody>
               </table>

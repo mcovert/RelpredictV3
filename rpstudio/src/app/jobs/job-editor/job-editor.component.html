@@ -20,7 +20,13 @@
           <tbody>
           <tr *ngFor="let p of jobs[jobIndex].parms">
             <td>{{p.parm}}</td>
-            <td><input class="col-12" type="text" value="{{p.parm_value}}"></td>
+            <td><input class="col-12" type="text" value="{{p.parm_value}}">
+              <div *ngIf="p.parm=='Model name'" style="float: right;">
+                <button class="btn btn-info btn-xs center-block" (click)="showModelPicker()">
+                  <span class="fa fa-eye"></span>
+                </button>
+              </div>
+            </td>
           </tr>
         </tbody>
         </table>

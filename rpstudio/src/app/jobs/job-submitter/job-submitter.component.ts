@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
 import { JobService } from '../../services/job.service';
-import { RPJobTemplate, RPJobTemplateParm, ReturnObject, RPJobSubmitInfo} from '../../shared/db-classes';
+import { RPJobTemplate, RPJobTemplateParm, ReturnObject, RPJobSubmitInfo, RPModel} from '../../shared/db-classes';
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
 
@@ -15,6 +15,7 @@ jobs : RPJobTemplate[] = [];
 currentJob = -1;
 jobServer = "";
 jobLink = "";
+showModelDialog = false;
 
  constructor(private jobservice : JobService, private router: Router) {}
 
@@ -49,5 +50,11 @@ jobLink = "";
   }
   openMonitor() {
   	window.open(this.jobLink, '_blank');
+  }
+  selectModel(model: string, i: number) {
+    console.log(model);
+    var currJob = this.jobs[this.currentJob];
+    currJob.parms[i].parm_value = model;
+
   }
 }
