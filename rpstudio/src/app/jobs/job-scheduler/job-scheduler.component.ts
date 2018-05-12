@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-job-scheduler',
-  templateUrl: './job-scheduler.component.html',
+  templateUrl: './job-scheduler.component2.html',
   styleUrls: ['./job-scheduler.component.css']
 })
 export class JobSchedulerComponent implements OnInit {
@@ -17,12 +17,16 @@ export class JobSchedulerComponent implements OnInit {
   every: string;
   type: string;	
   mode = "D";
+  repeat = "None";
+  interval = 0;
+  intervalMode = "";
   selectedDateMoment = new Date();
   selectedTimeMoment = `${this.selectedDateMoment.getHours()}:${this.selectedDateMoment.getMinutes()} ${(this.selectedDateMoment.getHours() > 11 ? 'am' : 'pm')}`;
 
   constructor() { }
 
   ngOnInit() {
+  	console.log("Scheduler");
   }
   saveSchedule() {}
   cancelSchedule() {}
@@ -30,5 +34,16 @@ export class JobSchedulerComponent implements OnInit {
   	console.log(mode);
   	this.mode = mode;
   }
-
+  setRepeat(r: string) {
+  	console.log(r);
+  	this.repeat = r;
+  }
+  setInterval(n: number) {
+  	console.log(n);
+  	this.interval = n;
+  }
+  setIntervalMode(m: string) {
+  	console.log(m);
+  	this.intervalMode = m;
+  }
 }

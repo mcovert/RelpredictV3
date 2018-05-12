@@ -20,6 +20,7 @@ showModelDialog = false;
  constructor(private jobservice : JobService, private router: Router) {}
 
   ngOnInit() {
+    console.log("Submitter");
   	this.jobservice.getJobTemplate().subscribe(result => {
   		console.log(result);
   		this.jobs = JSON.parse(result.returned_object).jobs;

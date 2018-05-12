@@ -1,0 +1,59 @@
+<app-job-submitter></app-job-submitter>
+<br><br>
+<h3 class="text-center">Define a Job Schedule</h3>
+<br>
+<div class="row col-12" style="height: 48 px;">
+      <div class="col-4"></div>
+      <div class="input-wrapper col-2">
+          <label>Pick date and time:</label>
+      </div>
+      <div class="col-4">
+           <ngx-datetime-picker [(selectedDateTime)]="selectedDateMoment"></ngx-datetime-picker>      
+       </div>
+      <div class="col-2"></div>
+      <br>
+</div> 
+<br>
+<div class="row col-12">
+      <div class="col-4"></div>
+      <div class="input-wrapper col-2">
+          <label>Repeat:</label>
+      </div>
+      <div class="col-2">
+           <select class="form-control" style="color: black" (change)="setRepeat($event.target.value)">
+             <option>None</option>
+             <option>Daily</option>
+             <option>Weekly</option>
+             <option>Monthly</option>
+             <option>Yearly</option>
+             <option>Weekday</option>
+             <option>Once</option>
+             <option>Continuously</option>
+             <option>Every</option>
+           </select> 
+      </div>     
+      <div class="row col-4" *ngIf="repeat=='Every'">
+           <app-number-picker [minimum]="1" [maximum]="999" [startAt]="1" [increment]="1" (number)="setInterval($event)" class="col-5">
+           </app-number-picker>
+           <select class="form-control col-5" (change)="setIntervalMode($event.target.value)">
+                    <option>Hours</option>
+                    <option>Days</option>
+                    <option>Weeks</option>
+                    <option>Months</option>
+           </select>
+           <div class="col-2"></div>
+      </div>
+      <div class="col-4" *ngIf="repeat!='Every'"></div>
+</div>
+<br> 
+<div class="row col-12">
+	<div class="col-4"></div>	
+	<div class="col-2">	
+    <button class="btn btn-primary btn-xs center-block" data-title="Submit Job" style="vertical-align: center;" (click)="saveSchedule()"><span class="fa fa-arrow-circle-right"></span> Save Schedule</button>
+    </div>
+	<div class="col-1"></div>	
+	<div class="col-2">	
+    <button class="btn btn-danger btn-xs center-block" data-title="Cancel" style="vertical-align: center;" (click)="cancelSchedule()"><span class="fa fa-ban"></span> Cancel</button>
+    </div>
+	<div class="col-3"></div>	
+</div>

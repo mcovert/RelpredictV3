@@ -6,7 +6,7 @@
      <div class="row col-12">
           <div class="col-4"></div>
           <label class="col-2" for="mode">Select a job</label>
-          <select class="col-2 form-control selcls" (change)="setCurrentJob($event.target.value)">
+          <select class="col-2 form-control selcls" style="color: black" (change)="setCurrentJob($event.target.value)">
              <option *ngFor="let job of jobs; let i=index" [value]="i" [selected]="i==currentJob">{{job.job_name}}</option>
           </select>
           <div class="col-4"></div>

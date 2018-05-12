@@ -1,0 +1,91 @@
+<app-job-submitter></app-job-submitter>
+<br><br>
+<h3 class="text-center">Define a Job Schedule</h3>
+<br>
+<div class="row col-12" style="height: 48 px;">
+      <div class="col-4"></div>
+      <label class="col-2" for="freq">Select frequency</label>
+      <div class="radio" >
+         <label class="radio-inline" >
+            <input type="radio" name="options" (click)="setMode('H')" value='H' autocomplete="off" id="r1" [checked]="mode=='H'"> Hourly
+         </label>
+         <label class="radio-inline">
+            <input type="radio" name="options" (click)="setMode('D')" value='D' autocomplete="off" id="r2" [checked]="mode=='D'"> Daily
+         </label>
+         <label class="radio-inline">
+            <input type="radio" name="options" (click)="setMode('W')" value='W' autocomplete="off" id="r3" [checked]="mode=='W'"> Weekly
+         </label>
+         <label class="radio-inline">
+            <input type="radio" name="options" (click)="setMode('M')" value='M' autocomplete="off" id="r4" [checked]="mode=='M'"> Monthly
+         </label>
+         <label class="radio-inline">
+            <input type="radio" name="options" (click)="setMode('Y')" value='Y' autocomplete="off" id="r5" [checked]="mode=='Y'"> Yearly
+         </label>
+         <label class="radio-inline">
+            <input type="radio" name="options" (click)="setMode('O')" value='O' autocomplete="off" id="r6" [checked]="mode=='O'"> Once
+         </label>
+         <label class="radio-inline">
+            <input type="radio" name="options" (click)="setMode('C')" value='C' autocomplete="off" id="r7" [checked]="mode=='C'"> Continuously
+         </label>
+      </div>
+      <div class="col-2"></div>
+</div> 
+<br>
+<div class="row col-12" style="height: 48px;" *ngIf="mode=='D' || mode=='W'">
+      <div class="col-4"></div>
+      <div class="col-2">Days</div>
+      <div class="col-4">
+		<div class="weekDays-selector">
+		  <input type="checkbox" id="weekday-mon" class="weekday" />
+		  <label for="weekday-mon">M</label>
+		  <input type="checkbox" id="weekday-tue" class="weekday" />
+		  <label for="weekday-tue">T</label>
+		  <input type="checkbox" id="weekday-wed" class="weekday" />
+		  <label for="weekday-wed">W</label>
+		  <input type="checkbox" id="weekday-thu" class="weekday" />
+		  <label for="weekday-thu">T</label>
+		  <input type="checkbox" id="weekday-fri" class="weekday" />
+		  <label for="weekday-fri">F</label>
+		  <input type="checkbox" id="weekday-sat" class="weekday" />
+		  <label for="weekday-sat">S</label>
+		  <input type="checkbox" id="weekday-sun" class="weekday" />
+		  <label for="weekday-sun">S</label>
+		</div>
+      </div>
+      <div class="col-2"></div>
+      <br>
+</div> 
+<div class="row col-12" *ngIf="mode=='H'">
+      <div class="col-4"></div>
+      <div class="input-wrapper col-2">
+          <label>Pick time:</label>
+      </div>
+      <div class="col-4">
+           <ngx-time-picker [(selectedTime)]="selectedTimeMoment"></ngx-time-picker>
+      </div>
+      <div class="col-2"></div>
+      <br>
+</div> 
+<div class="row col-12" *ngIf="mode=='D' || mode=='W' || mode=='O'">
+      <div class="col-4"></div>
+      <div class="input-wrapper col-2">
+          <label>Pick date and time:</label>
+      </div>
+      <div class="col-4">
+           <ngx-datetime-picker [(selectedDateTime)]="selectedDateMoment"></ngx-datetime-picker>      
+       </div>
+      <div class="col-2"></div>
+      <br>
+</div> 
+<br>
+<div class="row col-12">
+	<div class="col-4"></div>	
+	<div class="col-2">	
+    <button class="btn btn-primary btn-xs center-block" data-title="Submit Job" style="vertical-align: center;" (click)="saveSchedule()"><span class="fa fa-arrow-circle-right"></span> Save Schedule</button>
+    </div>
+	<div class="col-1"></div>	
+	<div class="col-2">	
+    <button class="btn btn-danger btn-xs center-block" data-title="Cancel" style="vertical-align: center;" (click)="cancelSchedule()"><span class="fa fa-ban"></span> Cancel</button>
+    </div>
+	<div class="col-3"></div>	
+</div>
