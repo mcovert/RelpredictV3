@@ -14,7 +14,7 @@
       <br>
 </div> 
 <br>
-<div class="row col-12">
+<div class="row col-12 ">
       <div class="col-4"></div>
       <div class="input-wrapper col-2">
           <label>Repeat:</label>
@@ -32,18 +32,34 @@
              <option>Every</option>
            </select> 
       </div>     
-      <div class="row col-4" *ngIf="repeat=='Every'">
+      <div class="row center-block col-4" *ngIf="repeat=='Every'">
            <app-number-picker [minimum]="1" [maximum]="999" [startAt]="1" [increment]="1" (number)="setInterval($event)" class="col-5">
            </app-number-picker>
-           <select class="form-control col-5" (change)="setIntervalMode($event.target.value)">
+           <select class="form-control col-2" (change)="setIntervalMode($event.target.value)">
                     <option>Hours</option>
                     <option>Days</option>
                     <option>Weeks</option>
                     <option>Months</option>
            </select>
-           <div class="col-2"></div>
       </div>
-      <div class="col-4" *ngIf="repeat!='Every'"></div>
+      <div class="row center-block col-4" *ngIf="repeat=='Weekday'">
+        <div class="weekDays-selector">
+          <input type="checkbox" id="weekday-sun" class="weekday" (click)="weekdays[0]=!weekdays[0];" [checked]="weekdays[0]"/>
+          <label for="weekday-sun">S</label>
+          <input type="checkbox" id="weekday-mon" class="weekday" (click)="weekdays[1]=!weekdays[1];" [checked]="weekdays[1]"/>
+          <label for="weekday-mon">M</label>
+          <input type="checkbox" id="weekday-tue" class="weekday" (click)="weekdays[2]=!weekdays[2];" [checked]="weekdays[2]"/>
+          <label for="weekday-tue">T</label>
+          <input type="checkbox" id="weekday-wed" class="weekday" (click)="weekdays[3]=!weekdays[3];" [checked]="weekdays[3]"/>
+          <label for="weekday-wed">W</label>
+          <input type="checkbox" id="weekday-thu" class="weekday" (click)="weekdays[4]=!weekdays[4];" [checked]="weekdays[4]"/>
+          <label for="weekday-thu">T</label>
+          <input type="checkbox" id="weekday-fri" class="weekday" (click)="weekdays[5]=!weekdays[5];" [checked]="weekdays[5]"/>
+          <label for="weekday-fri">F</label>
+          <input type="checkbox" id="weekday-sat" class="weekday" (click)="weekdays[6]=!weekdays[6];" [checked]="weekdays[6]"/>
+          <label for="weekday-sat">S</label>
+        </div>
+      </div>
 </div>
 <br> 
 <div class="row col-12">

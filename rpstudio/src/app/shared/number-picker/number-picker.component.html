@@ -1,11 +1,11 @@
-<div class="col-xs-3 col-xs-offset-3">
-	<div class="input-group number-spinner">
+<div class="row">
+	<div class="input-group col-auto">
 		<span class="input-group-btn data-dwn">
-			<button class="btn btn-default btn-info" data-dir="dwn" (click)="plus()"><span class="fa fa-plus"></span></button>
+			<button class="btn btn-default btn-secondary" data-dir="dwn" (click)="plus()"><span class="fa fa-chevron-up"></span></button>
 		</span>
-		<input type="text" class="form-control text-center col-2" [value]="num">
+		<input type="text" class="form-control text-center" [value]="num">
 		<span class="input-group-btn data-up">
-			<button class="btn btn-default btn-info" data-dir="up" (click)="minus()"><span class="fa fa-minus"></span></button>
+			<button class="btn btn-default btn-secondary" data-dir="up" (click)="minus()"><span class="fa fa-chevron-down"></span></button>
 		</span>
 	</div>
 </div>

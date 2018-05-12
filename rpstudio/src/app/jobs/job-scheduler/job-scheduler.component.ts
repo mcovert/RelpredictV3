@@ -22,10 +22,12 @@ export class JobSchedulerComponent implements OnInit {
   intervalMode = "";
   selectedDateMoment = new Date();
   selectedTimeMoment = `${this.selectedDateMoment.getHours()}:${this.selectedDateMoment.getMinutes()} ${(this.selectedDateMoment.getHours() > 11 ? 'am' : 'pm')}`;
+  weekdays : boolean[];
 
   constructor() { }
 
   ngOnInit() {
+  	this.weekdays = new Array(7).fill(false);
   	console.log("Scheduler");
   }
   saveSchedule() {}
