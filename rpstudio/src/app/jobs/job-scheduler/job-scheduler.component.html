@@ -53,35 +53,32 @@
 		</div>
       </div>
       <div class="col-2"></div>
+      <br>
 </div> 
-<br>
-<div class="row col-12" >
+<div class="row col-12" *ngIf="mode=='H'">
       <div class="col-4"></div>
       <div class="input-wrapper col-2">
           <label>Pick time:</label>
       </div>
       <div class="col-4">
-          <input [owlDateTimeTrigger]="timePicker" [owlDateTime]="timePicker" [(ngModel)]="selectedTimeMoment">
-              <span ><i class="fa  fa-clock-o"></i></span>
-          <owl-date-time #timePicker [pickerType]='timer'></owl-date-time>
+           <ngx-time-picker [(selectedTime)]="selectedTimeMoment"></ngx-time-picker>
       </div>
       <div class="col-2"></div>
+      <br>
 </div> 
- <br>
-<div class="row col-12">
+<div class="row col-12" *ngIf="mode=='D' || mode=='W' || mode=='O'">
       <div class="col-4"></div>
       <div class="input-wrapper col-2">
           <label>Pick date and time:</label>
       </div>
       <div class="col-4">
-          <input [owlDateTimeTrigger]="datePicker" [owlDateTime]="datePicker" [(ngModel)]="selectedDateMoment">
-              <span ><i class="fa  fa-calendar"></i></span>
-          <owl-date-time #datePicker></owl-date-time>
-      </div>
+           <ngx-datetime-picker [(selectedDateTime)]="selectedDateMoment"></ngx-datetime-picker>      
+       </div>
       <div class="col-2"></div>
+      <br>
 </div> 
- <br>
- <div class="row col-12">
+<br>
+<div class="row col-12">
 	<div class="col-4"></div>	
 	<div class="col-2">	
     <button class="btn btn-primary btn-xs center-block" data-title="Submit Job" style="vertical-align: center;" (click)="saveSchedule()"><span class="fa fa-arrow-circle-right"></span> Save Schedule</button>
@@ -91,4 +88,4 @@
     <button class="btn btn-danger btn-xs center-block" data-title="Cancel" style="vertical-align: center;" (click)="cancelSchedule()"><span class="fa fa-ban"></span> Cancel</button>
     </div>
 	<div class="col-3"></div>	
- </div>
+</div>

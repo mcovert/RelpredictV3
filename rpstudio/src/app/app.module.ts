@@ -7,7 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule  } from './app-routing.module';
 
 import { ArchwizardModule } from 'ng2-archwizard';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { GlobalService} from './services/global.service';
 import { AuthService} from './services/auth.service';
 import { DataService} from './services/data.service';
@@ -64,6 +63,7 @@ import { FilebrowserComponent } from './data/filebrowser/filebrowser.component';
 import { DatatypeSelectorComponent } from './shared/datatype-selector/datatype-selector.component';
 import { CreateDatamapComponent } from './data/create-datamap/create-datamap.component';
 import { ModelPickerComponent } from './models/model-picker/model-picker.component';
+import { DateTimePickerModule} from 'ngx-datetime-picker';
 
 @NgModule({
   declarations: [
@@ -120,8 +120,7 @@ import { ModelPickerComponent } from './models/model-picker/model-picker.compone
     FormsModule,
     ArchwizardModule,
     TreeModule,
-    OwlDateTimeModule, 
-    OwlNativeDateTimeModule
+    DateTimePickerModule
   ],
   exports: [
     RouterModule

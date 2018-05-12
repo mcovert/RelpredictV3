@@ -18,7 +18,7 @@ export class JobSchedulerComponent implements OnInit {
   type: string;	
   mode = "D";
   selectedDateMoment = new Date();
-  selectedTimeMoment = new Date();
+  selectedTimeMoment = `${this.selectedDateMoment.getHours()}:${this.selectedDateMoment.getMinutes()} ${(this.selectedDateMoment.getHours() > 11 ? 'am' : 'pm')}`;
 
   constructor() { }
 

@@ -1,0 +1,35 @@
+import { OnInit, EventEmitter, ElementRef, Renderer } from '@angular/core';
+import { ControlValueAccessor } from '@angular/forms';
+import { IsMobileService } from '../services/isMobile.service';
+import { DateService } from '../services/date.service';
+export declare class DatePickerComponent implements OnInit, ControlValueAccessor {
+    private isMobileService;
+    dateService: DateService;
+    private eRef;
+    private renderer;
+    selectedDate: Date;
+    min: string;
+    max: string;
+    placeholder: string;
+    inputTabIndex: number;
+    disableInput: boolean;
+    disableButton: boolean;
+    disablePicker: boolean;
+    selectedDateChange: EventEmitter<Date>;
+    input: ElementRef;
+    offClick(event: any): void;
+    pickerVisible: boolean;
+    isMobile: boolean;
+    invalid: boolean;
+    readonly formattedDate: string;
+    readonly mobileFormattedDate: string;
+    constructor(isMobileService: IsMobileService, dateService: DateService, eRef: ElementRef, renderer: Renderer);
+    writeValue(value: Date): void;
+    registerOnChange(handler: any): void;
+    registerOnTouched(): void;
+    setDate(date: string): void;
+    ngOnInit(): void;
+    newDatePicked(date: Date): void;
+    closePicker(close: boolean): void;
+    focus(): void;
+}
