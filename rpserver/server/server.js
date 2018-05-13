@@ -15,15 +15,18 @@ app.use(bodyParser.urlencoded( { extended: false}));
 app.use(bodyParser.json());
 var logger = function(req, res, next) {
   console.log(req.accessToken);
+  console.log("Token=" + req.accessToken.id);
+  console.log("userId=" + req.accessToken.userId);
   if (req.accessToken) {
     app.models.User.findById(req.accessToken.userId, function(err, user) {
+      if (!user) return;
       console.log(user);
       req.currentUser = user.email;
-      console.log("REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
+      console.log("UserId=" + user.email + " REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
     });
   }
   else  {
-    console.log("REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
+    console.log("UserId=? REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
     req.currentUser = "*not logged in*"    
   }
   next();

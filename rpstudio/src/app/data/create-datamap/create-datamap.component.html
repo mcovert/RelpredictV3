@@ -1,5 +1,6 @@
   <form #parmform="ngForm">
-      <h3 class="bg-info text-center">Edit Datamap</h3>
+      <h3 class="text-center">Edit Datamap</h3>
+      <br>
       <div class="row" >
        	 <div class="col-2"></div>
          <label class="col-1 text-center" for="dmname">Name</label>
@@ -8,7 +9,8 @@
          <select class="form-control col-2" name=dmtype [(ngModel)]="datamap.datamap_type"> 
               <option *ngFor="let dmt of datamapTypes" value="{{dmt}}" [selected]="datamap.datamap_type==dmt">{{dmt}}</option>
          </select>
-         <button class="btn btn-primary btn-sm col-2" (click)="newField()">New Field</button>
+         <div class="col-1"></div>
+         <button class="btn btn-primary btn-sm col-1" (click)="newField()">New Field</button>
          <div class="col-2"></div>
       </div>
       <br>

@@ -4,7 +4,7 @@ var rp = require('../../server/relpredict.js');
 module.exports = function(Model) {
 
     Model.nextversion = function (model_class, model_name, cb) {
-    	console.log('Finding next version for ' + model_class + "/" + model_name);
+    	//console.log('Finding next version for ' + model_class + "/" + model_name);
     	var version = 1;
       Model.find({where: {and: [{model_class: model_class}, {name: model_name}]}, order: "version DESC", limit: 1}, function(err, models) {
             if (!!models && models.length > 0) version = models[0].version + 1;
@@ -32,7 +32,7 @@ module.exports = function(Model) {
    	});
 
     Model.setcurrent = function (model_class, model_name, model_version, cb) {
-    	console.log('Setting current version for ' + model_class + "/" + model_name + " to " + model_version);
+    	//console.log('Setting current version for ' + model_class + "/" + model_name + " to " + model_version);
     	var version = 1;
         Model.findOne({where: {and: [{model_class: model_class}, {name: model_name}, {current: true}]}}, function(err, model) {
             //console.log('old'); console.log(model);

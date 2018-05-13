@@ -162,7 +162,7 @@ exports.getJobTemplate = () => {
 	if (fs.existsSync(fullFileName)) {
        var fileStat = fs.statSync(fullFileName);
        var jtContent = fs.readFileSync(fullFileName, 'utf8').replace(/\n|\r|\t/g, " ");
-       console.log(jtContent);
+       //console.log(jtContent);
        return jtContent;
     }
     else return '';	
@@ -210,14 +210,14 @@ var buffer = new Buffer(buff_size);
 exports.getDatafileHeader = (fileName) => {
 	//let fullFileName = path.join(config.datafiles, fileName);
 	let fullFileName = fileName;
-    let fd = fs.openSync(fullFileName, 'r');
-    fs.readSync(fd, buffer, 0, buff_size, 0);
-    fs.closeSync(fd);
-    let inbuff = buffer.toString('utf8').split('\n');
+  let fd = fs.openSync(fullFileName, 'r');
+  fs.readSync(fd, buffer, 0, buff_size, 0);
+  fs.closeSync(fd);
+  let inbuff = buffer.toString('utf8').split('\n');
 	return { 'datafile_name'   : fileName,
              'datafile_header' : inbuff[0] || '',
              'datafile_record' : inbuff[1] || ''
-           };
+         };
 }
 exports.getDatamapList = () => {
   var entries = [];
@@ -230,9 +230,9 @@ exports.getDatamapList = () => {
     else if (fullFileName.endsWith('.xlate')) dmType = 'Translation';
     if (fileStat.isFile()) {
     	entries.push( { 'datamap_name' : path.parse(files[i]).name,
-                        'datamap_type' : dmType
-                      }
-                    );
+                      'datamap_type' : dmType
+                    }
+                  );
     }
   }
   return entries;
@@ -271,7 +271,7 @@ exports.deleteFile = (filename) => {
     else {
     	let files = fs.readdirSync(fullFileName);
     	for (let i = 0; i < files.length; i++) {
-    		console.log(files[i]);
+    		//console.log(files[i]);
     		fs.unlinkSync(path.join(fullFileName, files[i]));
     	}
     	fs.rmdirSync(fullFileName);
@@ -318,7 +318,7 @@ createTarget = function(target) {
            ' parameters '  + quoted(createParms(target.parms)) + '\n';
 }                     
 convertModel = (model) => {
-	console.log(model);
+	//console.log(model);
 	var modelStr = 'model '    + quoted(model.name) + 
 	               ' version ' + quoted(model.version) +
 	               ' description ' + quoted(model.description) + '\n' +
@@ -332,7 +332,7 @@ convertModel = (model) => {
 }
 exports.convertModel = convertModel; 
 getModelPath = function(model) {
-  console.log(config.models + " " + model.model_class + " " + model.name + " " + model.version.toString());
+  //console.log(config.models + " " + model.model_class + " " + model.name + " " + model.version.toString());
 	return path.join(config.models, 
     	             model.model_class, 
     	             model.name,
@@ -341,7 +341,7 @@ getModelPath = function(model) {
 mkDir2 = (base, dirList) => {
   var newPath = base;
   for (var i = 0; i < dirList.length; i++) {
-    console.log(newPath + " adding " + dirList[i]);
+    //console.log(newPath + " adding " + dirList[i]);
     newPath = path.join(newPath, dirList[i]);
     if (!fs.existsSync(newPath))
        fs.mkdirSync(newPath);
@@ -360,7 +360,7 @@ saveModel = (model, overwrite) => {
     	}
     }
     var md = path.join(modelPath, model.name + '.modeldef');
-    console.log(md);
+    //console.log(md);
     if (fs.existsSync(md) && !overwrite)
       return "Model exists and overwrite was not specified";
     fs.writeFileSync(path.join(md), modelDef);
@@ -410,7 +410,7 @@ getModels = () => {
 }
 exports.getModels = getModels;
 getModel = (model_class, model_name, model_version) => {
-  console.log(model_class + ' ' + model_name + ' ' + model_version);
+  //console.log(model_class + ' ' + model_name + ' ' + model_version);
   var model_path = path.join(config.models, model_class, model_name, model_version, model_name + ".json");
   return JSON.parse(fs.readFileSync(model_path));
 }

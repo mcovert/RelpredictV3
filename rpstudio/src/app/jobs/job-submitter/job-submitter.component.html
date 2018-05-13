@@ -66,5 +66,5 @@
 	<a href="javascript:void(0)" (click)="openMonitor()"> {{jobLink}}</a> to monitor the job.</p>
 </div>
 <app-modal-dialog *ngIf="showMD" [(visible)]="showMD">
-   <app-model-view-dialog  [model]="model" (closeDialog)="closeMDialog()"></app-model-view-dialog >
+   <app-model-view-dialog  [model]="model" (closeDialog)="closeModelDialog()"></app-model-view-dialog >
 </app-modal-dialog>
