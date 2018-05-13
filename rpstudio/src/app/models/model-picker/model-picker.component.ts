@@ -26,6 +26,7 @@ export class ModelPickerComponent implements OnInit {
             else if (m1x > m2x) return 1;
             else return 0;
         });
+        this.selectModel(0);
      });
   }
 
