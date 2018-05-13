@@ -65,6 +65,7 @@ import { CreateDatamapComponent } from './data/create-datamap/create-datamap.com
 import { ModelPickerComponent } from './models/model-picker/model-picker.component';
 import { DateTimePickerModule} from 'ngx-datetime-picker';
 import { NumberPickerComponent } from './shared/number-picker/number-picker.component';
+import { ModelViewDialogComponent } from './models/model-view-dialog/model-view-dialog.component';
 
 @NgModule({
   declarations: [
@@ -112,7 +113,8 @@ import { NumberPickerComponent } from './shared/number-picker/number-picker.comp
     DatatypeSelectorComponent,
     CreateDatamapComponent,
     ModelPickerComponent,
-    NumberPickerComponent
+    NumberPickerComponent,
+    ModelViewDialogComponent
   ],
   imports: [
     BrowserModule,

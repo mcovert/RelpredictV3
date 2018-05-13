@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
 import { JobService } from '../../services/job.service';
+import { ModelService } from '../../services/model.service';
 import { RPJobTemplate, RPJobTemplateParm, ReturnObject, RPJobSubmitInfo, RPModel} from '../../shared/db-classes';
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
@@ -15,9 +16,11 @@ jobs : RPJobTemplate[] = [];
 currentJob = -1;
 jobServer = "";
 jobLink = "";
-showModelDialog = false;
+showMD = false;
+model: RPModel;
+modelName: string;
 
- constructor(private jobservice : JobService, private router: Router) {}
+ constructor(private jobservice : JobService, private modelservice: ModelService, private router: Router) {}
 
   ngOnInit() {
     console.log("Submitter");
@@ -56,6 +59,18 @@ showModelDialog = false;
     console.log(model);
     var currJob = this.jobs[this.currentJob];
     currJob.parms[i].parm_value = model;
+    this.modelName = model;
 
+  }
+  showModelDialog()
+  {
+    this.modelservice.getModelByName(this.modelName).subscribe(result => {
+      this.model = result.model as RPModel;
+      this.showMD = true;
+      console.log(this.model);
+    });
+  }
+  closeModelDialog() {
+    this.showMD = false;
   }
 }

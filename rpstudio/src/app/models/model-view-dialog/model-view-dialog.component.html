@@ -1,0 +1,15 @@
+<h3>Model Information</h3>
+<div class="row p-1">
+    <div class="col-2">Name</div>
+    <div class="col-2">Class</div>
+    <div class="col-2">Version</div>
+    <div class="col-4">Description</div>
+    <div class="col-2">Result ID</div>
+</div>
+<div class="row p-1">
+    <div class="col-2">{{model.name}}<span *ngIf="model.current" class="fa fa-star" style="color:gold"></span></div>
+    <div class="col-2">{{model.model_class}}</div>
+    <div class="col-2">{{model.version}}</div>
+    <div class="col-4">{{model.description}}</div>
+    <div class="col-2">{{model.identifier}}</div>
+</div>

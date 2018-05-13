@@ -44,24 +44,36 @@
       </div>
       <div class="row center-block col-4" *ngIf="repeat=='Weekday'">
         <div class="weekDays-selector">
-          <input type="checkbox" id="weekday-sun" class="weekday" (click)="weekdays[0]=!weekdays[0];" [checked]="weekdays[0]"/>
+          <input type="checkbox" id="weekday-sun" class="weekday" (change)="weekdays[0]=!weekdays[0];" [checked]="weekdays[0]"/>
           <label for="weekday-sun">S</label>
-          <input type="checkbox" id="weekday-mon" class="weekday" (click)="weekdays[1]=!weekdays[1];" [checked]="weekdays[1]"/>
+          <input type="checkbox" id="weekday-mon" class="weekday" (change)="weekdays[1]=!weekdays[1];" [checked]="weekdays[1]"/>
           <label for="weekday-mon">M</label>
-          <input type="checkbox" id="weekday-tue" class="weekday" (click)="weekdays[2]=!weekdays[2];" [checked]="weekdays[2]"/>
+          <input type="checkbox" id="weekday-tue" class="weekday" (change)="weekdays[2]=!weekdays[2];" [checked]="weekdays[2]"/>
           <label for="weekday-tue">T</label>
-          <input type="checkbox" id="weekday-wed" class="weekday" (click)="weekdays[3]=!weekdays[3];" [checked]="weekdays[3]"/>
+          <input type="checkbox" id="weekday-wed" class="weekday" (change)="weekdays[3]=!weekdays[3];" [checked]="weekdays[3]"/>
           <label for="weekday-wed">W</label>
-          <input type="checkbox" id="weekday-thu" class="weekday" (click)="weekdays[4]=!weekdays[4];" [checked]="weekdays[4]"/>
+          <input type="checkbox" id="weekday-thu" class="weekday" (change)="weekdays[4]=!weekdays[4];" [checked]="weekdays[4]"/>
           <label for="weekday-thu">T</label>
-          <input type="checkbox" id="weekday-fri" class="weekday" (click)="weekdays[5]=!weekdays[5];" [checked]="weekdays[5]"/>
+          <input type="checkbox" id="weekday-fri" class="weekday" (change)="weekdays[5]=!weekdays[5];" [checked]="weekdays[5]"/>
           <label for="weekday-fri">F</label>
-          <input type="checkbox" id="weekday-sat" class="weekday" (click)="weekdays[6]=!weekdays[6];" [checked]="weekdays[6]"/>
+          <input type="checkbox" id="weekday-sat" class="weekday" (change)="weekdays[6]=!weekdays[6];" [checked]="weekdays[6]"/>
           <label for="weekday-sat">S</label>
         </div>
       </div>
 </div>
 <br> 
+<div *ngIf="repeat!='Once'" class="row col-12" style="height: 48 px;">
+      <div class="col-4"></div>
+      <div class="input-wrapper col-2">
+          <label>Until:</label>
+      </div>
+      <div class="col-4">
+           <ngx-date-picker [(selectedDate)]="untilDateMoment"></ngx-date-picker>      
+       </div>
+      <div class="col-2"></div>
+      <br>
+</div> 
+<br>
 <div class="row col-12">
 	<div class="col-4"></div>	
 	<div class="col-2">	

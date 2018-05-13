@@ -136,5 +136,33 @@ module.exports = function(Model) {
         type: 'array'
       }
     })
+   Model.getmodel = function(model_class, model_name, model_version, cb) {
+      var retFile = rp.getModel(model_class, model_name, model_version);
+      cb(null, retFile);
+   };   
+   Model.remoteMethod('getmodel', {
+      http: {
+        path: '/getmodel',
+        verb: 'post'
+      },
+      accepts: [
+            {
+               arg: 'model_class',
+               type: 'string'
+            },
+            {
+               arg: 'model_name',
+               type: 'string'
+            },
+            {
+               arg: 'model_version',
+               type: 'string'
+            }
+      ], 
+      returns: {
+        arg:  'model',
+        type: 'object'
+      }
+    })
 
 }

@@ -99,6 +99,13 @@ httpOptions    : HttpHeaders;
   getModelById(id : string) : Observable<RPModel> {
      return this.httpService.get(this.url + 'models/' + id, this.authService.getHttpHeader()) as Observable<RPModel>;
   }
+  getModelByName(name: string) :Observable<RPModel> {
+     var parts = name.split("\/");
+     console.log(parts);
+     return this.httpService.post('http://ai25:3000/api/models/getmodel', 
+       JSON.stringify({ model_class: parts[0], model_name: parts[1], model_version: parts[2]}), 
+       this.authService.getHttpHeader()) as Observable<RPModel>;     
+  }
   getTrainedModels() : Observable<RPTrainedModel[]> {
     this.trained_models = this.httpService.get(this.url + 'trainedmodels', this.authService.getHttpHeader()) as Observable<RPTrainedModel[]>;
     return this.trained_models;

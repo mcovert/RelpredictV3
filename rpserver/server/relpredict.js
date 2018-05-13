@@ -409,3 +409,9 @@ getModels = () => {
   return models;
 }
 exports.getModels = getModels;
+getModel = (model_class, model_name, model_version) => {
+  console.log(model_class + ' ' + model_name + ' ' + model_version);
+  var model_path = path.join(config.models, model_class, model_name, model_version, model_name + ".json");
+  return JSON.parse(fs.readFileSync(model_path));
+}
+exports.getModel = getModel;

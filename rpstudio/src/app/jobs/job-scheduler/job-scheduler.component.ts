@@ -1,6 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
+import { GlobalService } from '../../services/global.service';
 import { JobService } from '../../services/job.service';
-import { RPJob, RPJobExec} from '../../shared/db-classes';
+import { ModelService } from '../../services/model.service';
+import { RPJob, RPJobExec, RPModel} from '../../shared/db-classes';
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
 
@@ -23,8 +25,10 @@ export class JobSchedulerComponent implements OnInit {
   selectedDateMoment = new Date();
   selectedTimeMoment = `${this.selectedDateMoment.getHours()}:${this.selectedDateMoment.getMinutes()} ${(this.selectedDateMoment.getHours() > 11 ? 'am' : 'pm')}`;
   weekdays : boolean[];
+  untilDateMoment = new Date();
+  showMD = false;
 
-  constructor() { }
+  constructor(private modelservice: ModelService, private jobservice: JobService, private globalservice: GlobalService) { }
 
   ngOnInit() {
   	this.weekdays = new Array(7).fill(false);
