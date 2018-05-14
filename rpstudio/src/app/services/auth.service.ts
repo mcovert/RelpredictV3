@@ -23,6 +23,7 @@ export class AuthService {
   loggedIn = false;
   url : string;
   httpOptions : HttpOptions;
+  httpOptionsX: HttpOptions;
 
   constructor(private http: HttpClient, private globalService: GlobalService) { 
     console.log("New auth service created"); 
@@ -50,6 +51,8 @@ export class AuthService {
             this.loggedIn = true;
             this.httpOptions = { 'headers': new HttpHeaders( { 'Content-Type': 'application/json',
                                                                'authorization': this.user.token } ) };
+            this.httpOptionsX= { 'headers': new HttpHeaders( { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                                                               'authorization': this.user.token } ) };
           });
     }
   }
@@ -57,9 +60,12 @@ export class AuthService {
     return this.globalService.getServerUrl();
   }
   getHttpHeader() {
-    console.log('Getting headers');
-    console.log(this.httpOptions.headers);
+    console.log('Getting headers ', this.httpOptions.headers);
     return this.httpOptions;
+  }
+  getHttpHeaderX() {
+    console.log('Getting headers ', this.httpOptionsX.headers);
+    return this.httpOptionsX;
   }
   getUsername() {
     if (!this.isLoggedIn())
@@ -86,5 +92,7 @@ export class AuthService {
   isLoggedIn() : boolean {
     return this.loggedIn;
   }
-
+  addAccessTokenToURL(url: string) {
+    return url + "?access_token=" + this.user.token;
+  }
 }

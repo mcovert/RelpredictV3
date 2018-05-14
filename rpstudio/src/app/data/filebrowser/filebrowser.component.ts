@@ -75,9 +75,7 @@ export class FilebrowserComponent implements OnInit {
   ngOnInit() {
   	this.dataservice.getDataDirectory().subscribe(result => {
   		var ro = result as RetObj;
-  		console.log(ro.filedir);
   		this.node = [ro.filedir];
-  		console.log(this.node);
       this.node[0].isExpanded = true;
   	})
   }
@@ -91,7 +89,6 @@ export class FilebrowserComponent implements OnInit {
   makeHeaders(fh : FileHeader ) {
   	this.fileHeader = [];
   	let splitChar = this.getSplitChar(this.fileInfo.datafile_format);
-  	console.log(splitChar);
   	let h = fh.datafile_header.split(splitChar);
   	let d = fh.datafile_record.split(splitChar);
   	for (var i = 0; i < h.length; i++) {
@@ -119,7 +116,6 @@ export class FilebrowserComponent implements OnInit {
   	if (status == true) {
   	  this.dataservice.getDatafileHeader(file).subscribe(result => {
   		  this.makeHeaders(result.datafile_content);
-  		  console.log(this.fileHeader);
   	  });
   	}
   	else this.fileHeader = [];
@@ -130,23 +126,16 @@ export class FilebrowserComponent implements OnInit {
     let file = this.fileInfo.datafile_fullname;
     if (status == true) {
       this.dataservice.getDatamap(file).subscribe(result => {
-        console.log(result);
         var dm = JSON.parse(result.returned_object);
-        console.log(dm);
         this.makeDatamap(dm);
-        console.log(this.fileHeader);
       });
     }
     else this.fileHeader = [];
     this.contentsDisplayed = status;
   }
   onActivateEvent(event) {
-  	console.log(event);
-  	console.log('Path=' + event.node.data.path);
   	this.dataservice.getDatafileInfo(event.node.data.path).subscribe(result => {
-  		console.log(result);
   		this.fileInfo = result.datafile_info;
-  		console.log(this.fileInfo);
   		if (this.fileInfo.datafile_type === 'File') {
           if (this.fileInfo.datafile_format == "datamap")
              this.displayDatamap(true);
@@ -159,7 +148,6 @@ export class FilebrowserComponent implements OnInit {
   	})
   }
   newType(t: string) {
-  	console.log(t);
   	let tokens = t.split("=");
   	for (let i = 0; i < this.fileHeader.length; i++) {
   		if (this.fileHeader[i].field_name == tokens[0]) {
@@ -167,7 +155,6 @@ export class FilebrowserComponent implements OnInit {
   			break;
   		}
   	}
-  	console.log(this.fileHeader);
   }
   createDatamap() {
     var datamap = new RPDatamap();

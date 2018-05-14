@@ -34,17 +34,7 @@ exports.config = config;
 /*******************************************************************************/
 getUserid = () => { return 'mcovert@ai.com'; };
 writeLog = function(issuer, severity, result, action, msg, parms, user) {
-   var dt = new Date();	
-   app.models.Log.create({
-   	 entry_date: dt.toISOString(),
-   	 issuer:     issuer,
-   	 severity:   severity,
-   	 result:     result,
-   	 action:     action,
-   	 msg:        msg,
-   	 userid:     'mcovert@ai.com',
-   	 parms:      parms
-   });
+   app.models.Log.writeToLog(issuer, severity, result, action, msg, parms, user);
 }
 exports.writeLog = writeLog;
 writeLogEntries = function(entries) {

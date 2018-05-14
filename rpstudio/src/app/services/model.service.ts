@@ -90,39 +90,38 @@ httpOptions    : HttpHeaders;
     return this.algorithms;
   }
   getModels() : Observable<ModelWrapper> { 
-    this.models = this.httpService.get('http://ai25:3000/api/models/listmodels', this.authService.getHttpHeader()) as Observable<ModelWrapper>;
+    this.models = this.httpService.get(this.authService.addAccessTokenToURL('http://ai25:3000/api/models/listmodels')) as Observable<ModelWrapper>;
     return this.models;
   }
   getModels_orig() : Observable<RPModel[]> { 
-    return this.httpService.get('http://ai25:3000/api/models/models', this.authService.getHttpHeader()) as Observable<RPModel[]>;
+    return this.httpService.get(this.authService.addAccessTokenToURL('http://ai25:3000/api/models/models')) as Observable<RPModel[]>;
   }
   getModelClasses() : Observable<RPModelClass[]> {
-    this.modelclasses = this.httpService.get(this.url + 'modelclasses', this.authService.getHttpHeader()) as Observable<RPModelClass[]>;
+    this.modelclasses = this.httpService.get(this.authService.addAccessTokenToURL(this.url + 'modelclasses')) as Observable<RPModelClass[]>;
     return this.modelclasses;
   }
   getModelById(id : string) : Observable<RPModel> {
-     return this.httpService.get(this.url + 'models/' + id, this.authService.getHttpHeader()) as Observable<RPModel>;
+     return this.httpService.get(this.authService.addAccessTokenToURL(this.url + 'models/' + id)) as Observable<RPModel>;
   }
   getModelByName(name: string) :Observable<SingleModelWrapper> {
      var parts = name.split("\/");
      console.log(parts);
-     return this.httpService.post('http://ai25:3000/api/models/getmodel', 
-       JSON.stringify({ model_class: parts[0], model_name: parts[1], model_version: parts[2]}), 
-       this.authService.getHttpHeader()) as Observable<SingleModelWrapper>;     
+     return this.httpService.post(this.authService.addAccessTokenToURL('http://ai25:3000/api/models/getmodel'), 
+       JSON.stringify({ model_class: parts[0], model_name: parts[1], model_version: parts[2]})) as Observable<SingleModelWrapper>;     
   }
   getTrainedModels() : Observable<RPTrainedModel[]> {
-    this.trained_models = this.httpService.get(this.url + 'trainedmodels', this.authService.getHttpHeader()) as Observable<RPTrainedModel[]>;
+    this.trained_models = this.httpService.get(this.authService.addAccessTokenToURL(this.url + 'trainedmodels')) as Observable<RPTrainedModel[]>;
     return this.trained_models;
   }
   createModel(model : RPModel, overwrite: boolean) {
     delete model.id;
-    return this.httpService.post('http://ai25:3000/api/models/createmodel', {model: model, overwrite: overwrite}) as Observable<ReturnObject>;    
+    return this.httpService.post(this.authService.addAccessTokenToURL('http://ai25:3000/api/models/createmodel'), {model: model, overwrite: overwrite}) as Observable<ReturnObject>;    
   }
   updateModel(model : RPModel) {
-    return this.httpService.put(this.url + 'models/' + model.id, JSON.stringify(model), this.authService.getHttpHeader());
+    return this.httpService.put(this.authService.addAccessTokenToURL(this.url + 'models/' + model.id), JSON.stringify(model));
   }
   deleteModel(id : string) {
-    return this.httpService.delete(this.url + 'models/' + id, this.authService.getHttpHeader());
+    return this.httpService.delete(this.authService.addAccessTokenToURL(this.url + 'models/' + id));
   }
 
   getDefaultAlgorithmDef() : RPAlgorithmDef {
@@ -156,8 +155,7 @@ httpOptions    : HttpHeaders;
   }
   getScript(model: RPModel) : Observable<ReturnObject> {
     let body = JSON.stringify({ model: model});
-    // return this.httpService.post('http://ai25:3000/api/models?access_token=' + this.authService.getUserToken(), body, this.httpOptions);
-    return this.httpService.post(this.url + 'models/convert', body, this.authService.getHttpHeader()) as Observable<ReturnObject>;
+    return this.httpService.post(this.authService.addAccessTokenToURL(this.url + 'models/convert'), body) as Observable<ReturnObject>;
 
   }
  }

@@ -17,17 +17,17 @@ export class JobService {
   }
 
   getJobs()  : Observable<RPJob[]> { 
-  	  this.jobs = this.httpService.get('http://ai25:3000/api/jobs',this.authService.getHttpHeader()) as Observable<RPJob[]>;
+  	  this.jobs = this.httpService.get(this.authService.addAccessTokenToURL('http://ai25:3000/api/jobs')) as Observable<RPJob[]>;
       return this.jobs;
   }
   getJobExecs()  : Observable<RPJobExec[]> { 
-      this.jobexecs = this.httpService.get('http://ai25:3000/api/jobexecs',this.authService.getHttpHeader()) as Observable<RPJobExec[]>;
+      this.jobexecs = this.httpService.get(this.authService.addAccessTokenToURL('http://ai25:3000/api/jobexecs')) as Observable<RPJobExec[]>;
       return this.jobexecs;
   }
   getJobTemplate()  : Observable<ReturnObject> { 
-      return this.httpService.get('http://ai25:3000/api/jobs/getjobtemplate',this.authService.getHttpHeader()) as Observable<ReturnObject>;
+      return this.httpService.get(this.authService.addAccessTokenToURL('http://ai25:3000/api/jobs/getjobtemplate')) as Observable<ReturnObject>;
   }
   submitJob(jobInfo) {
-      return this.httpService.post('http://ai25:3000/api/jobs/submitjob', {job_info: jobInfo},this.authService.getHttpHeader()) as Observable<ReturnObject>;
+      return this.httpService.post(this.authService.addAccessTokenToURL('http://ai25:3000/api/jobs/submitjob'), {job_info: jobInfo}) as Observable<ReturnObject>;
   }
 }

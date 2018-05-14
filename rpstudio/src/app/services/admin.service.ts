@@ -23,7 +23,7 @@ export class AdminService {
   }
 
   getLog() {
-      return this.http.get(this.globalService.getServerUrl() + 'logs', this.authService.getHttpHeader()) as Observable<RPLogEntry[]>;
+      return this.http.get(this.authService.addAccessTokenToURL(this.globalService.getServerUrl() + 'logs')) as Observable<RPLogEntry[]>;
 
   }
 

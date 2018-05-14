@@ -6,9 +6,6 @@ var path = require('path');
 
 var rp = require('../../server/relpredict.js');
 
-//console.log(rp.printObject(rp.getDatafiles()));
-//console.log(rp.getDatafileHeader('2018-04-23-ai.txt'));
-
 module.exports = function(Datafile) {
 	/* File upload section */
     var uploadedFileName = '';
@@ -23,7 +20,7 @@ module.exports = function(Datafile) {
         filename: function (req, file, cb) {
             // file will be accessible in `file` variable
             //var ext = file.originalname.substring(file.originalname.lastIndexOf("."));
-            var fileName = Date.now() + file.originalname;
+            var fileName = Date.now() + '_' + file.originalname ;
             uploadedFileName = fileName;
             uploaded_files.push(uploadedFileName);
             console.log(fileName);
@@ -32,26 +29,29 @@ module.exports = function(Datafile) {
         }
     });
     Datafile.uploadfiles = function (req, res, cb) {
-    	console.log('Uploading files...');
-    	console.log(req.file);
+    	console.log('Uploading files ', req.file);
         var upload = multer({
             storage: storage
-        }).array('file[]', 12);
+        }).array('file[]', 100);
         upload(req, res, function (err) {
-          //console.log(uploaded_files);
+            console.log(uploaded_files);
             if (err) {
                 // An error occurred when uploading
-                rp.writeLog('DATAFILE', 'ERROR', 'FAILED', 'UPLOAD', 'File upload failed',  { file: uploaded_files }, req.currentUser);
+                //rp.writeLog('DATAFILE', 'ERROR', 'FAILED', 'UPLOAD', 'File upload failed',  { file: uploaded_files }, req.currentUser);
                 res.json(err);
             }
-            rp.writeLog('DATAFILE', 'INFO', 'OK', 'UPLOAD', 'File uploaded',  { files: uploaded_files }, req.currentUser);
-            res.json(uploaded_files);
-            rp.runLocal('rpdatautil.sh', uploaded_files);
-            uploaded_files = [];
+            //rp.writeLog('DATAFILE', 'INFO', 'OK', 'UPLOAD', 'File uploaded',  { files: uploaded_files }, req.currentUser);
+               res.json(uploaded_files);
+               rp.runLocal('rpdatautil.sh', uploaded_files);
+               uploaded_files = [];
         });   
     };
 
     Datafile.remoteMethod('uploadfiles',   {
+      http: {
+        path: '/uploadfiles',
+        verb: 'post'
+      },
         accepts: [{
             arg: 'req',
             type: 'object',
@@ -72,7 +72,6 @@ module.exports = function(Datafile) {
         }
     });
    Datafile.listdatafiles = function(req, cb) {
-      rp.writeLog('DATAFILE', 'INFO', 'OK', 'LIST', 'List data files',  {}, req.currentUser);
    	  var retFiles = rp.getDatafiles();
       retFiles.isExpanded = true;
       //console.log(retFiles);
@@ -83,12 +82,7 @@ module.exports = function(Datafile) {
    			path: '/listdatafiles',
    			verb: 'get'
    		},
-      accepts: [{
-            arg: 'req',
-            type: 'object',
-            http: {
-                source: 'req'
-            }
+      accepts: [{ arg: 'req', type: 'object', http: { source: 'req' }
       }], 
    		returns: {
    			arg:  'filedir',
@@ -135,9 +129,9 @@ module.exports = function(Datafile) {
         type: 'object'
       }]
     });
-   Datafile.createdatamap = function(datamap, dir, overwrite, cb) {
+   Datafile.createdatamap = function(datamap, dir, overwrite, req, cb) {
       var ret = rp.saveDatamap(datamap, dir, overwrite);
-      //console.log(ret);
+      //rp.writeLog('DATAFILE', 'INFO', 'OK', 'CREATE', 'Datamap created',  { datamap: datamap }, req.currentUser);
       cb(null, ret);
    };   
    Datafile.remoteMethod('createdatamap', {
@@ -157,7 +151,11 @@ module.exports = function(Datafile) {
       {
             arg:  'overwrite',
             type: 'boolean'
-      }],
+      },
+      {     
+            arg: 'req', type: 'object', http: { source: 'req' } 
+      }
+      ],
       returns: [
       {
         arg:  'returned_object',
@@ -184,8 +182,9 @@ module.exports = function(Datafile) {
         type: 'string'
       }]
     });
-   Datafile.deletefile = function(filename, cb) {
+   Datafile.deletefile = function(filename, req, cb) {
       var ret = rp.deleteFile(filename);
+      //rp.writeLog('DATAFILE', 'INFO', 'OK', 'DELETE', 'File deleted',  { file: filename }, req.currentUser);
       cb(null, ret);
    };   
    Datafile.remoteMethod('deletefile', {
@@ -197,6 +196,9 @@ module.exports = function(Datafile) {
       {
             arg:  'filename',
             type: 'string'
+      },
+      {     
+            arg: 'req', type: 'object', http: { source: 'req' } 
       }],
       returns: [
       {

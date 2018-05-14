@@ -25,7 +25,6 @@ import { ModelCreateComponent } from './models/model-create/model-create.compone
 import { ModelsComponent } from './models/models.component';
 import { ModelComponent } from './models/model/model.component';
 import { JobsComponent } from './jobs/jobs.component';
-import { DataComponent } from './data/data.component';
 import { AdminComponent } from './admin/admin.component';
 import { LogBrowserComponent } from './log-browser/log-browser.component';
 import { FeatureListComponent } from './models/feature-list/feature-list.component';
@@ -55,10 +54,8 @@ import { JobSubmitterComponent } from './jobs/job-submitter/job-submitter.compon
 import { JobEditorComponent } from './jobs/job-editor/job-editor.component';
 import { JobStatusComponent } from './jobs/job-status/job-status.component';
 import { DatafileUploaderComponent } from './data/datafile-uploader/datafile-uploader.component';
-import { DatafileViewerComponent } from './data/datafile-viewer/datafile-viewer.component';
 import { FileLoaderComponent } from './file-loader/file-loader.component';
 import { ModelEditorComponent } from './models/model-editor/model-editor.component';
-import { BatchViewerComponent } from './data/batch-viewer/batch-viewer.component';
 import { FilebrowserComponent } from './data/filebrowser/filebrowser.component';
 import { DatatypeSelectorComponent } from './shared/datatype-selector/datatype-selector.component';
 import { CreateDatamapComponent } from './data/create-datamap/create-datamap.component';
@@ -79,7 +76,6 @@ import { ModelViewDialogComponent } from './models/model-view-dialog/model-view-
     ModelsComponent, 
     ModelComponent,
     JobsComponent,
-    DataComponent,
     AdminComponent,
     LogBrowserComponent,
     FeatureListComponent,
@@ -92,7 +88,6 @@ import { ModelViewDialogComponent } from './models/model-view-dialog/model-view-
     ParameterComponent,
     ModelClassPipe,
     LogBrowserComponent,
-    DataComponent,
     TrainedmodelListComponent,
     ModelClassPipe,
     HelpComponent,
@@ -105,10 +100,8 @@ import { ModelViewDialogComponent } from './models/model-view-dialog/model-view-
     JobEditorComponent,
     JobStatusComponent,
     DatafileUploaderComponent,
-    DatafileViewerComponent,
     FileLoaderComponent,
     ModelEditorComponent,
-    BatchViewerComponent,
     FilebrowserComponent,
     DatatypeSelectorComponent,
     CreateDatamapComponent,

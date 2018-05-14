@@ -16,14 +16,13 @@ var logger = function(req, res, next) {
   if (req.accessToken) {
     app.models.User.findById(req.accessToken.userId, function(err, user) {
       if (!user) return;
-      //console.log(user);
       req.currentUser = user.email;
-      console.log("UserId=" + user.email + " REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
+      console.log("UserId=" + user.email + " REQ: " + req.url);
     });
   }
   else  {
-    console.log("UserId=? REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
-    req.currentUser = "*not logged in*"    
+    console.log("UserId=<unknown> REQ: " + req.url);
+    req.currentUser = "<unknown>";    
   }
   next();
 }

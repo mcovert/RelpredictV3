@@ -33,7 +33,6 @@ datatypes      : RPDataType[] = [
     return this.datatypes;
   }
   isDate(d) {
-    console.log(d);
     let t = d.split("-");
     if (t.length >= 3 && 
         t[0] >= 1900  && 

@@ -38,7 +38,6 @@ export class DatafileUploaderComponent implements OnInit {
   }
 
   fileChangeEvent(fileInput: any) {
-  	console.log(document.getElementById('cin'));
   	for (var f of <Array<File>>fileInput.target.files) {
        this.filesToUpload.push(f);
     }

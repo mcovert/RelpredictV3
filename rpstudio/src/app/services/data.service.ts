@@ -53,54 +53,47 @@ datamapTypes   : string[] = [ "Map", "Xlate" ];
       console.log("Data service created...");
   }
 
-  getBatches()  : Observable<RPBatch[]> { 
-      this.batches = this.httpService.get('http://ai25:3000/api/batches', this.authService.getHttpHeader()) as Observable<RPBatch[]>;
-      return this.batches;
-  }
-  getDatafiles()  : Observable<RPDatafile[]> { 
-      this.datafiles = this.httpService.get('http://ai25:3000/api/datafiles', this.authService.getHttpHeader()) as Observable<RPDatafile[]>;
-      return this.datafiles;
-  }
+  // getDatafiles()  : Observable<RPDatafile[]> { 
+  //     this.datafiles = this.httpService.get('http://ai25:3000/api/datafiles', this.authService.getHttpHeader()) as Observable<RPDatafile[]>;
+  //     return this.datafiles;
+  // }
   getDatafileInfo(fileName) : Observable<FIRetObj> { 
-      return this.httpService.post('http://ai25:3000/api/datafiles/getfileinfo', {filename: fileName}, this.authService.getHttpHeader()) as Observable<FIRetObj>;
+      return this.httpService.post(this.authService.addAccessTokenToURL('http://ai25:3000/api/datafiles/getfileinfo'), {filename: fileName}) as Observable<FIRetObj>;
   }
   getDatafileHeader(fileName) : Observable<FHRetObj> { 
-      return this.httpService.post('http://ai25:3000/api/datafiles/getfileheader', {filename: fileName}, this.authService.getHttpHeader()) as Observable<FHRetObj>;
+      return this.httpService.post(this.authService.addAccessTokenToURL('http://ai25:3000/api/datafiles/getfileheader'), {filename: fileName}) as Observable<FHRetObj>;
   }
   getDatamapTypes() {
     return this.datamapTypes;
   }
   getDatamaps()  : Observable<RPDatamap[]> { 
-      this.datamaps = this.httpService.get('http://ai25:3000/api/datamaps', this.authService.getHttpHeader()) as Observable<RPDatamap[]>;
+      this.datamaps = this.httpService.get(this.authService.addAccessTokenToURL('http://ai25:3000/api/datafiles/datamaps')) as Observable<RPDatamap[]>;
       return this.datamaps;
   }
   getDatamap(datamap : string)  : Observable<ReturnObject> { 
-      return this.httpService.post('http://ai25:3000/api/datafiles/getdatamap', { datamap_name: datamap}, this.authService.getHttpHeader()) as Observable<ReturnObject>;
+      return this.httpService.post(this.authService.addAccessTokenToURL('http://ai25:3000/api/datafiles/getdatamap'), { datamap_name: datamap}) as Observable<ReturnObject>;
   }
 
   getDataDirectory() : Observable<RetObj> {
-     this.nodes = this.httpService.get('http://ai25:3000/api/datafiles/listdatafiles', this.authService.getHttpHeader()) as Observable<RetObj>;
+     this.nodes = this.httpService.get(this.authService.addAccessTokenToURL('http://ai25:3000/api/datafiles/listdatafiles')) as Observable<RetObj>;
      return this.nodes;
   }
   createDatamap(datamap: RPDatamap, dir: string, overwrite: boolean) : Observable<ReturnObject> {
-     return this.httpService.post('http://ai25:3000/api/datafiles/createdatamap', 
-       {datamap: datamap, dir: dir, overwrite: overwrite}, this.authService.getHttpHeader()) as Observable<ReturnObject>;    
+     return this.httpService.post(this.authService.addAccessTokenToURL('http://ai25:3000/api/datafiles/createdatamap'), 
+       {datamap: datamap, dir: dir, overwrite: overwrite}) as Observable<ReturnObject>;    
   }
   updateDatamap(datamap: RPDatamap) {}
   deleteFile(file: string) {
-     return this.httpService.post('http://ai25:3000/api/datafiles/deletefile', 
-       {filename: file}, this.authService.getHttpHeader()) as Observable<ReturnObject>;        
+     return this.httpService.post(this.authService.addAccessTokenToURL('http://ai25:3000/api/datafiles/deletefile'), 
+       {filename: file}) as Observable<ReturnObject>;        
   }
 
   uploadFiles(files : Array<File>) {
     let formData: any = new FormData();
-    console.log(files);
 
     for(let i =0; i < files.length; i++){
         formData.append("file[]", files[i], files[i]['name']);
     }
-    console.log('form data variable :   '+ formData.toString());
-
-    return this.httpService.post(this.globalService.getServerUrl() + 'datafiles/uploadfiles', formData, this.authService.getHttpHeader());
+    return this.httpService.post(this.authService.addAccessTokenToURL('http://ai25:3000/api/datafiles/uploadfiles'), formData);
   }
 }
