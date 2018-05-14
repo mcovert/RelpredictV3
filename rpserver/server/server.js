@@ -1,9 +1,5 @@
 'use strict';
 
-for (let j = 0; j < process.argv.length; j++) {  
-    console.log(j + ' -> ' + (process.argv[j]));
-}
-
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 
@@ -14,13 +10,13 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded( { extended: false}));
 app.use(bodyParser.json());
 var logger = function(req, res, next) {
-  console.log(req.accessToken);
-  console.log("Token=" + req.accessToken.id);
-  console.log("userId=" + req.accessToken.userId);
+  //console.log(req.accessToken);
+  //console.log("Token=" + req.accessToken.id);
+  //console.log("userId=" + req.accessToken.userId);
   if (req.accessToken) {
     app.models.User.findById(req.accessToken.userId, function(err, user) {
       if (!user) return;
-      console.log(user);
+      //console.log(user);
       req.currentUser = user.email;
       console.log("UserId=" + user.email + " REQ: " + req.url + " >>> " + JSON.stringify(req.body, null, 2));
     });

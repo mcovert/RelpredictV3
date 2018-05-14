@@ -42,7 +42,7 @@ writeLog = function(issuer, severity, result, action, msg, parms, user) {
    	 result:     result,
    	 action:     action,
    	 msg:        msg,
-   	 userid:     user,
+   	 userid:     'mcovert@ai.com',
    	 parms:      parms
    });
 }
@@ -405,12 +405,10 @@ getModels = () => {
       }
     }
   }
-  //console.log(models);
   return models;
 }
 exports.getModels = getModels;
 getModel = (model_class, model_name, model_version) => {
-  //console.log(model_class + ' ' + model_name + ' ' + model_version);
   var model_path = path.join(config.models, model_class, model_name, model_version, model_name + ".json");
   return JSON.parse(fs.readFileSync(model_path));
 }

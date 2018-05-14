@@ -17,7 +17,7 @@ module.exports = function(Datafile) {
         destination: function (req, file, cb) {
             // checking and creating uploads folder where files will be uploaded
             var dirPath = rp.config.uploads;
-            console.log(dirPath);
+            //console.log(dirPath);
             cb(null, dirPath + '/');
         },
         filename: function (req, file, cb) {
@@ -38,7 +38,7 @@ module.exports = function(Datafile) {
             storage: storage
         }).array('file[]', 12);
         upload(req, res, function (err) {
-          console.log(uploaded_files);
+          //console.log(uploaded_files);
             if (err) {
                 // An error occurred when uploading
                 rp.writeLog('DATAFILE', 'ERROR', 'FAILED', 'UPLOAD', 'File upload failed',  { file: uploaded_files }, req.currentUser);
@@ -75,7 +75,7 @@ module.exports = function(Datafile) {
       rp.writeLog('DATAFILE', 'INFO', 'OK', 'LIST', 'List data files',  {}, req.currentUser);
    	  var retFiles = rp.getDatafiles();
       retFiles.isExpanded = true;
-      console.log(retFiles);
+      //console.log(retFiles);
    	  cb(null, retFiles);
    }; 	
    Datafile.remoteMethod('listdatafiles', {
@@ -137,7 +137,7 @@ module.exports = function(Datafile) {
     });
    Datafile.createdatamap = function(datamap, dir, overwrite, cb) {
       var ret = rp.saveDatamap(datamap, dir, overwrite);
-      console.log(ret);
+      //console.log(ret);
       cb(null, ret);
    };   
    Datafile.remoteMethod('createdatamap', {

@@ -13,16 +13,16 @@ class LoggedInUser {
   role: string;
   token: string;
 }
+class HttpOptions {
+  headers: HttpHeaders;
+}
 @Injectable()
 export class AuthService {
 
   user : LoggedInUser;
   loggedIn = false;
   url : string;
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-
+  httpOptions : HttpOptions;
 
   constructor(private http: HttpClient, private globalService: GlobalService) { 
     console.log("New auth service created"); 
@@ -48,7 +48,8 @@ export class AuthService {
             this.user.role = "admin";
             this.user.token = login_resp.id;
             this.loggedIn = true;
-            this.httpOptions.headers.set('Authorization', this.user.token);
+            this.httpOptions = { 'headers': new HttpHeaders( { 'Content-Type': 'application/json',
+                                                               'authorization': this.user.token } ) };
           });
     }
   }
@@ -56,6 +57,8 @@ export class AuthService {
     return this.globalService.getServerUrl();
   }
   getHttpHeader() {
+    console.log('Getting headers');
+    console.log(this.httpOptions.headers);
     return this.httpOptions;
   }
   getUsername() {
@@ -77,7 +80,7 @@ export class AuthService {
 
   logout() {
     this.loggedIn = false;
-    this.httpOptions.headers.delete('Authoriztion');
+    this.httpOptions.headers.delete('authorization');
   }
 
   isLoggedIn() : boolean {

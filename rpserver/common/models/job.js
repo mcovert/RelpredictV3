@@ -30,7 +30,7 @@ module.exports = function(Job) {
       }
     });
     Job.submit = function (job_class, job_name, job_parms, cb) {
-    	console.log('Submitting job ' + job_class + "/" + job_name + " using " + job_parms);
+    	//console.log('Submitting job ' + job_class + "/" + job_name + " using " + job_parms);
         ssh.connect({ host: 'ai18', username: 'mcovert', privateKey: '/home/mcovert/.ssh/id_rsa'})
            .then(function() {
                  ssh.execCommand('bin/runsmall.sh', 
@@ -71,7 +71,7 @@ module.exports = function(Job) {
    	    }]
    	});
     Job.getjobtemplate = function (cb) {
-      console.log('Getting job template');
+      //console.log('Getting job template');
         cb(null, rp.getJobTemplate());
     };
     Job.remoteMethod(
