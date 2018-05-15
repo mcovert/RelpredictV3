@@ -23,18 +23,15 @@ module.exports = function(Datafile) {
             var fileName = Date.now() + '_' + file.originalname ;
             uploadedFileName = fileName;
             uploaded_files.push(uploadedFileName);
-            console.log(fileName);
             var user = req.currentUser;
             cb(null, fileName);
         }
     });
     Datafile.uploadfiles = function (req, res, cb) {
-    	console.log('Uploading files ', req.file);
         var upload = multer({
             storage: storage
         }).array('file[]', 100);
         upload(req, res, function (err) {
-            console.log(uploaded_files);
             if (err) {
                 // An error occurred when uploading
                 //rp.writeLog('DATAFILE', 'ERROR', 'FAILED', 'UPLOAD', 'File upload failed',  { file: uploaded_files }, req.currentUser);

@@ -6,14 +6,13 @@ var multer      = require('multer');
 const { spawn } = require('child_process');
 const dirTree   = require('directory-tree');
 var app         = require('./server.js');
+//var db = require('./rp_db.js');
 
 exports.showModels = () => {
    var models = app.models();
    console.log('There are ' + models.length + ' Loopback defined:');
    models.forEach(function(m) { console.log(m.modelName)});
 }
-//var log         = app.models.Log;
-
 /*******************************************************************************/
 /*    RelPredict system configuration taken from environment variables         */
 /*******************************************************************************/
@@ -268,6 +267,12 @@ exports.deleteFile = (filename) => {
         return "Directory deleted";
     }
 };
+exports.metatdata = (tableName) => {
+
+};
+exports.query = (tableName) => {
+
+};
 
 /*******************************************************************************/
 /*                         Model management functions                          */
@@ -377,20 +382,15 @@ getModels = () => {
   var model_classes = fs.readdirSync(config.models);
   for (var i = 0; i < model_classes.length; i++) {
     var mcdir = path.join(config.models, model_classes[i]);
-    //console.log(mcdir);
     var model_names = fs.readdirSync(mcdir);
     for (var j = 0; j < model_names.length; j++) {
       var mdir = path.join(mcdir, model_names[j]);
-      //console.log(mdir);
       var model_versions = fs.readdirSync(mdir);
       for (var k = 0; k < model_versions.length; k++) {
         var mjsondir = path.join(mdir, model_versions[k]);
-        //console.log(mjsondir);
         var fjson = path.join(mjsondir, model_names[j] + ".json");
-        //console.log(fjson);
         var model_json = fs.readFileSync(path.join(fjson));
         var model = JSON.parse(model_json);
-        //console.log(model);
         models.push(model);
       }
     }
@@ -403,3 +403,87 @@ getModel = (model_class, model_name, model_version) => {
   return JSON.parse(fs.readFileSync(model_path));
 }
 exports.getModel = getModel;
+/*******************************************************************************/
+/*                         System Statistics functions                         */
+/*******************************************************************************/
+countData = (dir, counter, tot_files, tot_size) => {
+  let subdirs = [];
+  for (let d of dir) {
+     //console.log(d);
+     let childDirs = fs.readdirSync(d);
+     for (let dname of childDirs ) {
+       let fullname = path.join(d, dname);
+       let stats = fs.statSync(fullname);
+       if (stats.isFile()) {
+          tot_files += 1;
+          tot_size  += stats.size;
+       }
+       else
+          subdirs.push(fullname);
+     }
+  }
+  if (subdirs.length > 0) {
+    countData(subdirs, counter, tot_files, tot_size);
+  }
+  else {
+    counter.push(tot_files);
+    counter.push(tot_size);
+  }
+  return;
+}
+countDirs = (dir, counter) => {
+  let subdirs = [];
+  for (let d of dir) {
+     //console.log(d);
+     let childDirs = fs.readdirSync(d);
+     for (let dname of childDirs ) {
+       let fullname = path.join(d, dname);
+       if (fs.statSync(fullname).isDirectory()) {
+          subdirs.push(fullname);
+       }
+     }
+  }
+  if (subdirs.length > 0) {
+    counter.push(subdirs.length);
+    countDirs(subdirs, counter);
+  }
+  else return;
+}
+getModelStats = () => {
+  let counter = [];
+  countDirs([config.models], counter);
+  let model_stats = {
+    model_classes:    counter[0] || 0,
+    models:           counter[1] || 0,
+    model_versions:   counter[2] || 0,
+    model_targets:    counter[3] || 0,
+    model_algorithms: counter[4] || 0,
+    trained_models:   counter[5] || 0
+  }
+  return model_stats;
+}
+getDataStats = () => {
+  let counter = [];
+  countData([config.datafiles], counter, 0 , 0);
+  let data_stats = {
+    files:            counter[0] || 0,
+    file_total_size:  counter[1] || 0
+  }
+  return data_stats;
+}
+getJobStats = () => {
+  let counter = [];
+  countDirs([path.join(config.jobs, 'logs')], counter);
+  let job_stats = {
+    jobs_defined:      counter[0] || 0,
+    jobs_executed:     counter[1] || 0
+  }
+  return job_stats;
+}
+getStats = () => {
+  return {   model_stats: getModelStats(),
+             data_stats:  getDataStats(),
+             job_stats:   getJobStats()
+         };
+}
+exports.getStats = getStats;
