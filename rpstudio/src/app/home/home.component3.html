@@ -1,15 +1,80 @@
-<div class="wrapper bg container-fluid">
-  <div *ngIf="authService.isLoggedIn()" class="rpcontent">
-     <div class="clearfix"><br /></div>
-        <div class="container">
-          <div class="row col-12" *ngFor="let t of topics">
-            <div class="col-3 topic-galley">{{t.title}}
-              <div class="col-3" *ngFor="let ti of t.items">{{ti.text}}</div>
-            </div>
-          </div>
-        </div>
+<div *ngIf="authService.isLoggedIn()" class="rpcontent">
+  <div class="nav-side-menu">
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+  
+        <div class="menu-list">
+  
+            <ul id="menu-content" class="menu-content collapse out">
+                <li>
+                  <a href="#">
+                  <i class="fa fa-dashboard fa-lg"></i> Dashboard
+                  </a>
+                </li>
+
+                <li  data-toggle="collapse" data-target="#products" class="collapsed active">
+                  <a href="#"><i class="fa fa-puzzle-piece fa-lg"></i> Models <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="products">
+                    <li class="active"><a href="#">Create New Models</a></li>
+                    <li><a href="#">Manage Models</a></li>
+                    <li><a href="#">Test, train, and predict</a></li>
+                    <li><a href="#">Analyze Performance</a></li>
+                </ul>
+
+
+                <li data-toggle="collapse" data-target="#service" class="collapsed">
+                  <a href="#"><i class="fa fa-database fa-lg"></i> Data <span class="arrow"></span></a>
+                </li>  
+                <ul class="sub-menu collapse" id="service">
+                  <li>Manage all data</li>
+                  <li>Upload data</li>
+                  <li>Query data sources</li>
+                </ul>
+
+
+                <li data-toggle="collapse" data-target="#new" class="collapsed">
+                  <a href="#"><i class="fa fa-caret-square-o-right fa-lg"></i> Jobs <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="new">
+                  <li>Submit</li>
+                  <li>Schedule</li>
+                  <li>View</li>
+                </ul>
+
+
+                 <li>
+                  <a href="#">
+                  <i class="fa fa-user fa-lg"></i> Profile
+                  </a>
+                 </li>
+
+                 <li>
+                  <a href="#">
+                  <i class="fa fa-users fa-lg"></i> Users
+                  </a>
+                 </li>
+                 
+                 <li>
+                  <a href="#">
+                  <i class="fa fa-cog fa-lg"></i> Administration
+                  </a>
+                 </li>
+
+                 <li>
+                  <a href="#">
+                  <i class="fa fa-info-circle fa-lg"></i> Help
+                  </a>
+                 </li>
+
+                 <li>
+                  <a href="#">
+                  <i class="fa fa-asterisk fa-lg"></i> About
+                  </a>
+                 </li>
+            </ul>
      </div>
-</div>
+  </div> 
+</div>        
 <div *ngIf="!authService.isLoggedIn()">
-    <user-login></user-login>
+  <user-login></user-login>
 </div>
