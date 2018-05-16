@@ -43,6 +43,7 @@ export class ModelsComponent implements OnInit {
         for (var mc of this.modelclasses) {
              this.model_classes.push(mc.label);
         }
+        console.log(this.modelclasses);
      });
 
      this.modelService.getModels().subscribe(resultArray => {
@@ -57,22 +58,30 @@ export class ModelsComponent implements OnInit {
             else return 0;
         });
      });
-
+     console.log(this.models);
   }
   toggleMenu() {
     // 1-line if statement that toggles the value:
     this.menuState = this.menuState === 'out' ? 'in' : 'out';
   } 
-  setCurrentClass(currClass : string, pos : number) {
+//  setCurrentClass(currClass : string, pos : number) {
+  setCurrentClass(pos : number) {
     this.currentPos = pos;
-    if (pos > 1)
-      this.currentClass = this.modelclasses[pos - 2].class_name;
-    else
-      this.currentClass = currClass;
-    //if (this.currentClass == "All")
-    //  this.models.filter(m2 => m2);
+    this.currentClass = this.model_classes[pos];
+    console.log(this.currentPos, this.currentClass);
+    //if (pos > 1)
+    //  this.currentClass = this.modelclasses[pos - 2].class_name;
     //else
-    //  this.models.filter(m2 => m2.model_class === this.currentClass);
+    //  this.currentClass = currClass;
+    if (this.currentClass == "All Models")
+      this.models.filter(m2 => m2);
+    else {
+      if (this.currentClass = "Current Models") {
+          this.models.filter(m2 => m2.current);        
+      }
+      else 
+          this.models.filter(m2 => m2.model_class === this.modelclasses[pos -2].label);
+    }
   }
   navigate(id : string) {
      id = '5a91e6530b25f0948b439c9e'
