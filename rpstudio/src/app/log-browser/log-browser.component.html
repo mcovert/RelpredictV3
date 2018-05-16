@@ -1,14 +1,11 @@
 <div class="container p-0">
 <h4 class="text-center">Log</h4>
 <div class="table-responsive">
-   <table id="mytable" class="table-condensed table-bordred table-striped sortable table-sm">
+     <table class="table table-responsive table-condensed">
      <thead>
         <th class="col-xs-1">Date</th>
         <th class="col-xs-1">Issuer</th>
         <th class="col-xs-1">Severity</th>
-        <th class="col-xs-1">Class</th>
-        <th class="col-xs-1">Action</th>
-        <th class="col-xs-2">Entity</th>
         <th class="col-xs-4">Message</th>
         <th class="col-xs-1">Userid</th>
      </thead>
@@ -17,9 +14,6 @@
           <td>{{logentry.entry_date}}</td>
           <td>{{logentry.issuer}}</td>
           <td>{{logentry.severity}}</td>
-          <td>{{logentry.msg_class}}</td>
-          <td>{{logentry.msg_action}}</td>
-          <td>{{logentry.msg_entity}}</td>
           <td>{{logentry.msg}}</td>
           <td>{{logentry.userid}}</td>
       </tr>

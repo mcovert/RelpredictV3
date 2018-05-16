@@ -12,14 +12,19 @@
       </div>
     </div>
     <div class="col-md-4" style="margin-bottom: 10px">
+      <br><br><br><br>
       <h6 class="text-center" >Volume and Accuracy</h6>
       <table class="table table-responsive table-condensed">
-        <tr>
+        <thead>
+          <th>Metric</th>
           <th *ngFor="let label of lineChartLabels">{{label}}</th>
-        </tr>
-        <tr *ngFor="let d of lineChartData">
-          <td *ngFor="let label of lineChartLabels;let j = index;">{{d && d.data[j]}}</td>
-        </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let d of lineChartData">
+            <td>{{d.label}}</td>
+            <td *ngFor="let label of lineChartLabels; let j = index;">{{d && d.data[j]}}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
     <div class="col-md-4">
@@ -33,39 +38,42 @@
       </div>
     </div>
 </div>
+<br>
 <div class="row col-12">
-    <app-log-browser></app-log-browser>
+    <div class="col-6">
+       <app-log-browser></app-log-browser>
+    </div>
     <div class="col-1"></div>
-    <div style="margin-bottom: 10px">
+    <div class="col-5" style="margin-bottom: 10px">
       <h5 class="text-center" >Notifications</h5>
       <table class="table table-responsive table-condensed">
         <thead>
-          <th>Date</th>
-          <th>Level</th>
-          <th>Notification</th>
+          <th class="col-2">Date</th>
+          <th class="col-2">Level</th>
+          <th class="col-8 text-center">Notification</th>
         </thead>
         <tbody>
-        <tr>
-          <td>2018-05-11</td>
-          <td>WARN</td>
-          <td>Job run time exceeded 2 hours</td>
-        </tr>
-        <tr>
-          <td>2018-05-12</td>
-          <td>INFO</td>
-          <td>Happy Mother's day!</td>
-        </tr>
-        <tr>
-          <td>2018-05-13</td>
-          <td>INFO</td>
-          <td>Don't forget to submit your TPS report</td>
-        </tr>
-        <tr>
-          <td>2018-05-14</td>
-          <td>INFO</td>
-          <td>Meeting with the Bobs at 2</td>
-        </tr>
-      </tbody>
+          <tr>
+            <td>2018-05-11</td>
+            <td>WARN</td>
+            <td>Job run time exceeded 2 hours</td>
+          </tr>
+          <tr>
+            <td>2018-05-12</td>
+            <td>INFO</td>
+            <td>Happy Mother's day!</td>
+          </tr>
+          <tr>
+            <td>2018-05-13</td>
+            <td>INFO</td>
+            <td>Don't forget to submit your TPS report</td>
+          </tr>
+          <tr>
+            <td>2018-05-14</td>
+            <td>INFO</td>
+            <td>Meeting with the Bobs at 2</td>
+          </tr>
+        </tbody>
       </table>
     </div>
 </div>
