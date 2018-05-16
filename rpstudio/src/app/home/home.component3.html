@@ -5,72 +5,75 @@
         <div class="menu-list">
   
             <ul id="menu-content" class="menu-content collapse out">
-                <li>
-                  <a href="#">
-                  <i class="fa fa-dashboard fa-lg"></i> Dashboard
+                <li  data-toggle="collapse" data-target="#dashboards" class="collapsed">
+                  <a routerLink="/home" routerLinkActive="active">
+                  <i class="fa fa-dashboard fa-lg"></i> Dashboards <span class="arrow"></span>
                   </a>
                 </li>
+                <ul class="sub-menu collapse" id="dashboards">
+                    <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+                    <li>Activity</li>
+                    <li>Performance</li>
+                </ul>
 
-                <li  data-toggle="collapse" data-target="#products" class="collapsed active">
-                  <a href="#"><i class="fa fa-puzzle-piece fa-lg"></i> Models <span class="arrow"></span></a>
+                <li  data-toggle="collapse" data-target="#models" class="collapsed" style="margin-left: 14px;">
+                  <i class="fa fa-puzzle-piece fa-lg"></i> Models <span class="arrow"></span>
                 </li>
-                <ul class="sub-menu collapse" id="products">
-                    <li class="active"><a href="#">Create New Models</a></li>
-                    <li><a href="#">Manage Models</a></li>
-                    <li><a href="#">Test, train, and predict</a></li>
-                    <li><a href="#">Analyze Performance</a></li>
+                <ul class="sub-menu collapse" id="models">
+                    <li><a routerLink="/model-create/new/none/none" routerLinkActive="active">Create New Models</a></li>
+                    <li><a routerLink="/models" routerLinkActive="active">Manage Models</a></li>
+                    <li>Test, train, and predict</li>
+                    <li>Analyze Models</li>
                 </ul>
 
 
-                <li data-toggle="collapse" data-target="#service" class="collapsed">
-                  <a href="#"><i class="fa fa-database fa-lg"></i> Data <span class="arrow"></span></a>
+                <li data-toggle="collapse" data-target="#data" class="collapsed" style="margin-left: 12px;">
+                  <i class="fa fa-database fa-lg"></i> Data <span class="arrow"></span>
                 </li>  
-                <ul class="sub-menu collapse" id="service">
-                  <li>Manage all data</li>
-                  <li>Upload data</li>
+                <ul class="sub-menu collapse" id="data">
+                  <li><a routerLink="/data" routerLinkActive="active">Manage all data</a></li>
+                  <li><a routerLink="/data-upload" routerLinkActive="active">Upload data</a></li>
                   <li>Query data sources</li>
                 </ul>
 
 
-                <li data-toggle="collapse" data-target="#new" class="collapsed">
-                  <a href="#"><i class="fa fa-caret-square-o-right fa-lg"></i> Jobs <span class="arrow"></span></a>
+                <li data-toggle="collapse" data-target="#jobs" class="collapsed" style="margin-left: 12px;">
+                  <i class="fa fa-caret-square-o-right fa-lg"></i> Jobs <span class="arrow"></span>
                 </li>
-                <ul class="sub-menu collapse" id="new">
-                  <li>Submit</li>
-                  <li>Schedule</li>
-                  <li>View</li>
+                <ul class="sub-menu collapse" id="jobs">
+                  <li><a routerLink="/job-scheduler" routerLinkActive="active">Submit or schedule a Job</a></li>
+                  <li>View Job Status</li>
                 </ul>
 
 
-                 <li>
-                  <a href="#">
-                  <i class="fa fa-user fa-lg"></i> Profile
+                <li data-toggle="collapse" data-target="#jobs" class="collapsed" style="margin-left: 2px;">
+                  <a  routerLinkActive="active" routerLink="/profile">
+                     <i class="fa fa-user fa-lg"></i> My Profile 
                   </a>
-                 </li>
+                </li>
 
-                 <li>
-                  <a href="#">
-                  <i class="fa fa-users fa-lg"></i> Users
-                  </a>
-                 </li>
+                <li style="margin-left: 10px;">
+                  <i class="fa fa-users fa-lg"></i> Manage Users and Roles 
+                </li>
                  
-                 <li>
-                  <a href="#">
-                  <i class="fa fa-cog fa-lg"></i> Administration
-                  </a>
-                 </li>
+                <li data-toggle="collapse" data-target="#admin" class="collapsed" style="margin-left: 10px;">
+                  <i class="fa fa-cog fa-lg"></i> Administration 
+                </li>
+                <ul class="sub-menu collapse" id="admin">
+                  <li><a routerLink="/log" routerLinkActive="active">View system log</a></li>
+                </ul>
 
-                 <li>
-                  <a href="#">
-                  <i class="fa fa-info-circle fa-lg"></i> Help
+                <li data-toggle="collapse" data-target="#jobs" class="collapsed">
+                  <a routerLink="/help" routerLinkActive="active">
+                    <i class="fa fa-info-circle fa-lg"></i> Help 
                   </a>
-                 </li>
+                </li>
 
-                 <li>
-                  <a href="#">
-                  <i class="fa fa-asterisk fa-lg"></i> About
+                <li data-toggle="collapse" data-target="#jobs" class="collapsed">
+                  <a routerLink="/about" routerLinkActive="active">
+                    <i class="fa fa-asterisk fa-lg"></i> About 
                   </a>
-                 </li>
+                </li>
             </ul>
      </div>
   </div> 
