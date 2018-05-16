@@ -63,6 +63,7 @@ import { ModelPickerComponent } from './models/model-picker/model-picker.compone
 import { DateTimePickerModule} from 'ngx-datetime-picker';
 import { NumberPickerComponent } from './shared/number-picker/number-picker.component';
 import { ModelViewDialogComponent } from './models/model-view-dialog/model-view-dialog.component';
+import { NavbarSideComponent } from './navbar-side/navbar-side.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +108,8 @@ import { ModelViewDialogComponent } from './models/model-view-dialog/model-view-
     CreateDatamapComponent,
     ModelPickerComponent,
     NumberPickerComponent,
-    ModelViewDialogComponent
+    ModelViewDialogComponent,
+    NavbarSideComponent
   ],
   imports: [
     BrowserModule,

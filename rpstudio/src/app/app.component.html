@@ -1,4 +1,11 @@
 <app-navbar></app-navbar>
-<div class="container-fluid">
-<router-outlet></router-outlet>
+<div *ngIf="authService.isLoggedIn()">
+   <div class="container-fluid">
+      <app-navbar-side></app-navbar-side>
+      <router-outlet></router-outlet>
+   </div>
 </div>
+<div *ngIf="!authService.isLoggedIn()">
+  <user-login></user-login>
+</div>
+

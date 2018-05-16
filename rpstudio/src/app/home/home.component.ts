@@ -11,53 +11,28 @@ import { Router } from "@angular/router";
 export class HomeComponent implements OnInit {
   // lineChart
   public lineChartData:Array<any> = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'},
-    {data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C'}
+    {data: [31, 59, 60, 61, 56, 55, 40], label: 'Data Batches'},
+    {data: [28, 48, 50, 52, 51, 51, 47], label: 'Data Records (1000)'},
+    {data: [82, 84, 84, 86, 80, 86, 82], label: 'Accuracy'}
   ];
-  public lineChartLabels:Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public lineChartLabels:Array<any> = [ 'November', 'December', 'January', 'February', 'March', 'April'];
   public lineChartOptions:any = {
-    responsive: true
+    responsive: true,
+    title: {
+       display: true,
+       text: 'Volume and Accuracy'
+    }
   };
-  public lineChartColors:Array<any> = [
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    },
-    { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
-    },
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    }
-  ];
   public lineChartLegend:boolean = true;
-  public lineChartType:string = 'line';
+  public lineChartType:string = 'bar';
+
+  public radarChartLabels:string[] = ['Denials', 'Appeals', 'Workflow', 'Revenue'];
+  public radarChartData:any = [
+    {data: [65, 59, 44, 35], label: 'Volume'},
+    {data: [84, 92, 82, 85], label: 'Accuracy'}
+  ];
+  public radarChartType:string = 'radar';
  
-  public randomize():void {
-    let _lineChartData:Array<any> = new Array(this.lineChartData.length);
-    for (let i = 0; i < this.lineChartData.length; i++) {
-      _lineChartData[i] = {data: new Array(this.lineChartData[i].data.length), label: this.lineChartData[i].label};
-      for (let j = 0; j < this.lineChartData[i].data.length; j++) {
-        _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
-      }
-    }
-    this.lineChartData = _lineChartData;
-  }
   constructor(private authService : AuthService, private router: Router) {
   }
 
