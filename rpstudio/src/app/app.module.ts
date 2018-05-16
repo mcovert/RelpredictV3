@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule  } from './app-routing.module';
-
+import { ChartsModule } from 'ng2-charts';
 import { ArchwizardModule } from 'ng2-archwizard';
 import { GlobalService} from './services/global.service';
 import { AuthService} from './services/auth.service';
@@ -117,7 +117,8 @@ import { ModelViewDialogComponent } from './models/model-view-dialog/model-view-
     FormsModule,
     ArchwizardModule,
     TreeModule,
-    DateTimePickerModule
+    DateTimePickerModule,
+    ChartsModule
   ],
   exports: [
     RouterModule
