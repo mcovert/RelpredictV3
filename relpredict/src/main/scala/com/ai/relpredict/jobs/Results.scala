@@ -1,5 +1,6 @@
 package com.ai.relpredict.jobs
 
+import play.api.libs.json._
 /**
  * The Results object encapsulates all returned values from any stage (setup, run, cleanup) of a Job. It is also used by Algorithms
  * to return information. A Results object contains a return code and a set of key/value pairs that can store a variety of objects such 
@@ -61,5 +62,11 @@ case class Results() extends Serializable {
   def toDebugString() : String = toDelimitedDebugString("\n")
   def toStringArray() : Array[String] = {
     kvMap.map{case (k : String, v : Option[Any]) => s"$k=${v.get.toString()}"}.toArray
+  }
+  def toJson() = {
+    val js = kvMap.map({case (k, v) => (k, v.get.toString)})
+    js.foreach(println)
+    //Json.prettyPrint(js)
+    //JsObject(js)
   }
 }

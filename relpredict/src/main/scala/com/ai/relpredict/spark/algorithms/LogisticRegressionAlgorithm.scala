@@ -46,8 +46,8 @@ class LogisticRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val p
     lrmodel = Some(new LogisticRegressionWithLBFGS().setNumClasses(target.size).run(df))
     checkAlgorithmModel(lrmodel, true, "LogisticRegression - training failed to produce a model")
     results.addDouble(s"${prefix}.training.records", df.count().toDouble)
-    results.addString(s"${prefix}.training.weights", lrmodel.get.weights.toString())
-    results.addString(s"${prefix}.training.intercept", lrmodel.get.intercept.toString())
+    //results.addString(s"${prefix}.training.weights", lrmodel.get.weights.toString())
+    //results.addString(s"${prefix}.training.intercept", lrmodel.get.intercept.toString())
     results
   }
   /** 

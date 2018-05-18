@@ -37,6 +37,8 @@ class CommandLineParser {
            c.copy(verbose = x) ).text("Produce debugging output")
          opt[String]("run").action( (x, c) =>
            c.copy(run = x) ).text("Run the job (true)")
+         opt[String]("base_dir").action( (x, c) =>
+           c.copy(run = x) ).text("Base directory")
      }
      parser
   }
