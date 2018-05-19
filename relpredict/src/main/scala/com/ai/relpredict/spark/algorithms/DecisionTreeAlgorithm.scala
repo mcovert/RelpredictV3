@@ -103,12 +103,12 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
     if (checkAlgorithmModel(dtmodel, false, "DecisionTree - no model has been created. Save is ignored."))
        dtmodel.get.save(ss.sparkContext, fileName)
        /* Now save the visualizable decision tree to disk */
-       val sb = new StringBuilder()
-       sb.append(DecisionTreeUtil.getCSVHeader(dtmodel.get.depth))
-       sb.append(DecisionTreeUtil.getModelText(dtmodel.get.toDebugString, fs))
-       var file = SparkUtil.getHDFSFileWriter(s"${fileName}.vmodel", ss, false)
-       file.get.write(sb.toString())
-       file.get.close()
+       //val sb = new StringBuilder()
+       //sb.append(DecisionTreeUtil.getCSVHeader(dtmodel.get.depth))
+       //sb.append(DecisionTreeUtil.getModelText(dtmodel.get.toDebugString, fs))
+       //var file = SparkUtil.getHDFSFileWriter(s"${fileName}.vmodel", ss, false)
+       //file.get.write(sb.toString())
+       //file.get.close()
   }
   /**
    * Load the model from disk

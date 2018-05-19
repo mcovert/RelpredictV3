@@ -81,9 +81,12 @@ object RelPredict extends GrammarDef {
                         ScalaUtil.controlMsg(s"Running job ${j.jobname}")
                         val results = j.setup().merge(j.run()).merge(j.cleanup())
                         results.addString("job.cmdline", cmdLine.toString)
+                        results.toStringArray().foreach(println)
+                        val rmap = JsonConverter.toJson(results.convertToMap())
                         /* Save results  to log file */
                         val dir = RPConfig.getBaseDir()
-                        SparkUtil.saveTextToHDFSFile(results.toDelimitedDebugString("\n"), s"${dir}logs/${j.jobname}-${j.jobID}.log", sparkSession.get)
+                        //SparkUtil.saveTextToHDFSFile(results.toDelimitedDebugString("\n"), s"${dir}logs/${j.jobname}-${j.jobID}.log", sparkSession.get)
+                        SparkUtil.saveTextToHDFSFile(rmap, s"${dir}logs/${j.jobname}-${j.jobID}.log", sparkSession.get)
                         ScalaUtil.controlMsg(s"Job ${j.jobname} completed with return code ${results.getRC()}")
                         if (ScalaUtil.verbose) results.toStringArray().sorted.foreach(ScalaUtil.controlMsg(_))
                       }
