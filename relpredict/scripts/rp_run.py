@@ -47,13 +47,20 @@ os.system("mkdir " + jobdir)
 print "Setting up HDFS job directory: \n   " + jobdir
 os.system("hdfs dfs -mkdir " + jobdir)
 
-print "Copying model " + os.environ['RP_MODELDIR'] + '/' + model_def + " to: \n   " + jobdir + "/model" 
+print "Copying model " + os.environ['RP_MODELDIR'] + '/' + model_def + " to HDFS: \n   " + jobdir + "/model" 
 os.system("hdfs dfs -copyFromLocal " + os.environ['RP_MODELDIR'] + "/" + model_def + " " + jobdir + "/model")
+
+print "Copying model " + os.environ['RP_MODELDIR'] + '/' + model_def + " to local: \n   " + jobdir + "/model" 
+os.system("cp " + os.environ['RP_MODELDIR'] + "/" + model_def + " " + jobdir + "/model")
 
 cmd = os.environ['SPARK_HOME'] + "/bin/spark-submit --class com.ai.relpredict.jobs.RelPredict --master yarn --deploy-mode client --files /relpredict/conf/log4j.properties " + cmdargs + " > " + jobdir + "/log" 
 
 print "Executing command: \n   " + cmd
 os.system(cmd)     
+
+print "Copying job directory back to local and cleaning up." 
+os.system("hdfs dfs -copyToLocal " +  jobdir + "/results " + jobdir + "/results");
+os.system("hdfs dfs -rm -r " + jobdir);
    
   
 
