@@ -5,7 +5,7 @@ import scopt._
 class CommandLineParser {
   def getParser() : OptionParser[Config] = {
       val parser = new scopt.OptionParser[Config]("relpredict") {
-         head("relpredict", "2.0")
+         head("relpredict", "3.0")
 
          opt[String]("jobname").action( (x, c) =>
            c.copy(jobname = x) ).text("The name of the spark job that will be submitted (relpredict)")
@@ -34,13 +34,13 @@ class CommandLineParser {
          opt[String]("verbose").action( (x, c) =>
            c.copy(verbose = x) ).text("Produce verbose output")
          opt[String]("debug").action( (x, c) =>
-           c.copy(verbose = x) ).text("Produce debugging output")
+           c.copy(debug = x) ).text("Produce debugging output")
          opt[String]("run").action( (x, c) =>
            c.copy(run = x) ).text("Run the job (true)")
          opt[String]("base_dir").action( (x, c) =>
-           c.copy(run = x) ).text("Base directory")
+           c.copy(base_dir = x) ).text("Base directory")
          opt[String]("job_dir").action( (x, c) =>
-           c.copy(run = x) ).text("Job directory")
+           c.copy(job_dir = x) ).text("Job directory")
      }
      parser
   }
