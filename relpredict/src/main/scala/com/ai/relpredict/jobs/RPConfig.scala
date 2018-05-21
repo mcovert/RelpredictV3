@@ -5,6 +5,7 @@ import com.ai.relpredict.spark._
 
 object RPConfig {
     private var baseDir = ""
+    private var jobDir  = ""
     /**
      * Set up the base directory for RelPredict
      */
@@ -16,6 +17,17 @@ object RPConfig {
      * Get the base directory. Note that all directories returned will have "/" appended to the end.
      */
     def getBaseDir() = baseDir
+    /**
+     * Set up the job directory for RelPredict
+     */
+    def setJobDir(dir : String) { 
+      jobDir = if (dir.endsWith("/") || dir == "") dir else s"${dir}/"
+      if (! new java.io.File(jobDir).exists) ScalaUtil.terminal_error(s"Job directory $jobDir does not exist")
+    }
+    /**
+     * Get the job directory. Note that all directories returned will have "/" appended to the end.
+     */
+    def getJobDir() = jobDir
     /**
      * Get the configuration directory
      */
@@ -32,8 +44,8 @@ object RPConfig {
      * Get the model directory for a specific model and run ID. If none is specified, the current model is returned.
      */
     def getModelDir(model : Model, runID : String) : String = {
-      if (runID == "") s"${getModelDir(model)}/current/"
-      else s"${getModelDir(model)}/${runID}/"
+      if (runID == "") s"${getJobDir()}${getModelDir(model)}/current/"
+      else s"${getJobDir()}${getModelDir(model)}/${runID}/"
     }
     /**
      * Get the target directory for a named target within a model

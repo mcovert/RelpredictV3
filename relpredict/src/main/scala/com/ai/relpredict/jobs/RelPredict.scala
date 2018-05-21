@@ -17,7 +17,7 @@ import org.apache.spark.sql.SparkSession
 * Command line formats:
 *     relpredict --run_type train  --split 0.8  
 *
-*     relpredict --run_type predict --model_def saved_model.model --save_as format --output location --run_id runID
+*     relpredict --run_type predict --model_def saved_model.model --save_as format --job_dir location --run_id runID
 *     
 *                For predicted records, save_as format is hive or hdfs (the default is hive), and output location, for hive is the 
 *                output table name (must be of the proper format for predicted records), and for hdfs is the root directory                                    
@@ -67,6 +67,7 @@ object RelPredict extends GrammarDef {
            parser.parse(args, Config()) match {
               case Some(config) => {
                  RPConfig.setBaseDir(config.base_dir)
+                 RPConfig.setJobDir(config.job_dir)
                  ScalaUtil.setVerbose(config.verbose)
                  ScalaUtil.setEnvironment(config.env)
                  // Try to create a job using the command line arguments. 
