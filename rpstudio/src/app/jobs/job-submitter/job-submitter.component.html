@@ -31,11 +31,11 @@
                               </div> 
                           </td>
                           <td>
-                             <div *ngIf="p.label=='Model name'">
+                             <div *ngIf="p.label=='Model definition'">
                                 <app-model-picker (selectedModel)="selectModel($event, i)"></app-model-picker>
                              </div>
-                             <div *ngIf="p.label!='Model name'">
-                                 <input class="col-12" type="text" value="{{p.parm_value}}">
+                             <div *ngIf="p.label!='Model definition'">
+                                 <input class="col-12" type="text" value="{{p.parm_value}}" (change)="setParm(i,$event.target.value)">
                              </div>
                           </td>
                           <td>{{p.hint}}

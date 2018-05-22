@@ -56,5 +56,12 @@ datatypes      : RPDataType[] = [
   decode(s: string) : string {
       return decodeURI(s);
   }
+  stripQuotes(s: string) : string {
+      let start = 0;
+      let end = s.length;
+      if (s.startsWith("\"") || s.startsWith("\'")) start = 1;
+      if (s.endsWith("\"") || s.endsWith("\'")) end -= 1;
+      return s.substring(start, end);
+  }
 
 }

@@ -19,14 +19,15 @@ export class ModelPickerComponent implements OnInit {
         console.log(resultArray);
         this.models = resultArray.models;
         this.models.sort((m1 : RPModel, m2 : RPModel) : number => {
-            let m1x = m1.model_class + '.' + m1.name + '.' + m1.version;
-            let m2x = m2.model_class + '.' + m2.name + '.' + m2.version;
+            let m1x = m1.model_class + '/' + m1.name + '/' + m1.version;
+            let m2x = m2.model_class + '/' + m2.name + '/' + m2.version;
 
             if (m1x < m2x) return -1;
             else if (m1x > m2x) return 1;
             else return 0;
         });
         this.selectModel(0);
+        console.log(this.models);
      });
   }
 

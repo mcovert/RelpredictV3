@@ -119,8 +119,10 @@ getCommandMonitor = function(cmd, server) {
 exports.runJob = (cmd) => {
     var server = acquireServer();
     var fullCmd = path.join(config.scripts, cmd.command);
+    var userid = cmd.username.split("@")[0];
+    console.log("Running " + fullCmd + " for user " + userid + " on server " + server);
     console.log("Connecting to "+ server);
-    ssh.connect({ host: server, username: cmd.username, privateKey: '/home/' + cmd.username + '/.ssh/id_rsa'})
+    ssh.connect({ host: server, username: userid, privateKey: '/home/' + userid + '/.ssh/id_rsa'})
         .then(function() {
             console.log("Running " + fullCmd);
             ssh.execCommand(fullCmd, 

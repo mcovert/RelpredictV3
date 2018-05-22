@@ -1,4 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
+import { GlobalService } from '../../services/global.service';
+import { AuthService } from '../../services/auth.service';
 import { JobService } from '../../services/job.service';
 import { ModelService } from '../../services/model.service';
 import { RPJobTemplate, RPJobTemplateParm, ReturnObject, RPJobSubmitInfo, RPModel} from '../../shared/db-classes';
@@ -20,7 +22,8 @@ showMD = false;
 model: RPModel;
 modelName: string;
 
- constructor(private jobservice : JobService, private modelservice: ModelService, private router: Router) {}
+ constructor(private jobservice : JobService, private modelservice: ModelService, private globalService: GlobalService, 
+             private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     console.log("Submitter");
@@ -34,20 +37,28 @@ modelName: string;
   setCurrentJob(i: number) {
   	this.currentJob = i;
   }
+  setParm(i: number, v: string) {
+    console.log(i, v);
+    this.jobs[this.currentJob].parms[i].parm_value = v;
+  }
   submitJob() {
   	 var currJob = this.jobs[this.currentJob];
   	 var cmd = currJob.cmd;
      for (var i = 0; i < currJob.parms.length; i++) {
+       /* Special case for SQL statements to prevent globbing at the server becase of * */
+      if (currJob.parms[i].parm == 'sql') {
+        currJob.parms[i].parm_value = "\"" + this.globalService.stripQuotes(currJob.parms[i].parm_value) + "\""; 
+      }
      	cmd = cmd + ' --' + currJob.parms[i].parm +
      	            ' ' + currJob.parms[i].parm_value;
      }
-     var jobInfo = { username: 'mcovert', command: cmd, jobtype: currJob.job_type };
+     var jobInfo = { username: this.authService.getUsername(), command: cmd, jobtype: currJob.job_type };
      console.log(jobInfo);
      this.jobservice.submitJob(jobInfo).subscribe(result => {
-     	console.log(result);
-     	var ret = JSON.parse(result.returned_object);
-     	this.jobServer = ret.server; 
-     	this.jobLink = ret.monitor; 
+        console.log(result);
+        var ret = JSON.parse(result.returned_object);
+        this.jobServer = ret.server; 
+        this.jobLink = ret.monitor; 
      });
   }
   cancelJob() {
@@ -56,7 +67,7 @@ modelName: string;
   	window.open(this.jobLink, '_blank');
   }
   selectModel(model: string, i: number) {
-    console.log(model);
+    console.log("Model selected is " + model + " at position " + i);
     var currJob = this.jobs[this.currentJob];
     currJob.parms[i].parm_value = model;
     this.modelName = model;
