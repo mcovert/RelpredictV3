@@ -1,13 +1,14 @@
+import com.ai.spark._
 import akka.actor.{ Actor, ActorLogging, Props }
 
-final case class QRecords(data_source:String, schema:String, table:String, q_limit:String)
+final case class QRecords(field: String, value: String, type: String)
 
 
-object UserRegistryActor {
+object QueryActor {
   final case class ActionPerformed(description: String)
 
  
-  final case class GetRecords(q_limit:String)
+  final case class GetRecords(data_source:String, schema:String, table:String, q_limit:String)
   
 
   def props: Props = Props[QueryActor]
@@ -15,11 +16,9 @@ object UserRegistryActor {
 
 class QueryActor extends Actor with ActorLogging {
   import QueryActor._
-
-  var records = Set.empty[QRrecords]
-
+ 
   def receive: Receive = {
-    case GetRecords(q_limit) =>
-      sender() ! ActionPerformed(s"Records \${q_limit} selected")
+    case GetRecords(data_source,schama,table,q_limit) =>
+      sender() !QueryUtil.SparkQuery(data_source,schama,table,q_limit)
     }
 }
