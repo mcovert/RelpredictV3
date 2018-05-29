@@ -35,5 +35,4 @@ object QueryServer extends App with QueryRoutes {
   //#main-class
 }
 //#main-class
-//#quick-start-server
-~                     
+//#quick-start-server                    

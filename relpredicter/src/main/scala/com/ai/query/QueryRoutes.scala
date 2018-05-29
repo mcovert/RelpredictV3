@@ -43,7 +43,7 @@ trait QueryRoutes extends JsonSupport {
             get 
               {
               val query: Future[QRecords] =
-                (queryActor ? GetRecords(data_source, schema, table, q_limit)).mapTo[QRecords]
+                (queryActor ? GetRecords(d_source, d_schema, d_table, q_limit)).mapTo[QRecords]
                complete(query)
               }
             
