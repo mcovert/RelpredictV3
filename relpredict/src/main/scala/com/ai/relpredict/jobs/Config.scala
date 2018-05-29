@@ -5,6 +5,8 @@ import scopt._
 /* Define the command line parameter configuration class */
 case class Config(jobname:       String = "relpredict", 
                   sql:           String = "select * from training",
+                  table:         String = "",
+                  limit:         Integer= 0,
                   data_def:      String = "data.datadef",
                   split:         Double = 0.8,
                   base_dir:      String = "/relpredict",

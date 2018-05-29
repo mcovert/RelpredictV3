@@ -15,6 +15,9 @@ import org.apache.spark.sql.SparkSession
 *
 *{{{
 * Command line formats:
+*     relpredict config_file
+*                Use the config file to load the configuration
+*
 *     relpredict --run_type train  --split 0.8  
 *
 *     relpredict --run_type predict --model_def saved_model.model --save_as format --job_dir location --run_id runID
@@ -22,6 +25,7 @@ import org.apache.spark.sql.SparkSession
 *                For predicted records, save_as format is hive or hdfs (the default is hive), and output location, for hive is the 
 *                output table name (must be of the proper format for predicted records), and for hdfs is the root directory                                    
 *                A predicted record format is:
+*                      model_class     - model_class (string)
 *                      model           - model name (string)
 *                      version         - model version (int)
 *                      target          - name of predicted target (string)
@@ -33,7 +37,9 @@ import org.apache.spark.sql.SparkSession
 * *
 *  Both formats must specify:
 *        --sql        "select * from training"
-*        --model_def  model_def_file
+*        --model_def  model_def_file  (model_class/moel_name/model_version)
+*        --table      "database.table_name"
+*        --limit      record_limit 
 *        
 *  Either format can specify:
 *        --column_map column_map_filename
@@ -63,6 +69,7 @@ object RelPredict extends GrammarDef {
       val clp = new CommandLineParser()
       val parser = clp.getParser()
       if (args.length == 0) parser.showUsage()
+      else if (args.length == 1)  
       else {
            parser.parse(args, Config()) match {
               case Some(config) => {
