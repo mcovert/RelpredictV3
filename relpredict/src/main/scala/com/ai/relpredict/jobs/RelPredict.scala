@@ -68,46 +68,58 @@ object RelPredict extends GrammarDef {
       // Parse the command line
       val clp = new CommandLineParser()
       val parser = clp.getParser()
-      if (args.length == 0) parser.showUsage()
-      else if (args.length == 1)  
-      else {
-           parser.parse(args, Config()) match {
-              case Some(config) => {
-                 RPConfig.setBaseDir(config.base_dir)
-                 RPConfig.setJobDir(config.job_dir)
-                 ScalaUtil.setVerbose(config.verbose)
-                 ScalaUtil.setEnvironment(config.env)
-                 // Try to create a job using the command line arguments. 
-                 val job = getJob(config)
-                 if (config.run == "false") {
-                        ScalaUtil.controlMsg("Run was set to false. The job will not be submitted.")
-                 }
-                 else {
-                    job match {
-                      // If Job was built successfully, set it up and run it. 
-                      case Some(j) => {
-                        ScalaUtil.controlMsg(s"Running job ${j.jobname}")
-                        val results = j.setup().merge(j.run()).merge(j.cleanup())
-                        results.addString("job.cmdline", cmdLine.toString)
-                        results.toStringArray().foreach(println)
-                        val rmap = JsonConverter.toJson(results.convertToMap())
-                        /* Save results  to log file */
-                        val dir = RPConfig.getJobDir()
-                        //SparkUtil.saveTextToHDFSFile(results.toDelimitedDebugString("\n"), s"${dir}logs/${j.jobname}-${j.jobID}.log", sparkSession.get)
-                        SparkUtil.saveTextToHDFSFile(rmap, s"${dir}results", sparkSession.get)
-                        ScalaUtil.controlMsg(s"Job ${j.jobname} completed with return code ${results.getRC()}")
-                        if (ScalaUtil.verbose) results.toStringArray().sorted.foreach(ScalaUtil.controlMsg(_))
-                      }
-                      // Else write and error message and end
-                      case None => ScalaUtil.terminal_error("Job could not be created")
-                    }
-                 }
-              }
-              // If there were no command line parms, print usage and end
-              case None => parser.showUsage()
-           }
+      if (args.length == 0) {
+        parser.showUsage()
+        ScalaUtil.terminal_error("No configuration information was supplied.")
+      }
+      // Load configuration information
+      var config : Option[Config] = None
+      if (args.length == 1)  config = parser.parse(loadConfig(args(0)), Config())  // Load from file
+      else config = parser.parse(args, Config())           // Load from command line parameters
+      config match {
+          case Some(config) => {
+             RPConfig.setBaseDir(config.base_dir)
+             RPConfig.setJobDir(config.job_dir)
+             ScalaUtil.setVerbose(config.verbose)
+             ScalaUtil.setEnvironment(config.env)
+             // Try to create a job using the command line arguments. 
+             val job = getJob(config)
+             if (config.run == "false") {
+                    ScalaUtil.controlMsg("Run was set to false. The job will not be submitted.")
+             }
+             else {
+                job match {
+                  // If Job was built successfully, set it up and run it. 
+                  case Some(j) => {
+                    ScalaUtil.controlMsg(s"Running job ${j.jobname}")
+                    val results = j.setup().merge(j.run()).merge(j.cleanup())
+                    results.addString("job.cmdline", cmdLine.toString)
+                    results.toStringArray().foreach(println)
+                    val rmap = JsonConverter.toJson(results.convertToMap())
+                    /* Save results  to log file */
+                    val dir = RPConfig.getJobDir()
+                    //SparkUtil.saveTextToHDFSFile(results.toDelimitedDebugString("\n"), s"${dir}logs/${j.jobname}-${j.jobID}.log", sparkSession.get)
+                    SparkUtil.saveTextToHDFSFile(rmap, s"${dir}results", sparkSession.get)
+                    ScalaUtil.controlMsg(s"Job ${j.jobname} completed with return code ${results.getRC()}")
+                    if (ScalaUtil.verbose) results.toStringArray().sorted.foreach(ScalaUtil.controlMsg(_))
+                  }
+                  // Else write and error message and end
+                  case None => ScalaUtil.terminal_error("Job could not be created")
+                }
+             }
+          }
+          // If there is no config information, print error and end
+          case None => ScalaUtil.terminal_error("Error loading configuration information")
       }
       ScalaUtil.end(sysName)
+    }
+    def loadConfig(configFile: String) : Array[String] = {
+      val source = scala.io.Source.fromFile(configFile)
+      val parms = source.getLines.map(l => {
+        val kv = l.split("=")
+        List("--" + kv(0), kv(1))
+      }).flatMap(x => x).toArray
+      parms
     }
     // Generate a Job from command line parameters. 
     def getJob(conf : Config) : Option[Job] = {

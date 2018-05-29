@@ -43,7 +43,7 @@ class CommandLineParser {
            c.copy(job_dir = x) ).text("Job directory")
          opt[String]("table").action( (x, c) =>
            c.copy(table = x) ).text("Table name")
-         opt[String]("limit").action( (x, c) =>
+         opt[Int]("limit").action( (x, c) =>
            c.copy(limit = x) ).text("Limit to this number of records")
      }
      parser
