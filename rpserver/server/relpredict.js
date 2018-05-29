@@ -13,6 +13,22 @@ exports.showModels = () => {
    console.log('There are ' + models.length + ' Loopback defined:');
    models.forEach(function(m) { console.log(m.modelName)});
 }
+getDateString = function (d) {
+   let yyyy = d.getFullYear().toString();
+   let MM = pad(d.getMonth() + 1,2);
+   let dd = pad(d.getDate(), 2);
+   let hh = pad(d.getHours(), 2);
+   let mm = pad(d.getMinutes(), 2)
+   let ss = pad(d.getSeconds(), 2)
+   return yyyy + MM + dd+  hh + mm + ss;
+};
+function pad(number, length) {
+   let str = '' + number;
+   while (str.length < length) {
+       str = '0' + str;
+   }
+   return str;
+}
 /*******************************************************************************/
 /*    RelPredict system configuration taken from environment variables         */
 /*******************************************************************************/
@@ -115,24 +131,51 @@ getCommandMonitor = function(cmd, server) {
 	if (cmd == 'spark') return 'http://' + server + ':4040';
 	else return '';
 };
-/* Ouput log is sent back to the handlers below. They can be written to log files! */
+createJobname = (cmd) => {
+  return cmd.jobname + "_" + getDateString(new Date());
+}
+createJobDirectory = (cmd) => {
+  let jobDir = path.join(config.jobs, createJobname(cmd));
+  fs.makeDirSync(jobDir);
+  return jobDir;
+}
+createConfigFile = (cmd, jobDir) => {
+  let fileName = path.join(jobDir, 'config');
+  let cfgString = 'user='    + cmd.username + '\n' +
+                  'jobname=' + cmd.jobname  + '\n' +
+                  'jobdir='  + jobDir       + '\n' +
+                  'jobtype=' + cmd.jobType  + '\n';
+  for (var i = 0; i < cmd.parms.length; i++) {
+    cfgString = cfgString + cmd.parms[i].parm + '=' + cmd.parms[i].parm_value + '\n';
+  }
+  fs.writeFileSync(fileName, cfgString);
+}
+/**********************************************************************/
+/* To run a job:                                                      */
+/*    1. Get a server to run the job on                               */
+/*    2. Extract the base userid                                      */
+/*    3. Create the job directory and copy the config file to it      */
+/*    4. Run the job                                                  */
+/**********************************************************************/
 exports.runJob = (cmd) => {
     var server = acquireServer();
     var fullCmd = path.join(config.scripts, cmd.command);
     var userid = cmd.username.split("@")[0];
+    var jobDir = createJobDirectory(cmd);
+    createConfigFile(cmd, jobDir);
     console.log("Running " + fullCmd + " for user " + userid + " on server " + server);
     console.log("Connecting to "+ server);
     ssh.connect({ host: server, username: userid, privateKey: '/home/' + userid + '/.ssh/id_rsa'})
-        .then(function() {
+       .then(function() {
             console.log("Running " + fullCmd);
             ssh.execCommand(fullCmd, 
-                { cwd: config.home,
-	               onStdout(chunk) { console.log('stdoutChunk', chunk.toString('utf8'))},
+                { cwd: jobDir,
+	                 onStdout(chunk) { console.log('stdoutChunk', chunk.toString('utf8'))},
                    onStderr(chunk) { console.log('stderrChunk', chunk.toString('utf8'))}
                 }
             );
             releaseServer(server);
-        });
+       });
     return JSON.stringify({ 'server': server, 'monitor': getCommandMonitor(cmd.jobtype, server)});
 }; 
 /* Run local commands from home bin directory */
@@ -206,8 +249,8 @@ exports.getDatafileHeader = (fileName) => {
   fs.closeSync(fd);
   let inbuff = buffer.toString('utf8').split('\n');
 	return { 'datafile_name'   : fileName,
-             'datafile_header' : inbuff[0] || '',
-             'datafile_record' : inbuff[1] || ''
+           'datafile_header' : inbuff[0] || '',
+           'datafile_record' : inbuff[1] || ''
          };
 }
 exports.getDatamapList = () => {

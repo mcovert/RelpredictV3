@@ -290,7 +290,9 @@ export class ReturnObject {
 }
 export class RPJobSubmitInfo {
   username: string;
+  jobname : string;
   command : string;
+  parms   : RPJobTemplateParm[];
   jobType : string;
 }
 export class FieldModelUsage {

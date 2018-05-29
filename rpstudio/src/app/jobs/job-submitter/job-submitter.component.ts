@@ -44,15 +44,15 @@ modelName: string;
   submitJob() {
   	 var currJob = this.jobs[this.currentJob];
   	 var cmd = currJob.cmd;
-     for (var i = 0; i < currJob.parms.length; i++) {
-       /* Special case for SQL statements to prevent globbing at the server becase of * */
-      if (currJob.parms[i].parm == 'sql') {
-        currJob.parms[i].parm_value = "\"" + this.globalService.stripQuotes(currJob.parms[i].parm_value) + "\""; 
-      }
-     	cmd = cmd + ' --' + currJob.parms[i].parm +
-     	            ' ' + currJob.parms[i].parm_value;
-     }
-     var jobInfo = { username: this.authService.getUsername(), command: cmd, jobtype: currJob.job_type };
+     //for (var i = 0; i < currJob.parms.length; i++) {
+     // if (currJob.parms[i].parm == 'sql') {
+     //  currJob.parms[i].parm_value = "\"" + this.globalService.stripQuotes(currJob.parms[i].parm_value) + "\""; 
+     //}
+     //	cmd = cmd + ' --' + currJob.parms[i].parm +
+     //	            ' ' + currJob.parms[i].parm_value;
+     //}
+     var jobInfo = { username: this.authService.getUsername(), command: cmd, 
+                     parms:    currJob.parms,                  jobtype: currJob.job_type };
      console.log(jobInfo);
      this.jobservice.submitJob(jobInfo).subscribe(result => {
         console.log(result);
