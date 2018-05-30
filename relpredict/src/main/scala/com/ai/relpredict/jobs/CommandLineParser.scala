@@ -15,7 +15,7 @@ class CommandLineParser {
            c.copy(sql = x) ).text("SQL statement for input (select * from training)")
          opt[String]("data_def").action( (x, c) =>
            c.copy(sql = x) ).text("Data definition file for complex encoded data")
-         opt[Double]("split").action( (x, c) =>
+         opt[String]("split").action( (x, c) =>
            c.copy(split = x) ).text("Fraction of input file to use for training (0.8)")
          opt[String]("run_type").action( (x, c) =>
            c.copy(run_type = x) ).text("The run type (train, predict) the job")
@@ -43,8 +43,10 @@ class CommandLineParser {
            c.copy(job_dir = x) ).text("Job directory")
          opt[String]("table").action( (x, c) =>
            c.copy(table = x) ).text("Table name")
-         opt[Int]("limit").action( (x, c) =>
+         opt[String]("limit").action( (x, c) =>
            c.copy(limit = x) ).text("Limit to this number of records")
+         opt[String]("config").action( (x, c) =>
+           c.copy(limit = x) ).text("Configuration file")
      }
      parser
   }

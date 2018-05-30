@@ -19,12 +19,13 @@ case class TrainingJob(jn: String, model: com.ai.relpredict.spark.Model, conf : 
     def run() : Results = {
       var r = new Results()
       val split = {
-        if (conf.split <= 0.0 || conf.split >= 1.0) {
+        val sp = conf.split.toDouble
+        if (sp <= 0.0 || sp >= 1.0) {
           ScalaUtil.writeWarning(s"Split $conf.split must be greater than 0.0 and less than 1.0. 0.8 will be used." )
           r.setRC(r.WARN)
           Array(0.8, 0.2)
         }
-        else Array(conf.split, 1.0 - conf.split)
+        else Array(sp, 1.0 - sp)
       }
       val vecs = VectorBuilder.buildTargetDataFrames(ss, model, df)
       var targnum = 0   

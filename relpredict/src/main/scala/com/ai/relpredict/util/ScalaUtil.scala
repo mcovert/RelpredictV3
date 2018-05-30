@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import org.apache.log4j.{Level, LogManager, PropertyConfigurator}
+import scala.reflect.runtime.universe._
 
 class ConsoleLogger {
   def error(msg : String)   { println(msg) }
@@ -127,4 +128,10 @@ object ScalaUtil {
       }
       i
     }
+    def getMemberNames[T: TypeTag]: List[String] = typeOf[T].members.collect {
+       case m: MethodSymbol if m.isCaseAccessor => {
+           val fn = m.fullName.split("\\.")
+           fn(fn.length - 1)
+       }
+    }.toList
 }

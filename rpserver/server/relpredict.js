@@ -402,9 +402,10 @@ saveModel = (model, overwrite) => {
     var md = path.join(modelPath, model.name + '.modeldef');
     //console.log(md);
     if (fs.existsSync(md) && !overwrite)
-      return "Model exists and overwrite was not specified";
-    fs.writeFileSync(path.join(md), modelDef);
+      return "ERROR: Model exists and overwrite was not specified";
+    fs.writeFileSync(md, modelDef);
     fs.writeFileSync(path.join(modelPath, model.name + '.json'), modelJSON);
+    runLocal('model2hdfs.sh', modelPath);
     return "OK";
 }
 exports.saveModel = saveModel;

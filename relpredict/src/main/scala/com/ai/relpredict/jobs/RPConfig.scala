@@ -2,10 +2,45 @@ package com.ai.relpredict.jobs
 
 import com.ai.relpredict.util.ScalaUtil
 import com.ai.relpredict.spark._
+import scala.collection.JavaConverters._
 
 object RPConfig {
     private var baseDir = ""
     private var jobDir  = ""
+    private var config  : Config = Config()
+    // Parse the command line. Order of prededence (highest to lowest priority) is:
+    //     1. Command line args
+    //     2. config file
+    //     3. env variables
+    def getConfig(cmd_line_args: Array[String]) : Option[Config] = {
+      val clp                                 = new CommandLineParser()
+      val parser                              = clp.getParser()
+      // Get as much information as we can find
+      var cmdlineConfig : Option[Config]      = parser.parse(cmd_line_args, Config())
+      var envConfig     : Map[String, String] = System.getenv().asScala.toMap
+      var cfgConfig     : Option[Config]      = None
+      cmdlineConfig match { 
+        case Some(cfg) => {
+            if (cfg.config != "") {
+                ScalaUtil.controlMsg("Loading config file from " + cfg.config)
+                cfgConfig = parser.parse(loadConfig(cfg.config), Config())
+            }
+        }
+        case None =>
+      }
+      // Now let's resolve everything
+      this.config = Config().merge(envConfig).merge(cfgConfig).merge(cmdlineConfig).setDefaults()
+      this.config.print
+      Some(this.config)
+    }
+    def loadConfig(configFile: String) : Array[String] = {
+      val source = scala.io.Source.fromFile(configFile)
+      val parms = source.getLines.map(l => {
+        val kv = l.split("=")
+        List("--" + kv(0), kv(1))
+      }).flatMap(x => x).toArray
+      parms
+    }
     /**
      * Set up the base directory for RelPredict
      */

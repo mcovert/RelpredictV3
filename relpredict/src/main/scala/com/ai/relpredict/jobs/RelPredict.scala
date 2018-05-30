@@ -65,7 +65,11 @@ object RelPredict extends GrammarDef {
       ScalaUtil.setShutdownHook(this.shutdown)  // Register the system shutdown hook
       val cmdLine = new StringBuilder()
       args.foreach(arg => cmdLine.append(s"$arg "))
-      // Parse the command line
+      // Parse the command line. Order of prededence (highest to lowest priority) is:
+      //     1. Command line args
+      //     2. config file
+      //     3. env variables
+      var config : Option[Config] = RPConfig.getConfig(args)
       val clp = new CommandLineParser()
       val parser = clp.getParser()
       if (args.length == 0) {
@@ -73,9 +77,14 @@ object RelPredict extends GrammarDef {
         ScalaUtil.terminal_error("No configuration information was supplied.")
       }
       // Load configuration information
-      var config : Option[Config] = None
-      if (args.length == 1)  config = parser.parse(loadConfig(args(0)), Config())  // Load from file
-      else config = parser.parse(args, Config())           // Load from command line parameters
+      if (args.length == 1)  {
+        ScalaUtil.controlMsg("Loading config file from " + args(0))
+        config = parser.parse(loadConfig(args(0)), Config())
+      }   // Load from file
+      else {
+        ScalaUtil.controlMsg("Loading config file from command line parameters")
+        config = parser.parse(args, Config())           // Load from command line parameters
+      }
       config match {
           case Some(config) => {
              RPConfig.setBaseDir(config.base_dir)
