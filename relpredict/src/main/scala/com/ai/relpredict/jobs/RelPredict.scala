@@ -65,26 +65,8 @@ object RelPredict extends GrammarDef {
       ScalaUtil.setShutdownHook(this.shutdown)  // Register the system shutdown hook
       val cmdLine = new StringBuilder()
       args.foreach(arg => cmdLine.append(s"$arg "))
-      // Parse the command line. Order of prededence (highest to lowest priority) is:
-      //     1. Command line args
-      //     2. config file
-      //     3. env variables
+      // Set up RelPredict configuration. See RPConfig for details.
       var config : Option[Config] = RPConfig.getConfig(args)
-      val clp = new CommandLineParser()
-      val parser = clp.getParser()
-      if (args.length == 0) {
-        parser.showUsage()
-        ScalaUtil.terminal_error("No configuration information was supplied.")
-      }
-      // Load configuration information
-      if (args.length == 1)  {
-        ScalaUtil.controlMsg("Loading config file from " + args(0))
-        config = parser.parse(loadConfig(args(0)), Config())
-      }   // Load from file
-      else {
-        ScalaUtil.controlMsg("Loading config file from command line parameters")
-        config = parser.parse(args, Config())           // Load from command line parameters
-      }
       config match {
           case Some(config) => {
              RPConfig.setBaseDir(config.base_dir)
@@ -122,14 +104,14 @@ object RelPredict extends GrammarDef {
       }
       ScalaUtil.end(sysName)
     }
-    def loadConfig(configFile: String) : Array[String] = {
-      val source = scala.io.Source.fromFile(configFile)
-      val parms = source.getLines.map(l => {
-        val kv = l.split("=")
-        List("--" + kv(0), kv(1))
-      }).flatMap(x => x).toArray
-      parms
-    }
+    // def loadConfig(configFile: String) : Array[String] = {
+    //   val source = scala.io.Source.fromFile(configFile)
+    //   val parms = source.getLines.map(l => {
+    //     val kv = l.split("=")
+    //     List("--" + kv(0), kv(1))
+    //   }).flatMap(x => x).toArray
+    //   parms
+    // }
     // Generate a Job from command line parameters. 
     def getJob(conf : Config) : Option[Job] = {
       val jobParms = ScalaUtil.makeParms(conf.parms)

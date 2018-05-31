@@ -15,6 +15,12 @@ object RPConfig {
     def getConfig(cmd_line_args: Array[String]) : Option[Config] = {
       val clp                                 = new CommandLineParser()
       val parser                              = clp.getParser()
+      // See if help is requested. If so, print it, then end. 
+      if (cmd_line_args.length == 1 && cmd_line_args(0) == "--help") {
+         parser.showUsage()
+         ScalaUtil.end("Job")
+         System.exit(0)
+      }
       // Get as much information as we can find
       var cmdlineConfig : Option[Config]      = parser.parse(cmd_line_args, Config())
       var envConfig     : Map[String, String] = System.getenv().asScala.toMap
