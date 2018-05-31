@@ -65,10 +65,12 @@ object RelPredict extends GrammarDef {
       ScalaUtil.setShutdownHook(this.shutdown)  // Register the system shutdown hook
       val cmdLine = new StringBuilder()
       args.foreach(arg => cmdLine.append(s"$arg "))
+      ScalaUtil.controlMsg("Command line: " + cmdLine.toString);
       // Set up RelPredict configuration. See RPConfig for details.
       var config : Option[Config] = RPConfig.getConfig(args)
       config match {
           case Some(config) => {
+             config.print()
              RPConfig.setBaseDir(config.base_dir)
              RPConfig.setJobDir(config.job_dir)
              ScalaUtil.setVerbose(config.verbose)

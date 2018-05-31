@@ -9,12 +9,10 @@ class CommandLineParser {
 
          opt[String]("jobname").action( (x, c) =>
            c.copy(jobname = x) ).text("The name of the spark job that will be submitted (relpredict)")
-         opt[String]("output").action( (x, c) =>
-           c.copy(base_dir = x) ).text("The HDFS output directory for all results, or the Hive table name")
          opt[String]("sql").action( (x, c) =>
            c.copy(sql = x) ).text("SQL statement for input (select * from training)")
          opt[String]("data_def").action( (x, c) =>
-           c.copy(sql = x) ).text("Data definition file for complex encoded data")
+           c.copy(data_def = x) ).text("Data definition file for complex encoded data")
          opt[String]("split").action( (x, c) =>
            c.copy(split = x) ).text("Fraction of input file to use for training (0.8)")
          opt[String]("run_type").action( (x, c) =>
@@ -46,7 +44,7 @@ class CommandLineParser {
          opt[String]("limit").action( (x, c) =>
            c.copy(limit = x) ).text("Limit to this number of records")
          opt[String]("config").action( (x, c) =>
-           c.copy(limit = x) ).text("Configuration file")
+           c.copy(config = x) ).text("Configuration file")
      }
      parser
   }

@@ -36,73 +36,87 @@ case class Config(jobname:       String = "",
          _config match {
 
             case Some(_config) => {
-              val p01 = if (_config.jobname    == "") this.jobname    else _config.jobname
-              val p02 = if (_config.sql        == "") this.sql        else _config.sql
-              val p03 = if (_config.table      == "") this.table      else _config.table
-              val p04 = if (_config.limit      == "") this.limit      else _config.limit
-              val p05 = if (_config.data_def   == "") this.data_def   else _config.data_def
-              val p06 = if (_config.split      == "") this.split      else _config.split
-              val p07 = if (_config.base_dir   == "") this.base_dir   else _config.base_dir
-              val p08 = if (_config.run_type   == "") this.run_type   else _config.run_type
-              val p09 = if (_config.model_def  == "") this.model_def  else _config.model_def
-              val p10 = if (_config.run_id     == "") this.run_id     else _config.run_id
-              val p11 = if (_config.data_maps  == "") this.data_maps  else _config.data_maps
-              val p12 = if (_config.column_map == "") this.column_map else _config.column_map
-              val p13 = if (_config.verbose    == "") this.verbose    else _config.verbose
-              val p14 = if (_config.debug      == "") this.debug      else _config.debug
-              val p15 = if (_config.parms      == "") this.parms      else _config.parms
-              val p16 = if (_config.run        == "") this.run        else _config.run
-              val p17 = if (_config.config     == "") this.config    else _config.config
+              val p01 = if (_config.jobname    == "") jobname    else _config.jobname
+              val p02 = if (_config.sql        == "") sql        else _config.sql
+              val p03 = if (_config.table      == "") table      else _config.table
+              val p04 = if (_config.limit      == "") limit      else _config.limit
+              val p05 = if (_config.data_def   == "") data_def   else _config.data_def
+              val p06 = if (_config.split      == "") split      else _config.split
+              val p07 = if (_config.base_dir   == "") base_dir   else _config.base_dir
+              val p07a= if (_config.job_dir    == "") job_dir    else _config.job_dir
+              val p08 = if (_config.run_type   == "") run_type   else _config.run_type
+              val p08a= if (_config.env        == "") env        else _config.env
+              val p09 = if (_config.model_def  == "") model_def  else _config.model_def
+              val p10 = if (_config.run_id     == "") run_id     else _config.run_id
+              val p11 = if (_config.data_maps  == "") data_maps  else _config.data_maps
+              val p12 = if (_config.column_map == "") column_map else _config.column_map
+              val p13 = if (_config.verbose    == "") verbose    else _config.verbose
+              val p14 = if (_config.debug      == "") debug      else _config.debug
+              val p15 = if (_config.parms      == "") parms      else _config.parms
+              val p16 = if (_config.run        == "") run        else _config.run
+              val p17 = if (_config.config     == "") config     else _config.config
 
-              return Config(p01, p02, p03, p04, p05, p06, p07, p08, p09, p10,
-                            p11, p12, p13, p14, p15, p16, p17)
+              return Config(jobname = p01,    sql = p02,      table = p03,     limit = p04, 
+                            data_def = p05,   split = p06,    base_dir = p07,  
+                            job_dir = p07a, run_type = p08,   env = p08a, 
+                            model_def = p09,  run_id = p10,   data_maps = p11, column_map = p12, 
+                            verbose = p13,    debug = p14,    parms = p15,     run = p16, 
+                            config = p17)
             }
             case None => return this
          }
       }
       def merge(_config : Map[String, String]) : Config = {
-            val p01 = _config.getOrElse("jobname",    this.jobname)
-            val p02 = _config.getOrElse("sql",        this.sql)
-            val p03 = _config.getOrElse("table",      this.table)
-            val p04 = _config.getOrElse("limit",      this.limit)
-            val p05 = _config.getOrElse("data_def",   this.data_def)
-            val p06 = _config.getOrElse("split",      this.split)
-            val p07 = _config.getOrElse("base_dir",   this.base_dir)
-            val p08 = _config.getOrElse("run_type",   this.run_type)
-            val p09 = _config.getOrElse("model_def",  this.model_def)
-            val p10 = _config.getOrElse("run_id",     this.run_id)
-            val p11 = _config.getOrElse("data_maps",  this.data_maps)
-            val p12 = _config.getOrElse("column_map", this.column_map)
-            val p13 = _config.getOrElse("verbose",    this.verbose)
-            val p14 = _config.getOrElse("debug",      this.debug)
-            val p15 = _config.getOrElse("parms",      this.parms)
-            val p16 = _config.getOrElse("run",        this.run)
-            val p17 = _config.getOrElse("config",     this.config)
+            val p01 = _config.getOrElse("jobname",    jobname)
+            val p02 = _config.getOrElse("sql",        sql)
+            val p03 = _config.getOrElse("table",      table)
+            val p04 = _config.getOrElse("limit",      limit)
+            val p05 = _config.getOrElse("data_def",   data_def)
+            val p06 = _config.getOrElse("split",      split)
+            val p07 = _config.getOrElse("base_dir",   base_dir)
+            val p07a= _config.getOrElse("job_dir",    job_dir)
+            val p08 = _config.getOrElse("run_type",   run_type)
+            val p08a= _config.getOrElse("env",        env)
+            val p09 = _config.getOrElse("model_def",  model_def)
+            val p10 = _config.getOrElse("run_id",     run_id)
+            val p11 = _config.getOrElse("data_maps",  data_maps)
+            val p12 = _config.getOrElse("column_map", column_map)
+            val p13 = _config.getOrElse("verbose",    verbose)
+            val p14 = _config.getOrElse("debug",      debug)
+            val p15 = _config.getOrElse("parms",      parms)
+            val p16 = _config.getOrElse("run",        run)
+            val p17 = _config.getOrElse("config",     config)
 
-            return Config(p01, p02, p03, p04, p05, p06, p07, p08, p09, p10,
-                          p11, p12, p13, p14, p15, p16, p17)
+            return Config(jobname = p01,    sql = p02,      table = p03,     limit = p04, 
+                          data_def = p05,   split = p06,    base_dir = p07,  
+                          job_dir = p07a, run_type = p08,   env = p08a, 
+                          model_def = p09,  run_id = p10,   data_maps = p11, column_map = p12, 
+                          verbose = p13,    debug = p14,    parms = p15,     run = p16, 
+                          config = p17)
       }
-      def setDefaults() : Config = { return this.merge(default_values) }
+      def setDefaults() : Config = { return merge(default_values) }
 
       def print() {
             ScalaUtil.writeInfo("--------------Start Configuration--------------")
-            ScalaUtil.writeInfo("jobname:    " + this.jobname)
-            ScalaUtil.writeInfo("sql:        " + this.sql)
-            ScalaUtil.writeInfo("table:      " + this.table)
-            ScalaUtil.writeInfo("limit:      " + this.limit)
-            ScalaUtil.writeInfo("data_def:   " + this.data_def)
-            ScalaUtil.writeInfo("split:      " + this.split)
-            ScalaUtil.writeInfo("base_dir:   " + this.base_dir)
-            ScalaUtil.writeInfo("run_type:   " + this.run_type)
-            ScalaUtil.writeInfo("model_def:  " + this.model_def)
-            ScalaUtil.writeInfo("run_id:     " + this.run_id)
-            ScalaUtil.writeInfo("data_maps:  " + this.data_maps)
-            ScalaUtil.writeInfo("column_map: " + this.column_map)
-            ScalaUtil.writeInfo("verbose:    " + this.verbose)
-            ScalaUtil.writeInfo("debug:      " + this.debug)
-            ScalaUtil.writeInfo("parms:      " + this.parms)
-            ScalaUtil.writeInfo("run:        " + this.run)
-            ScalaUtil.writeInfo("config:     " + this.config)      
+            ScalaUtil.writeInfo("jobname:    " + jobname)
+            ScalaUtil.writeInfo("sql:        " + sql)
+            ScalaUtil.writeInfo("table:      " + table)
+            ScalaUtil.writeInfo("limit:      " + limit)
+            ScalaUtil.writeInfo("data_def:   " + data_def)
+            ScalaUtil.writeInfo("split:      " + split)
+            ScalaUtil.writeInfo("base_dir:   " + base_dir)
+            ScalaUtil.writeInfo("job_dir:    " + job_dir)
+            ScalaUtil.writeInfo("run_type:   " + run_type)
+            ScalaUtil.writeInfo("env:        " + env)
+            ScalaUtil.writeInfo("model_def:  " + model_def)
+            ScalaUtil.writeInfo("run_id:     " + run_id)
+            ScalaUtil.writeInfo("data_maps:  " + data_maps)
+            ScalaUtil.writeInfo("column_map: " + column_map)
+            ScalaUtil.writeInfo("verbose:    " + verbose)
+            ScalaUtil.writeInfo("debug:      " + debug)
+            ScalaUtil.writeInfo("parms:      " + parms)
+            ScalaUtil.writeInfo("run:        " + run)
+            ScalaUtil.writeInfo("config:     " + config)      
             ScalaUtil.writeInfo("---------------End Configuration---------------")
       }
 }

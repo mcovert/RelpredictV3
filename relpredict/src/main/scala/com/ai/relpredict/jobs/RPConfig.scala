@@ -22,7 +22,10 @@ object RPConfig {
          System.exit(0)
       }
       // Get as much information as we can find
+      // ScalaUtil.controlMsg("Loading command line parms")
       var cmdlineConfig : Option[Config]      = parser.parse(cmd_line_args, Config())
+      // cmdlineConfig.get.print()
+      // ScalaUtil.controlMsg("Loading env parms")
       var envConfig     : Map[String, String] = System.getenv().asScala.toMap
       var cfgConfig     : Option[Config]      = None
       cmdlineConfig match { 
@@ -30,14 +33,23 @@ object RPConfig {
             if (cfg.config != "") {
                 ScalaUtil.controlMsg("Loading config file from " + cfg.config)
                 cfgConfig = parser.parse(loadConfig(cfg.config), Config())
+                //cfgConfig.get.print()
             }
         }
-        case None =>
+        case None => ScalaUtil.controlMsg("Config file loading produced no resulting configuration")
       }
       // Now let's resolve everything
-      this.config = Config().merge(envConfig).merge(cfgConfig).merge(cmdlineConfig).setDefaults()
-      this.config.print
-      Some(this.config)
+      config = config.setDefaults()
+      //ScalaUtil.controlMsg("Defaults Merged")
+      config = config.merge(envConfig)
+      //ScalaUtil.controlMsg("Env Merged")
+      //config.print()
+      config = config.merge(cfgConfig)
+      //ScalaUtil.controlMsg("Config Merged")
+      //config.print()
+      config = config.merge(cmdlineConfig)
+      //ScalaUtil.controlMsg("Cmdline Merged (final)")
+      Some(config)
     }
     def loadConfig(configFile: String) : Array[String] = {
       val source = scala.io.Source.fromFile(configFile)
