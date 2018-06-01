@@ -143,7 +143,7 @@ createJobname = (cmd) => {
   return cmd.jobname + "_" + getDateString(new Date());
 }
 createJobDirectory = (jobclass, jobname) => {
-  let jobDir = path.join(config.jobs, jobclass + "_" + jobname + "_" + getDateString(new Date());
+  let jobDir = path.join(config.jobs, jobclass + "_" + jobname + "_" + getDateString(new Date()));
   fs.makeDirSync(jobDir);
   return jobDir;
 }
