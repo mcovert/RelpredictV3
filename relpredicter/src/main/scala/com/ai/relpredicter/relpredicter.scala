@@ -1,4 +1,4 @@
-package com.ai.relpredicter
+/* package com.ai.relpredicter
 
 import akka.actor.{ Actor, ActorLogging, ActorRef, ActorSystem, Props }
 
@@ -26,3 +26,4 @@ object AkkaQuickstart extends App {
   val predicter: ActorRef = system.actorOf(Predicter.props, "predictorActor")
 
 }
+*/

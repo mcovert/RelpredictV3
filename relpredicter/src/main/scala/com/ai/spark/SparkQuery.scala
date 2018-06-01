@@ -5,12 +5,14 @@ import org.apache.spark.rdd.RDD
 import org.apache.spark.sql._
 import org.apache.spark.sql.types._
 
+
 object QueryUtil
 {
 	def SparkQuery( DataSource : String, SchemaName : String, TableName : String, QLimit : String) : Array[(String,String,String)]=
 	{
 
 		val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "yarn").enableHiveSupport().getOrCreate() 
+		import sc.implicits._
 		sc.sql("use "+SchemaName)
 
 		val queryDF =sc.sql("select *  from "+TableName+" limit "+QLimit)
