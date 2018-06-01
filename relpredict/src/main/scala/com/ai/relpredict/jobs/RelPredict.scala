@@ -73,9 +73,10 @@ object RelPredict extends GrammarDef {
              config.print()
              RPConfig.setBaseDir(config.base_dir)
              RPConfig.setJobDir(config.job_dir)
-             ScalaUtil.setVerbose(config.verbose)
+             //ScalaUtil.setVerbose(config.verbose)
              ScalaUtil.setEnvironment(config.env)
              // Try to create a job using the command line arguments. 
+             ScalaUtil.controlMsg("Building job...")
              val job = getJob(config)
              if (config.run == "false") {
                     ScalaUtil.controlMsg("Run was set to false. The job will not be submitted.")

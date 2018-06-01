@@ -289,11 +289,10 @@ export class ReturnObject {
   returned_object : string;
 }
 export class RPJobSubmitInfo {
-  username: string;
-  jobname : string;
-  command : string;
-  parms   : RPJobTemplateParm[];
-  jobType : string;
+  username : string;
+  jobclass : string;
+  jobname  : string;
+  parms    : RPJobTemplateParm[]
 }
 export class FieldModelUsage {
   field_name: string;

@@ -6,7 +6,9 @@ var multer      = require('multer');
 const { spawn } = require('child_process');
 const dirTree   = require('directory-tree');
 var app         = require('./server.js');
-//var db = require('./rp_db.js');
+
+var jobListString = ""
+var jobList       = []; 
 
 exports.showModels = () => {
    var models = app.models();
@@ -131,11 +133,17 @@ getCommandMonitor = function(cmd, server) {
 	if (cmd == 'spark') return 'http://' + server + ':4040';
 	else return '';
 };
+findJob = (job_class, job_name) => {
+  for (let i = 0; i < jobList.length; i++)
+    if (jobList[i].job_class == job_class && jobList[i].job_name == job_name)
+      return jobList[i];
+  return null;
+}
 createJobname = (cmd) => {
   return cmd.jobname + "_" + getDateString(new Date());
 }
-createJobDirectory = (cmd) => {
-  let jobDir = path.join(config.jobs, createJobname(cmd));
+createJobDirectory = (jobclass, jobname) => {
+  let jobDir = path.join(config.jobs, jobclass + "_" + jobname + "_" + getDateString(new Date());
   fs.makeDirSync(jobDir);
   return jobDir;
 }
@@ -150,33 +158,38 @@ createConfigFile = (cmd, jobDir) => {
   }
   fs.writeFileSync(fileName, cfgString);
 }
-/**********************************************************************/
-/* To run a job:                                                      */
-/*    1. Get a server to run the job on                               */
-/*    2. Extract the base userid                                      */
-/*    3. Create the job directory and copy the config file to it      */
-/*    4. Run the job                                                  */
-/**********************************************************************/
+/************************************************************************/
+/* To run a job:                                                        */
+/*    1. Ensure that the job_class and job_name exists in the catalog   */
+/*    2. Get a server to run the job on                                 */
+/*    3. Extract the base userid                                        */
+/*    4. Create the job directory and copy the config file to it        */
+/*    5. Run the job. The script called needs to handle the HDFS stuff. */
+/************************************************************************/
 exports.runJob = (cmd) => {
+    var job = findJob(cmd.jobclass, cmd.jobname);
+    if (job == null) {
+      console.Log("Unknown job specified: " + cmd.jobclass + "/" + cmd.jobname);
+      return JSON.stringify({ status: 'job not found'});
+    }
     var server = acquireServer();
-    var fullCmd = path.join(config.scripts, cmd.command);
     var userid = cmd.username.split("@")[0];
-    var jobDir = createJobDirectory(cmd);
+    var jobDir = createJobDirectory(job.job_class, job.job_name);
     createConfigFile(cmd, jobDir);
-    console.log("Running " + fullCmd + " for user " + userid + " on server " + server);
+    var fullCmd = path.join(config.scripts, job.cmd) + " " + jobDir;
+    console.log("Running '" + fullCmd + "' for user " + userid + " on server " + server);
     console.log("Connecting to "+ server);
     ssh.connect({ host: server, username: userid, privateKey: '/home/' + userid + '/.ssh/id_rsa'})
        .then(function() {
-            console.log("Running " + fullCmd);
             ssh.execCommand(fullCmd, 
                 { cwd: jobDir,
-	                 onStdout(chunk) { console.log('stdoutChunk', chunk.toString('utf8'))},
-                   onStderr(chunk) { console.log('stderrChunk', chunk.toString('utf8'))}
+                  onStdout(chunk) { console.log('stdoutChunk', chunk.toString('utf8'))},
+                  onStderr(chunk) { console.log('stderrChunk', chunk.toString('utf8'))}
                 }
             );
             releaseServer(server);
        });
-    return JSON.stringify({ 'server': server, 'monitor': getCommandMonitor(cmd.jobtype, server)});
+    return JSON.stringify({ status: 'submitted', 'server': server, 'monitor': getCommandMonitor(cmd.jobtype, server)});
 }; 
 /* Run local commands from home bin directory */
 exports.runLocal = (cmd, parms) => {
@@ -192,11 +205,15 @@ exports.runLocal = (cmd, parms) => {
     cmdrun.on('exit', function (code, signal) { console.log('Command ' + cmd + ' exited with ' + `code ${code}`); } );
 }
 exports.getJobTemplate = () => {
+  if (jobListString != "") return jobListString; 
 	var fullFileName = path.join(config.jobtemplates, 'jobs.json');
 	if (fs.existsSync(fullFileName)) {
        var fileStat = fs.statSync(fullFileName);
        var jtContent = fs.readFileSync(fullFileName, 'utf8').replace(/\n|\r|\t/g, " ");
-       //console.log(jtContent);
+       if (jobListString = "") {
+          jobListString = jtContent;
+          jobList       = JSON.parse(jtContent).jobs
+       }
        return jtContent;
     }
     else return '';	

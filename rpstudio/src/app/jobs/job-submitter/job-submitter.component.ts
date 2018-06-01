@@ -51,8 +51,10 @@ modelName: string;
      //	cmd = cmd + ' --' + currJob.parms[i].parm +
      //	            ' ' + currJob.parms[i].parm_value;
      //}
-     var jobInfo = { username: this.authService.getUsername(), command: cmd, 
-                     parms:    currJob.parms,                  jobtype: currJob.job_type };
+     var jobInfo = { username: this.authService.getUsername(), 
+                     jobclass: currJob.job_class, 
+                     jobname:  currJob.job_name, 
+                     parms:    currJob.parms };
      console.log(jobInfo);
      this.jobservice.submitJob(jobInfo).subscribe(result => {
         console.log(result);

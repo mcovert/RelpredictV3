@@ -14,8 +14,8 @@ class ConsoleLogger {
      
 // create the date/time formatters
 object ScalaUtil {
-    var verbose = false
-    var debug = false
+    var verbose = true
+    var debug = true
     var localMode = false
     var shutdownHook = () => {}
     val log = /* LogManager.getLogger("Console") */ new ConsoleLogger()

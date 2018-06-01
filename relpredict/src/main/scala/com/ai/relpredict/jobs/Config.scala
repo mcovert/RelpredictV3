@@ -27,11 +27,12 @@ case class Config(jobname:       String = "",
                   run:           String = "",
                   config:        String = "")
 {
-      def default_values = Map("split" -> "0.8", 
+      def default_values = Map("split"    -> "0.8", 
                                "base_dir" -> "/relpredict", 
-                               "env" -> "yarn", 
-                               "verbose" -> "true",
-                               "debug" -> "false"   )
+                               "env"      -> "yarn", 
+                               "verbose"  -> "true",
+                               "debug"    -> "false",
+                               "run"      -> "true"   )
       def merge(_config : Option[Config]) : Config = {
          _config match {
 
@@ -56,12 +57,12 @@ case class Config(jobname:       String = "",
               val p16 = if (_config.run        == "") run        else _config.run
               val p17 = if (_config.config     == "") config     else _config.config
 
-              return Config(jobname = p01,    sql = p02,      table = p03,     limit = p04, 
-                            data_def = p05,   split = p06,    base_dir = p07,  
-                            job_dir = p07a, run_type = p08,   env = p08a, 
-                            model_def = p09,  run_id = p10,   data_maps = p11, column_map = p12, 
-                            verbose = p13,    debug = p14,    parms = p15,     run = p16, 
-                            config = p17)
+              return Config(jobname   = p01,    sql      = p02,    table     = p03,     limit      = p04, 
+                            data_def  = p05,    split    = p06,    base_dir  = p07,  
+                            job_dir   = p07a,   run_type = p08,    env       = p08a, 
+                            model_def = p09,    run_id   = p10,    data_maps = p11,     column_map = p12, 
+                            verbose   = p13,    debug    = p14,    parms     = p15,     run        = p16, 
+                            config    = p17)
             }
             case None => return this
          }
@@ -87,12 +88,12 @@ case class Config(jobname:       String = "",
             val p16 = _config.getOrElse("run",        run)
             val p17 = _config.getOrElse("config",     config)
 
-            return Config(jobname = p01,    sql = p02,      table = p03,     limit = p04, 
-                          data_def = p05,   split = p06,    base_dir = p07,  
-                          job_dir = p07a, run_type = p08,   env = p08a, 
-                          model_def = p09,  run_id = p10,   data_maps = p11, column_map = p12, 
-                          verbose = p13,    debug = p14,    parms = p15,     run = p16, 
-                          config = p17)
+              return Config(jobname   = p01,    sql      = p02,    table     = p03,     limit      = p04, 
+                            data_def  = p05,    split    = p06,    base_dir  = p07,  
+                            job_dir   = p07a,   run_type = p08,    env       = p08a, 
+                            model_def = p09,    run_id   = p10,    data_maps = p11,     column_map = p12, 
+                            verbose   = p13,    debug    = p14,    parms     = p15,     run        = p16, 
+                            config    = p17)
       }
       def setDefaults() : Config = { return merge(default_values) }
 
