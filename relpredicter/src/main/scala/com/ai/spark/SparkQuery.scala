@@ -11,7 +11,7 @@ object QueryUtil
 	def SparkQuery( DataSource : String, SchemaName : String, TableName : String, QLimit : String) : Array[(String,String,String)]=
 	{
 
-		val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "yarn").enableHiveSupport().getOrCreate() 
+		val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "yarn-client").enableHiveSupport().getOrCreate() 
 		import sc.implicits._
 		sc.sql("use "+SchemaName)
 

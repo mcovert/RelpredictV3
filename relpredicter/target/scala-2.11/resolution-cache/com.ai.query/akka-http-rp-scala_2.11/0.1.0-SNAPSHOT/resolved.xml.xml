@@ -4,7 +4,7 @@
 		module="akka-http-rp-scala_2.11"
 		revision="0.1.0-SNAPSHOT"
 		status="integration"
-		publication="20180601112145"
+		publication="20180601161738"
 	>
 		<description>
 		akka-http-rp-scala

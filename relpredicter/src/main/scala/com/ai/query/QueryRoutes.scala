@@ -36,18 +36,20 @@ trait QueryRoutes extends JsonSupport {
   //#all-routes
   //#users-get-post
 
-  lazy val queryRoutes: Route =
-    pathPrefix("query") {
-      //#users-get-delete
-        
-        
-            get 
+ // lazy val queryRoutes: Route =
+    val queryRoutes : Route =
+      path("query") {
+      //#query-get      
+              
+              get
               {
-               parameters('d_source.as[String], 'd_schema.as[String], 'd_table.as[String],'q_limit.as[String])
-               {(d_source,d_schema,d_table,q_limit)=>
-              val query: Future[QRecords] =
-                (queryActor ? GetRecords(d_source, d_schema, d_table, q_limit)).mapTo[QRecords]
-               complete(query)
+               parameters("dsource", "dschema", "dtable","qlimit")
+               {(dsource,dschema,dtable,qlimit)=>
+               
+                  val query: Future[QRecords] =
+                  //complete (s" dsource='%dsource' and dschema='%dschema' and dtable='%dtable' and qlimit='%qlimit'")
+                  (queryActor ? GetRecords(dsource, dschema, dtable, qlimit)).mapTo[QRecords]
+                  complete(query)
               }
             }
             /*

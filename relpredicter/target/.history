@@ -9,3 +9,6 @@ help
 show
 :q
 exit
+~run
+~stop
+~run
