@@ -7,9 +7,6 @@ const { spawn } = require('child_process');
 const dirTree   = require('directory-tree');
 var app         = require('./server.js');
 
-var jobListString = ""
-var jobList       = []; 
-
 exports.showModels = () => {
    var models = app.models();
    console.log('There are ' + models.length + ' Loopback defined:');
@@ -46,6 +43,12 @@ var config = {
 	models:       process.env.RP_MODELDIR
 };
 exports.config = config;
+/******************************************************************************/
+/*                        Load the job list file                              */
+/******************************************************************************/
+var jobListString = fs.readFileSync(path.join(config.jobtemplates, 'jobs.json'), 'utf8').replace(/\n|\r|\t/g, " ");
+var jobList       = JSON.parse(jobListString).jobs
+
 /*******************************************************************************/
 /*                             Utility functions                               */
 /*******************************************************************************/
@@ -134,9 +137,18 @@ getCommandMonitor = function(cmd, server) {
 	else return '';
 };
 findJob = (job_class, job_name) => {
-  for (let i = 0; i < jobList.length; i++)
-    if (jobList[i].job_class == job_class && jobList[i].job_name == job_name)
+  //console.log("Job List:");
+  //console.log(jobListString);
+  //console.log(jobList);
+  //console.log("Finding job " + job_class + "/" + job_name);
+  if (jobList.length == 0) getJobTemplate()
+  for (let i = 0; i < jobList.length; i++) {
+    //console.log(jobList[i]);
+    if (jobList[i].job_class == job_class && jobList[i].job_name == job_name) {
+      //console.log("Found job");
       return jobList[i];
+    }
+  }
   return null;
 }
 createJobname = (cmd) => {
@@ -144,15 +156,16 @@ createJobname = (cmd) => {
 }
 createJobDirectory = (jobclass, jobname) => {
   let jobDir = path.join(config.jobs, jobclass + "_" + jobname + "_" + getDateString(new Date()));
-  fs.makeDirSync(jobDir);
+  fs.mkdirSync(jobDir);
   return jobDir;
 }
 createConfigFile = (cmd, jobDir) => {
   let fileName = path.join(jobDir, 'config');
-  let cfgString = 'user='    + cmd.username + '\n' +
-                  'jobname=' + cmd.jobname  + '\n' +
-                  'jobdir='  + jobDir       + '\n' +
-                  'jobtype=' + cmd.jobType  + '\n';
+  let cfgString = "";
+  // let cfgString = '#user='    + cmd.username + '\n' +
+  //                 '#jobname=' + cmd.jobname  + '\n' +
+  //                 '#jobdir='  + jobDir       + '\n' +
+  //                 '#jobtype=' + cmd.jobType  + '\n';
   for (var i = 0; i < cmd.parms.length; i++) {
     cfgString = cfgString + cmd.parms[i].parm + '=' + cmd.parms[i].parm_value + '\n';
   }
@@ -169,7 +182,7 @@ createConfigFile = (cmd, jobDir) => {
 exports.runJob = (cmd) => {
     var job = findJob(cmd.jobclass, cmd.jobname);
     if (job == null) {
-      console.Log("Unknown job specified: " + cmd.jobclass + "/" + cmd.jobname);
+      console.log("Unknown job specified: " + cmd.jobclass + "/" + cmd.jobname);
       return JSON.stringify({ status: 'job not found'});
     }
     var server = acquireServer();
@@ -204,20 +217,21 @@ exports.runLocal = (cmd, parms) => {
     cmdrun.stderr.on('data', (data) => { console.error(`${data}`);});
     cmdrun.on('exit', function (code, signal) { console.log('Command ' + cmd + ' exited with ' + `code ${code}`); } );
 }
-exports.getJobTemplate = () => {
-  if (jobListString != "") return jobListString; 
-	var fullFileName = path.join(config.jobtemplates, 'jobs.json');
-	if (fs.existsSync(fullFileName)) {
-       var fileStat = fs.statSync(fullFileName);
-       var jtContent = fs.readFileSync(fullFileName, 'utf8').replace(/\n|\r|\t/g, " ");
-       if (jobListString = "") {
-          jobListString = jtContent;
-          jobList       = JSON.parse(jtContent).jobs
-       }
-       return jtContent;
-    }
-    else return '';	
+getJobTemplate = () => {
+  return jobListString; 
+ // var fullFileName = path.join(config.jobtemplates, 'jobs.json');
+ // if (fs.existsSync(fullFileName)) {
+ //       var fileStat = fs.statSync(fullFileName);
+ //       var jtContent = fs.readFileSync(fullFileName, 'utf8').replace(/\n|\r|\t/g, " ");
+ //       if (jobListString = "") {
+ //          jobListString = jtContent;
+ //          jobList       = JSON.parse(jtContent).jobs
+ //       }
+ //       return jtContent;
+ //    }
+ //    else return '';	
 }
+exports.getJobTemplate = getJobTemplate
 /*******************************************************************************/
 /*                         Data management functions                           */
 /*******************************************************************************/

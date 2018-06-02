@@ -8,3 +8,11 @@ textarea
 {
     font: 16px 'Open Sans', sans-serif;
 }
+h3 {
+	background-color: gray;
+	color: white;
+	padding: 0;
+	margin: 0;
+	text-align: center ;
+	flex: auto;
+}

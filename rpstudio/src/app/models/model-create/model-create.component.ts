@@ -1,10 +1,10 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, Input } from '@angular/core';
 import { ModelService } from '../../services/model.service';
 import { GlobalService } from '../../services/global.service';
 import { Observable } from "rxjs/Observable";
 import { Router, ActivatedRoute } from "@angular/router";
 import { RPDataType, RPParameter, RPParameterDef, RPFeature, RPTargetAlgorithm, RPTarget, RPModel, RPAlgorithmDef, RPCurrentModel, RPLogEntry, RPTrainedModel,
-         RPModelClass, ReturnObject, FieldModelUsage } from '../../shared/db-classes';
+         RPModelClass, ReturnObject, FieldModelUsage, RPModelTemplate } from '../../shared/db-classes';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -33,7 +33,7 @@ export class ModelCreateComponent implements OnInit {
   curr_type    : string;
   script       : string = '';
   checked      : boolean[] = [];
-  mode         : string = "new";  /* new, file, datamap */
+  mode         : string = "new";  /* new, model, file, datamap */
   field_source : string = "";
   field_string : string = "";
   fields       : FieldModelUsage[] = [];
@@ -41,23 +41,20 @@ export class ModelCreateComponent implements OnInit {
 
   constructor(private modelService : ModelService, private router: Router, 
               private route: ActivatedRoute, private globalservice: GlobalService) { 
-     this.route.params.subscribe( params => { 
-        this.mode = params['mode'] || "new"; 
-        this.field_source = params['field_source'] || "";
-        this.field_string = params['fields'] || "";
-        if (this.mode == 'datamap' || this.mode == 'file') {
-          this.fields = JSON.parse(this.globalservice.decode(this.field_string)); 
-          for (var i = 0; i < this.fields.length; i++) this.fields[i].field_use = 'Feature';       
-          this.ready = true;
-        }
-        else
-          this.ready = true;
-     });
   }
 
   ngOnInit() {
     this.modelService.getModelClasses().subscribe(resultArray => {
         this.modelClasses = resultArray as RPModelClass[];
+        this.createModel();
+        this.ready = true;
+    });
+    this.dataTypes = this.modelService.getDataTypes();
+    this.algDefs = this.modelService.getAlgorithmDefs();
+    this.parmDefs = this.dataTypes[0].parms;
+    this.parms = this.createParms(this.parmDefs);
+  }
+  createModel() {
         this.model = new RPModel();
         this.model.model_class = this.modelClasses[0].label;
         this.model.version = 1;
@@ -67,15 +64,16 @@ export class ModelCreateComponent implements OnInit {
         this.model.description = "";
         this.model.identifier = "";
         this.model.current = false;
-        if (this.mode == 'datamap' || this.mode == 'file') {
+        if (this.mode == 'file') {
           this.model.name = this.field_source + "_model";
           this.model.description = "Model built from " + this.mode + " " + this.field_source;
-        }
-    });
-    this.dataTypes = this.modelService.getDataTypes();
-    this.algDefs = this.modelService.getAlgorithmDefs();
-    this.parmDefs = this.dataTypes[0].parms;
-    this.parms = this.createParms(this.parmDefs);
+        }    
+  }
+  selectBuildMode(bm: String) {
+    this.mode = bm;
+  }
+  getModelFromTemplate() {
+    return new RPModel();
   }
   setModelClass(mc: string) {
     this.model.model_class = mc;

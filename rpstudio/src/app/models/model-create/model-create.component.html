@@ -1,20 +1,36 @@
 <div *ngIf="ready">
-<wizard #wizard navBarLayout="large-empty-symbols">
-  <wizard-step *ngIf="mode=='new'" stepTitle="Model Building" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
+  <wizard-step stepTitle="Model Building" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
     <form>
       <br>
       <h2 class="text-center">How would you like to build the model?</h2>
       <br>
       <div class="row col-12">
-              <div class="col-4"></div>
-              <label class="col-2" for="mode">Build as</label>
-              <select class="col-2" [(ngModel)]="mode" id="mode" name="mode">
+           <div class="col-4"></div>
+           <label class="col-2" for="mode">Build as</label>
+           <select class="col-2" (change)="selectBuildMode($event.target.value)" >
                  <option value="none" selected >Empty model</option>
                  <option value="model">Using another model</option>
-                 <option value="datamap">Using a Datamap</option>
-                 <option value="file">Using a File</option>
-              </select>
-              <div class="col-4"></div>
+                 <option value="file">Using a Datamap or File</option>
+           </select>
+           <div class="col-4"></div>
+      </div>  
+      <div *ngIf="mode='model'" class="row col-12">
+           <div class="col-4"></div>
+              <app-model-picker (selectedModel)="selectModel($event)"></app-model-picker>
+               <button class="btn btn-info btn-xs center-block" (click)="showModelDialog()">
+                    <span class="fa fa-eye"></span>
+               </button> 
+           </div>
+           <div class="col-4"></div>
+      </div>  
+      <div *ngIf="mode='file'" class="row col-12">
+           <div class="col-4"></div>
+              <app-model-picker (selectedModel)="selectModel($event)"></app-model-picker>
+               <button class="btn btn-info btn-xs center-block" (click)="showModelDialog()">
+                    <span class="fa fa-eye"></span>
+               </button> 
+           </div>
+           <div class="col-4"></div>
       </div>  
     </form>
     <br/>
@@ -22,7 +38,7 @@
        <button type="button" nextStep class="btn btn-sm btn-primary">Next Step</button>
     </div>
   </wizard-step>
-  <wizard-step *ngIf="mode=='datamap' || mode=='file'" stepTitle="Model Building" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
+  <wizard-step stepTitle="Model Building" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
     <form>
       <br>
       <h2 class="text-center">Build the model using a {{mode}}</h2>
@@ -63,7 +79,8 @@
     <div class="text-center">
        <button type="button" nextStep class="btn btn-sm btn-primary" (click)="fillModelFromFields();">Next Step</button>
     </div>
-  </wizard-step>  <wizard-step stepTitle="Define the new model" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
+  </wizard-step>  
+  <wizard-step stepTitle="Define the new model" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
     <form>
       <br>
       <h2 class="text-center">Define the model</h2>

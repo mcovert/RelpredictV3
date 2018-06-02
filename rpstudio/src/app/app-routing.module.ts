@@ -23,7 +23,7 @@ const routes: Routes = [
  { path: '', component: HomeComponent },
  { path: 'home', component: HomeComponent },
  { path: 'profile', component: ProfileComponent, canActivate: [OnlyLoggedInGuard] },
- { path: 'model-create/:mode/:field_source/:fields', component: ModelCreateComponent, canActivate: [OnlyLoggedInGuard] },
+ { path: 'model-create', component: ModelCreateComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'about', component: AboutComponent },
  { path: 'log', component: LogBrowserComponent, canActivate: [OnlyLoggedInGuard] },
  { path: 'models', component: ModelsComponent, canActivate: [OnlyLoggedInGuard] },
