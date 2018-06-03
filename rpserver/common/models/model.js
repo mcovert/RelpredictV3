@@ -72,6 +72,7 @@ module.exports = function(Model) {
    		}
    	});
     Model.convert = function (model, cb) {
+        console.log(model);
         cb(null, rp.convertModel(model));
     };
     Model.remoteMethod(

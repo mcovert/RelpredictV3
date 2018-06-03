@@ -16,4 +16,7 @@ export class NavbarComponent implements OnInit {
   getUsernameAndRole() {
     return this.authService.getUsernameAndRole();
   }
+  showBrand() {
+  	window.open("http://www.AnalyticsInside.us", "_blank");
+  }
 }

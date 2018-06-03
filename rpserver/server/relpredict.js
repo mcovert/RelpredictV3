@@ -389,7 +389,7 @@ createTarget = function(target) {
            ' parameters '  + quoted(createParms(target.parms)) + '\n';
 }                     
 convertModel = (model) => {
-	//console.log(model);
+	console.log(model);
 	var modelStr = 'model '    + quoted(model.name) + 
 	               ' version ' + quoted(model.version) +
 	               ' description ' + quoted(model.description) + '\n' +
@@ -403,7 +403,7 @@ convertModel = (model) => {
 }
 exports.convertModel = convertModel; 
 getModelPath = function(model) {
-  //console.log(config.models + " " + model.model_class + " " + model.name + " " + model.version.toString());
+  console.log(config.models + " " + model.model_class + " " + model.name + " " + model.version.toString());
 	return path.join(config.models, 
     	             model.model_class, 
     	             model.name,

@@ -154,8 +154,9 @@ httpOptions    : HttpHeaders;
     return ta;    
   }
   getScript(model: RPModel) : Observable<ReturnObject> {
-    let body = JSON.stringify({ model: model});
-    return this.httpService.post(this.authService.addAccessTokenToURL(this.url + 'models/convert'), body) as Observable<ReturnObject>;
+    console.log('Model to convert', model);
+    //let body = JSON.stringify({ model: model});
+    return this.httpService.post(this.authService.addAccessTokenToURL(this.url + 'models/convert'), { model: model}) as Observable<ReturnObject>;
 
   }
  }

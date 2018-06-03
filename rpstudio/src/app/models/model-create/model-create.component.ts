@@ -69,8 +69,14 @@ export class ModelCreateComponent implements OnInit {
           this.model.description = "Model built from " + this.mode + " " + this.field_source;
         }    
   }
-  selectBuildMode(bm: String) {
+  selectBuildMode(bm: string) {
     this.mode = bm;
+  }
+  selectModel(model_info: string) {
+
+  }
+  selectFile(file_info: string) {
+
   }
   getModelFromTemplate() {
     return new RPModel();

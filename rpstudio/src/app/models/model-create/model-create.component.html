@@ -1,4 +1,5 @@
 <div *ngIf="ready">
+  <wizard>
   <wizard-step stepTitle="Model Building" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
     <form>
       <br>
@@ -7,29 +8,23 @@
       <div class="row col-12">
            <div class="col-4"></div>
            <label class="col-2" for="mode">Build as</label>
-           <select class="col-2" (change)="selectBuildMode($event.target.value)" >
+           <select class="col-2" (change)="selectBuildMode($event.target.value)" id="mode">
                  <option value="none" selected >Empty model</option>
                  <option value="model">Using another model</option>
                  <option value="file">Using a Datamap or File</option>
            </select>
            <div class="col-4"></div>
       </div>  
-      <div *ngIf="mode='model'" class="row col-12">
+      <div *ngIf="mode=='model'" class="row col-12">
            <div class="col-4"></div>
-              <app-model-picker (selectedModel)="selectModel($event)"></app-model-picker>
-               <button class="btn btn-info btn-xs center-block" (click)="showModelDialog()">
-                    <span class="fa fa-eye"></span>
-               </button> 
-           </div>
+           <label class="col-2" for="mode">Select Model</label>
+           <app-model-picker (selectedModel)="selectModel($event)"></app-model-picker>
            <div class="col-4"></div>
       </div>  
-      <div *ngIf="mode='file'" class="row col-12">
+      <div *ngIf="mode=='file'" class="row col-12">
            <div class="col-4"></div>
-              <app-model-picker (selectedModel)="selectModel($event)"></app-model-picker>
-               <button class="btn btn-info btn-xs center-block" (click)="showModelDialog()">
-                    <span class="fa fa-eye"></span>
-               </button> 
-           </div>
+           <label class="col-2" for="mode">Select File or Datamap</label>
+           <app-model-picker (selectedModel)="selectFile($event)"></app-model-picker>
            <div class="col-4"></div>
       </div>  
     </form>
@@ -41,13 +36,19 @@
   <wizard-step stepTitle="Model Building" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
     <form>
       <br>
+      <div *ngIf="mode=='none'" class="row col-12">
+         <h2 class="text-center">Build the model manually</h2>
+         <h3 class="text-center">You will now be asked to define features, targets, and identifiers</h3>
+         <h3 class="text-center">You can also define data encoding, algorithms, and other parameters.</h3>
+      </div>
+      <div *ngIf="mode!='none'" class="row col-12">
       <h2 class="text-center">Build the model using a {{mode}}</h2>
       <h3 class="text-center">Identify how the model will use the data</h3>
       <br>
       <div class="row col-12">
               <div class="col-4"></div>
-              <label class="col-2">{{mode}}:</label>
-              <label class="col-2">{{field_source}}</label>
+                <label class="col-2">{{mode}}:</label>
+                <label class="col-2">{{field_source}}</label>
               <div class="col-4"></div>
       </div>
       <div class="row">
@@ -73,7 +74,8 @@
         </table>
         </div>
         <div class="col-3"></div>
-      </div>  
+      </div> 
+      </div> 
     </form>
     <br/>
     <div class="text-center">
