@@ -3,17 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs/Observable";
 import { RPDataType, RPParameter,    RPFeature,      RPTargetAlgorithm, 
 	       RPTarget,   RPModel,        RPAlgorithmDef, RPCurrentModel, 
-	       RPLogEntry, RPTrainedModel, RPModelClass, ReturnObject} from '../shared/db-classes';
+	       RPLogEntry, RPTrainedModel, RPModelClass, ReturnObject, ModelWrapper,
+         SingleModelWrapper } from '../shared/db-classes';
 import { GlobalService } from './global.service';
 import { AuthService } from './auth.service';
-
-class ModelWrapper {
-  models: RPModel[];
-}
-
-class SingleModelWrapper {
-  model: RPModel;
-}
 
 @Injectable()
 export class ModelService {
@@ -107,7 +100,7 @@ httpOptions    : HttpHeaders;
      var parts = name.split("\/");
      console.log(parts);
      return this.httpService.post(this.authService.addAccessTokenToURL('http://ai25:3000/api/models/getmodel'), 
-       JSON.stringify({ model_class: parts[0], model_name: parts[1], model_version: parts[2]})) as Observable<SingleModelWrapper>;     
+       { model_class: parts[0], model_name: parts[1], model_version: parts[2]}) as Observable<SingleModelWrapper>;     
   }
   getTrainedModels() : Observable<RPTrainedModel[]> {
     this.trained_models = this.httpService.get(this.authService.addAccessTokenToURL(this.url + 'trainedmodels')) as Observable<RPTrainedModel[]>;

@@ -8,6 +8,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angu
 export class ModelViewDialogComponent implements OnInit {
 
   @Input() model;
+  @Input() mode;
   @Output() closeDialog : EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }

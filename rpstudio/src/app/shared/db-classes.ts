@@ -299,3 +299,10 @@ export class FieldModelUsage {
   field_type: string;
   field_use : string;
 }
+export class ModelWrapper {
+  models: RPModel[];
+}
+
+export class SingleModelWrapper {
+  model: RPModel;
+}

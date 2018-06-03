@@ -3,8 +3,10 @@ import { ModelService } from '../../services/model.service';
 import { GlobalService } from '../../services/global.service';
 import { Observable } from "rxjs/Observable";
 import { Router, ActivatedRoute } from "@angular/router";
-import { RPDataType, RPParameter, RPParameterDef, RPFeature, RPTargetAlgorithm, RPTarget, RPModel, RPAlgorithmDef, RPCurrentModel, RPLogEntry, RPTrainedModel,
-         RPModelClass, ReturnObject, FieldModelUsage, RPModelTemplate } from '../../shared/db-classes';
+import { RPDataType, RPParameter, RPParameterDef, RPFeature, RPTargetAlgorithm, RPTarget, RPModel, RPAlgorithmDef, 
+         RPCurrentModel, RPLogEntry, RPTrainedModel,
+         RPModelClass, ReturnObject, FieldModelUsage, RPModelTemplate,
+         ModelWrapper, SingleModelWrapper } from '../../shared/db-classes';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -33,7 +35,7 @@ export class ModelCreateComponent implements OnInit {
   curr_type    : string;
   script       : string = '';
   checked      : boolean[] = [];
-  mode         : string = "new";  /* new, model, file, datamap */
+  mode         : string = "none";  /* none, model, file, datamap */
   field_source : string = "";
   field_string : string = "";
   fields       : FieldModelUsage[] = [];
@@ -71,10 +73,13 @@ export class ModelCreateComponent implements OnInit {
   }
   selectBuildMode(bm: string) {
     this.mode = bm;
-    console.log("Build mode", this.mode)
   }
   selectModel(model_info: string) {
-
+    console.log("Finding model", model_info);
+    this.modelService.getModelByName(model_info).subscribe( result => {
+      this.model = result.model as RPModel;
+      console.log("Selected model", this.model);
+    });
   }
   selectFile(file_info: string) {
 

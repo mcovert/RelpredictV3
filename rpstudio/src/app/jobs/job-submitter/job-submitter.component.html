@@ -23,23 +23,25 @@
                   </thead>
                   <tbody>
                       <tr *ngFor="let p of jobs[currentJob].parms; let i=index;">
-                          <td>{{p.label}}
-                             <div *ngIf="p.label=='Model name'" style="float:right">
-                                <button class="btn btn-info btn-xs center-block" (click)="showModelDialog()">
-                                    <span class="fa fa-eye"></span>
-                                </button> 
-                              </div> 
-                          </td>
+                          <td>{{p.label}}</td>
                           <td>
                              <div *ngIf="p.label=='Model definition'">
-                                <app-model-picker (selectedModel)="selectModel($event, i)"></app-model-picker>
+                                <div class="row">
+                                  <div class="col-10">
+                                     <app-model-picker (selectedModel)="selectModel($event, i)"></app-model-picker>
+                                  </div>
+                                  <div class="col-2">
+                                     <button class="btn btn-info btn-xs center-block" (click)="showModelDialog()">
+                                         <span class="fa fa-eye"></span>
+                                     </button> 
+                                  </div>
+                                </div>
                              </div>
                              <div *ngIf="p.label!='Model definition'">
                                  <input class="col-12" type="text" value="{{p.parm_value}}" (change)="setParm(i,$event.target.value)">
                              </div>
                           </td>
-                          <td>{{p.hint}}
-                          </td>
+                          <td>{{p.hint}}</td>
                       </tr>
                   </tbody>
               </table>
@@ -66,5 +68,5 @@
 	<a href="javascript:void(0)" (click)="openMonitor()"> {{jobLink}}</a> to monitor the job.</p>
 </div>
 <app-modal-dialog *ngIf="showMD" [(visible)]="showMD">
-   <app-model-view-dialog  [model]="model" (closeDialog)="closeModelDialog()"></app-model-view-dialog >
+   <app-model-view-dialog  [model]="model" [mode]="'dialog'" (closeDialog)="closeModelDialog()"></app-model-view-dialog >
 </app-modal-dialog>

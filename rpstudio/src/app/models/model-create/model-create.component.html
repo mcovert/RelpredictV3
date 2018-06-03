@@ -7,19 +7,32 @@
       <br>
       <div class="row col-12">
            <div class="col-4"></div>
-           <label class="col-2" for="mode">Build as</label>
-           <select class="col-2" (change)="selectBuildMode($event.target.value)" id="mode">
+           <label class="col-2">Build as</label>
+           <select class="col-3" (change)="selectBuildMode($event.target.value)">
                  <option value="none" selected >Empty model</option>
                  <option value="model">Using another model</option>
                  <option value="file">Using a Datamap or File</option>
            </select>
-           <div class="col-4"></div>
+           <div class="col-3"></div>
       </div>  
-      <div *ngIf="mode=='model'" class="row col-12">
-           <div class="col-4"></div>
-           <label class="col-2" for="mode">Select Model</label>
-           <app-model-picker (selectedModel)="selectModel($event)"></app-model-picker>
-           <div class="col-4"></div>
+      <br>
+      <div *ngIf="mode=='model'">
+           <div class="row col-12">
+             <div class="col-4"></div>
+             <label class="col-2">Select Model</label>
+             <div class="col-3">
+             <app-model-picker (selectedModel)="selectModel($event)"></app-model-picker>
+             </div>
+             <div class="col-3"></div>
+           </div>
+           <br>
+           <div class="row col-12">
+             <div class="col-2"></div>
+             <div class="col-8">
+             <app-model-view-dialog [model]="model" [mode]="'inline'"></app-model-view-dialog>
+             </div>
+             <div class="col-2"></div>
+           </div>
       </div>  
       <div *ngIf="mode=='file'" class="row col-12">
            <div class="col-4"></div>
@@ -36,7 +49,7 @@
   <wizard-step stepTitle="Model Building" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
     <form>
       <br>
-      <div *ngIf="mode=='none'" class="row col-12">
+      <div *ngIf="mode=='none'">
          <div class="row">
            <h2 class="text-center">Build the model manually</h2>
          </div>
@@ -52,7 +65,7 @@
            <div class="col-2"></div>
          </div>
       </div>
-      <div *ngIf="mode!='none'" class="row col-12">
+      <div *ngIf="mode!='none'">
       <div class="row">
       <h2 class="text-center">Build the model using a {{mode}}</h2>
       </div>
