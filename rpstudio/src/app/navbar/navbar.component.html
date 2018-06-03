@@ -1,65 +1,9 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="width: 100%; height: 40px; ">
   <div class="collapse navbar-collapse justify-content-between">
-  <a class="navbar-brand" (click)="showBrand()">
+  <a class="navbar-brand" (click)="showBrand()" style="color:white">
     <img src="/assets/Analytics-Inside-Logo.png" width="42" height="30" alt="">
     RelPredict Studio
   </a>
-  <!--
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="/" routerLinkActive="active">Home</a>
-      </li>
-      <li *ngIf="authService.isLoggedIn()" class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="modelsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Models</a>
-        <div class="dropdown-menu" aria-labelledby="modelsDropdown">
-          <a class="dropdown-item" routerLink="/model-create/new/none/none" routerLinkActive="active">New Model</a>
-          <a class="dropdown-item" href="#">New Model Version</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item"  routerLink="/models" routerLinkActive="active">Manage Models</a>          
-        </div>
-      </li>
-      <li *ngIf="authService.isLoggedIn()" class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="dataDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Data</a>
-        <div class="dropdown-menu" aria-labelledby="dataDropdown">
-          <a class="dropdown-item" href="#">New Data Map</a>
-          <a class="dropdown-item" routerLink="/data-upload" routerLinkActive="active">Upload files</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item"  routerLink="/data" routerLinkActive="active">Manage Data</a>          
-        </div>
-      </li>
-      <li *ngIf="authService.isLoggedIn()" class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="jobsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Jobs</a>
-        <div class="dropdown-menu" aria-labelledby="jobsDropdown">
-          <a class="dropdown-item" href="#">Submit a job</a>
-          <a class="dropdown-item" href="#">Schedule a job</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item"  routerLink="/jobs" routerLinkActive="active">Show Job Status</a>          
-          <a class="dropdown-item" href="#">Show Job Log</a>          
-        </div>
-      </li>
-      <li *ngIf="authService.isLoggedIn()" class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
-        <div class="dropdown-menu" aria-labelledby="adminDropdown">
-          <a class="dropdown-item"  routerLink="/profile" routerLinkActive="active">Profile</a>
-          <a class="dropdown-item" href="#">Users and Roles</a>
-          <a class="dropdown-item"  routerLink="/admin" routerLinkActive="active">Defaults</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item"  routerLink="/log" routerLinkActive="active">Show System Log</a>          
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/help" routerLinkActive="active">Help</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/about" routerLinkActive="active">About</a>
-      </li>
-    </ul>
-  -->
     <div class="row text-right pr-1" >
       <div *ngIf="authService.isLoggedIn()" class="row pr-1">
          <a class="nav-link" routerLinkActive="active" routerLink="/profile"  style="color:gold">{{getUsernameAndRole()}}</a>

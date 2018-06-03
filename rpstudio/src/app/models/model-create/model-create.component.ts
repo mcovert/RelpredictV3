@@ -48,7 +48,7 @@ export class ModelCreateComponent implements OnInit {
   ngOnInit() {
     this.modelService.getModelClasses().subscribe(resultArray => {
         this.modelClasses = resultArray as RPModelClass[];
-        this.createModel();
+        this.createNewModel();
         this.ready = true;
     });
     this.dataTypes = this.modelService.getDataTypes();
@@ -56,7 +56,7 @@ export class ModelCreateComponent implements OnInit {
     this.parmDefs = this.dataTypes[0].parms;
     this.parms = this.createParms(this.parmDefs);
   }
-  createModel() {
+  createNewModel() {
         this.model = new RPModel();
         this.model.model_class = this.modelClasses[0].label;
         this.model.version = 1;
@@ -73,12 +73,13 @@ export class ModelCreateComponent implements OnInit {
   }
   selectBuildMode(bm: string) {
     this.mode = bm;
+    if (this.mode == 'none') createNewModel();
   }
   selectModel(model_info: string) {
-    console.log("Finding model", model_info);
     this.modelService.getModelByName(model_info).subscribe( result => {
       this.model = result.model as RPModel;
-      console.log("Selected model", this.model);
+      this.model.version = 1;
+      this.model.name = this.model.name + "_copy";     
     });
   }
   selectFile(file_info: string) {
