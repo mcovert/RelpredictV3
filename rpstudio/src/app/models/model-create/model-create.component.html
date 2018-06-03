@@ -34,18 +34,52 @@
              <div class="col-2"></div>
            </div>
       </div>  
-      <div *ngIf="mode=='file'" class="row col-12">
-           <div class="col-2"></div>
-           <label>Builing a model from a file or datamap is done from the Manage Data page.</label>
-           <div class="col-1"></div>
-           <button type="button" nextStep class="btn btn-sm btn-primary">Go to Manage Data</button>
-           <div class="col-2"></div>
-      </div>  
-    </form>
-    <br/>
-    <div class="text-center" *ngIf="mode!='file'">
+      <div *ngIf="mode=='file'">
+        <h2 class="text-center">Build the model using a file or datamap</h2>
+        <br>
+        <div class="row col-12">
+          <div class="col-5">
+            <h3 class="text-center">Select a file or datamap</h3>
+            <div class="row">
+              <tree-root [nodes]="node" [options]="options"
+                 (toggleExpanded)="onEvent($event)"
+                 (activate)="onActivateEvent($event)"
+                 (focus)="onEvent($event)"
+                 (blur)="onEvent($event)">
+              </tree-root>
+            </div>
+          </div>
+          <div class="col-7">
+           <h3 class="text-center">Identify how the model will use the data</h3>
+           <br>
+           <table class="table table-bordered table-striped sortable table-sm">
+             <thead>
+               <th>Field Name</th>
+               <th>Data Type</th>
+               <th>Usage</th>
+             </thead>
+             <tbody>
+               <tr *ngFor="let f of fields; let i = index;">
+                 <td>{{f.field_name}}</td>
+                 <td>{{f.field_type}}</td>
+                 <td>
+                    <select class="form-control" (change)="setUsage($event.target.value,i);">
+                       <option value="Feature" selected >Feature</option>
+                       <option value="Target">Target</option>
+                       <option value="Identifier">Identifier</option>
+                    </select>
+                 </td>
+               </tr>
+             </tbody>
+           </table>
+          </div> 
+        </div>
+      </div>
+      <br>
+      <div class="text-center">
        <button type="button" nextStep class="btn btn-sm btn-primary">Next Step</button>
-    </div>
+      </div>
+    </form>
   </wizard-step>
   <wizard-step stepTitle="Model Building" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
     <form>
@@ -75,48 +109,6 @@
              <div class="col-2"></div>
            </div>
       </div>
-      <div *ngIf="mode=='file'">
-      <div class="row">
-      <h2 class="text-center">Build the model using a {{mode}}</h2>
-      </div>
-      <br>
-      <div class="row col-12">
-         <div class="col-2"></div>
-           <h4 class="text-center">Identify how the model will use the data</h4>
-         <div class="col-2"></div>
-      </div>
-      <br>
-      <div class="row col-12">
-              <div class="col-4"></div>
-                <label class="col-2">{{mode}}:</label>
-                <label class="col-2">{{field_source}}</label>
-              <div class="col-4"></div>
-      </div>
-      <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
-        <table class="table table-bordered table-striped sortable table-sm">
-          <thead>
-            <th>Field Name</th>
-            <th>Data Type</th>
-            <th>Usage</th>
-          </thead>
-          <tbody>
-            <tr *ngFor="let f of fields; let i = index;">
-              <td>{{f.field_name}}</td>
-              <td>{{f.field_type}}</td>
-              <select class="form-control" (change)="setUsage($event.target.value,i);">
-                 <option value="Feature" selected >Feature</option>
-                 <option value="Target">Target</option>
-                 <option value="Identifier">Identifier</option>
-              </select>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-        <div class="col-3"></div>
-      </div> 
-      </div> 
     </form>
     <br/>
     <div class="text-center">

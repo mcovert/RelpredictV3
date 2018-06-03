@@ -2,7 +2,7 @@
 <div class="row" >
 	<div class="col-4 border">
         <div class="row">
-		  <h3>Data Directory</h3>
+	      	  <h3>Data Directory</h3>
         </div>
         <div class="row">
           <tree-root [nodes]="node" [options]="options"
@@ -98,8 +98,43 @@
     </div>
 </div>
 </div>
-<!--div *ngIf="showDMDialog()">
-<app-modal-dialog *ngIf="showDMDialog" [(visible)]="showDMDialog">
-   <app-datamap-editor  [mode]="edit" [datamap]="newDatamap" (saveDatamap)="saveDM($event)" (cancelDatamap)="cancelDM()"></app-datamap-editor>
+<!--div *ngIf="showModelConversionDialog()">
+<app-modal-dialog>
+      <div class="row col-12">
+         <div class="col-2"></div>
+           <h4 class="text-center">Identify how the model will use the data</h4>
+         <div class="col-2"></div>
+      </div>
+      <br>
+      <div class="row col-12">
+              <div class="col-4"></div>
+                <label class="col-2">{{mode}}:</label>
+                <label class="col-2">{{field_source}}</label>
+              <div class="col-4"></div>
+      </div>
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+        <table class="table table-bordered table-striped sortable table-sm">
+          <thead>
+            <th>Field Name</th>
+            <th>Data Type</th>
+            <th>Usage</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let f of fields; let i = index;">
+              <td>{{f.field_name}}</td>
+              <td>{{f.field_type}}</td>
+              <select class="form-control" (change)="setUsage($event.target.value,i);">
+                 <option value="Feature" selected >Feature</option>
+                 <option value="Target">Target</option>
+                 <option value="Identifier">Identifier</option>
+              </select>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="col-3"></div>
+      </div> 
 </app-modal-dialog>
 </div-->
