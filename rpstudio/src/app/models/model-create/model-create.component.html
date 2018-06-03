@@ -1,6 +1,6 @@
 <div *ngIf="ready">
   <wizard>
-  <wizard-step stepTitle="Model Building" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
+  <wizard-step stepTitle="Model Template" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
     <form>
       <br>
       <h2 class="text-center">How would you like to build the model?</h2>
@@ -37,13 +37,31 @@
     <form>
       <br>
       <div *ngIf="mode=='none'" class="row col-12">
-         <h2 class="text-center">Build the model manually</h2>
-         <h3 class="text-center">You will now be asked to define features, targets, and identifiers</h3>
-         <h3 class="text-center">You can also define data encoding, algorithms, and other parameters.</h3>
+         <div class="row">
+           <h2 class="text-center">Build the model manually</h2>
+         </div>
+         <br>
+         <div class="row col-12">
+           <div class="col-2"></div>
+             <h4 class="text-center">You will now be asked to define features, targets, and identifiers</h4>
+           <div class="col-2"></div>
+         </div>
+         <div class="row col-12">
+           <div class="col-2"></div>
+           <h4 class="text-center">You can also define data encoding, algorithms, and other parameters.</h4>
+           <div class="col-2"></div>
+         </div>
       </div>
       <div *ngIf="mode!='none'" class="row col-12">
+      <div class="row">
       <h2 class="text-center">Build the model using a {{mode}}</h2>
-      <h3 class="text-center">Identify how the model will use the data</h3>
+      </div>
+      <br>
+      <div class="row col-12">
+         <div class="col-2"></div>
+           <h4 class="text-center">Identify how the model will use the data</h4>
+         <div class="col-2"></div>
+      </div>
       <br>
       <div class="row col-12">
               <div class="col-4"></div>

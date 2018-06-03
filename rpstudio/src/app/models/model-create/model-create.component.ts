@@ -71,6 +71,7 @@ export class ModelCreateComponent implements OnInit {
   }
   selectBuildMode(bm: string) {
     this.mode = bm;
+    console.log("Build mode", this.mode)
   }
   selectModel(model_info: string) {
 
