@@ -36,6 +36,11 @@ class FileHeader {
 class FHRetObj {
   datafile_content : FileHeader;
 }
+class Field {
+  field_name: string;
+  field_val:  string;
+  field_type: string;
+}
 
 @Injectable()
 export class DataService {
@@ -65,8 +70,8 @@ datamapTypes   : string[] = [ "Map", "Xlate" ];
     if (ft == 'CSV') return ',';
     return ' ';
   }
-  getFileFields(file: FileInfo, fh : FileHeader ) : FileHeader[] {
-    let fileHeader : FileHeader[] = [];
+  getFileFields(file: FileInfo, fh : FileHeader ) : Field[] {
+    let fileHeader : Field[] = [];
     let splitChar = this.getSplitChar(file.datafile_format);
     let h = fh.datafile_header.split(splitChar);
     let d = fh.datafile_record.split(splitChar);
@@ -78,10 +83,10 @@ datamapTypes   : string[] = [ "Map", "Xlate" ];
     }
     return fileHeader;
   }
-  getDatamapFields(dm : RPDatamap) : FileHeader[] {
-    let fileHeader : FileHeader[] = [];
+  getDatamapFields(dm : RPDatamap) : Field[] {
+    let fileHeader : Field[] = [];
     for (var f of dm.fields) {
-      this.fileHeader.push({field_name: f.field_name, 
+      fileHeader.push({field_name: f.field_name, 
                           field_val: '', 
                           field_type: f.field_type});
     }

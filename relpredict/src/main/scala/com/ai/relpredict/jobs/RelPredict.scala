@@ -107,6 +107,10 @@ object RelPredict extends GrammarDef {
       }
       ScalaUtil.end(sysName)
     }
+    def getModelFileName(conf: Config) : String = {
+      val cnv = conf.model_def.split("/");
+      return conf.base_dir + "/models/" + conf.model_def + "/" + cnv(1) + ".modeldef"
+    }
     // def loadConfig(configFile: String) : Array[String] = {
     //   val source = scala.io.Source.fromFile(configFile)
     //   val parms = source.getLines.map(l => {
@@ -123,8 +127,9 @@ object RelPredict extends GrammarDef {
       val columnMap = getColumnMap(conf.column_map)
       // Load any data maps into the global cache
       loadDataMap(conf.data_maps)
-      val modelDef = getModelDef(conf.model_def)
-      if (modelDef.isEmpty) ScalaUtil.terminal_error("Model definition file was not specified")
+      val modelFileName = getModelFileName(conf)
+      val modelDef = getModelDef(modelFileName)
+      if (modelDef.isEmpty) ScalaUtil.terminal_error(s"Model definition file ${modelFileName} was not specified")
       if (ScalaUtil.verbose) modelDef.get.print()
       // Create the SparkSession
       if (conf.run != "true") return None

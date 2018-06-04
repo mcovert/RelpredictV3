@@ -173,12 +173,12 @@ export class FilebrowserComponent implements OnInit {
     });
   }
   createModel() {
-    var fenc = this.globalservice.encode(this.fileInfo.datafile_name);
-    var denc = this.globalservice.encode(JSON.stringify(this.fileHeader));
-    if (this.fileInfo.datafile_format == 'datamap')
-       this.router.navigate(['model-create', 'datamap', fenc, denc]);
-    else 
-       this.router.navigate(['model-create', 'file', fenc, denc]);
+    //var fenc = this.globalservice.encode(this.fileInfo.datafile_name);
+    //var denc = this.globalservice.encode(JSON.stringify(this.fileHeader));
+    //if (this.fileInfo.datafile_format == 'datamap')
+    //   this.router.navigate(['model-create', 'datamap', fenc, denc]);
+    //else 
+    this.router.navigate(['model-create']);
   }
   deleteFile() {
     console.log(this.fileInfo);
