@@ -60,6 +60,33 @@ datamapTypes   : string[] = [ "Map", "Xlate" ];
   getDatafileInfo(fileName) : Observable<FIRetObj> { 
       return this.httpService.post(this.authService.addAccessTokenToURL('http://ai25:3000/api/datafiles/getfileinfo'), {filename: fileName}) as Observable<FIRetObj>;
   }
+  getSplitChar(ft) {
+    if (ft == 'TSV') return '\t';
+    if (ft == 'CSV') return ',';
+    return ' ';
+  }
+  getFileFields(file: FileInfo, fh : FileHeader ) : FileHeader[] {
+    let fileHeader : FileHeader[] = [];
+    let splitChar = this.getSplitChar(file.datafile_format);
+    let h = fh.datafile_header.split(splitChar);
+    let d = fh.datafile_record.split(splitChar);
+    for (var i = 0; i < h.length; i++) {
+      if (d[i].length > 20) d[i] = d[i].substring(0,18) + "...";
+      fileHeader.push({field_name: h[i], 
+                       field_val: d[i], 
+                       field_type: this.globalService.guessDataType(d[i])});
+    }
+    return fileHeader;
+  }
+  getDatamapFields(dm : RPDatamap) : FileHeader[] {
+    let fileHeader : FileHeader[] = [];
+    for (var f of dm.fields) {
+      this.fileHeader.push({field_name: f.field_name, 
+                          field_val: '', 
+                          field_type: f.field_type});
+    }
+    return fileHeader;
+  }
   getDatafileHeader(fileName) : Observable<FHRetObj> { 
       return this.httpService.post(this.authService.addAccessTokenToURL('http://ai25:3000/api/datafiles/getfileheader'), {filename: fileName}) as Observable<FHRetObj>;
   }

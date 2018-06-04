@@ -306,3 +306,11 @@ export class ModelWrapper {
 export class SingleModelWrapper {
   model: RPModel;
 }
+export class FileHeader {
+  datafile_name    : string;
+  datafile_header  : string;
+  datafile_record  : string;
+}
+export class FHRetObj {
+  datafile_content : FileHeader;
+}

@@ -1,6 +1,7 @@
 <div *ngIf="ready">
   <wizard>
-  <wizard-step stepTitle="Model Template" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome">
+  <wizard-step stepTitle="Model Template" navigationSymbol="&#xf044;" navigationSymbolFontFamily="FontAwesome"
+               (stepExit)="fillModelFromFields(); ">
     <form>
       <br>
       <h2 class="text-center">How would you like to build the model?</h2>
@@ -59,7 +60,7 @@
                <th>Usage</th>
              </thead>
              <tbody>
-               <tr *ngFor="let f of fields; let i = index;">
+               <tr *ngFor="let f of fileHeader; let i = index;">
                  <td>{{f.field_name}}</td>
                  <td>{{f.field_type}}</td>
                  <td>
@@ -89,28 +90,29 @@
          <br>
          <div class="row col-12">
            <div class="col-2"></div>
-             <label>You will now be asked to define features, targets, and identifiers. You can also define data encoding, algorithms, and other parameters.</label>
+             <label class="pl-1">You will now be asked to define features, targets, and identifiers. You can also define data encoding, algorithms, and other parameters.</label>
            <div class="col-2"></div>
          </div>
       </div>
-      <div *ngIf="mode=='model'">
-           <h2 class="text-center">Build the model from another model</h2>
+      <div *ngIf="mode!='none'">
+           <h2 class="text-center">Build the model from a {{mode}}</h2>
          <br>
          <div class="row col-12">
-           <div class="col-2"></div>
-             <label>You can now make modifications to the following model.</label>
+           <div class="col-3"></div>
+             <label class="text-center">You can now make modifications to the following model.</label>
            <div class="col-2"></div>
          </div>
-           <div class="row col-12">
+         <br>
+         <div class="row col-12">
              <div class="col-2"></div>
              <div class="col-8">
              <app-model-view-dialog [model]="model" [mode]="'inline'"></app-model-view-dialog>
              </div>
              <div class="col-2"></div>
-           </div>
+         </div>
       </div>
     </form>
-    <br/>
+    <br>
     <div class="text-center">
        <button type="button" previousStep class="btn btn-sm btn-danger">Go to previous step</button>
        <button type="button" nextStep class="btn btn-sm btn-primary" (click)="fillModelFromFields();">Next Step</button>
@@ -368,12 +370,12 @@
     </div>
     <div class="text-center">
       <button type="button" previousStep class="btn btn-sm btn-primary">Previous Step</button>
-      <button type="button" class="btn btn-sm btn-success" resetWizard (click)="saveModel()">Save Model</button>
-      <button type="button" class="btn btn-sm btn-danger" resetWizard (click)="cancelModel()">Discard and Exit</button>
+      <button type="button" class="btn btn-sm btn-success" (click)="saveModel()">Save Model</button>
+      <button type="button" class="btn btn-sm btn-danger" (click)="cancelModel()">Discard and Exit</button>
     </div>
     <div class ="row">
       <div class="col-2"></div>
-      <div class="col-10">Result: {{message}}</div>
+      <div class="col-10">{{message}}</div>
     </div>
   </wizard-step>
 </wizard>

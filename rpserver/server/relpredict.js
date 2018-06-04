@@ -394,8 +394,11 @@ convertModel = (model) => {
 	               ' version ' + quoted(model.version) +
 	               ' description ' + quoted(model.description) + '\n' +
 	               '    featureset fset id ' + quoted(model.identifier) + '\n';
-	for (var i = 0; i < model.features.length; i++)
-		modelStr = modelStr + createFeature(model.features[i]);
+	for (var i = 0; i < model.features.length; i++) {
+    if (model.features[i].name != model.identifier) {
+		  modelStr = modelStr + createFeature(model.features[i]);
+    }
+  }
 	for (var i = 0; i < model.targets.length; i++)
 		modelStr = modelStr + createTarget(model.targets[i]);
 	console.log(modelStr);

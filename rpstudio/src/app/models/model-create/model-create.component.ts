@@ -108,68 +108,58 @@ export class ModelCreateComponent implements OnInit {
   }
   onEvent(event) {
   }
-  getSplitChar(ft) {
-    if (ft == 'TSV') return '\t';
-    if (ft == 'CSV') return ',';
-    return ' ';
-  }
-  makeHeaders(fh : FileHeader ) {
-    this.fileHeader = [];
-    let splitChar = this.getSplitChar(this.fileInfo.datafile_format);
-    let h = fh.datafile_header.split(splitChar);
-    let d = fh.datafile_record.split(splitChar);
-    for (var i = 0; i < h.length; i++) {
-      if (d[i].length > 20) d[i] = d[i].substring(0,18) + "...";
-      this.fileHeader.push({field_name: h[i], 
-                          field_val: d[i], 
-                          field_type: this.globalservice.guessDataType(d[i])});
+  setupFieldUsage() {
+    this.fields = [];
+    this.checked = [];
+    for (let i = 0; i < this.fileHeader.length; i++) {
+        let fu = new FieldModelUsage();
+        fu.field_name = this.fileHeader[i].field_name;
+        fu.field_type = this.fileHeader[i].field_type;
+        fu.field_use  = 'Feature';
+        this.fields.push(fu);
+        this.checked.push(false);
     }
   }
-  makeDatamap(dm : RPDatamap) {
-    this.fileHeader = [];
-    for (var f of dm.fields) {
-      this.fileHeader.push({field_name: f.field_name, 
-                          field_val: '', 
-                          field_type: f.field_type});
-    }
+  createFileHeader(file: FileInfo) {
+    this.dataservice.getDatafileHeader(file.datafile_fullname).subscribe(result => {
+      //console.log(result);
+      this.fileHeader = this.dataservice.getFileFields(file, result.datafile_content);
+      this.setupFieldUsage();
+      this.createNewModel();
+      this.model.name = "Model_From_File_" + file.datafile_name;
+      this.model.description = "Model create from file " + file.datafile_name;
+      this.fillModelFromFields();
+    });
   }
-  displayFileHeader(status) {
-    let file = this.fileInfo.datafile_fullname;
-    if (status == true) {
-      this.dataservice.getDatafileHeader(file).subscribe(result => {
-        this.makeHeaders(result.datafile_content);
-      });
-    }
-    else this.fileHeader = [];
-    this.contentsDisplayed = status;
+  createDatamapHeader(file: FileInfo) {
+    this.dataservice.getDatamap(file.datafile_fullname).subscribe(result => {
+      this.fileHeader = [];
+      let dm = JSON.parse(result.returned_object);
+      for (var f of dm.fields) {
+         this.fileHeader.push({field_name: f.field_name, 
+                               field_val: '', 
+                               field_type: f.field_type});
+      }
+      this.setupFieldUsage();
+      this.createNewModel();
+      this.model.name = "Model_Frm_Datamap_" + dm.datamap_name;
+      this.model.description = "Model create from datamap " + dm.datamap_name;
+      this.fillModelFromFields();
+    });
   }
-  displayDatamap(status) {
-    this.showFileHeader = status;
-    let file = this.fileInfo.datafile_fullname;
-    if (status == true) {
-      this.dataservice.getDatamap(file).subscribe(result => {
-        var dm = JSON.parse(result.returned_object);
-        this.makeDatamap(dm);
-      });
-    }
-    else this.fileHeader = [];
-    this.contentsDisplayed = status;
-  }
-
   onActivateEvent(event) {
-    console.log("ActivateEvent", event.node.data.path);
+    //console.log("File selected", event.node.data.path);
     this.dataservice.getDatafileInfo(event.node.data.path).subscribe(result => {
+      //console.log(result);
       this.fileInfo = result.datafile_info;
-      console.log(this.fileInfo);
       if (this.fileInfo.datafile_type === 'File') {
           if (this.fileInfo.datafile_format == "datamap")
-             this.displayDatamap(true);
+             this.createDatamapHeader(this.fileInfo);
           else
-             this.displayFileHeader(true);
+             this.createFileHeader(this.fileInfo);
       }
       else
-          this.displayFileHeader(false);
-
+          this.fileHeader = [];
     })
   }
 
@@ -183,10 +173,6 @@ export class ModelCreateComponent implements OnInit {
         this.model.description = "";
         this.model.identifier = "";
         this.model.current = false;
-        if (this.mode == 'file') {
-          this.model.name = this.field_source + "_model";
-          this.model.description = "Model built from " + this.mode + " " + this.field_source;
-        }    
   }
   selectBuildMode(bm: string) {
     this.mode = bm;
@@ -196,7 +182,7 @@ export class ModelCreateComponent implements OnInit {
     this.modelService.getModelByName(model_info).subscribe( result => {
       this.model = result.model as RPModel;
       this.model.version = 1;
-      this.model.name = this.model.name + "_copy";     
+      this.model.name = this.model.name + "_copy"; 
     });
   }
   selectFile(file_info: string) {
@@ -307,7 +293,7 @@ export class ModelCreateComponent implements OnInit {
   saveModel() {
     this.modelService.createModel(this.model, false).subscribe(
       data => {
-         this.router.navigate(['models']);
+        this.message = "The model was saved."
       },
       error => {
         this.message = "Error saving Model: " + error;
@@ -315,7 +301,7 @@ export class ModelCreateComponent implements OnInit {
   }
   cancelModel() {
     if (confirm("Are you sure you want to discard this model?")) {
-       this.router.navigate(['models']);      
+       this.message = "The model was not saved."     
     }
   }
   saveParms(plist : RPParameter[]) {
@@ -404,19 +390,23 @@ export class ModelCreateComponent implements OnInit {
   setUsage(usage: string, index: number) {
     console.log("Setting " + this.fields[index].field_name + " to usage " + usage);
     this.fields[index].field_use = usage;
+    if (usage == 'Identifier') this.checked[index] = true;
   }
   fillModelFromFields() {
+    this.model.features = [];
+    this.model.targets = [];
+    this.model.identifier = "";
     for (var i = 0; i < this.fields.length; i++) {
-      console.log(this.fields[i]);
+      var feature = new RPFeature();
+      feature.parms = [];
+      feature.name = this.fields[i].field_name;
+      feature.type = this.fields[i].field_type;
+      feature.label = this.fields[i].field_name;
+      this.model.features.push(feature);
       if (this.fields[i].field_use == 'Feature' || this.fields[i].field_use == 'Identifier') {
-           var feature = new RPFeature();
-           feature.parms = [];
-           feature.name = this.fields[i].field_name;
-           feature.type = this.fields[i].field_type;
-           feature.label = this.fields[i].field_name;;
-           this.model.features.push(feature);
            if (this.fields[i].field_use == 'Identifier') {
                this.checked.push(true);
+               this.model.identifier = this.fields[i].field_name;
            }
            else {
                this.checked.push(false);
