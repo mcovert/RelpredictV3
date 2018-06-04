@@ -205,7 +205,7 @@ exports.runJob = (cmd) => {
     return JSON.stringify({ status: 'submitted', 'server': server, 'monitor': getCommandMonitor(cmd.jobtype, server)});
 }; 
 /* Run local commands from home bin directory */
-exports.runLocal = (cmd, parms) => {
+runLocal = (cmd, parms) => {
 	var cmdpath = config.home + '/bin/' + cmd;
 
 	if (!fs.existsSync(cmdpath)) {
@@ -217,6 +217,7 @@ exports.runLocal = (cmd, parms) => {
     cmdrun.stderr.on('data', (data) => { console.error(`${data}`);});
     cmdrun.on('exit', function (code, signal) { console.log('Command ' + cmd + ' exited with ' + `code ${code}`); } );
 }
+exports.runLocal = runLocal;
 getJobTemplate = () => {
   return jobListString; 
  // var fullFileName = path.join(config.jobtemplates, 'jobs.json');
@@ -439,7 +440,8 @@ saveModel = (model, overwrite) => {
       return "ERROR: Model exists and overwrite was not specified";
     fs.writeFileSync(md, modelDef);
     fs.writeFileSync(path.join(modelPath, model.name + '.json'), modelJSON);
-    runLocal('model2hdfs.sh', modelPath);
+    console.log(modelPath);
+    runLocal('model2hdfs.sh', [ modelPath ]);
     return "OK";
 }
 exports.saveModel = saveModel;
