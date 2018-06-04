@@ -9,25 +9,25 @@ name := "akka-http-rp-scala"
 resolvers ++= Seq(
   "apache-snapshots" at "http://repository.apache.org/snapshots/",
   "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
- // "bintray-spark-packages" at "https://dl.bintray.com/spark-packages/maven/" 
-
 )
+    //sparkComponents ++= Seq("core", "sql","hive","mllib")
 
- //   addSbtPlugin("org.spark-packages" % "sbt-spark-package" % "0.2.6")
     libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-http"            % akkaHttpVersion,
       "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
       "com.typesafe.akka" %% "akka-http-xml"        % akkaHttpVersion,
       "com.typesafe.akka" %% "akka-stream"          % akkaVersion,
+      "com.typesafe.akka" %% "akka-slf4j" 	    % akkaVersion,
 
       "com.typesafe.akka" %% "akka-http-testkit"    % akkaHttpVersion % Test,
       "com.typesafe.akka" %% "akka-testkit"         % akkaVersion     % Test,
       "com.typesafe.akka" %% "akka-stream-testkit"  % akkaVersion     % Test,
       "org.scalatest"     %% "scalatest"            % "3.0.1"         % Test,
 
-       "org.apache.spark" %% "spark-core" % sparkVersion,
-  "org.apache.spark" %% "spark-sql" % sparkVersion,
-  "org.apache.spark" %% "spark-mllib" % sparkVersion,
-  "org.apache.spark" %% "spark-hive" % sparkVersion,
-  "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.4"
+     "org.apache.spark" %% "spark-core" % sparkVersion,
+     "org.apache.spark" %% "spark-sql" % sparkVersion,
+     "org.apache.spark" %% "spark-mllib" % sparkVersion,
+     "org.apache.spark" %% "spark-hive" % sparkVersion, 
+     "org.apache.spark" %% "spark-yarn" % sparkVersion,
+     "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.4"
 )

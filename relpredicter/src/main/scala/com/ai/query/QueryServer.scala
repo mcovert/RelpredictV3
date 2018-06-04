@@ -52,9 +52,9 @@ object QueryServer extends App with QueryRoutes {
   
 
   //#http-server
-  Http().bindAndHandle(queryRoutes, "localhost", 8080)
+  Http().bindAndHandle(queryRoutes, "ai26", 8080)
 
-  println(s"Server online at http://localhost:8080/")
+  println(s"Server online at http://ai26:8080/")
 
   Await.result(system.whenTerminated, Duration.Inf)
   //#http-server

@@ -31,7 +31,7 @@ trait QueryRoutes extends JsonSupport {
   def queryActor: ActorRef 
 
   // Required by the `ask` (?) method below
-  implicit lazy val timeout = Timeout(5.seconds) // usually we'd obtain the timeout from the system's configuration
+  implicit lazy val timeout = Timeout(30.seconds) // usually we'd obtain the timeout from the system's configuration
 
   //#all-routes
   //#users-get-post

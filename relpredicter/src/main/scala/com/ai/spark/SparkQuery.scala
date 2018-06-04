@@ -6,12 +6,16 @@ import org.apache.spark.sql._
 import org.apache.spark.sql.types._
 
 
+
+
 object QueryUtil
 {
-	def SparkQuery( DataSource : String, SchemaName : String, TableName : String, QLimit : String) : Array[(String,String,String)]=
+	def SparkQuery( DataSource : String, SchemaName : String, TableName : String, QLimit : String) : Array[(String,String,String)] = 
 	{
-
-		val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "yarn-client").enableHiveSupport().getOrCreate() 
+		val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "local").enableHiveSupport()
+		.config("yarn.resourcemanager.address","ai02.analyticsinside.us:8032")
+		.config("hive.metastore.uris", "trift://ai04.analyticsinside.us:9083")
+		.getOrCreate() 
 		import sc.implicits._
 		sc.sql("use "+SchemaName)
 
@@ -20,8 +24,10 @@ object QueryUtil
 		val queryTypes=queryDF.dtypes
 		val queryCombined=queryTypes.zip(queryValues)
 		val queryFinal=queryCombined.map((x=>(x._1._1,x._2,x._1._2)))
+		queryFinal.foreach(println)
+		sc.stop()
 
-	return queryFinal
+	     queryFinal
 
 	}
 }

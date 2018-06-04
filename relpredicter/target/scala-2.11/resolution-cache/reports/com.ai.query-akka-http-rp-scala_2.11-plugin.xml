@@ -4,10 +4,10 @@
 	<info
 		organisation="com.ai.query"
 		module="akka-http-rp-scala_2.11"
-		revision="0.1.0-SNAPSHOT"
+		revision="0.1-SNAPSHOT"
 		conf="plugin"
-		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, pom, scala-tool"
-		date="20180601161738"/>
+		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool"
+		date="20180604123042"/>
 	<dependencies>
 	</dependencies>
 </ivy-report>
