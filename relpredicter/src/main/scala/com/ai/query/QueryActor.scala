@@ -23,9 +23,12 @@ class QueryActor extends Actor with ActorLogging {
      val fullRecord = QueryUtil.SparkQuery(dsource ,dschema,dtable,qlimit)
    //  val tupledRecord  = fullRecord.foreach (r => {(QRecord.apply _).tupled(r) 
    // 												println(r)})
-    val tupledRecord1 = (QRecord.apply _).tupled(fullRecord(0)) 
-    val tupledRecord2 = (QRecord.apply _).tupled(fullRecord(1))
-     sender() ! QRecords(Array(tupledRecord1,tupledRecord2))
+    val tupledRecords : Array[QRecord] = fullRecord.map(r => (QRecord.apply _).tupled(r) )
+    //val tupledRecord1 = (QRecord.apply _).tupled(fullRecord(0)) 
+   // val tupledRecord2 = (QRecord.apply _).tupled(fullRecord(1))
+   // sender() ! QRecords(Array(tupledRecord1,tupledRecord2))
+   sender() ! QRecords(tupledRecords)
+
      	//(QRecord.apply _).tupled(QueryUtil.SparkQuery(dsource ,dschema,dtable,qlimit)(0))
     }
 }
