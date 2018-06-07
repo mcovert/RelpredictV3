@@ -14,7 +14,7 @@ object QueryUtil
 	{
 		val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "local").enableHiveSupport()
 		.config("yarn.resourcemanager.address","ai02.analyticsinside.us:8032")
-		.config("hive.metastore.uris", "trift://ai04.analyticsinside.us:9083")
+		.config("hive.metastore.uris", "thrift://ai04.analyticsinside.us:9083")
 		.getOrCreate() 
 		import sc.implicits._
 		sc.sql("use "+SchemaName)
@@ -23,7 +23,8 @@ object QueryUtil
 		val queryValues=queryDF.map(_.toString).collect.flatMap(_.split(","))
 		val queryTypes=queryDF.dtypes
 		val queryCombined=queryTypes.zip(queryValues)
-		val queryFinal=queryCombined.map((x=>(x._1._1,x._2,x._1._2)))
+		val queryFinal=queryCombined.map((x=>(x._1._1.replace("[",""),x._2.replace("[",""),x._1._2.replace("[",""))))
+		
 		queryFinal.foreach(println)
 		sc.stop()
 

@@ -14,6 +14,8 @@ import akka.http.scaladsl.server.directives.PathDirectives.path
 
 import scala.concurrent.Future
 import com.ai.query.QueryActor._
+import com.ai.util._
+
 import akka.pattern.ask
 import akka.util.Timeout
 
@@ -46,8 +48,9 @@ trait QueryRoutes extends JsonSupport {
                parameters("dsource", "dschema", "dtable","qlimit")
                {(dsource,dschema,dtable,qlimit)=>
                
-                  val query: Future[QRecords] =
+                  //val query: Future[QRecords] =
                   //complete (s" dsource='%dsource' and dschema='%dschema' and dtable='%dtable' and qlimit='%qlimit'")
+                  val query: Future[QRecords] =
                   (queryActor ? GetRecords(dsource, dschema, dtable, qlimit)).mapTo[QRecords]
                   complete(query)
               }

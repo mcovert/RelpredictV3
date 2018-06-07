@@ -6,10 +6,16 @@
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/lightbend/akka/sample/Greeter$$anonfun$props$1.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryRoutes$class.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryRoutes$class.class[0m
+[0m[[0mdebug[0m] [0m	com/ai/util/JsonConverter$$anonfun$toJson$3.class[0m
+[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/util/JsonConverter$$anonfun$toJson$3.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryRoutes$$anonfun$1$$anonfun$apply$1$$anonfun$apply$2.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryRoutes$$anonfun$1$$anonfun$apply$1$$anonfun$apply$2.class[0m
+[0m[[0mdebug[0m] [0m	com/ai/util/JsonConverter$$anonfun$toJson$1.class[0m
+[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/util/JsonConverter$$anonfun$toJson$1.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryRoutes.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryRoutes.class[0m
+[0m[[0mdebug[0m] [0m	com/ai/util/JsonConverter$$anonfun$toJson$4.class[0m
+[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/util/JsonConverter$$anonfun$toJson$4.class[0m
 [0m[[0mdebug[0m] [0m	com/lightbend/akka/sample/Greeter$WhoToGreet$.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/lightbend/akka/sample/Greeter$WhoToGreet$.class[0m
 [0m[[0mdebug[0m] [0m	com/ai[0m
@@ -22,6 +28,8 @@
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/JsonSupport$class.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/spark[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/spark[0m
+[0m[[0mdebug[0m] [0m	com/ai/util/JsonConverter.class[0m
+[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/util/JsonConverter.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryRoutes$$anonfun$1$$anonfun$apply$1.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryRoutes$$anonfun$1$$anonfun$apply$1.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryServer$delayedInit$body.class[0m
@@ -42,6 +50,8 @@
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryActor$ActionPerformed.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryServer$.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryServer$.class[0m
+[0m[[0mdebug[0m] [0m	com/ai/util/JsonConverter$$anonfun$toJson$2.class[0m
+[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/util/JsonConverter$$anonfun$toJson$2.class[0m
 [0m[[0mdebug[0m] [0m	com/lightbend/akka/sample/Printer$Greeting.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/lightbend/akka/sample/Printer$Greeting.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QRecords.class[0m
@@ -54,6 +64,8 @@
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/lightbend/akka/sample/AkkaQuickstart$.class[0m
 [0m[[0mdebug[0m] [0m	com/lightbend/akka/sample[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/lightbend/akka/sample[0m
+[0m[[0mdebug[0m] [0m	com/ai/util[0m
+[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/util[0m
 [0m[[0mdebug[0m] [0m	com/lightbend/akka/sample/Printer$.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/lightbend/akka/sample/Printer$.class[0m
 [0m[[0mdebug[0m] [0m	com/lightbend/akka/sample/AkkaQuickstart$delayedInit$body.class[0m
@@ -66,6 +78,8 @@
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/lightbend/akka/sample/Printer$$anonfun$receive$2.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QRecord$.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QRecord$.class[0m
+[0m[[0mdebug[0m] [0m	com/ai/util/JsonConverter$.class[0m
+[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/util/JsonConverter$.class[0m
 [0m[[0mdebug[0m] [0m	com/lightbend/akka/sample/Greeter$Greet$.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/lightbend/akka/sample/Greeter$Greet$.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/spark/QueryUtil$$anonfun$SparkQuery$1.class[0m
