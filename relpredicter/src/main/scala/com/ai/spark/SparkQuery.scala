@@ -19,7 +19,7 @@ object QueryUtil
 		import sc.implicits._
 		sc.sql("use "+SchemaName)
 
-		val queryDF =sc.sql("select npi from "+TableName+" limit "+QLimit)
+		val queryDF =sc.sql("select * from "+TableName+" limit "+QLimit)
 		val queryValues=queryDF.map(_.toString).collect.flatMap(_.split(","))
 		val queryTypes=queryDF.dtypes
 		val queryCombined=queryTypes.zip(queryValues)
