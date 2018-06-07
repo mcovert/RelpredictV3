@@ -3,7 +3,7 @@ import com.ai.spark._
 import akka.actor.{ Actor, ActorLogging, Props }
 
 final case class QRecord(dfield: String, dvalue: String, dtype: String)
-final case class QRecords(qrecords:Array[(String, String, String)])
+final case class QRecords(qrecords:Array[QRecord])
 
 object QueryActor {
   final case class ActionPerformed(description: String)
@@ -20,6 +20,6 @@ class QueryActor extends Actor with ActorLogging {
  
   def receive: Receive = {
     case GetRecords(dsource,dschema,dtable,qlimit) =>
-      sender() ! QueryUtil.SparkQuery(dsource ,dschema,dtable,qlimit).toArray
+      sender() ! (QRecord.apply _).tupled(QueryUtil.SparkQuery(dsource ,dschema,dtable,qlimit)(0))
     }
 }
