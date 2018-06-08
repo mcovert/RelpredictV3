@@ -5,6 +5,59 @@ package com.ai.relpredict.jobs
  * to return information. A Results object contains a return code and a set of key/value pairs that can store a variety of objects such 
  * as strings, integers, doubles, vectors and matrices. In addition, each value is actually an Option allowing null values to be stored.
  * Results objects can be merged. Note: Maintaining key name spaces for merges Results objects is the responsibility of the user.
+ *
+ * By convention, Result objects are expected to conform to the following specification and encoding style.
+ *
+ *       section-name.identifier
+ *       section-name.subsection.count
+ *       section-name.subsection.<i>.identifier
+ *
+ *       Subsections are hierarchical and can descend downward ad infinitum.
+ *
+ *       RelPredict jobs use the following hierarchy:
+ *
+ *
+ *       job - job level information
+ *       ----------------------------
+ *       job.jobname
+ *       job.cmdline
+ *       job.run_date
+ *       job.directory
+ *       job.run_duration
+ *       job.return_code
+ *       job.messages.count
+ *       job.messages.<i>.severity
+ *       job.messages.<i>.msgtext
+ *       job.messages.<i>.issuer
+ *       job.messages.<i>.timestamp
+ *
+ *       model - Model definition
+ *       ----------------------------
+ *       model.model_class
+ *       model.model_name
+ *       model.model_version
+ *       model.targets.count
+ *       model.targets.target.<i>.target_name
+ *       model.targets.target.<i>.target_type
+ *       model.targets.target.<i>.algorithms.count
+ *       model.targets.target.<i>.algorithms.<j>.algorithm_name
+ *       model.targets.target.<i>.algorithms.<j>.algorithm_type
+ *       model.targets.target.<i>.algorithms.<j>.metrics.count
+ *       model.targets.target.<i>.algorithms.<j>.metrics.<k>.metric_name
+ *       model.targets.target.<i>.algorithms.<j>.metrics.<k>.metric_type
+ *       model.targets.target.<i>.algorithms.<j>.metrics.<k>.metric_value
+ *
+ *       data - Input and output data
+ *       ----------------------------
+ *       data.input.count
+ *       data.input.<i>.file_name
+ *       data.input.<i>.file_type
+ *       data.input.<i>.file_records
+ *       data.output.count
+ *       data.output.<i>.file_name
+ *       data.output.<i>.file_type
+ *       data.output.<i>.file_records
+ *
  */
 case class Results() extends Serializable {
   val OK    = 0
@@ -64,5 +117,29 @@ case class Results() extends Serializable {
   }
   def convertToMap() : Map[String,Any] = {
     kvMap.toMap.map { case (k, v) => (k, v.get)}
+  }
+  def convertToJson() : String = {
+
+    var parseMap = scala.collection.mutable.Map[String, Any]()
+
+    kvMap.foreach( case (k, v) => {
+      val root = parseMap
+      addToMap(k, v, root)
+    }
+    return JsonConverted.toJson(parseMap)
+  }
+  def addToMap(key: String, value: Any, map: Map[String, Any])
+      val parts = k.split(".")
+      parts.foreach( case s => {
+         if (root.contains(s)) root = root.get(s)
+         else {
+          val newRoot = scala.collection.mutable.Map[String, Any]()
+          root.put(s, newRoot)
+          root = newRoot
+         }
+      })
+    })
+
+    return json.toString
   }
 }
