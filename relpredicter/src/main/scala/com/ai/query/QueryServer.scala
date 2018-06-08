@@ -27,27 +27,17 @@ import akka.util.Timeout
 //#main-class
 object QueryServer extends App with QueryRoutes {
 
-  // set up ActorSystem and other dependencies here
-  //#main-class
-  //#server-bootstrapping
+
 
   
     implicit val system: ActorSystem = ActorSystem("rpAkkaHttpServer")
     implicit val materializer: ActorMaterializer = ActorMaterializer()
   //#server-bootstrapping
 
-    val queryActor: ActorRef = system.actorOf(QueryActor.props, "queryActor")
-
-
-  //#main-class
-  // from the QueryRoutes trait
-  //lazy val routes: Route = QueryRoutes
-  //#main-class
+  val queryActor: ActorRef = system.actorOf(QueryActor.props, "queryActor")
 
   
   lazy val routes: Route = queryRoutes
-  //#all-routes
-  //#users-get-post
 
   
 
@@ -61,4 +51,4 @@ object QueryServer extends App with QueryRoutes {
   //#main-class
 }
 
-//#quick-start-server                    
+                  

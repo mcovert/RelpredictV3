@@ -55,27 +55,6 @@ trait QueryRoutes extends JsonSupport {
                   complete(query)
               }
             }
-            /*
-             val queryRoutes =
-    path("query") {
-      //#users-get-delete
-        
-        
-            get 
-              {
-               parameters('d_source.as[String], 'd_schema.as[String], 'd_table.as[String],'q_limit.as[String])
-               {(d_source,d_schema, d_table, q_limit)=>
-                complete
-                  {
-                    queryActor ? GetRecords(d_source, d_schema, d_table, q_limit)
-                  }
-               
-              }
-            }
-        
-  //#all-routes
-    }*/
-        
-  //#all-routes
+           
     }
   }
