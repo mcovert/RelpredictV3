@@ -71,6 +71,7 @@ case class Results() extends Serializable {
   def add(k : String, v : Option[Any]) = kvMap(k) = v
   def getKeys() = kvMap.keys
   def getMapEntries() = kvMap.toList
+  def getMap() = kvMap
   def addDouble(k: String, value : Double) = kvMap(k) = Some(value)
   def addString(k : String, value : String) = kvMap(k) = Some(value)
   def addVector(k : String, value : Array[Double]) = kvMap(k) = Some(value)
@@ -117,29 +118,5 @@ case class Results() extends Serializable {
   }
   def convertToMap() : Map[String,Any] = {
     kvMap.toMap.map { case (k, v) => (k, v.get)}
-  }
-  def convertToJson() : String = {
-
-    var parseMap = scala.collection.mutable.Map[String, Any]()
-
-    kvMap.foreach( case (k, v) => {
-      val root = parseMap
-      addToMap(k, v, root)
-    }
-    return JsonConverted.toJson(parseMap)
-  }
-  def addToMap(key: String, value: Any, map: Map[String, Any])
-      val parts = k.split(".")
-      parts.foreach( case s => {
-         if (root.contains(s)) root = root.get(s)
-         else {
-          val newRoot = scala.collection.mutable.Map[String, Any]()
-          root.put(s, newRoot)
-          root = newRoot
-         }
-      })
-    })
-
-    return json.toString
   }
 }

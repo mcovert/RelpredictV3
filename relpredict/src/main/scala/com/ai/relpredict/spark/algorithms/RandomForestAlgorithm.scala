@@ -48,14 +48,14 @@ class RandomForestAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
     ScalaUtil.writeInfo(s"RandomForest training with (records=${df.count}, length=$recLen, impurity=$impurity, maxDepth=$maxDepth, maxBins=$maxBins, trees=$numTrees, strategy=$featureSubsetStrategy)")
     rfmodel = Some(RandomForest.trainClassifier(df, target.size, categoryMap, numTrees, featureSubsetStrategy, impurity, maxDepth, maxBins))
     checkAlgorithmModel(rfmodel, true, "RandomForest - training failed to produce a model")
-    results.addDouble(s"${prefix}.training.records", df.count().toDouble)
+    results.addDouble(s"${prefix}.training_records", df.count().toDouble)
     results
   }
   /* Test an RDD of LabeledPoints against a trained model */
   def test(df : RDD[(String, LabeledPoint)], suffix : String) : Option[(Results, RDD[(String, Double, Double)])] = { 
     checkAlgorithmModel(rfmodel, true, "RandomForest - test cannot be performed because no model exists")
     var results = new Results()
-    results.addDouble(s"${prefix}.test.records", df.count())
+    results.addDouble(s"${prefix}.test_${suffix}_records", df.count())
     rfmodel match {
       case None => None
       case Some(m) => {
@@ -66,13 +66,13 @@ class RandomForestAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
                }}
          )
          val testErr = AlgorithmUtil.getError(resultdf)
-         results.addDouble(s"${prefix}.test.${suffix}.error", testErr)
+         results.addDouble(s"${prefix}.test_${suffix}_error", testErr)
          var matrix = AlgorithmUtil.getConfusionMatrix(resultdf, target)
          if (ScalaUtil.verbose) {
            ScalaUtil.controlMsg(s"Test error=$testErr")
            ScalaUtil.controlMsg(AlgorithmUtil.confusionToString(matrix, target.getInvMap(), "\n"))
          }
-         results.addString(s"${prefix}.test.${suffix}.confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))         
+         results.addString(s"${prefix}.test_${suffix}_confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))         
          Some((results, resultdf))
       }
     }

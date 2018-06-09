@@ -51,7 +51,7 @@ class GradientBoostedTreesAlgorithm(val fs : FeatureSet, target : Target[_], val
     ScalaUtil.writeInfo(s"Gradient boosted trees training with (records=${df.count} length=$recLen depth=${boostingStrategy.treeStrategy.maxDepth})")
     gbmodel = Some(GradientBoostedTrees.train(df, boostingStrategy))
     checkAlgorithmModel(gbmodel, true, "GradientBoostedTrees - training failed to produce a model")
-    results.addDouble("$prefix.training.records", df.count().toDouble)
+    results.addDouble("$prefix.training_records", df.count().toDouble)
     results
   }
   /* Test an RDD of LabeledPoints against a trained model */
@@ -59,7 +59,7 @@ class GradientBoostedTreesAlgorithm(val fs : FeatureSet, target : Target[_], val
     checkAlgorithmModel(gbmodel, true, "GradientBoostedTrees - test cannot be performed because no model exists")
     df.cache
     var results = new Results()
-    results.addDouble("$prefix.test.records", df.count())
+    results.addDouble(s"${prefix}.test_${suffix}_records", df.count())
     gbmodel match {
       case None =>
       case Some(m) => {
@@ -68,13 +68,13 @@ class GradientBoostedTreesAlgorithm(val fs : FeatureSet, target : Target[_], val
             (id, point.label, prediction)
          }
          val testErr = AlgorithmUtil.getError(resultdf)
-         results.addDouble(s"${prefix}.test.${suffix}.error", testErr)
+         results.addDouble(s"${prefix}.test_${suffix}_error", testErr)
          var matrix = AlgorithmUtil.getConfusionMatrix(resultdf, target)
          if (ScalaUtil.verbose) {
            ScalaUtil.controlMsg(s"Test error=$testErr")
            ScalaUtil.controlMsg(AlgorithmUtil.confusionToString(matrix, target.getInvMap(), "\n"))
          }
-         results.addString(s"${prefix}.test.${suffix}.confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
+         results.addString(s"${prefix}.test_${suffix}_confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
          df.unpersist()
          Some((results, resultdf))
       }

@@ -1,3 +1,6 @@
+[0m[[0m[33mwarn[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/jobs/ResultWriter.scala:26:14: non-variable type argument String in type pattern scala.collection.immutable.Map[String,Any] (the underlying of Map[String,Any]) is unchecked since it is eliminated by erasure[0m
+[0m[[0m[33mwarn[0m] [0m[0m					case m: Map[String, Any] => return map + (k -> addMapElements(m, k_remaining, v))[0m
+[0m[[0m[33mwarn[0m] [0m[0m					        ^[0m
 [0m[[0m[33mwarn[0m] [0m[0mthere was one deprecation warning; re-run with -deprecation for details[0m
 [0m[[0m[33mwarn[0m] [0m[0mthere was one feature warning; re-run with -feature for details[0m
-[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m
+[0m[[0m[33mwarn[0m] [0m[0mthree warnings found[0m

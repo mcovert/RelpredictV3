@@ -56,9 +56,9 @@ class LinearRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val par
     // Train the model
     lirmodel = Some(LinearRegressionWithSGD.train(df, iters, stepSize))
     checkAlgorithmModel(lirmodel, true, "LinearRegression - training failed to produce a model")
-    results.addDouble(s"${prefix}.training.records", df.count().toDouble)
-    results.addString(s"${prefix}.training.weights", lirmodel.get.weights.toString())
-    results.addString(s"${prefix}.training.intercept", lirmodel.get.intercept.toString())
+    results.addDouble(s"${prefix}.training_records", df.count().toDouble)
+    results.addString(s"${prefix}.training_weights", lirmodel.get.weights.toString())
+    results.addString(s"${prefix}.training_intercept", lirmodel.get.intercept.toString())
     results
   }
   /** 
@@ -78,17 +78,17 @@ class LinearRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val par
                }}
          )
          val testErr = AlgorithmUtil.getError(resultdf)
-         results.addDouble(s"${prefix}.test.${suffix}.error", testErr)
+         results.addDouble(s"${prefix}.test_${suffix}_error", testErr)
          var matrix = AlgorithmUtil.getConfusionMatrix(resultdf, target)
          if (ScalaUtil.verbose) {
            ScalaUtil.controlMsg(s"Test error=$testErr")
            ScalaUtil.controlMsg(AlgorithmUtil.confusionToString(matrix, target.getInvMap(), "\n"))
          }
-         results.addString(s"${prefix}.test.${suffix}.confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
+         results.addString(s"${prefix}.test_${suffix}_confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
          val metrics = new MulticlassMetrics(resultdf.map(x => (x._3, x._2)))
          results.addDouble(s"${prefix}.test.${suffix}.accuracy", metrics.accuracy)
          target.getInvMap().map{ case (k, v) =>
-           val rKey = s"${prefix}.test.${suffix}.label.$v"
+           val rKey = s"${prefix}.test_${suffix}_label.$v"
            results.addDouble(s"$rKey.false_positive_rate", metrics.falsePositiveRate(k))
            results.addDouble(s"$rKey.true_positive_rate", metrics.truePositiveRate(k))
            results.addDouble(s"$rKey.precision", metrics.precision(k))

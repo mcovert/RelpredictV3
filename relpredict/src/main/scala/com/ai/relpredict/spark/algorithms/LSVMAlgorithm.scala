@@ -48,8 +48,8 @@ class LSVMAlgorithm(val fs : FeatureSet, target : Target[_], val parms : Map[Str
     // Train the model
     dtmodel = Some(DecisionTree.trainClassifier(df, target.size, categoryMap, impurity, maxDepth, maxBins))
     checkAlgorithmModel(dtmodel, true, "LSVM - training failed to produce a model")
-    results.addDouble(s"${prefix}.training.records", df.count().toDouble)
-    results.addString(s"${prefix}.training.tree", AlgorithmUtil.getTreeModelText(dtmodel.get.toDebugString, target))
+    results.addDouble(s"${prefix}.training_records", df.count().toDouble)
+    results.addString(s"${prefix}.training_tree", AlgorithmUtil.getTreeModelText(dtmodel.get.toDebugString, target))
     results
   }
   /** 

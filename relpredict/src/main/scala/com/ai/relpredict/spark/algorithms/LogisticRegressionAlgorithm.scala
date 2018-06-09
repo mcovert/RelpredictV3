@@ -45,7 +45,7 @@ class LogisticRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val p
     // Train the model
     lrmodel = Some(new LogisticRegressionWithLBFGS().setNumClasses(target.size).run(df))
     checkAlgorithmModel(lrmodel, true, "LogisticRegression - training failed to produce a model")
-    results.addDouble(s"${prefix}.training.records", df.count().toDouble)
+    results.addDouble(s"${prefix}.training_records", df.count().toDouble)
     //results.addString(s"${prefix}.training.weights", lrmodel.get.weights.toString())
     //results.addString(s"${prefix}.training.intercept", lrmodel.get.intercept.toString())
     results
@@ -56,7 +56,7 @@ class LogisticRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val p
   def test(df : RDD[(String, LabeledPoint)], suffix : String) : Option[(Results, RDD[(String, Double, Double)])] = { 
     checkAlgorithmModel(lrmodel, true, "LogisticRegression - test cannot be performed because no model exists")
     var results = new Results()
-    results.addDouble(s"${prefix}.test.${suffix}.records", df.count())
+    results.addDouble(s"${prefix}.test_${suffix}_records", df.count())
     lrmodel match {
       case None => None
       case Some(m) => {
@@ -67,7 +67,7 @@ class LogisticRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val p
                }}
          )
          val testErr = AlgorithmUtil.getError(resultdf)
-         results.addDouble(s"${prefix}.test.${suffix}.error", testErr)
+         results.addDouble(s"${prefix}.test_${suffix}_error", testErr)
          var matrix = AlgorithmUtil.getConfusionMatrix(resultdf, target)
          if (ScalaUtil.verbose) {
            ScalaUtil.controlMsg(s"Test error=$testErr")
@@ -77,7 +77,7 @@ class LogisticRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val p
          val metrics = new MulticlassMetrics(resultdf.map(x => (x._3, x._2)))
          results.addDouble(s"${prefix}.test.${suffix}.accuracy", metrics.accuracy)
          target.getInvMap().map{ case (k, v) =>
-           val rKey = s"${prefix}.test.${suffix}.label.$v"
+           val rKey = s"${prefix}.test_${suffix}_label.$v"
            results.addDouble(s"$rKey.false_positive_rate", metrics.falsePositiveRate(k))
            results.addDouble(s"$rKey.true_positive_rate", metrics.truePositiveRate(k))
            results.addDouble(s"$rKey.precision", metrics.precision(k))

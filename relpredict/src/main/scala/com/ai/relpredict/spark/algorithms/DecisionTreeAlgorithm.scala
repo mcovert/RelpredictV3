@@ -49,8 +49,8 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
     // Train the model
     dtmodel = Some(DecisionTree.trainClassifier(df, target.size, categoryMap, impurity, maxDepth, maxBins))
     checkAlgorithmModel(dtmodel, true, "DecisionTree - training failed to produce a model")
-    results.addDouble(s"${prefix}.training.records", df.count().toDouble)
-    results.addString(s"${prefix}.training.tree", AlgorithmUtil.getTreeModelText(dtmodel.get.toDebugString, target))
+    results.addDouble(s"${prefix}.training_records", df.count().toDouble)
+    results.addString(s"${prefix}.decision_tree", AlgorithmUtil.getTreeModelText(dtmodel.get.toDebugString, target))
     results
   }
   /** 
@@ -59,7 +59,7 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
   def test(df : RDD[(String, LabeledPoint)], suffix : String) : Option[(Results, RDD[(String, Double, Double)])] = { 
     checkAlgorithmModel(dtmodel, true, "DecisionTree - test cannot be performed because no model exists")
     var results = new Results()
-    results.addDouble(s"${prefix}.test.${suffix}.records", df.count())
+    results.addDouble(s"${prefix}.test_${suffix}_records", df.count())
     dtmodel match {
       case None => None
       case Some(m) => {
@@ -70,13 +70,13 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
                }}
          )
          val testErr = AlgorithmUtil.getError(resultdf)
-         results.addDouble(s"${prefix}.test.${suffix}.error", testErr)
+         results.addDouble(s"${prefix}.test_${suffix}_error", testErr)
          var matrix = AlgorithmUtil.getConfusionMatrix(resultdf, target)
          if (ScalaUtil.verbose) {
            ScalaUtil.controlMsg(s"Test error=$testErr")
            ScalaUtil.controlMsg(AlgorithmUtil.confusionToString(matrix, target.getInvMap(), "\n"))
          }
-         results.addString(s"${prefix}.test.${suffix}.confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
+         results.addString(s"${prefix}.test_${suffix}_confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
          Some((results, resultdf))
       }
     }
