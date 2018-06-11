@@ -45,13 +45,11 @@ trait QueryRoutes extends JsonSupport {
               
               get
               {
-               parameters("dsource", "dschema", "dtable","qlimit")
-               {(dsource,dschema,dtable,qlimit)=>
+               parameters("source", "schema", "table","limit")
+               {(source,schema,table,limit)=>
                
-                  //val query: Future[QRecords] =
-                  //complete (s" dsource='%dsource' and dschema='%dschema' and dtable='%dtable' and qlimit='%qlimit'")
-                                    
-                  val query: Future[QRecords] = (queryActor ? GetRecords(dsource, dschema, dtable, qlimit)).mapTo[QRecords]
+                                                   
+                  val query: Future[QRows] = (queryActor ? GetRecords(source, schema, table, limit)).mapTo[QRows]
                   complete(query)
               }
             }

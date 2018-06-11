@@ -11,8 +11,9 @@ trait JsonSupport extends SprayJsonSupport {
   import DefaultJsonProtocol._
 
   //implicit val queryJsonFormat = jsonFormat3(QRecord)
-  implicit val qrecordFormat = jsonFormat3(QRecord)
-  implicit val qrecordsFormat = jsonFormat1(QRecords)
+  implicit val qcolumnFormat = jsonFormat3(QColumn)
+  implicit val qrowFormat = jsonFormat1(QRow)
+  implicit val qrowsFormat = jsonFormat1(QRows)
 
   implicit val actionPerformedFormat = jsonFormat1(ActionPerformed)
 }
