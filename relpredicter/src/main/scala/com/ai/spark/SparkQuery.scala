@@ -19,14 +19,14 @@ object QueryUtil
 		import sc.implicits._
 		sc.sql("use "+SchemaName)
 
-		/*if (QLimit=="0")
+		val queryDF = if (QLimit=="0")
         {
-        	val queryDF =sc.sql("select * from "+TableName)
+        	sc.sql("select * from "+TableName)
         }
         else
-        {*/
-			val queryDF =sc.sql("select * from "+TableName+" limit "+QLimit)
-		//}
+        {
+			sc.sql("select * from "+TableName+" limit "+QLimit)
+		}
 /*		val queryValues=queryDF.map(_.toString).collect.flatMap(_.split(","))
 		val queryTypes=queryDF.dtypes
 		val queryCombined=queryTypes.zip(queryValues)
@@ -38,7 +38,7 @@ object QueryUtil
 		val queryTypes=queryDF.dtypes
 		val queryCombined = queryValues.map(list => list.map(value => (queryTypes(list.indexOf(value)),value)))
 		val queryFinal= queryCombined.collect.map(_.map((x=>(x._1._1,x._2,x._1._2))))
- 		queryFinal.map(_.mkString).foreach(println)
+ 		//queryFinal.map(_.mkString).foreach(println)
 		sc.stop()
 	    
 	    queryFinal
