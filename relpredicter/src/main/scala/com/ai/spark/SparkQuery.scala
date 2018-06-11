@@ -4,6 +4,8 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql._
 import org.apache.spark.sql.types._
+import org.apache.spark.sql.functions._
+
 
 
 
@@ -19,7 +21,7 @@ object QueryUtil
 		import sc.implicits._
 		sc.sql("use "+SchemaName)
 
-		val queryDF = if (QLimit=="0")
+		val queryDFraw = if (QLimit=="0")
         {
         	sc.sql("select * from "+TableName)
         }
@@ -33,6 +35,9 @@ object QueryUtil
 		val queryFinal=queryCombined.map((x=>(x._1._1.replace("[","").replace("]",""),x._2.replace("[","").replace("]",""),x._1._2.replace("[","").replace("]",""))))
 		
 		queryFinal.foreach(println) */
+
+		// Replace commas in filed values
+		val queryDF= queryDFraw.select(queryDF.columns.map(c=>regexp_replace(col(c),"\\,"," ").alias(c)): _*)
 
 		val queryValues = queryDF.rdd.map(row => row.toString().replace("[","").replace("]","").split(","))
 		val queryTypes=queryDF.dtypes
