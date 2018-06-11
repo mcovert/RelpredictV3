@@ -37,7 +37,7 @@ object QueryUtil
 		queryFinal.foreach(println) */
 
 		// Replace commas in filed values
-		val queryDF= queryDFraw.select(queryDF.columns.map(c=>regexp_replace(col(c),"\\,"," ").alias(c)): _*)
+		val queryDF= queryDFraw.select(queryDFraw.columns.map(c=>regexp_replace(col(c),"\\,"," ").alias(c)): _*)
 
 		val queryValues = queryDF.rdd.map(row => row.toString().replace("[","").replace("]","").split(","))
 		val queryTypes=queryDF.dtypes

@@ -2,8 +2,6 @@
 [0m[[0mdebug[0m] [0mInput file mappings:[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryServer.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryServer.class[0m
-[0m[[0mdebug[0m] [0m	com/ai/spark/QueryUtil$$anonfun$3$$anonfun$apply$2.class[0m
-[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/spark/QueryUtil$$anonfun$3$$anonfun$apply$2.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryRoutes$class.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryRoutes$class.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/util/JsonConverter$$anonfun$toJson$3.class[0m
@@ -16,12 +14,16 @@
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryRoutes.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/util/JsonConverter$$anonfun$toJson$4.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/util/JsonConverter$$anonfun$toJson$4.class[0m
+[0m[[0mdebug[0m] [0m	com/ai/spark/QueryUtil$$anonfun$4$$anonfun$apply$2.class[0m
+[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/spark/QueryUtil$$anonfun$4$$anonfun$apply$2.class[0m
 [0m[[0mdebug[0m] [0m	com/ai[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryActor$$anonfun$receive$1$$anonfun$1$$anonfun$apply$1.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryActor$$anonfun$receive$1$$anonfun$1$$anonfun$apply$1.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/spark/QueryUtil$$anonfun$2.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/spark/QueryUtil$$anonfun$2.class[0m
+[0m[[0mdebug[0m] [0m	com/ai/spark/QueryUtil$$anonfun$4.class[0m
+[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/spark/QueryUtil$$anonfun$4.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/JsonSupport$class.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/JsonSupport$class.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/spark[0m
@@ -50,8 +52,6 @@
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryActor$$anonfun$receive$1$$anonfun$1$$anonfun$apply$1$$anonfun$apply$2.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QColumn.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QColumn.class[0m
-[0m[[0mdebug[0m] [0m	com/ai/spark/QueryUtil$$anonfun$2$$anonfun$apply$1.class[0m
-[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/spark/QueryUtil$$anonfun$2$$anonfun$apply$1.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query[0m
 [0m[[0mdebug[0m] [0m	com/ai/util[0m
@@ -82,6 +82,8 @@
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/spark/QueryUtil.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryRoutes$$anonfun$1.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryRoutes$$anonfun$1.class[0m
+[0m[[0mdebug[0m] [0m	com/ai/spark/QueryUtil$$anonfun$3$$anonfun$apply$1.class[0m
+[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/spark/QueryUtil$$anonfun$3$$anonfun$apply$1.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryActor$$anonfun$receive$1.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryActor$$anonfun$receive$1.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryActor$GetRecords.class[0m
