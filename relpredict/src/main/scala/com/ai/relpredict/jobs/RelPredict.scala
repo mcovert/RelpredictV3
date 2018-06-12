@@ -9,6 +9,8 @@ import com.ai.relpredict.util._
 import org.apache.log4j.{Level, LogManager, PropertyConfigurator}
 import com.ai.relpredict.spark._
 import org.apache.spark.sql.SparkSession
+import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.ArrayBuffer
 
 /**
 *  The RelPredict job
@@ -60,6 +62,9 @@ object RelPredict extends GrammarDef {
     val sysName = "RelPredict"
     private var dataMaps = Map[String, Datamap]()
     private var sparkSession : Option[SparkSession] = None
+    private var resArray = scala.collection.mutable.ArrayBuffer[scala.collection.mutible.Map[String, Any]]()
+    private var r_job    = new scala.collection.mutible.Map[String, Any]()
+
     def main(args: Array[String]) {
       ScalaUtil.start(sysName, args)            // Initialize system tracking and logging facilities
       ScalaUtil.setShutdownHook(this.shutdown)  // Register the system shutdown hook
