@@ -5,33 +5,33 @@ import java.util.Calendar
 import com.ai.relpredict.dsl._
 import org.apache.spark.sql.SparkSession
 import com.ai.relpredict.util._
+import scala.collection.mutable.ArrayBuffer
 
 abstract class Job(val jobname: String, modelDef: Model, config: Config, jobParms : Map[String, String]) {
   val starttime    : java.util.Date = ScalaUtil.getDate()
-  val jobID = ScalaUtil.getDirectoryDate(starttime)
+  val jobID                         = ScalaUtil.getDirectoryDate(starttime)
+  var baseResults  : results
   /**
    * Called before a job is run
+   * Saves job level information into the supplied Results object
    */
-  def setup() : Results = {
-    val r = new Results()
-    r.addString("job.starttime", ScalaUtil.getDateTimeString(starttime))
-    r.addString("job.jobname", jobname)
-    r.addString("job.id", jobID)
-    r.addString("job.parms", ScalaUtil.makeParmString(jobParms))
-    r.addString("job.model.name", modelDef.name)
-    r.addString("job.model.version", modelDef.version)
-    r
+  def setup(results: Results) {
+    baseResults = results
+    jobResults.put("starttime", ScalaUtil.getDateTimeString(starttime))
+    jobResults.put("jobname", jobname)
+    jobResults.put("id", jobID)
+    jobResults.put("parms", ScalaUtil.makeParmString(jobParms))
+    jobResults.put("config", conf.getConfString())
+    baseResults.put("job", jobResults)
   }
   /**
    * Called to execute the job
    */
-  def run()   : Results
+  def run()
   /**
    * Called when the job has completed
    */
-  def cleanup() : Results = { 
-    val r = new Results()
-    r.addString("job.endtime", ScalaUtil.getDateTimeString(ScalaUtil.getDate()))
-    r
+  def cleanup()  { 
+    jobResults.put("endtime", ScalaUtil.getDateTimeString(ScalaUtil.getDate()))
   }
 } 

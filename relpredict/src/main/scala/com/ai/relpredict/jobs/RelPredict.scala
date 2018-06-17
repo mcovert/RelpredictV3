@@ -60,27 +60,28 @@ import scala.collection.mutable.ArrayBuffer
 */
 object RelPredict extends GrammarDef {
     val sysName = "RelPredict"
-    private var dataMaps = Map[String, Datamap]()
+    private var dataMaps                            = Map[String, Datamap]()
     private var sparkSession : Option[SparkSession] = None
-    private var resArray = scala.collection.mutable.ArrayBuffer[scala.collection.mutible.Map[String, Any]]()
-    private var r_job    = new scala.collection.mutible.Map[String, Any]()
+    private baseResults      : Results              = new Results()                        
+    private jobResults       : Results              = new Results()                        
+    private modelResults     : Results              = new Results()                        
 
     def main(args: Array[String]) {
       ScalaUtil.start(sysName, args)            // Initialize system tracking and logging facilities
       ScalaUtil.setShutdownHook(this.shutdown)  // Register the system shutdown hook
+      baseResults.put("job", jobResults)
+      baseResults.put("model", modelResults)
       val cmdLine = new StringBuilder()
       args.foreach(arg => cmdLine.append(s"$arg "))
       ScalaUtil.controlMsg("Command line: " + cmdLine.toString);
+      jobResults.put("cmdline", cmdLine.toString)
       // Set up RelPredict configuration. See RPConfig for details.
       var config : Option[Config] = RPConfig.getConfig(args)
       config match {
           case Some(config) => {
-             config.print()
              RPConfig.setBaseDir(config.base_dir)
              RPConfig.setJobDir(config.job_dir)
-             //ScalaUtil.setVerbose(config.verbose)
              ScalaUtil.setEnvironment(config.env)
-             // Try to create a job using the command line arguments. 
              ScalaUtil.controlMsg("Building job...")
              val job = getJob(config)
              if (config.run == "false") {
@@ -91,16 +92,14 @@ object RelPredict extends GrammarDef {
                   // If Job was built successfully, set it up and run it. 
                   case Some(j) => {
                     ScalaUtil.controlMsg(s"Running job ${j.jobname}")
-                    val results = j.setup().merge(j.run()).merge(j.cleanup())
-                    results.addString("job.cmdline", cmdLine.toString)
-                    results.toStringArray().foreach(println)
-                    val rmap = ResultWriter.getString(results)
-                    /* Save results  to log file */
+                    j.setup(baseResults)
+                    j.run()
+                    j.cleanup())
+                    val jsonResults = JsonConverter.toJson(baseResults)
+                    /* Save results  to file */
                     val dir = RPConfig.getJobDir()
-                    //SparkUtil.saveTextToHDFSFile(results.toDelimitedDebugString("\n"), s"${dir}logs/${j.jobname}-${j.jobID}.log", sparkSession.get)
-                    SparkUtil.saveTextToHDFSFile(rmap, s"${dir}results", sparkSession.get)
-                    ScalaUtil.controlMsg(s"Job ${j.jobname} completed with return code ${results.getRC()}")
-                    if (ScalaUtil.verbose) results.toStringArray().sorted.foreach(ScalaUtil.controlMsg(_))
+                    SparkUtil.saveTextToHDFSFile(jsonResults, s"${dir}results", sparkSession.get)
+                    ScalaUtil.controlMsg(s"Job ${j.jobname} completed with return code ${jobResults.getRC()}")
                   }
                   // Else write and error message and end
                   case None => ScalaUtil.terminal_error("Job could not be created")
