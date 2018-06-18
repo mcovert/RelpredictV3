@@ -48,5 +48,20 @@ object QueryUtil
 	    
 	    queryFinal
 	 }
+	 def SparkTables( DataSource : String, SchemaName : String)
+	 {
+	 	val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "local").enableHiveSupport()
+		.config("yarn.resourcemanager.address","ai02.analyticsinside.us:8032")
+		.config("hive.metastore.uris", "thrift://ai04.analyticsinside.us:9083")
+		.getOrCreate() 
+		import sc.implicits._
+	 	sc.sql("use "+SchemaName)
+	 	val tablesNames=sc.sql("show tables")
+	 	val tablesFinal=tablesNames.rdd.map(row=>row.toString().split(",")).collect.map(x=>(x(1)))
+	 	sc.stop()
+	    
+	    tablesFinal
+	 }
+
 	}
 
