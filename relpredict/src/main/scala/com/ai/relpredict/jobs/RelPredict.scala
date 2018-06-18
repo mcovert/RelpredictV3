@@ -114,8 +114,17 @@ object RelPredict extends GrammarDef {
       ScalaUtil.end(sysName)
     }
     def getModelFileName(conf: Config) : String = {
-      val cnv = conf.model_def.split("/");
-      return conf.base_dir + "/models/" + conf.model_def + "/" + cnv(1) + ".modeldef"
+      modelResults.put("model_class",      conf.model_class);
+      modelResults.put("model_name",       conf.model_name);
+      modelResults.put("model_version",    conf.model_version);
+      modelResults.put("model_train_date", conf.model_train_date);
+      modelResults.addArray("targets")
+      val cnv = conf.model_class      + "/" + 
+                conf.model_name       + "/" + 
+                conf.model_version    + "/" + 
+                conf.model_train_date + "/" + 
+                conf.model_name + ".modeldef"
+      return conf.base_dir + "/models/" + cnv;
     }
     // def loadConfig(configFile: String) : Array[String] = {
     //   val source = scala.io.Source.fromFile(configFile)
@@ -207,6 +216,7 @@ object RelPredict extends GrammarDef {
       }
     }
     def loadDataMap(mapDefs : String) {
+      dataResults.addArray("datamaps")
       if (mapDefs.isEmpty) { ScalaUtil.controlMsg("No data maps were specified"); return}
       val dMapDefs = mapDefs.split(";")
       dataMaps = dMapDefs.map(md => {
@@ -215,6 +225,12 @@ object RelPredict extends GrammarDef {
         else ScalaUtil.controlMsg(s"Loading data map ${mapEntry(0)} from ${mapEntry(1)}")        
         (mapEntry(0).toLowerCase() -> Datamap(mapEntry(1)))
       }).toMap
+      dataMaps.keys.foreach{ k : String => { 
+          var r = Results(); 
+          r.put("datamap_name", k); 
+          dataResults.put("datamasps", r)
+        }
+      }
     }
     def getDataMap(name : String) : Option[Datamap] = dataMaps.get(name.toLowerCase()) 
     // Perform any shutdown activities that may be required
