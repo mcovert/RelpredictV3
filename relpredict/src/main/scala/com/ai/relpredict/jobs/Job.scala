@@ -7,22 +7,21 @@ import org.apache.spark.sql.SparkSession
 import com.ai.relpredict.util._
 import scala.collection.mutable.ArrayBuffer
 
-abstract class Job(val jobname: String, modelDef: Model, config: Config, jobParms : Map[String, String]) {
-  val starttime    : java.util.Date = ScalaUtil.getDate()
-  val jobID                         = ScalaUtil.getDirectoryDate(starttime)
-  var baseResults  : results
+abstract class Job(val jobname: String, modelDef: Model, config: Config, jobParms : Map[String, String],
+                   var results: Results) {
+  val starttime : java.util.Date = ScalaUtil.getDate()
+  val st                         = System.currentTimeMillis
+  val jobID                      = ScalaUtil.getDirectoryDate(starttime)
   /**
    * Called before a job is run
    * Saves job level information into the supplied Results object
    */
   def setup(results: Results) {
-    baseResults = results
-    jobResults.put("starttime", ScalaUtil.getDateTimeString(starttime))
-    jobResults.put("jobname", jobname)
-    jobResults.put("id", jobID)
-    jobResults.put("parms", ScalaUtil.makeParmString(jobParms))
-    jobResults.put("config", conf.getConfString())
-    baseResults.put("job", jobResults)
+    results.put("job.starttime", ScalaUtil.getDateTimeString(starttime))
+    results.put("job.jobname", jobname)
+    results.put("job.id", jobID)
+    results.put("job.parms", ScalaUtil.makeParmString(jobParms))
+    results.put("job.config", conf.getConfString())
   }
   /**
    * Called to execute the job
@@ -32,6 +31,8 @@ abstract class Job(val jobname: String, modelDef: Model, config: Config, jobParm
    * Called when the job has completed
    */
   def cleanup()  { 
-    jobResults.put("endtime", ScalaUtil.getDateTimeString(ScalaUtil.getDate()))
+    val endtime = ScalaUtil.getDate()
+    results.put("job.endtime", ScalaUtil.getDateTimeString(endtime))
+    results.put("job.runtime", "%1d ms".format(System.currentTimeMillis - start))
   }
 } 

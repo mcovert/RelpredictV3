@@ -62,15 +62,17 @@ object RelPredict extends GrammarDef {
     val sysName = "RelPredict"
     private var dataMaps                            = Map[String, Datamap]()
     private var sparkSession : Option[SparkSession] = None
-    private baseResults      : Results              = new Results()                        
-    private jobResults       : Results              = new Results()                        
-    private modelResults     : Results              = new Results()                        
+    private var baseResults      : Results          = new Results()                        
+    private var jobResults       : Results          = new Results()                        
+    private var modelResults     : Results          = new Results()                        
+    private var dataResults      : Results          = new Results()                        
 
     def main(args: Array[String]) {
       ScalaUtil.start(sysName, args)            // Initialize system tracking and logging facilities
       ScalaUtil.setShutdownHook(this.shutdown)  // Register the system shutdown hook
-      baseResults.put("job", jobResults)
+      baseResults.put("job",   jobResults)
       baseResults.put("model", modelResults)
+      baseResults.put("data",  dataResults)
       val cmdLine = new StringBuilder()
       args.foreach(arg => cmdLine.append(s"$arg "))
       ScalaUtil.controlMsg("Command line: " + cmdLine.toString);
@@ -94,7 +96,7 @@ object RelPredict extends GrammarDef {
                     ScalaUtil.controlMsg(s"Running job ${j.jobname}")
                     j.setup(baseResults)
                     j.run()
-                    j.cleanup())
+                    j.cleanup()
                     val jsonResults = JsonConverter.toJson(baseResults)
                     /* Save results  to file */
                     val dir = RPConfig.getJobDir()

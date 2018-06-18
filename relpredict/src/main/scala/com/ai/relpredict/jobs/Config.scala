@@ -17,7 +17,10 @@ case class Config(jobname:       String = "",
                   job_dir:       String = "", 
                   run_type:      String = "", 
                   env:           String = "", 
-                  model_def:     String = "",
+                  model_class:   String = "",
+                  model_name:    String = "",
+                  model_version: String = "",
+                  model_train_date:    String = "",
                   run_id:        String = "",
                   data_maps:     String = "",
                   column_map:    String = "",
@@ -47,7 +50,10 @@ case class Config(jobname:       String = "",
               val p07a= if (_config.job_dir    == "") job_dir    else _config.job_dir
               val p08 = if (_config.run_type   == "") run_type   else _config.run_type
               val p08a= if (_config.env        == "") env        else _config.env
-              val p09 = if (_config.model_def  == "") model_def  else _config.model_def
+              val p09 = if (_config.model_class       == "") model_class  else _config.model_class
+              val p09a= if (_config.model_name        == "") model_name  else _config.model_name
+              val p09b= if (_config.model_version     == "") model_version  else _config.model_version
+              val p09c= if (_config.model_train_date  == "") model_train_date  else _config.model_train_date
               val p10 = if (_config.run_id     == "") run_id     else _config.run_id
               val p11 = if (_config.data_maps  == "") data_maps  else _config.data_maps
               val p12 = if (_config.column_map == "") column_map else _config.column_map
@@ -60,7 +66,8 @@ case class Config(jobname:       String = "",
               return Config(jobname   = p01,    sql      = p02,    table     = p03,     limit      = p04, 
                             data_def  = p05,    split    = p06,    base_dir  = p07,  
                             job_dir   = p07a,   run_type = p08,    env       = p08a, 
-                            model_def = p09,    run_id   = p10,    data_maps = p11,     column_map = p12, 
+                            model_class = p09, model_name = p09a, model_version = p09b, model_train_date = p09c,    
+                            run_id   = p10,    data_maps = p11,     column_map = p12, 
                             verbose   = p13,    debug    = p14,    parms     = p15,     run        = p16, 
                             config    = p17)
             }
@@ -78,7 +85,10 @@ case class Config(jobname:       String = "",
             val p07a= _config.getOrElse("job_dir",    job_dir)
             val p08 = _config.getOrElse("run_type",   run_type)
             val p08a= _config.getOrElse("env",        env)
-            val p09 = _config.getOrElse("model_def",  model_def)
+            val p09 = _config.getOrElse("model_class",       model_class)
+            val p09a= _config.getOrElse("model_name",        model_name)
+            val p09b= _config.getOrElse("model_version",     model_version)
+            val p09c= _config.getOrElse("model_train_date",  model_train_date)
             val p10 = _config.getOrElse("run_id",     run_id)
             val p11 = _config.getOrElse("data_maps",  data_maps)
             val p12 = _config.getOrElse("column_map", column_map)
@@ -91,7 +101,8 @@ case class Config(jobname:       String = "",
               return Config(jobname   = p01,    sql      = p02,    table     = p03,     limit      = p04, 
                             data_def  = p05,    split    = p06,    base_dir  = p07,  
                             job_dir   = p07a,   run_type = p08,    env       = p08a, 
-                            model_def = p09,    run_id   = p10,    data_maps = p11,     column_map = p12, 
+                            model_class = p09, model_name = p09a, model_version = p09b, model_train_date = p09c,    
+                            run_id   = p10,    data_maps = p11,     column_map = p12, 
                             verbose   = p13,    debug    = p14,    parms     = p15,     run        = p16, 
                             config    = p17)
       }
@@ -99,25 +110,28 @@ case class Config(jobname:       String = "",
 
       def print() {
             ScalaUtil.writeInfo("--------------Start Configuration--------------")
-            ScalaUtil.writeInfo("jobname:    " + jobname)
-            ScalaUtil.writeInfo("sql:        " + sql)
-            ScalaUtil.writeInfo("table:      " + table)
-            ScalaUtil.writeInfo("limit:      " + limit)
-            ScalaUtil.writeInfo("data_def:   " + data_def)
-            ScalaUtil.writeInfo("split:      " + split)
-            ScalaUtil.writeInfo("base_dir:   " + base_dir)
-            ScalaUtil.writeInfo("job_dir:    " + job_dir)
-            ScalaUtil.writeInfo("run_type:   " + run_type)
-            ScalaUtil.writeInfo("env:        " + env)
-            ScalaUtil.writeInfo("model_def:  " + model_def)
-            ScalaUtil.writeInfo("run_id:     " + run_id)
-            ScalaUtil.writeInfo("data_maps:  " + data_maps)
-            ScalaUtil.writeInfo("column_map: " + column_map)
-            ScalaUtil.writeInfo("verbose:    " + verbose)
-            ScalaUtil.writeInfo("debug:      " + debug)
-            ScalaUtil.writeInfo("parms:      " + parms)
-            ScalaUtil.writeInfo("run:        " + run)
-            ScalaUtil.writeInfo("config:     " + config)      
+            ScalaUtil.writeInfo("jobname:           " + jobname)
+            ScalaUtil.writeInfo("sql:               " + sql)
+            ScalaUtil.writeInfo("table:             " + table)
+            ScalaUtil.writeInfo("limit:             " + limit)
+            ScalaUtil.writeInfo("data_def:          " + data_def)
+            ScalaUtil.writeInfo("split:             " + split)
+            ScalaUtil.writeInfo("base_dir:          " + base_dir)
+            ScalaUtil.writeInfo("job_dir:           " + job_dir)
+            ScalaUtil.writeInfo("run_type:          " + run_type)
+            ScalaUtil.writeInfo("env:               " + env)
+            ScalaUtil.writeInfo("model_class:       " + model_class)
+            ScalaUtil.writeInfo("model_name:        " + model_name)
+            ScalaUtil.writeInfo("model_version:     " + model_version)
+            ScalaUtil.writeInfo("model_train_date:  " + model_train_date)
+            ScalaUtil.writeInfo("run_id:            " + run_id)
+            ScalaUtil.writeInfo("data_maps:         " + data_maps)
+            ScalaUtil.writeInfo("column_map:        " + column_map)
+            ScalaUtil.writeInfo("verbose:           " + verbose)
+            ScalaUtil.writeInfo("debug:             " + debug)
+            ScalaUtil.writeInfo("parms:             " + parms)
+            ScalaUtil.writeInfo("run:               " + run)
+            ScalaUtil.writeInfo("config:            " + config)      
             ScalaUtil.writeInfo("---------------End Configuration---------------")
       }
       def getConfigString() = {
@@ -132,7 +146,10 @@ case class Config(jobname:       String = "",
             "job_dir="    + job_dir + ";" +
             "run_type="   + run_type + ";" +
             "env="        + env + ";" +
-            "model_def="  + model_def + ";" +
+            "model_class="       + model_class + ";" +
+            "model_name="        + model_name + ";" +
+            "model_version="     + model_version + ";" +
+            "model_train_date="  + model_train_date + ";" +
             "run_id="     + run_id + ";" +
             "data_maps="  + data_maps + ";" +
             "column_map=" + column_map + ";" +
