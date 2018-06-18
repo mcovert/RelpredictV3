@@ -32,7 +32,7 @@ class QueryActor extends Actor with ActorLogging {
 
     case GetTables(source,schema) =>
       val tablesRecord=QueryUtil.SparkTables(source,schema)
-      val tablesList : Array[TableName] = tablesRecord.map(r=> (TableName.apply _))
+      val tablesList : Array[TableName] = tablesRecord.map(r=>(TableName.apply (r.toString)))
       sender() ! TableList(tablesList)
 
 

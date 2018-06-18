@@ -48,7 +48,7 @@ object QueryUtil
 	    
 	    queryFinal
 	 }
-	 def SparkTables( DataSource : String, SchemaName : String)
+	 def SparkTables( DataSource : String, SchemaName : String) :Array[String] =
 	 {
 	 	val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "local").enableHiveSupport()
 		.config("yarn.resourcemanager.address","ai02.analyticsinside.us:8032")
