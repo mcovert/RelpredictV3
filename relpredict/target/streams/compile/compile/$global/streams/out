@@ -1,16 +1,9 @@
-[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/jobs/RelPredict.scala:153:29: not enough arguments for method apply: (jobname: String, modelDef: com.ai.relpredict.spark.Model, config: com.ai.relpredict.jobs.Config, ss: org.apache.spark.sql.SparkSession, df: org.apache.spark.sql.DataFrame, dMap: Map[String,com.ai.relpredict.util.Datamap], columnMap: com.ai.relpredict.util.Datamap, jobParms: Map[String,String], results: com.ai.relpredict.util.Results)com.ai.relpredict.jobs.TrainingJob in object TrainingJob.[0m
-[0m[[0m[31merror[0m] [0m[0mUnspecified value parameters jobParms, results.[0m
-[0m[[0m[31merror[0m] [0m[0m            Some(TrainingJob(conf.jobname, model, conf, ss, df, columnMap, jobParms))[0m
-[0m[[0m[31merror[0m] [0m[0m                            ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/jobs/RelPredict.scala:157:31: not enough arguments for method apply: (jobname: String, modelDef: com.ai.relpredict.spark.Model, config: com.ai.relpredict.jobs.Config, ss: org.apache.spark.sql.SparkSession, df: org.apache.spark.sql.DataFrame, dMap: Map[String,com.ai.relpredict.util.Datamap], columnMap: com.ai.relpredict.util.Datamap, jobParms: Map[String,String], results: com.ai.relpredict.util.Results)com.ai.relpredict.jobs.PredictionJob in object PredictionJob.[0m
-[0m[[0m[31merror[0m] [0m[0mUnspecified value parameters jobParms, results.[0m
-[0m[[0m[31merror[0m] [0m[0m            Some(PredictionJob(conf.jobname, model, conf, ss, df, columnMap, jobParms))[0m
-[0m[[0m[31merror[0m] [0m[0m                              ^[0m
 [0m[[0m[33mwarn[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/util/Results.scala:36:16: non-variable type argument com.ai.relpredict.util.Results in type pattern scala.collection.mutable.ArrayBuffer[com.ai.relpredict.util.Results] is unchecked since it is eliminated by erasure[0m
 [0m[[0m[33mwarn[0m] [0m[0m      case ab: ArrayBuffer[Results] => Some(ab)[0m
 [0m[[0m[33mwarn[0m] [0m[0m               ^[0m
 [0m[[0m[33mwarn[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/util/Results.scala:55:21: non-variable type argument com.ai.relpredict.util.Results in type pattern scala.collection.mutable.ArrayBuffer[com.ai.relpredict.util.Results] is unchecked since it is eliminated by erasure[0m
 [0m[[0m[33mwarn[0m] [0m[0m      case Some(ab: ArrayBuffer[Results]) => ab += r[0m
 [0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[33mwarn[0m] [0m[0mthere was one deprecation warning; re-run with -deprecation for details[0m
+[0m[[0m[33mwarn[0m] [0m[0mthere was one feature warning; re-run with -feature for details[0m
+[0m[[0m[33mwarn[0m] [0m[0mfour warnings found[0m

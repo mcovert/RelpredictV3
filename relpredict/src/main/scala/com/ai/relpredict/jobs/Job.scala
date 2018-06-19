@@ -7,12 +7,13 @@ import org.apache.spark.sql.SparkSession
 import com.ai.relpredict.util._
 import scala.collection.mutable.ArrayBuffer
 
-abstract class Job(val jobname: String, modelDef: Model, config: Config, jobParms : Map[String, String],
-                   val dataMaps: Map[String, Datamap], val columnMap: Datamap, var results: Results) {
+abstract class Job(val jobname: String, val modelDef: Model, val config: Config, 
+                   val jobParms : Map[String, String], val dataMaps: Map[String, Datamap], 
+                   val columnMap: Datamap) {
   val starttime : java.util.Date          = ScalaUtil.getDate()
   val start                               = System.currentTimeMillis
   val jobID                               = ScalaUtil.getDirectoryDate(starttime)
-  var baseResults      : Results                     
+  var baseResults      : Results          = new Results()          
   var jobResults       : Results          = new Results()                        
   var modelResults     : Results          = new Results()                        
   var dataResults      : Results          = new Results()                        
@@ -21,8 +22,7 @@ abstract class Job(val jobname: String, modelDef: Model, config: Config, jobParm
    * Called before a job is run
    * Saves job level information into the supplied Results object
    */
-  def setup(results: Results) {
-    baseResults = results
+  def setup() {
     baseResults.put("job",   jobResults)
     setupJob()
     baseResults.put("model", modelResults)
@@ -33,14 +33,15 @@ abstract class Job(val jobname: String, modelDef: Model, config: Config, jobParm
   /**
    * Called to execute the job
    */
-  def run() : Results
+  def run()
   /**
    * Called when the job has completed
    */
-  def cleanup()  { 
+  def cleanup() : Results = { 
     val endtime = ScalaUtil.getDate()
-    jobResults.put("jendtime", ScalaUtil.getDateTimeString(endtime))
+    jobResults.put("endtime", ScalaUtil.getDateTimeString(endtime))
     jobResults.put("runtime", "%1d ms".format(System.currentTimeMillis - start))
+    baseResults
   }
   def setupJob() {
     jobResults.put("starttime", ScalaUtil.getDateTimeString(starttime))

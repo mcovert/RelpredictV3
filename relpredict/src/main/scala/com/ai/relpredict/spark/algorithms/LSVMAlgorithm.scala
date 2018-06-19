@@ -35,6 +35,7 @@ class LSVMAlgorithm(val fs : FeatureSet, target : Target[_], val parms : Map[Str
       case Some(m) => ScalaUtil.writeWarning("LSVM - Overwriting existing trained model")
     }
     var results = new Results()
+    results.put("phase", "train")
     // Set up all parameters
     var categoryMap = SparkUtil.buildCategoryMap(target.featureSet)
     val impurity = ScalaUtil.getParm("impurity", "gini", parms)
@@ -56,7 +57,8 @@ class LSVMAlgorithm(val fs : FeatureSet, target : Target[_], val parms : Map[Str
   def test(df : RDD[(String, LabeledPoint)], suffix : String) : Option[(Results, RDD[(String, Double, Double)])] = { 
     checkAlgorithmModel(dtmodel, true, "LSVM - test cannot be performed because no model exists")
     var results = new Results()
-    results.put(s"test_${suffix}_records", df.count())
+    results.put("phase", "test")
+   results.put(s"test_${suffix}_records", df.count())
     dtmodel match {
       case None => None
       case Some(m) => {
@@ -86,13 +88,14 @@ class LSVMAlgorithm(val fs : FeatureSet, target : Target[_], val parms : Map[Str
    */
   def predict(df : RDD[(String, Vector)]) : Option[(Results, RDD[(String, Double)])] = { 
     checkAlgorithmModel(dtmodel, true, "LSVM - prediction is not possible because no model has been created")
-    val r = new Results()
-    r.put("predict_records", df.count())    
+    val results = new Results()
+    results.put("phase", "predict")
+    results.put("predict_records", df.count())    
     val dfr = df.map(point => {
        val prediction = dtmodel.get.predict(point._2)
        (point._1, prediction)
     })
-    Some((r, dfr))
+    Some((results, dfr))
   }
   /** 
    *  Save the model file to disk 

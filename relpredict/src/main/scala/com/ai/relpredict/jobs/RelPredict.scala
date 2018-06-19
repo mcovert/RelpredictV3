@@ -62,7 +62,6 @@ object RelPredict extends GrammarDef {
     val sysName = "RelPredict"
     private var dataMaps                            = Map[String, Datamap]()
     private var sparkSession : Option[SparkSession] = None
-    var baseResults                                 = Results()
 
     def main(args: Array[String]) {
       ScalaUtil.start(sysName, args)            // Initialize system tracking and logging facilities
@@ -87,9 +86,9 @@ object RelPredict extends GrammarDef {
                   // If Job was built successfully, set it up and run it. 
                   case Some(j) => {
                     ScalaUtil.controlMsg(s"Running job ${j.jobname}")
-                    j.setup(baseResults)
+                    j.setup()
                     j.run()
-                    j.cleanup()
+                    var baseResults = j.cleanup()
                     val jsonResults = JsonConverter.toJson(baseResults)
                     /* Save results  to file */
                     val dir = RPConfig.getJobDir()
@@ -149,12 +148,12 @@ object RelPredict extends GrammarDef {
       // Check the run type and generate the appropriate job type
       conf.run_type match {
           case "train" => {
-            ScalaUtil.controlMsg("Training job created")            
-            Some(TrainingJob(conf.jobname, model, conf, ss, df, columnMap, jobParms))
+            ScalaUtil.controlMsg("Training job created") 
+            Some(TrainingJob(conf.jobname, model, conf, ss, df, dataMaps, columnMap, jobParms))
           }
           case "predict" => {
             ScalaUtil.controlMsg("Prediction job created")            
-            Some(PredictionJob(conf.jobname, model, conf, ss, df, columnMap, jobParms))
+            Some(PredictionJob(conf.jobname, model, conf, ss, df, dataMaps, columnMap, jobParms))
           }
           case unknown => { ScalaUtil.terminal_error(s"Unknown run type: $unknown"); None }
       }

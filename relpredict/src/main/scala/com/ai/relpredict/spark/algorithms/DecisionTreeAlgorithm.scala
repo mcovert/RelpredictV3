@@ -47,6 +47,7 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
     // Train the model
     dtmodel = Some(DecisionTree.trainClassifier(df, target.size, categoryMap, impurity, maxDepth, maxBins))
     checkAlgorithmModel(dtmodel, true, "DecisionTree - training failed to produce a model")
+    results.put("phase", "train")
     results.put("training_records", df.count().toDouble)
     results.put("decision_tree", AlgorithmUtil.getTreeModelText(dtmodel.get.toDebugString, target))
     results
@@ -57,6 +58,7 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
   def test(df : RDD[(String, LabeledPoint)], suffix : String) : Option[(Results, RDD[(String, Double, Double)])] = { 
     checkAlgorithmModel(dtmodel, true, "DecisionTree - test cannot be performed because no model exists")
     var results = new Results()
+    results.put("phase", "test")
     results.put(s"test_${suffix}_records", df.count())
     dtmodel match {
       case None => None
@@ -87,13 +89,14 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
    */
   def predict(df : RDD[(String, Vector)]) : Option[(Results, RDD[(String, Double)])] = { 
     checkAlgorithmModel(dtmodel, true, "DecisionTree - prediction is not possible because no model has been created")
-    val r = new Results()
-    r.put("predict_records", df.count())
+    val results = new Results()
+    results.put("phase", "predict")
+    results.put("predict_records", df.count())
     val dfr = df.map(point => {
        val prediction = dtmodel.get.predict(point._2)
        (point._1, prediction)
     })
-    Some((r, dfr))
+    Some((results, dfr))
   }
   /** 
    *  Save the model file to disk 

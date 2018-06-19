@@ -15,18 +15,19 @@ import org.apache.spark.sql.Row
 import scala.collection.mutable.ArrayBuffer
 
 
-case class TrainingJob(jobname: String, modelDef: com.ai.relpredict.spark.Model, config : Config, 
-                       ss : SparkSession, df : DataFrame, dMap: Map[String, Datamap], columnMap: Datamap, 
-                       jobParms : Map[String, String], results: Results)
+case class TrainingJob(override val jobname: String, override val modelDef: com.ai.relpredict.spark.Model, 
+                       override val config : Config, ss : SparkSession, df : DataFrame, 
+                       override val dataMaps: Map[String, Datamap], override val columnMap: Datamap, 
+                       override val jobParms : Map[String, String])
    extends Job(jobname: String,  modelDef: Model, config: Config, jobParms : Map[String, String],
-               dMap: Map[String, Datamap], columnMap: Datamap, results: Results) {
+               dataMaps: Map[String, Datamap], columnMap: Datamap) {
     import ss.sqlContext.implicits._
-    def run() : Results = {
+    def run() {
       val split = {
         val sp = config.split.toDouble
         if (sp <= 0.0 || sp >= 1.0) {
           ScalaUtil.writeWarning(s"Split $config.split must be greater than 0.0 and less than 1.0. 0.8 will be used." )
-          jobResults.setRC(results.WARN)
+          jobResults.setRC(baseResults.WARN)
           Array(0.8, 0.2)
         }
         else Array(sp, 1.0 - sp)
@@ -50,6 +51,7 @@ case class TrainingJob(jobname: String, modelDef: com.ai.relpredict.spark.Model,
             case Some(alg) => {
               var algBase = new Results()
               algBase.put("alg_name", alg.name)
+              algBase.put("target_name", t.getName())
               algBase.addArray("phases")
               alg.start()
               algBase.put("phases", alg.train(tVecs(0).map(r => r._2)))
@@ -62,6 +64,5 @@ case class TrainingJob(jobname: String, modelDef: com.ai.relpredict.spark.Model,
         })
       })
       modelDef.saveModel(jobID)
-      baseResults
     }
 }

@@ -14,12 +14,13 @@ import org.apache.spark.mllib.regression.LabeledPoint
 /**
  * The Prediction job uses a save trained model to predict targets on new data.
  */
-case class PredictionJob(jobname: String, modelDef: com.ai.relpredict.spark.Model, config : Config, 
-                       ss : SparkSession, df : DataFrame, dMap: Map[String, Datamap], columnMap: Datamap, 
-                       jobParms : Map[String, String], results: Results)
+case class PredictionJob(override val jobname: String, override val modelDef: com.ai.relpredict.spark.Model, 
+                         override val config : Config, ss : SparkSession, df : DataFrame, 
+                         override val dataMaps: Map[String, Datamap], override val columnMap: Datamap, 
+                         override val jobParms : Map[String, String])
    extends Job(jobname: String,  modelDef: Model, config: Config, jobParms : Map[String, String],
-               dMap: Map[String, Datamap], columnMap: Datamap, results: Results) {
-    def run() : Results = {
+               dataMaps: Map[String, Datamap], columnMap: Datamap) {
+    def run() {
        import ss.implicits._
        val df = ss.sqlContext.sql(config.sql)
        df.cache
@@ -44,6 +45,5 @@ case class PredictionJob(jobname: String, modelDef: com.ai.relpredict.spark.Mode
           vPos += 1
           res
        })
-       baseResults
     }
 }

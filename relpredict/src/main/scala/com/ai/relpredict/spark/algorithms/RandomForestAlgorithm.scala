@@ -34,6 +34,7 @@ class RandomForestAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
       case Some(m) => ScalaUtil.writeWarning("RandomForest - Overwriting exisiting trained model")
     }
     var results = new Results()
+    results.put("phase", "train")
     // Set up all parameters
     var categoryMap = SparkUtil.buildCategoryMap(target.featureSet)
     // Train the model
@@ -53,6 +54,7 @@ class RandomForestAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
   def test(df : RDD[(String, LabeledPoint)], suffix : String) : Option[(Results, RDD[(String, Double, Double)])] = { 
     checkAlgorithmModel(rfmodel, true, "RandomForest - test cannot be performed because no model exists")
     var results = new Results()
+    results.put("phase", "test")
     results.put(s"test_${suffix}_records", df.count())
     rfmodel match {
       case None => None
@@ -81,13 +83,14 @@ class RandomForestAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
   /* of rows containing the row identifier and a double of the class that the row was predicted to be. */
   def predict(df : RDD[(String, Vector)]) : Option[(Results, RDD[(String, Double)])] = { 
     checkAlgorithmModel(rfmodel, true, "RandomForest - prediction is not possible because no model has been created")
-    val r = new Results()
-    r.put("predict_records", df.count())    
+    val results = new Results()
+    results.put("phase", "predict")
+    results.put("predict_records", df.count())    
     val dfr = df.map(point => {
        val prediction = rfmodel.get.predict(point._2)
        (point._1, prediction)
     })
-    Some((r, dfr))
+    Some((results, dfr))
   }
   /* Save the model file to disk */
   def saveModel(ss : SparkSession, fileName : String) {
