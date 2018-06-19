@@ -1,6 +1,5 @@
 package com.ai.relpredict.spark.algorithms
 
-import com.ai.relpredict.jobs.Results
 import com.ai.relpredict.spark._
 import java.io.FileWriter
 import org.apache.spark.SparkContext
@@ -14,7 +13,7 @@ import org.apache.spark.mllib.tree.DecisionTree
 import org.apache.spark.mllib.tree.model.DecisionTreeModel
 import org.apache.spark.mllib.util.MLUtils
 import org.apache.spark.rdd._
-import com.ai.relpredict.util.ScalaUtil
+import com.ai.relpredict.util.{ScalaUtil, Results}
 import com.ai.relpredict.dsl._
 
 /**
@@ -24,7 +23,6 @@ import com.ai.relpredict.dsl._
 class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms : Map[String, String]) extends Algorithm("decision_tree") {
   var dtmodel : Option[DecisionTreeModel] = None
   var predicted : Option[RDD[(String, Double)]] = None
-  val prefix = s"target.${target.getName()}.$name"
   /* Allows printing any model information to a file. For a Decision Tree, this is the actual tree if/then/else logic. */
   def printTo(file : FileWriter) {
     if (checkAlgorithmModel(dtmodel, false, "DecisionTree - Print is not possible because no model exists")) file.write(dtmodel.get.toDebugString)
@@ -49,8 +47,8 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
     // Train the model
     dtmodel = Some(DecisionTree.trainClassifier(df, target.size, categoryMap, impurity, maxDepth, maxBins))
     checkAlgorithmModel(dtmodel, true, "DecisionTree - training failed to produce a model")
-    results.addDouble(s"${prefix}.training_records", df.count().toDouble)
-    results.addString(s"${prefix}.decision_tree", AlgorithmUtil.getTreeModelText(dtmodel.get.toDebugString, target))
+    results.put("training_records", df.count().toDouble)
+    results.put("decision_tree", AlgorithmUtil.getTreeModelText(dtmodel.get.toDebugString, target))
     results
   }
   /** 
@@ -59,7 +57,7 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
   def test(df : RDD[(String, LabeledPoint)], suffix : String) : Option[(Results, RDD[(String, Double, Double)])] = { 
     checkAlgorithmModel(dtmodel, true, "DecisionTree - test cannot be performed because no model exists")
     var results = new Results()
-    results.addDouble(s"${prefix}.test_${suffix}_records", df.count())
+    results.put(s"test_${suffix}_records", df.count())
     dtmodel match {
       case None => None
       case Some(m) => {
@@ -70,13 +68,13 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
                }}
          )
          val testErr = AlgorithmUtil.getError(resultdf)
-         results.addDouble(s"${prefix}.test_${suffix}_error", testErr)
+         results.put(s"test_${suffix}_error", testErr)
          var matrix = AlgorithmUtil.getConfusionMatrix(resultdf, target)
          if (ScalaUtil.verbose) {
            ScalaUtil.controlMsg(s"Test error=$testErr")
            ScalaUtil.controlMsg(AlgorithmUtil.confusionToString(matrix, target.getInvMap(), "\n"))
          }
-         results.addString(s"${prefix}.test_${suffix}_confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
+         results.put(s"test_${suffix}_confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
          Some((results, resultdf))
       }
     }
@@ -90,6 +88,7 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
   def predict(df : RDD[(String, Vector)]) : Option[(Results, RDD[(String, Double)])] = { 
     checkAlgorithmModel(dtmodel, true, "DecisionTree - prediction is not possible because no model has been created")
     val r = new Results()
+    r.put("predict_records", df.count())
     val dfr = df.map(point => {
        val prediction = dtmodel.get.predict(point._2)
        (point._1, prediction)

@@ -19,8 +19,14 @@ class CommandLineParser {
            c.copy(run_type = x) ).text("The run type (train, predict) the job")
          opt[String]("env").action( (x, c) =>
            c.copy(env = x) ).text("The job run time type (yarn-cluster, yarn-client, local)")
-         opt[String]("model_def").action( (x, c) =>
-           c.copy(model_def = x) ).text("The name of the predictive model definition file (required)")
+         opt[String]("model_class").action( (x, c) =>
+           c.copy(model_class = x) ).text("The class of the predictive model definition file (required)")
+         opt[String]("model_name").action( (x, c) =>
+           c.copy(model_name = x) ).text("The name of the predictive model definition file (required)")
+         opt[String]("model_version").action( (x, c) =>
+           c.copy(model_version = x) ).text("The version of the predictive model definition file (required)")
+         opt[String]("model_train_date").action( (x, c) =>
+           c.copy(model_train_date = x) ).text("The training date of the predictive model definition file (required)")
          opt[String]("run_id").action( (x, c) =>
            c.copy(run_id = x) ).text("The identifier of the trained model file to load (if not specified, the most recent trained model will be used)")
          opt[String]("data_maps").action( (x, c) =>

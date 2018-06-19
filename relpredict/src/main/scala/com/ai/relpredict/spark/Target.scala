@@ -23,7 +23,8 @@ abstract class Target[A](name : String, desc : String, algorithmDefs : Array[Alg
   def decode(i : Long) : A  
   def decode(i : Double) : A  
   def encode(r : Row) : Double 
-  def getName() : String = name
+  def getName() = name
+  def getParms() = parms
   def getFeatureSet() = featureSet
   def translate(in : String) : String = { 
     if (dataMap.isDefined) dataMap.get.getValue(in)

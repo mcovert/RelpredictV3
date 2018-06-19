@@ -62,6 +62,7 @@ object RelPredict extends GrammarDef {
     val sysName = "RelPredict"
     private var dataMaps                            = Map[String, Datamap]()
     private var sparkSession : Option[SparkSession] = None
+    var baseResults                                 = Results()
 
     def main(args: Array[String]) {
       ScalaUtil.start(sysName, args)            // Initialize system tracking and logging facilities
@@ -69,7 +70,6 @@ object RelPredict extends GrammarDef {
       val cmdLine = new StringBuilder()
       args.foreach(arg => cmdLine.append(s"$arg "))
       ScalaUtil.controlMsg("Command line: " + cmdLine.toString);
-      jobResults.put("cmdline", cmdLine.toString)
       // Set up RelPredict configuration. See RPConfig for details.
       var config : Option[Config] = RPConfig.getConfig(args)
       config match {
@@ -94,7 +94,7 @@ object RelPredict extends GrammarDef {
                     /* Save results  to file */
                     val dir = RPConfig.getJobDir()
                     SparkUtil.saveTextToHDFSFile(jsonResults, s"${dir}results", sparkSession.get)
-                    ScalaUtil.controlMsg(s"Job ${j.jobname} completed with return code ${jobResults.getRC()}")
+                    ScalaUtil.controlMsg(s"Job ${j.jobname} completed with return code ${baseResults.getRC()}")
                   }
                   // Else write and error message and end
                   case None => ScalaUtil.terminal_error("Job could not be created")
@@ -204,7 +204,6 @@ object RelPredict extends GrammarDef {
       }
     }
     def loadDataMap(mapDefs : String) {
-      dataResults.addArray("datamaps")
       if (mapDefs.isEmpty) { ScalaUtil.controlMsg("No data maps were specified"); return}
       val dMapDefs = mapDefs.split(";")
       dataMaps = dMapDefs.map(md => {
@@ -213,12 +212,6 @@ object RelPredict extends GrammarDef {
         else ScalaUtil.controlMsg(s"Loading data map ${mapEntry(0)} from ${mapEntry(1)}")        
         (mapEntry(0).toLowerCase() -> Datamap(mapEntry(1)))
       }).toMap
-      dataMaps.keys.foreach{ k : String => { 
-          var r = Results(); 
-          r.put("datamap_name", k); 
-          dataResults.put("datamasps", r)
-        }
-      }
     }
     def getDataMap(name : String) : Option[Datamap] = dataMaps.get(name.toLowerCase()) 
     // Perform any shutdown activities that may be required

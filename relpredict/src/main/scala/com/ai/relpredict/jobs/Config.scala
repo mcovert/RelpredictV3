@@ -134,31 +134,29 @@ case class Config(jobname:       String = "",
             ScalaUtil.writeInfo("config:            " + config)      
             ScalaUtil.writeInfo("---------------End Configuration---------------")
       }
-      def getConfigString() = {
-        return 
-            "jobname="    + jobname + ";" +
-            "sql="        + sql + ";" +
-            "table="      + table + ";" +
-            "limit="      + limit + ";" +
-            "data_def="   + data_def + ";" +
-            "split="      + split + ";" +
-            "base_dir="   + base_dir + ";" +
-            "job_dir="    + job_dir + ";" +
-            "run_type="   + run_type + ";" +
-            "env="        + env + ";" +
-            "model_class="       + model_class + ";" +
-            "model_name="        + model_name + ";" +
-            "model_version="     + model_version + ";" +
-            "model_train_date="  + model_train_date + ";" +
-            "run_id="     + run_id + ";" +
-            "data_maps="  + data_maps + ";" +
-            "column_map=" + column_map + ";" +
-            "verbose="    + verbose + ";" +
-            "debug="      + debug + ";" +
-            "parms="      + parms + ";" +
-            "run="        + run + ";" +
-            "config="     + config     
-
+      def getConfigString() : String = {
+        return "jobname="           + jobname          + ";" +
+               "sql="               + sql              + ";" +
+               "table="             + table            + ";" +
+               "limit="             + limit            + ";" +
+               "data_def="          + data_def         + ";" +
+               "split="             + split            + ";" +
+               "base_dir="          + base_dir         + ";" +
+               "job_dir="           + job_dir          + ";" +
+               "run_type="          + run_type         + ";" +
+               "env="               + env              + ";" +
+               "model_class="       + model_class      + ";" +
+               "model_name="        + model_name       + ";" +
+               "model_version="     + model_version    + ";" +
+               "model_train_date="  + model_train_date + ";" +
+               "run_id="            + run_id           + ";" +
+               "data_maps="         + data_maps        + ";" +
+               "column_map="        + column_map       + ";" +
+               "verbose="           + verbose          + ";" +
+               "debug="             + debug            + ";" +
+               "parms="             + parms            + ";" +
+               "run="               + run              + ";" +
+               "config="            + config     
       }
 }
 

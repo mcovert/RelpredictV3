@@ -1,7 +1,6 @@
 package com.ai.relpredict.spark
 
 import com.ai.relpredict.dsl._
-import com.ai.relpredict.jobs.Results
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.mllib.linalg.{Vector, Vectors}
@@ -9,7 +8,7 @@ import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.rdd._
 import com.ai.relpredict._
 import com.ai.relpredict.spark._
-import com.ai.relpredict.util.ScalaUtil
+import com.ai.relpredict.util.{ScalaUtil, Results}
 import java.io.FileWriter
 import java.util.Date
 /**
@@ -41,6 +40,9 @@ abstract class Algorithm(val name : String) extends Serializable {
       case Some(m) => true
     }
   }
-  def start() { starttime = ScalaUtil.getDate() }
-  def end()  = (ScalaUtil.getDate().getTime - starttime.getTime).toDouble / 1000.0
+  def start() { 
+    starttime = ScalaUtil.getDate() 
+  }
+  def runTime()  = (ScalaUtil.getDate().getTime - starttime.getTime).toDouble / 1000.0
+  def end() {}
 }

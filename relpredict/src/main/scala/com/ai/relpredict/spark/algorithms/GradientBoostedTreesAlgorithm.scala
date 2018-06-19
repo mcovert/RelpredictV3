@@ -1,6 +1,5 @@
 package com.ai.relpredict.spark.algorithms
 
-import com.ai.relpredict.jobs.Results
 import com.ai.relpredict.spark._
 import java.io.FileWriter
 import org.apache.spark.SparkContext
@@ -16,7 +15,7 @@ import org.apache.spark.mllib.tree.model.GradientBoostedTreesModel
 import org.apache.spark.mllib.util.MLUtils
 
 import org.apache.spark.rdd._
-import com.ai.relpredict.util.ScalaUtil
+import com.ai.relpredict.util.{ScalaUtil, Results}
 import com.ai.relpredict.dsl._
 
 /**
@@ -27,7 +26,6 @@ import com.ai.relpredict.dsl._
 class GradientBoostedTreesAlgorithm(val fs : FeatureSet, target : Target[_], val parms : Map[String, String]) extends Algorithm("gradient_boosted_trees") {
   var gbmodel : Option[GradientBoostedTreesModel] = None
   var predicted : Option[RDD[(String, Double)]] = None
-  val prefix = s"target.${target.getName()}.$name"
   /* Allows printing any model information to a file. For a Decision Tree, this is the actual tree if/then/else logic. */
   def printTo(file : FileWriter) {
     if (checkAlgorithmModel(gbmodel, false, "GradientBoostedTrees - Print is not possible because no model exists")) file.write(gbmodel.get.toDebugString)
@@ -51,7 +49,7 @@ class GradientBoostedTreesAlgorithm(val fs : FeatureSet, target : Target[_], val
     ScalaUtil.writeInfo(s"Gradient boosted trees training with (records=${df.count} length=$recLen depth=${boostingStrategy.treeStrategy.maxDepth})")
     gbmodel = Some(GradientBoostedTrees.train(df, boostingStrategy))
     checkAlgorithmModel(gbmodel, true, "GradientBoostedTrees - training failed to produce a model")
-    results.addDouble("$prefix.training_records", df.count().toDouble)
+    results.put("training_records", df.count().toDouble)
     results
   }
   /* Test an RDD of LabeledPoints against a trained model */
@@ -59,7 +57,7 @@ class GradientBoostedTreesAlgorithm(val fs : FeatureSet, target : Target[_], val
     checkAlgorithmModel(gbmodel, true, "GradientBoostedTrees - test cannot be performed because no model exists")
     df.cache
     var results = new Results()
-    results.addDouble(s"${prefix}.test_${suffix}_records", df.count())
+    results.put(s"test_${suffix}_records", df.count())
     gbmodel match {
       case None =>
       case Some(m) => {
@@ -68,13 +66,13 @@ class GradientBoostedTreesAlgorithm(val fs : FeatureSet, target : Target[_], val
             (id, point.label, prediction)
          }
          val testErr = AlgorithmUtil.getError(resultdf)
-         results.addDouble(s"${prefix}.test_${suffix}_error", testErr)
+         results.put(s"test_${suffix}_error", testErr)
          var matrix = AlgorithmUtil.getConfusionMatrix(resultdf, target)
          if (ScalaUtil.verbose) {
            ScalaUtil.controlMsg(s"Test error=$testErr")
            ScalaUtil.controlMsg(AlgorithmUtil.confusionToString(matrix, target.getInvMap(), "\n"))
          }
-         results.addString(s"${prefix}.test_${suffix}_confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
+         results.put(s"test_${suffix}_confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
          df.unpersist()
          Some((results, resultdf))
       }
@@ -88,6 +86,7 @@ class GradientBoostedTreesAlgorithm(val fs : FeatureSet, target : Target[_], val
   def predict(df : RDD[(String, Vector)]) : Option[(Results, RDD[(String, Double)])] = { 
     checkAlgorithmModel(gbmodel, true, "GradientBoostedTrees - prediction is not possible because no model has been created")
     val r = new Results()
+    r.put("predict_records", df.count())
     val dfr = df.map(point => {
        val prediction = gbmodel.get.predict(point._2)
        (point._1, prediction)
@@ -103,6 +102,6 @@ class GradientBoostedTreesAlgorithm(val fs : FeatureSet, target : Target[_], val
     gbmodel = Some(GradientBoostedTreesModel.load(ss.sparkContext, fileName))
     checkAlgorithmModel(gbmodel, true, "GradientBoostedTrees - the model could not be loaded.")
   }
-    def getTreeModelText() = gbmodel.get.toDebugString
+  def getTreeModelText() = gbmodel.get.toDebugString
 
 }

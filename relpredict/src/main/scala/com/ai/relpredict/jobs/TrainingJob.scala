@@ -8,54 +8,60 @@ import org.apache.spark.sql._
 import org.apache.spark.sql.types._
 import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.tree.model.{DecisionTreeModel, Node}
-import com.ai.relpredict.util.{ScalaUtil, Datamap}
+import com.ai.relpredict.util.{ScalaUtil, Datamap, Results}
 import com.ai.relpredict.spark.{VectorBuilder, SparkUtil, Target, AlgorithmFactory, Model}
 import org.apache.spark.sql.catalyst.encoders.RowEncoder
 import org.apache.spark.sql.Row
 import scala.collection.mutable.ArrayBuffer
 
 
-case class TrainingJob(jn: String, model: com.ai.relpredict.spark.Model, conf : Config, ss : SparkSession, 
-                       df : DataFrame, dm: Datamap, jobParms : Map[String, String])
-   extends Job(val jobname: String,  modelDef: Model, config: Config, jobParms : Map[String, String],
-               val dMap: Map[String, Datamap], val columnMap: Datamap, var results: Results) {
+case class TrainingJob(jobname: String, modelDef: com.ai.relpredict.spark.Model, config : Config, 
+                       ss : SparkSession, df : DataFrame, dMap: Map[String, Datamap], columnMap: Datamap, 
+                       jobParms : Map[String, String], results: Results)
+   extends Job(jobname: String,  modelDef: Model, config: Config, jobParms : Map[String, String],
+               dMap: Map[String, Datamap], columnMap: Datamap, results: Results) {
     import ss.sqlContext.implicits._
-    def run() : Map[String, Any] = {
+    def run() : Results = {
       val split = {
-        val sp = conf.split.toDouble
+        val sp = config.split.toDouble
         if (sp <= 0.0 || sp >= 1.0) {
-          ScalaUtil.writeWarning(s"Split $conf.split must be greater than 0.0 and less than 1.0. 0.8 will be used." )
-          jobResults.setRC(r.WARN)
+          ScalaUtil.writeWarning(s"Split $config.split must be greater than 0.0 and less than 1.0. 0.8 will be used." )
+          jobResults.setRC(results.WARN)
           Array(0.8, 0.2)
         }
         else Array(sp, 1.0 - sp)
       }
-      val vecs = VectorBuilder.buildTargetDataFrames(ss, model, df)
-      model.targets.foreach(t => {
+      val vecs = VectorBuilder.buildTargetDataFrames(ss, modelDef, df)
+      var targNum = 0
+      modelDef.targets.foreach(t => {
         var targetResults = new Results()
         targetResults.put("target_name", t.getName())
         targetResults.put("target_type", t.getDatatype())
-        targetResults.put(ScalaUtil.makeParmString(t.parms))
-        targetResults.addArray("algorithms", tAlgResults)
-        modelResults.put("targets", tResults)
-        val tVecs : Array[RDD[(String, LabeledPoint)]] = vecs(targnum).randomSplit(split)
+        targetResults.put("target_parms", ScalaUtil.makeParmString(t.getParms()))
+        targetResults.addArray("algorithms")
+        modelResults.put("targets", targetResults)
+        val tVecs : Array[RDD[(String, LabeledPoint)]] = vecs(targNum).randomSplit(split)
+        targNum += 1
         tVecs(0).cache()
         tVecs(1).cache
         t.algorithms.foreach(a => {
           a match {
             case None => ScalaUtil.writeError(s"Target ${t.getName()} algorithm ${a.get.name} encountered an error.")
             case Some(alg) => {
+              var algBase = new Results()
+              algBase.put("alg_name", alg.name)
+              algBase.addArray("phases")
               alg.start()
-              alg.train(tVecs(0).map(r => r._2))
-              alg.test(tVecs(0), "training")
-              alg.test(tVecs(1), "holdback")
-              targetResults.put("algorithms", alg.end())
+              algBase.put("phases", alg.train(tVecs(0).map(r => r._2)))
+              algBase.put("phases", alg.test(tVecs(0), "training"))
+              algBase.put("phases", alg.test(tVecs(1), "holdback"))
+              targetResults.put("algorithms", algBase)
+              alg.end()
             }
-
           }
         })
       })
-      model.saveModel(jobID)
-      r
+      modelDef.saveModel(jobID)
+      baseResults
     }
 }

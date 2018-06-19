@@ -17,6 +17,7 @@ case class Datamap(val fileName : String) extends Serializable {
       case unknown : Throwable => {
         ScalaUtil.writeError(s"Error loading datamap from $fileName")
         ScalaUtil.writeError(unknown.toString())
+        ScalaUtil.writeError("Ignoring file")
         Map[String, String]()
       }
     }
@@ -29,5 +30,13 @@ case class Datamap(val fileName : String) extends Serializable {
       val (k, v) = m
       ScalaUtil.writeInfo(s"  $k -> $v")
     })
+  }
+  def getDatamapString() = {
+    var sb = new StringBuilder()
+    dmap.toList.foreach(m => {
+      val (k, v) = m
+      sb.append(s"$k -> $v;")
+    })
+    sb.toString()
   }
 }

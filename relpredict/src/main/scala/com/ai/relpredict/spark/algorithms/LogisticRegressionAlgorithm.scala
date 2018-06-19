@@ -1,6 +1,5 @@
 package com.ai.relpredict.spark.algorithms
 
-import com.ai.relpredict.jobs.Results
 import com.ai.relpredict.spark._
 import java.io.FileWriter
 import org.apache.spark.SparkContext
@@ -13,7 +12,7 @@ import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.classification._
 import org.apache.spark.mllib.util.MLUtils
 import org.apache.spark.rdd._
-import com.ai.relpredict.util.ScalaUtil
+import com.ai.relpredict.util.{ScalaUtil, Results}
 import com.ai.relpredict.dsl._
 import org.apache.spark.mllib.evaluation.MulticlassMetrics
 /**
@@ -23,7 +22,6 @@ import org.apache.spark.mllib.evaluation.MulticlassMetrics
 class LogisticRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val parms : Map[String, String]) extends Algorithm("logistic_regression") {
   var lrmodel : Option[LogisticRegressionModel] = None
   var predicted : Option[RDD[(String, Double)]] = None
-  val prefix = s"target.${target.getName()}.$name"
   /* Allows printing any model information to a file. For a Decision Tree, this is the actual tree if/then/else logic. */
   def printTo(file : FileWriter) {
     if (checkAlgorithmModel(lrmodel, false, "LogisticRegression - Print is not possible because no model exists")) {}
@@ -45,9 +43,7 @@ class LogisticRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val p
     // Train the model
     lrmodel = Some(new LogisticRegressionWithLBFGS().setNumClasses(target.size).run(df))
     checkAlgorithmModel(lrmodel, true, "LogisticRegression - training failed to produce a model")
-    results.addDouble(s"${prefix}.training_records", df.count().toDouble)
-    //results.addString(s"${prefix}.training.weights", lrmodel.get.weights.toString())
-    //results.addString(s"${prefix}.training.intercept", lrmodel.get.intercept.toString())
+    results.put(s"training_records", df.count().toDouble)
     results
   }
   /** 
@@ -56,7 +52,7 @@ class LogisticRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val p
   def test(df : RDD[(String, LabeledPoint)], suffix : String) : Option[(Results, RDD[(String, Double, Double)])] = { 
     checkAlgorithmModel(lrmodel, true, "LogisticRegression - test cannot be performed because no model exists")
     var results = new Results()
-    results.addDouble(s"${prefix}.test_${suffix}_records", df.count())
+    results.put(s"test_${suffix}_records", df.count())
     lrmodel match {
       case None => None
       case Some(m) => {
@@ -67,22 +63,22 @@ class LogisticRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val p
                }}
          )
          val testErr = AlgorithmUtil.getError(resultdf)
-         results.addDouble(s"${prefix}.test_${suffix}_error", testErr)
+         results.put(s"test_${suffix}_error", testErr)
          var matrix = AlgorithmUtil.getConfusionMatrix(resultdf, target)
          if (ScalaUtil.verbose) {
            ScalaUtil.controlMsg(s"Test error=$testErr")
            ScalaUtil.controlMsg(AlgorithmUtil.confusionToString(matrix, target.getInvMap(), "\n"))
          }
-         results.addString(s"${prefix}.test.${suffix}.confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
+         results.put(s"test_${suffix}_confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
          val metrics = new MulticlassMetrics(resultdf.map(x => (x._3, x._2)))
-         results.addDouble(s"${prefix}.test.${suffix}.accuracy", metrics.accuracy)
+         results.put(s"test_${suffix}_accuracy", metrics.accuracy)
          target.getInvMap().map{ case (k, v) =>
-           val rKey = s"${prefix}.test_${suffix}_label.$v"
-           results.addDouble(s"$rKey.false_positive_rate", metrics.falsePositiveRate(k))
-           results.addDouble(s"$rKey.true_positive_rate", metrics.truePositiveRate(k))
-           results.addDouble(s"$rKey.precision", metrics.precision(k))
-           results.addDouble(s"$rKey.recall", metrics.recall(k))
-           results.addDouble(s"$rKey.f_measure", metrics.fMeasure(k))
+           val rKey = s"test_${suffix}_label.$v"
+           results.put(s"$rKey.false_positive_rate", metrics.falsePositiveRate(k))
+           results.put(s"$rKey.true_positive_rate", metrics.truePositiveRate(k))
+           results.put(s"$rKey.precision", metrics.precision(k))
+           results.put(s"$rKey.recall", metrics.recall(k))
+           results.put(s"$rKey.f_measure", metrics.fMeasure(k))
          }
          Some((results, resultdf))
       }
@@ -97,6 +93,7 @@ class LogisticRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val p
   def predict(df : RDD[(String, Vector)]) : Option[(Results, RDD[(String, Double)])] = { 
     checkAlgorithmModel(lrmodel, true, "LogisticRegression - prediction is not possible because no model has been created")
     val r = new Results()
+    r.put("predict_records", df.count())    
     val dfr = df.map(point => {
        val prediction = lrmodel.get.predict(point._2)
        (point._1, prediction)

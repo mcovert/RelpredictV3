@@ -14,38 +14,36 @@ import org.apache.spark.mllib.regression.LabeledPoint
 /**
  * The Prediction job uses a save trained model to predict targets on new data.
  */
-case class PredictionJob(jn: String, model: Model, conf : Config, ss : SparkSession, df : DataFrame, dm: Datamap, jobParms : Map[String, String])
-   extends Job(jn: String, model: Model, conf : Config, jobParms : Map[String, String]) {
+case class PredictionJob(jobname: String, modelDef: com.ai.relpredict.spark.Model, config : Config, 
+                       ss : SparkSession, df : DataFrame, dMap: Map[String, Datamap], columnMap: Datamap, 
+                       jobParms : Map[String, String], results: Results)
+   extends Job(jobname: String,  modelDef: Model, config: Config, jobParms : Map[String, String],
+               dMap: Map[String, Datamap], columnMap: Datamap, results: Results) {
     def run() : Results = {
        import ss.implicits._
-       val df = ss.sqlContext.sql(conf.sql)
+       val df = ss.sqlContext.sql(config.sql)
        df.cache
-       var r = new Results()
-       val pVecs = VectorBuilder.buildPredictionDataFrames(ss, model, df)
+       val pVecs = VectorBuilder.buildPredictionDataFrames(ss, modelDef, df)
        var vPos = 0
-       val pred = model.targets.map(t => {
+       val pred = modelDef.targets.map(t => {
           val res = t.algorithms.map(a => { 
             /* TO-DO: Load the saved model into the algorithm */
-            a.get.loadModel(ss, s"${model.name}/${model.version}/${conf.run_id}/${t.getName()}/${a.get.name}")
+            a.get.loadModel(ss, s"${modelDef.name}/${modelDef.version}/${config.run_id}/${t.getName()}/${a.get.name}")
             a.get.start()
             val res = a.get.predict(pVecs(vPos))
             res match {
               case None => ScalaUtil.writeError(s"Target ${t.getName()} algorithm ${a.get.name} encountered an error.")
               case Some(x) => {
-                 val predictMsg = a.get.getTerminationStats(t.getName(), "predict")
-                 ScalaUtil.controlMsg(predictMsg)
-                 r.addString(s"job.predict.${model.name}.${t.getName()}.${a.get.name}.status.msg", predictMsg)          
-                 r.merge(res.get._1)
                  val rDF = SparkUtil.getPredictedDataFrame(ss, jobname, t.getName(), a.get.name, x._2)
                  val dir = RPConfig.getBaseDir()
                  val runID = ScalaUtil.getDirectoryDate()
-                 rDF.write.save(RPConfig.getAlgorithmDataDir(model, runID, t, a.get))
+                 rDF.write.save(RPConfig.getAlgorithmDataDir(modelDef, runID, t, a.get))
               }
             }
           })
           vPos += 1
           res
        })
-       r
+       baseResults
     }
 }
