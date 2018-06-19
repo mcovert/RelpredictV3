@@ -63,4 +63,14 @@ case class Results() extends Serializable {
       case _ => this  
     }
   }
+  def print(level: String) {
+    kvMap.foreach{ case (k,v) => {
+      v match {
+         case r: Results => r.print(level + "   ")
+         case ab: ArrayBuffer[Results] => ab.foreach{ r: Results => r.print(level + "   ")} 
+         case _ => println(s"${level}${k}=${v}")
+
+      }
+    }}
+  }
 }

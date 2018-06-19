@@ -73,6 +73,7 @@ object RelPredict extends GrammarDef {
       var config : Option[Config] = RPConfig.getConfig(args)
       config match {
           case Some(config) => {
+             config.print()
              RPConfig.setBaseDir(config.base_dir)
              RPConfig.setJobDir(config.job_dir)
              ScalaUtil.setEnvironment(config.env)
@@ -89,6 +90,7 @@ object RelPredict extends GrammarDef {
                     j.setup()
                     j.run()
                     var baseResults = j.cleanup()
+                    baseResults.print("")
                     val jsonResults = JsonConverter.toJson(baseResults)
                     /* Save results  to file */
                     val dir = RPConfig.getJobDir()
@@ -109,8 +111,14 @@ object RelPredict extends GrammarDef {
       val cnv = conf.model_class      + "/" + 
                 conf.model_name       + "/" + 
                 conf.model_version    + "/" + 
-                conf.model_train_date + "/" + 
                 conf.model_name + ".modeldef"
+      return conf.base_dir + "/models/" + cnv;
+    }
+    def getTrainedModelDirectory(conf: Config) : String = {
+      val cnv = conf.model_class      + "/" + 
+                conf.model_name       + "/" + 
+                conf.model_version    + "/" + 
+                conf.model_train_date + "/" 
       return conf.base_dir + "/models/" + cnv;
     }
     // def loadConfig(configFile: String) : Array[String] = {
