@@ -62,17 +62,10 @@ object RelPredict extends GrammarDef {
     val sysName = "RelPredict"
     private var dataMaps                            = Map[String, Datamap]()
     private var sparkSession : Option[SparkSession] = None
-    private var baseResults      : Results          = new Results()                        
-    private var jobResults       : Results          = new Results()                        
-    private var modelResults     : Results          = new Results()                        
-    private var dataResults      : Results          = new Results()                        
 
     def main(args: Array[String]) {
       ScalaUtil.start(sysName, args)            // Initialize system tracking and logging facilities
       ScalaUtil.setShutdownHook(this.shutdown)  // Register the system shutdown hook
-      baseResults.put("job",   jobResults)
-      baseResults.put("model", modelResults)
-      baseResults.put("data",  dataResults)
       val cmdLine = new StringBuilder()
       args.foreach(arg => cmdLine.append(s"$arg "))
       ScalaUtil.controlMsg("Command line: " + cmdLine.toString);
@@ -114,11 +107,6 @@ object RelPredict extends GrammarDef {
       ScalaUtil.end(sysName)
     }
     def getModelFileName(conf: Config) : String = {
-      modelResults.put("model_class",      conf.model_class);
-      modelResults.put("model_name",       conf.model_name);
-      modelResults.put("model_version",    conf.model_version);
-      modelResults.put("model_train_date", conf.model_train_date);
-      modelResults.addArray("targets")
       val cnv = conf.model_class      + "/" + 
                 conf.model_name       + "/" + 
                 conf.model_version    + "/" + 

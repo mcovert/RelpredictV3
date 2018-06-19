@@ -10,6 +10,7 @@ object JsonConverter {
   def toJson(o: Any) : String = {
     var json = new ListBuffer[String]()
     o match {
+      case r: Results => toJson(r.getMap())
       case m: Map[_,_] => {
         for ( (k,v) <- m ) {
           var key = escape(k.asInstanceOf[String])

@@ -30,6 +30,7 @@ abstract class Target[A](name : String, desc : String, algorithmDefs : Array[Alg
     else in
   }
   def getInvMap() : Map[Int, String]
+  def getDatatype() = ""
 }
 /** 
  *  A StringTarget encodes a categorical set of strings 
@@ -42,6 +43,7 @@ case class StringTarget(name : String, desc : String, algorithmDefs : Array[Algo
   override def decode(i : Long) : String = invMap(i.toInt)
   override def decode(i : Double) : String = invMap(i.toInt)
   override def encode(r : Row) : Double = map(translate(r.getAs[String](columnName))).toDouble
+  override def getDatatype() = "string"
   def getInvMap() = invMap
 }
 /** 
@@ -55,6 +57,7 @@ case class BooleanTarget(name : String, desc : String, algorithmDefs : Array[Alg
   override def decode(i : Long) : Boolean = { if (i == 0) false else true}
   override def decode(i : Double) : Boolean = { if (i == 0.0) false else true}
   override def encode(r : Row) : Double = if (r.getAs[Boolean](columnName)) 1.0 else 0.0
+  override def getDatatype() = "boolean"
   def getInvMap() = invMap
 }
 /** 
@@ -68,6 +71,7 @@ case class IntegerTarget(name : String, desc : String, algorithmDefs : Array[Alg
   override def decode(i : Long) : Long = i
   override def decode(i : Double) : Long = i.toLong
   override def encode(r : Row) : Double = r.getAs[Integer](columnName).toDouble
+  override def getDatatype() = "integer"
   def getInvMap() = invMap
 }
 /** 
@@ -81,5 +85,6 @@ case class DoubleTarget(name : String, desc : String, algorithmDefs : Array[Algo
   override def decode(i : Long) : Double = i.toDouble
   override def decode(i : Double) : Double = i
   override def encode(r : Row) : Double = r.getAs[Double](columnName)
+  override def getDatatype() = "double"
   def getInvMap() = invMap
 }

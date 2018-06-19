@@ -43,5 +43,4 @@ abstract class Algorithm(val name : String) extends Serializable {
   }
   def start() { starttime = ScalaUtil.getDate() }
   def end()  = (ScalaUtil.getDate().getTime - starttime.getTime).toDouble / 1000.0
-  def getTerminationStats(targetName : String, phase : String = "to complete") = s"Algorithm $name for Target $targetName took ${end()} seconds to $phase."
 }

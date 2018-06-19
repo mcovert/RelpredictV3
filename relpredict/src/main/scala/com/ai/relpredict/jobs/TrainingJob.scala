@@ -15,8 +15,10 @@ import org.apache.spark.sql.Row
 import scala.collection.mutable.ArrayBuffer
 
 
-case class TrainingJob(jn: String, model: com.ai.relpredict.spark.Model, conf : Config, ss : SparkSession, df : DataFrame, dm: Datamap, jobParms : Map[String, String])
-   extends Job(jn: String, model: Model, conf : Config, jobParms : Map[String, String]) {
+case class TrainingJob(jn: String, model: com.ai.relpredict.spark.Model, conf : Config, ss : SparkSession, 
+                       df : DataFrame, dm: Datamap, jobParms : Map[String, String])
+   extends Job(val jobname: String,  modelDef: Model, config: Config, jobParms : Map[String, String],
+               val dMap: Map[String, Datamap], val columnMap: Datamap, var results: Results) {
     import ss.sqlContext.implicits._
     def run() : Map[String, Any] = {
       val split = {
@@ -29,13 +31,13 @@ case class TrainingJob(jn: String, model: com.ai.relpredict.spark.Model, conf : 
         else Array(sp, 1.0 - sp)
       }
       val vecs = VectorBuilder.buildTargetDataFrames(ss, model, df)
-      var targetResults = new scala.collection.mutable.ArrayBuffer.empty[Results]
       model.targets.foreach(t => {
-        var tResults = new Results()
-        targetResults += tResults
-        tResults.add("target_name", t.getName())
-        var tAlgResults = new scala.collection.mutable.ArrayBuffer.empty[Results]
-        tResults.add("algorithms", tAlgResults)
+        var targetResults = new Results()
+        targetResults.put("target_name", t.getName())
+        targetResults.put("target_type", t.getDatatype())
+        targetResults.put(ScalaUtil.makeParmString(t.parms))
+        targetResults.addArray("algorithms", tAlgResults)
+        modelResults.put("targets", tResults)
         val tVecs : Array[RDD[(String, LabeledPoint)]] = vecs(targnum).randomSplit(split)
         tVecs(0).cache()
         tVecs(1).cache
@@ -47,7 +49,7 @@ case class TrainingJob(jn: String, model: com.ai.relpredict.spark.Model, conf : 
               alg.train(tVecs(0).map(r => r._2))
               alg.test(tVecs(0), "training")
               alg.test(tVecs(1), "holdback")
-              tAlgResults += alg.end()
+              targetResults.put("algorithms", alg.end())
             }
 
           }

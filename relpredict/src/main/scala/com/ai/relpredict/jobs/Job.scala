@@ -8,20 +8,26 @@ import com.ai.relpredict.util._
 import scala.collection.mutable.ArrayBuffer
 
 abstract class Job(val jobname: String, modelDef: Model, config: Config, jobParms : Map[String, String],
-                   var results: Results) {
-  val starttime : java.util.Date = ScalaUtil.getDate()
-  val st                         = System.currentTimeMillis
-  val jobID                      = ScalaUtil.getDirectoryDate(starttime)
+                   val dMap: Map[String, Datamap], val columnMap: Datamap, var results: Results) {
+  val starttime : java.util.Date          = ScalaUtil.getDate()
+  val st                                  = System.currentTimeMillis
+  val jobID                               = ScalaUtil.getDirectoryDate(starttime)
+  var baseResults      : Results          = new Results()                       
+  var jobResults       : Results          = new Results()                        
+  var modelResults     : Results          = new Results()                        
+  var dataResults      : Results          = new Results()                        
+
   /**
    * Called before a job is run
    * Saves job level information into the supplied Results object
    */
-  def setup(results: Results) {
-    results.put("job.starttime", ScalaUtil.getDateTimeString(starttime))
-    results.put("job.jobname", jobname)
-    results.put("job.id", jobID)
-    results.put("job.parms", ScalaUtil.makeParmString(jobParms))
-    results.put("job.config", conf.getConfString())
+  def setup() {
+    baseResults.put("job",   jobResults)
+    setupJob()
+    baseResults.put("model", modelResults)
+    setupModel()
+    baseResults.put("data",  dataResults)
+    setupData()
   }
   /**
    * Called to execute the job
@@ -32,7 +38,22 @@ abstract class Job(val jobname: String, modelDef: Model, config: Config, jobParm
    */
   def cleanup()  { 
     val endtime = ScalaUtil.getDate()
-    results.put("job.endtime", ScalaUtil.getDateTimeString(endtime))
-    results.put("job.runtime", "%1d ms".format(System.currentTimeMillis - start))
+    jobResults.put("job.endtime", ScalaUtil.getDateTimeString(endtime))
+    jobResults.put("job.runtime", "%1d ms".format(System.currentTimeMillis - start))
   }
+  setupJob() {
+    jobResults.put("starttime", ScalaUtil.getDateTimeString(starttime))
+    jobResults.put("jobname", jobname)
+    jobResults.put("id", jobID)
+    jobResults.put("parms", ScalaUtil.makeParmString(jobParms))
+    jobResults.put("config", conf.getConfString())    
+  }
+  setupModel() {
+      modelResults.put("model_class",      config.model_class);
+      modelResults.put("model_name",       config.model_name);
+      modelResults.put("model_version",    config.model_version);
+      modelResults.put("model_train_date", config.model_train_date);
+      modelResults.addArray("targets")    
+  }
+  setupData() {}
 } 
