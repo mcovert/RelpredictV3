@@ -7,17 +7,19 @@ import org.apache.spark.sql.types._
 import org.apache.spark.sql.functions._
 
 
+/*val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "local").enableHiveSupport()
+    .config("yarn.resourcemanager.address","ai02.analyticsinside.us:8032")
+    .config("hive.metastore.uris", "thrift://ai04.analyticsinside.us:9083")*/
 
 
-
-object QueryUtil
+object QueryUtil(sc : SparkSession)
 {
 	def SparkQuery( DataSource : String, SchemaName : String, TableName : String, QLimit : String) : Array[Array[(String,String,String)]] = 
 	{
-		val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "local").enableHiveSupport()
+		/*val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "local").enableHiveSupport()
 		.config("yarn.resourcemanager.address","ai02.analyticsinside.us:8032")
 		.config("hive.metastore.uris", "thrift://ai04.analyticsinside.us:9083")
-		.getOrCreate() 
+		.getOrCreate() */
 		import sc.implicits._
 		sc.sql("use "+SchemaName)
 
@@ -44,21 +46,22 @@ object QueryUtil
 		val queryCombined = queryValues.map(list => list.map(value => (queryTypes(list.indexOf(value)),value)))
 		val queryFinal= queryCombined.collect.map(_.map((x=>(x._1._1,x._2,x._1._2))))
  		//queryFinal.map(_.mkString).foreach(println)
-		sc.stop()
+		
+		//sc.stop()
 	    
 	    queryFinal
 	 }
 	 def SparkTables( DataSource : String, SchemaName : String) :Array[String] =
 	 {
-	 	val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "local").enableHiveSupport()
+	 	/*val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "local").enableHiveSupport()
 		.config("yarn.resourcemanager.address","ai02.analyticsinside.us:8032")
 		.config("hive.metastore.uris", "thrift://ai04.analyticsinside.us:9083")
-		.getOrCreate() 
+		.getOrCreate() */
 		import sc.implicits._
 	 	sc.sql("use "+SchemaName)
 	 	val tablesNames=sc.sql("show tables")
 	 	val tablesFinal=tablesNames.rdd.map(row=>row.toString().split(",")).collect.map(x=>(x(1)))
-	 	sc.stop()
+	 	//sc.stop()
 	    
 	    tablesFinal
 	 }

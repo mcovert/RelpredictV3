@@ -1,0 +1,4 @@
+[0m[[0minfo[0m] [0mLoading project definition from /home/vloewengart/rp-repo/RelpredictV3/relpredicter/project[0m
+[0m[[0minfo[0m] [0mSet current project to akka-http-rp-scala (in build file:/home/vloewengart/rp-repo/RelpredictV3/relpredicter/)[0m
+[0m[[0minfo[0m] [0mRunning com.ai.query.QueryServer [0m
+Server online at http://ai26:8080/
