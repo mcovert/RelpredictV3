@@ -41,11 +41,13 @@ case class Results() extends Serializable {
       if (kvMap.contains(k)) Some(kvMap(k))
       else None
   }
-  def getMap() = kvMap.toMap
+  def getMap() = kvMap
   override def toString() = {
     val sb = new StringBuilder()
-    sb.append(s"RC=$rc; ")
-    kvMap.foreach{case (k : String, v : Any) => sb.append(s"$k=${v.toString()}; ")}
+    sb.append("Results\n")
+    sb.append("-------\n")
+    sb.append(s"RC=$rc;\n")
+    kvMap.foreach{case (k : String, v : Any) => sb.append(s"$k=${v.toString()};\n")}
     sb.toString()   
   }
   def addResults(k: String, r: Results) {

@@ -55,8 +55,8 @@ case class TrainingJob(override val jobname: String, override val modelDef: com.
               algBase.addArray("phases")
               alg.start()
               algBase.put("phases", alg.train(tVecs(0).map(r => r._2)))
-              algBase.put("phases", alg.test(tVecs(0), "training"))
-              algBase.put("phases", alg.test(tVecs(1), "holdback"))
+              algBase.put("phases", alg.test(tVecs(0), "training").get._1)
+              algBase.put("phases", alg.test(tVecs(1), "holdback").get._1)
               targetResults.put("algorithms", algBase)
               alg.end()
             }

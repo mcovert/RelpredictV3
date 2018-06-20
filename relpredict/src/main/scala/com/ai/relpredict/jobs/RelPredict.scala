@@ -90,8 +90,10 @@ object RelPredict extends GrammarDef {
                     j.setup()
                     j.run()
                     var baseResults = j.cleanup()
-                    baseResults.print("")
+                    //baseResults.print("")
+                    //println(baseResults)
                     val jsonResults = JsonConverter.toJson(baseResults)
+                    //println(jsonResults)
                     /* Save results  to file */
                     val dir = RPConfig.getJobDir()
                     SparkUtil.saveTextToHDFSFile(jsonResults, s"${dir}results", sparkSession.get)
