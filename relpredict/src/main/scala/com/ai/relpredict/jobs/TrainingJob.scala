@@ -49,16 +49,11 @@ case class TrainingJob(override val jobname: String, override val modelDef: com.
           a match {
             case None => ScalaUtil.writeError(s"Target ${t.getName()} algorithm ${a.get.name} encountered an error.")
             case Some(alg) => {
-              var algBase = new Results()
-              algBase.put("alg_name", alg.name)
-              algBase.put("target_name", t.getName())
-              algBase.addArray("phases")
               alg.start()
-              algBase.put("phases", alg.train(tVecs(0).map(r => r._2)))
-              algBase.put("phases", alg.test(tVecs(0), "training").get._1)
-              algBase.put("phases", alg.test(tVecs(1), "holdback").get._1)
-              targetResults.put("algorithms", algBase)
-              alg.end()
+              alg.train(tVecs(0).map(r => r._2))
+              alg.test(tVecs(0), "training").get._1
+              alg.test(tVecs(1), "holdback").get._1
+              targetResults.put("algorithms", alg.end())
             }
           }
         })

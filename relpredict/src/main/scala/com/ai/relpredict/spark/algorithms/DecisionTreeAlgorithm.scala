@@ -35,7 +35,7 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
       case None =>
       case Some(m) => ScalaUtil.writeWarning("DecisionTree - Overwriting existing trained model")
     }
-    var results = new Results()
+    var phaseResults = new Results()
     // Set up all parameters
     var categoryMap = SparkUtil.buildCategoryMap(target.featureSet)
     val impurity = ScalaUtil.getParm("impurity", "gini", parms)
@@ -47,19 +47,22 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
     // Train the model
     dtmodel = Some(DecisionTree.trainClassifier(df, target.size, categoryMap, impurity, maxDepth, maxBins))
     checkAlgorithmModel(dtmodel, true, "DecisionTree - training failed to produce a model")
-    results.put("phase", "train")
-    results.put("training_records", df.count().toDouble)
-    results.put("decision_tree", AlgorithmUtil.getTreeModelText(dtmodel.get.toDebugString, target))
-    results
+    phaseResults.put("phase", "train")
+    phaseResults.put("step", "")
+    phaseResults.put("records", s"${df.count}")
+    phaseResults.put("decision_tree", AlgorithmUtil.getTreeModelText(dtmodel.get.toDebugString, target))
+    results.put("phases", phaseResults)
+    phaseResults
   }
   /** 
    *  Test an RDD of LabeledPoints against a trained model 
    */
   def test(df : RDD[(String, LabeledPoint)], suffix : String) : Option[(Results, RDD[(String, Double, Double)])] = { 
     checkAlgorithmModel(dtmodel, true, "DecisionTree - test cannot be performed because no model exists")
-    var results = new Results()
-    results.put("phase", "test")
-    results.put(s"test_${suffix}_records", df.count())
+    var phaseResults = new Results()
+    phaseResults.put("phase", "test")
+    phaseResults.put("step", suffix)
+    phaseResults.put("records", s"${df.count}")
     dtmodel match {
       case None => None
       case Some(m) => {
@@ -70,14 +73,15 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
                }}
          )
          val testErr = AlgorithmUtil.getError(resultdf)
-         results.put(s"test_${suffix}_error", testErr)
+         phaseResults.put("error", s"$testErr")
          var matrix = AlgorithmUtil.getConfusionMatrix(resultdf, target)
          if (ScalaUtil.verbose) {
            ScalaUtil.controlMsg(s"Test error=$testErr")
            ScalaUtil.controlMsg(AlgorithmUtil.confusionToString(matrix, target.getInvMap(), "\n"))
          }
-         results.put(s"test_${suffix}_confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
-         Some((results, resultdf))
+         phaseResults.put("confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
+         results.put("phases", phaseResults)
+         Some((phaseResults, resultdf))
       }
     }
   }
@@ -89,14 +93,16 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
    */
   def predict(df : RDD[(String, Vector)]) : Option[(Results, RDD[(String, Double)])] = { 
     checkAlgorithmModel(dtmodel, true, "DecisionTree - prediction is not possible because no model has been created")
-    val results = new Results()
-    results.put("phase", "predict")
-    results.put("predict_records", df.count())
+    val phaseResults = new Results()
+    phaseResults.put("phase", "predict")
+    phaseResults.put("step", "")
+    phaseResults.put("records", s"${df.count}")
     val dfr = df.map(point => {
        val prediction = dtmodel.get.predict(point._2)
        (point._1, prediction)
     })
-    Some((results, dfr))
+    results.put("phases", phaseResults)
+    Some((phaseResults, dfr))
   }
   /** 
    *  Save the model file to disk 
@@ -104,13 +110,6 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
   def saveModel(ss : SparkSession, fileName : String) {
     if (checkAlgorithmModel(dtmodel, false, "DecisionTree - no model has been created. Save is ignored."))
        dtmodel.get.save(ss.sparkContext, fileName)
-       /* Now save the visualizable decision tree to disk */
-       //val sb = new StringBuilder()
-       //sb.append(DecisionTreeUtil.getCSVHeader(dtmodel.get.depth))
-       //sb.append(DecisionTreeUtil.getModelText(dtmodel.get.toDebugString, fs))
-       //var file = SparkUtil.getHDFSFileWriter(s"${fileName}.vmodel", ss, false)
-       //file.get.write(sb.toString())
-       //file.get.close()
   }
   /**
    * Load the model from disk

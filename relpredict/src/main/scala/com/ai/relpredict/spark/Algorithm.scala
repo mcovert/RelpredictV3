@@ -16,6 +16,7 @@ import java.util.Date
  * do not share a common ancestry.
  */
 abstract class Algorithm(val name : String) extends Serializable {
+  var results = new Results()
   var starttime : Date = new Date()
   /** Print anything noteworthy to a file  */ 
   def printTo(file : FileWriter)
@@ -41,8 +42,18 @@ abstract class Algorithm(val name : String) extends Serializable {
     }
   }
   def start() { 
-    starttime = ScalaUtil.getDate() 
+    starttime = ScalaUtil.getDate()
+    results = new Results()
+    results.put("alg_name", name)
+    results.put("start_time", starttime.toString()) 
+    results.addArray("phases")
+
   }
   def runTime()  = (ScalaUtil.getDate().getTime - starttime.getTime).toDouble / 1000.0
-  def end() {}
+  def end() : Results = {
+    val endtime = new Date()
+    results.put("end_time", endtime.toString())
+    results.put("run_time", (endtime.getTime - starttime.getTime).toDouble / 1000.0)
+    results
+  }
 }
