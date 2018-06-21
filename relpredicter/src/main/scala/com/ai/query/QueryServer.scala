@@ -41,6 +41,8 @@ object QueryServer extends App with QueryRoutes {
 
   
 
+  
+
   //#http-server
   Http().bindAndHandle(queryRoutes, "ai26", 8080)
 

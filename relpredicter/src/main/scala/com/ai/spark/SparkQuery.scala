@@ -12,14 +12,14 @@ import org.apache.spark.sql.functions._
     .config("hive.metastore.uris", "thrift://ai04.analyticsinside.us:9083")*/
 
 
-object QueryUtil(sc : SparkSession)
+object QueryUtil
 {
 	def SparkQuery( DataSource : String, SchemaName : String, TableName : String, QLimit : String) : Array[Array[(String,String,String)]] = 
 	{
-		/*val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "local").enableHiveSupport()
+		val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "local").enableHiveSupport()
 		.config("yarn.resourcemanager.address","ai02.analyticsinside.us:8032")
 		.config("hive.metastore.uris", "thrift://ai04.analyticsinside.us:9083")
-		.getOrCreate() */
+		.getOrCreate() 
 		import sc.implicits._
 		sc.sql("use "+SchemaName)
 
@@ -53,10 +53,10 @@ object QueryUtil(sc : SparkSession)
 	 }
 	 def SparkTables( DataSource : String, SchemaName : String) :Array[String] =
 	 {
-	 	/*val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "local").enableHiveSupport()
+	 	val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "local").enableHiveSupport()
 		.config("yarn.resourcemanager.address","ai02.analyticsinside.us:8032")
 		.config("hive.metastore.uris", "thrift://ai04.analyticsinside.us:9083")
-		.getOrCreate() */
+		.getOrCreate() 
 		import sc.implicits._
 	 	sc.sql("use "+SchemaName)
 	 	val tablesNames=sc.sql("show tables")
