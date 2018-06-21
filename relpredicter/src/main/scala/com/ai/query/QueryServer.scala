@@ -37,10 +37,7 @@ object QueryServer extends App with QueryRoutes {
 
   val queryActor: ActorRef = system.actorOf(QueryActor.props, "queryActor")
 
-  //For testing
-  //val table_request = """{"source":"hive","schema":"relpredict"}"""
-
-  
+    
   lazy val routes: Route = queryRoutes
 
   
@@ -50,8 +47,7 @@ object QueryServer extends App with QueryRoutes {
 
   println(s"Server online at http://ai26:8080/")
    
-   //HttpRequest(POST("/tables", HttpEntity(`application/json`, table_request)))
-
+  
   Await.result(system.whenTerminated, Duration.Inf)
   //#http-server
   //#main-class
