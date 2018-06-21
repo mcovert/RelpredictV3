@@ -9,6 +9,7 @@ import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import com.ai.query.QueryActor._
 
+
 import scala.concurrent.duration._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.model.StatusCodes
@@ -36,10 +37,11 @@ object QueryServer extends App with QueryRoutes {
 
   val queryActor: ActorRef = system.actorOf(QueryActor.props, "queryActor")
 
-  
-  lazy val routes: Route = queryRoutes
+  //For testing
+  //val table_request = """{"source":"hive","schema":"relpredict"}"""
 
   
+  lazy val routes: Route = queryRoutes
 
   
 
@@ -47,6 +49,8 @@ object QueryServer extends App with QueryRoutes {
   Http().bindAndHandle(queryRoutes, "ai26", 8080)
 
   println(s"Server online at http://ai26:8080/")
+   
+   //HttpRequest(POST("/tables", HttpEntity(`application/json`, table_request)))
 
   Await.result(system.whenTerminated, Duration.Inf)
   //#http-server

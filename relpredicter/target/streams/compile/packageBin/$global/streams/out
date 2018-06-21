@@ -28,6 +28,8 @@
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryActor$GetTables$.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/TableList$.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/TableList$.class[0m
+[0m[[0mdebug[0m] [0m	com/ai/query/TableRequest$.class[0m
+[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/TableRequest$.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/spark/QueryUtil$$anonfun$4.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/spark/QueryUtil$$anonfun$4.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/JsonSupport$class.class[0m
@@ -64,6 +66,8 @@
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/util/JsonConverter$$anonfun$toJson$2.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/TableName$.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/TableName$.class[0m
+[0m[[0mdebug[0m] [0m	com/ai/query/TableRequest.class[0m
+[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/TableRequest.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryActor$$anonfun$receive$1$$anonfun$1$$anonfun$apply$1$$anonfun$apply$2.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryActor$$anonfun$receive$1$$anonfun$1$$anonfun$apply$1$$anonfun$apply$2.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QColumn.class[0m

@@ -16,6 +16,7 @@ trait JsonSupport extends SprayJsonSupport {
   implicit val qrowsFormat = jsonFormat1(QRows)
   implicit val tablenameFormat = jsonFormat1(TableName)
   implicit val tablelistFormat = jsonFormat1((TableList))
+  implicit val tablerequestFormat = jsonFormat2(TableRequest)
 
   implicit val actionPerformedFormat = jsonFormat1(ActionPerformed)
 }

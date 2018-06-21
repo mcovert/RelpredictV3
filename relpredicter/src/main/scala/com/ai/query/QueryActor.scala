@@ -10,6 +10,7 @@ final case class QRows(rows:Array[QRow])
 final case class TableName(table_name: String)
 final case class TableList(table_list:Array[TableName])
 
+final case class TableRequest(source:String, schema:String)
 
 
 object QueryActor {
