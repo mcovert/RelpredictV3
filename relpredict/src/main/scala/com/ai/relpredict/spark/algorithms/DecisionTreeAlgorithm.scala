@@ -35,7 +35,7 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
       case None =>
       case Some(m) => ScalaUtil.writeWarning("DecisionTree - Overwriting existing trained model")
     }
-    var phaseResults = new Results()
+    var phaseResults = setupPhase("train", "", s"${df.count}")
     // Set up all parameters
     var categoryMap = SparkUtil.buildCategoryMap(target.featureSet)
     val impurity = ScalaUtil.getParm("impurity", "gini", parms)
@@ -47,11 +47,7 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
     // Train the model
     dtmodel = Some(DecisionTree.trainClassifier(df, target.size, categoryMap, impurity, maxDepth, maxBins))
     checkAlgorithmModel(dtmodel, true, "DecisionTree - training failed to produce a model")
-    phaseResults.put("phase", "train")
-    phaseResults.put("step", "")
-    phaseResults.put("records", s"${df.count}")
     phaseResults.put("decision_tree", AlgorithmUtil.getTreeModelText(dtmodel.get.toDebugString, target))
-    results.put("phases", phaseResults)
     phaseResults
   }
   /** 
@@ -59,10 +55,7 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
    */
   def test(df : RDD[(String, LabeledPoint)], suffix : String) : Option[(Results, RDD[(String, Double, Double)])] = { 
     checkAlgorithmModel(dtmodel, true, "DecisionTree - test cannot be performed because no model exists")
-    var phaseResults = new Results()
-    phaseResults.put("phase", "test")
-    phaseResults.put("step", suffix)
-    phaseResults.put("records", s"${df.count}")
+    var phaseResults = setupPhase("test", suffix, s"${df.count()}")
     dtmodel match {
       case None => None
       case Some(m) => {
@@ -80,7 +73,6 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
            ScalaUtil.controlMsg(AlgorithmUtil.confusionToString(matrix, target.getInvMap(), "\n"))
          }
          phaseResults.put("confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
-         results.put("phases", phaseResults)
          Some((phaseResults, resultdf))
       }
     }
@@ -93,15 +85,11 @@ class DecisionTreeAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
    */
   def predict(df : RDD[(String, Vector)]) : Option[(Results, RDD[(String, Double)])] = { 
     checkAlgorithmModel(dtmodel, true, "DecisionTree - prediction is not possible because no model has been created")
-    val phaseResults = new Results()
-    phaseResults.put("phase", "predict")
-    phaseResults.put("step", "")
-    phaseResults.put("records", s"${df.count}")
+    var phaseResults = setupPhase("predict", "", s"${df.count()}")
     val dfr = df.map(point => {
        val prediction = dtmodel.get.predict(point._2)
        (point._1, prediction)
     })
-    results.put("phases", phaseResults)
     Some((phaseResults, dfr))
   }
   /** 

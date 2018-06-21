@@ -43,8 +43,7 @@ class LinearRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val par
       case None =>
       case Some(m) => ScalaUtil.writeWarning("LinearRegression - Overwriting existing trained model")
     }
-    var results = new Results()
-    results.put("phase", "train")
+    var phaseResults = setupPhase("test", "", s"${df.count()}")
         // Set up all parameters
     var categoryMap = SparkUtil.buildCategoryMap(target.featureSet)
     val recLen = df.take(1)(0).features.size
@@ -65,9 +64,7 @@ class LinearRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val par
    */
   def test(df : RDD[(String, LabeledPoint)], suffix : String) : Option[(Results, RDD[(String, Double, Double)])] = { 
     checkAlgorithmModel(lirmodel, true, "LinearRegression - test cannot be performed because no model exists")
-    var results = new Results()
-    results.put("phase", "test")
-    results.put(s"test_${suffix}_records", df.count())
+    var phaseResults = setupPhase("test", suffix, s"${df.count()}")
     lirmodel match {
       case None => None
       case Some(m) => {
@@ -78,24 +75,24 @@ class LinearRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val par
                }}
          )
          val testErr = AlgorithmUtil.getError(resultdf)
-         results.put(s"test_${suffix}_error", testErr)
+         phaseResults.put("error", s"$testErr")
          var matrix = AlgorithmUtil.getConfusionMatrix(resultdf, target)
          if (ScalaUtil.verbose) {
            ScalaUtil.controlMsg(s"Test error=$testErr")
            ScalaUtil.controlMsg(AlgorithmUtil.confusionToString(matrix, target.getInvMap(), "\n"))
          }
-         results.put(s"test_${suffix}_confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
+         phaseResults.put(s"test_${suffix}_confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
          val metrics = new MulticlassMetrics(resultdf.map(x => (x._3, x._2)))
-         results.put(s"test_${suffix}_accuracy", metrics.accuracy)
+         phaseResults.put("accuracy", metrics.accuracy)
          target.getInvMap().map{ case (k, v) =>
            val rKey = s"test_${suffix}_label.$v"
-           results.put(s"$rKey.false_positive_rate", metrics.falsePositiveRate(k))
-           results.put(s"$rKey.true_positive_rate", metrics.truePositiveRate(k))
-           results.put(s"$rKey.precision", metrics.precision(k))
-           results.put(s"$rKey.recall", metrics.recall(k))
-           results.put(s"$rKey.f_measure", metrics.fMeasure(k))
+           phaseResults.put(s"${rKey}_false_positive_rate", metrics.falsePositiveRate(k))
+           phaseResults.put(s"${rKey}_true_positive_rate", metrics.truePositiveRate(k))
+           phaseResults.put(s"${rKey}_precision", metrics.precision(k))
+           phaseResults.put(s"${rKey}_recall", metrics.recall(k))
+           phaseResults.put(s"${rKey}_f_measure", metrics.fMeasure(k))
          }
-         Some((results, resultdf))
+         Some((phaseResults, resultdf))
       }
     }
   }
@@ -107,14 +104,12 @@ class LinearRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val par
    */
   def predict(df : RDD[(String, Vector)]) : Option[(Results, RDD[(String, Double)])] = { 
     checkAlgorithmModel(lirmodel, true, "LinearRegression - prediction is not possible because no model has been created")
-    val results = new Results()
-    results.put("phase", "predict")
-    results.put("predict_records", df.count())    
+    var phaseResults = setupPhase("predict", "", s"${df.count()}")
     val dfr = df.map(point => {
        val prediction = lirmodel.get.predict(point._2)
        (point._1, prediction)
     })
-    Some((results, dfr))
+    Some((phaseResults, dfr))
   }
   /** 
    *  Save the model file to disk 

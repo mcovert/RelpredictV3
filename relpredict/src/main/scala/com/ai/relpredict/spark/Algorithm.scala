@@ -17,6 +17,7 @@ import java.util.Date
  */
 abstract class Algorithm(val name : String) extends Serializable {
   var results = new Results()
+  var phaseResults = new Results()
   var starttime : Date = new Date()
   /** Print anything noteworthy to a file  */ 
   def printTo(file : FileWriter)
@@ -55,5 +56,21 @@ abstract class Algorithm(val name : String) extends Serializable {
     results.put("end_time", endtime.toString())
     results.put("run_time", (endtime.getTime - starttime.getTime).toDouble / 1000.0)
     results
+  }
+  def setupPhase(phaseName: String, stepName: String, recCount: String) : Results = {
+    phaseResults = new Results()
+    phaseResults.put("phase", phaseName)
+    phaseResults.put("step", stepName)
+    phaseResults.addArray("metrics")
+    results.put("phases", phaseResults)
+    if (!recCount.isEmpty()) phaseResults.put("records", recCount)
+    phaseResults
+  }
+  def addMetric(metricName: String, metricValue: Any, related: String) {
+    var metricResults = new Results()
+    metricResults.put("metric_name", metricName)
+    metricResults.put("metric_value", metricValue)
+    metricResults.put("related", related)
+    phaseResults.put("phases", metricResults)
   }
 }

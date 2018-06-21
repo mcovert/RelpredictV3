@@ -34,9 +34,7 @@ class LogisticRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val p
       case None =>
       case Some(m) => ScalaUtil.writeWarning("LogisticRegression - Overwriting existing trained model")
     }
-    var phaseResults = new Results()
-    phaseResults.put("phase", "train")
-    phaseResults.put("step", "")
+    var phaseResults = setupPhase("train", "", s"${df.count()}")
     // Set up all parameters
     var categoryMap = SparkUtil.buildCategoryMap(target.featureSet)
     val recLen = df.take(1)(0).features.size
@@ -45,8 +43,6 @@ class LogisticRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val p
     // Train the model
     lrmodel = Some(new LogisticRegressionWithLBFGS().setNumClasses(target.size).run(df))
     checkAlgorithmModel(lrmodel, true, "LogisticRegression - training failed to produce a model")
-    phaseResults.put("records", df.count.toDouble)
-    results.put("phases", phaseResults)
     phaseResults
   }
   /** 
@@ -54,10 +50,7 @@ class LogisticRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val p
    */
   def test(df : RDD[(String, LabeledPoint)], suffix : String) : Option[(Results, RDD[(String, Double, Double)])] = { 
     checkAlgorithmModel(lrmodel, true, "LogisticRegression - test cannot be performed because no model exists")
-    var phaseResults = new Results()
-    phaseResults.put("phase", "test")
-    phaseResults.put("step", suffix)
-    phaseResults.put("records", df.count)
+    var phaseResults = setupPhase("test", suffix, s"${df.count()}")
     lrmodel match {
       case None => None
       case Some(m) => {
@@ -98,15 +91,11 @@ class LogisticRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val p
    */
   def predict(df : RDD[(String, Vector)]) : Option[(Results, RDD[(String, Double)])] = { 
     checkAlgorithmModel(lrmodel, true, "LogisticRegression - prediction is not possible because no model has been created")
-    val phaseResults = new Results()
-    phaseResults.put("phase", "predict")
-    phaseResults.put("step", "")
-    phaseResults.put("records", df.count)    
+    var phaseResults = setupPhase("predict", "", s"${df.count()}")
     val dfr = df.map(point => {
        val prediction = lrmodel.get.predict(point._2)
        (point._1, prediction)
     })
-    results.put("phases", phaseResults)
     Some((phaseResults, dfr))
   }
   /** 

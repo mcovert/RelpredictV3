@@ -34,8 +34,7 @@ class LSVMAlgorithm(val fs : FeatureSet, target : Target[_], val parms : Map[Str
       case None =>
       case Some(m) => ScalaUtil.writeWarning("LSVM - Overwriting existing trained model")
     }
-    var results = new Results()
-    results.put("phase", "train")
+    var phaseResults = setupPhase("train", "", s"${df.count()}")
     // Set up all parameters
     var categoryMap = SparkUtil.buildCategoryMap(target.featureSet)
     val impurity = ScalaUtil.getParm("impurity", "gini", parms)
@@ -47,18 +46,14 @@ class LSVMAlgorithm(val fs : FeatureSet, target : Target[_], val parms : Map[Str
     // Train the model
     dtmodel = Some(DecisionTree.trainClassifier(df, target.size, categoryMap, impurity, maxDepth, maxBins))
     checkAlgorithmModel(dtmodel, true, "LSVM - training failed to produce a model")
-    results.put("training_records", df.count().toDouble)
-    results.put("training_tree", AlgorithmUtil.getTreeModelText(dtmodel.get.toDebugString, target))
-    results
+    phaseResults
   }
   /** 
    *  Test an RDD of LabeledPoints against a trained model 
    */
   def test(df : RDD[(String, LabeledPoint)], suffix : String) : Option[(Results, RDD[(String, Double, Double)])] = { 
     checkAlgorithmModel(dtmodel, true, "LSVM - test cannot be performed because no model exists")
-    var results = new Results()
-    results.put("phase", "test")
-   results.put(s"test_${suffix}_records", df.count())
+    var phaseResults = setupPhase("test", suffix, s"${df.count()}")
     dtmodel match {
       case None => None
       case Some(m) => {
@@ -69,14 +64,14 @@ class LSVMAlgorithm(val fs : FeatureSet, target : Target[_], val parms : Map[Str
                }}
          )
          val testErr = AlgorithmUtil.getError(resultdf)
-         results.put(s"test_${suffix}_error", testErr)
+         phaseResults.put("error", s"${testErr}")
          var matrix = AlgorithmUtil.getConfusionMatrix(resultdf, target)
          if (ScalaUtil.verbose) {
            ScalaUtil.controlMsg(s"Test error=$testErr")
            ScalaUtil.controlMsg(AlgorithmUtil.confusionToString(matrix, target.getInvMap(), "\n"))
          }
-         results.put(s"test_${suffix}_confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
-         Some((results, resultdf))
+         phaseResults.put("confusion", AlgorithmUtil.confusionToResultString(matrix, target.getInvMap()))
+         Some((phaseResults, resultdf))
       }
     }
   }
@@ -88,14 +83,12 @@ class LSVMAlgorithm(val fs : FeatureSet, target : Target[_], val parms : Map[Str
    */
   def predict(df : RDD[(String, Vector)]) : Option[(Results, RDD[(String, Double)])] = { 
     checkAlgorithmModel(dtmodel, true, "LSVM - prediction is not possible because no model has been created")
-    val results = new Results()
-    results.put("phase", "predict")
-    results.put("predict_records", df.count())    
+    var phaseResults = setupPhase("predict", "", s"${df.count()}")
     val dfr = df.map(point => {
        val prediction = dtmodel.get.predict(point._2)
        (point._1, prediction)
     })
-    Some((results, dfr))
+    Some((phaseResults, dfr))
   }
   /** 
    *  Save the model file to disk 
