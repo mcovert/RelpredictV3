@@ -8,7 +8,7 @@ object RPConfig {
     private var baseDir          = ""
     private var jobDir           = ""
     private var modelBaseDir     = ""
-    private var modelOutputDir   = ""
+    private var trainedModelDir  = ""
     private var config  : Config = Config()
     // Parse the command line. Order of prededence (highest to lowest priority) is:
     //     1. Command line args
@@ -51,6 +51,7 @@ object RPConfig {
       //config.print()
       config = config.merge(cmdlineConfig)
       //ScalaUtil.controlMsg("Cmdline Merged (final)")
+      setDirectories(config)
       Some(config)
     }
     def loadConfig(configFile: String) : Array[String] = {
@@ -78,11 +79,21 @@ object RPConfig {
     def setJobDir(dir : String) { 
       jobDir = if (dir.endsWith("/") || dir == "") dir else s"${dir}/"
       if (! new java.io.File(jobDir).exists) ScalaUtil.terminal_error(s"Job directory $jobDir does not exist")
-    }  
+    } 
+    /**
+     * Set up the model directories for RelPredict. The base model directory hold the model definition
+     * and a file that contains information about which trained models and algorithms are to be used.
+     * The trained model directory is where all trained models are stored.
+     */
     def setModelDir(model_class : String, model_name: String, model_version: String, model_run_date: String) { 
       modelBaseDir = getBaseDir() + "/models/" + model_class + "/" + model_name + "/" + model_version + "/"
-      modelOutputDir = modelBaseDir + "/" + model_run_date
+      trainedModelDir = modelBaseDir + "/" + model_run_date
     }  
+    def setDirectories(conf: Config) {
+      setBaseDir(conf.base_dir)
+      setJobDir(getBaseDir() + "jobs/" + conf.run_id)
+      setModelDir(conf.model_class, conf.model_name, conf.model_version, conf.model_train_date)
+    } 
     /**
      * Get the job directory. Note that all directories returned will have "/" appended to the end.
      */
@@ -98,7 +109,8 @@ object RPConfig {
     /**
      * Get the model directory for a specific model
      */
-    def getModelDir(model : Model) : String = s"${baseDir}models/${model.name}/${model.version}/"
+    def getModelDir() : String = modelBaseDir
+    def getTrainedModelDir() : String = trainedModelDir
     /**
      * Get the model directory for a specific model and run ID. If none is specified, the current model is returned.
      */

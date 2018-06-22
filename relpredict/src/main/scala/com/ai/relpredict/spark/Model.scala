@@ -67,7 +67,19 @@ case class Model(modelDef : ModelDef, ss : SparkSession, df : DataFrame, dm: Dat
   }
   /**
    *  Load a full model from a directory. This includes all of the map files for features
-   *  and targets.
+   *  and targets. 
+   *       1. Locate and load the modeldef and current files
+   *          a. The modeldef file contains the definition language for the model (model_class/model_name/model_version/model_name.modeldef)
+   *          b. The current file (model_class/model_name/model_version/model_name.current) designates the current training date and for each target, 
+   *             the algorithm (and ML model) that will be used (model_class/model_name/model_version/model_train_date/target/algorithm/model). 
+   *             Note that this designation is user specified using rpstudio. 
+   *       2. Create the model file from it and a SparkSession object
+   *          a. For each feature (text or string) and each target (string), find and load its map file into a data frame
+   *             i.  Search the trained model directory first
+   *             ii. Search data/vocabulary next
+   *          b. Call the builders in the model for each target and feature
+   *       3. Return the model.
+   *          a. Calling model.predict()
    */
   def this(dirName: String) {
 

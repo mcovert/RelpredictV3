@@ -23,6 +23,7 @@ object JsonConverter {
             case a: scala.collection.immutable.Map[_,_] => { json += "\"" + key + "\":" + toJson(a); }
             case a: ArrayBuffer[_] => { json += "\"" + key + "\":" + toJson(a); }
             case a: Int => { json += "\"" + key + "\":" + a; }
+            case a: Double => { json += "\"" + key + "\":" + a; }
             case a: Boolean => { json += "\"" + key + "\":" + a; }
             case a: String => { json += "\"" + key + "\":\"" + escape(a) + "\""; }
             case _ => 
@@ -38,6 +39,7 @@ object JsonConverter {
             case a: scala.collection.immutable.Map[_,_] => { json += "\"" + key + "\":" + toJson(a); }
             case a: ArrayBuffer[_] => { json += "\"" + key + "\":" + toJson(a); }
             case a: Int => { json += "\"" + key + "\":" + a; }
+            case a: Double => { json += "\"" + key + "\":" + a; }
             case a: Boolean => { json += "\"" + key + "\":" + a; }
             case a: String => { json += "\"" + key + "\":\"" + escape(a) + "\""; }
             case _ => 
@@ -53,9 +55,10 @@ object JsonConverter {
             case a: scala.collection.immutable.Map[_,_] => { list += toJson(a); }
             case a: ArrayBuffer[_] => { list += toJson(a); }
             case a: Int => { list += a.toString(); }
+            case a: Double => { list += a.toString(); }
             case a: Boolean => { list += a.toString(); }
             case a: String => { list += "\"" + escape(a) + "\""; }
-            case _ => println("l-u");
+            case _ => 
           }
         }
         return "[" + list.mkString(",") + "]"

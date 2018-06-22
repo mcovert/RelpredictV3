@@ -12,11 +12,12 @@ import org.apache.spark.sql.SparkSession
 import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.ArrayBuffer
 
-case class PredictionRecordField(fieldName: String, fieldValue: Any)
+case class PredictionRecordField(fieldName: String, fieldType: String, fieldValue: String)
 case class PredictionRecord(fields: Array[PredictionRecordField])
-case class PredictedRecord(id:         String, target:     String,
-	                       prediction: String, probability: Double, 
-	                       algorithm:  String, timestamp:  Date)
+
+case class PredictedRecord(id:         String, model:       String,  target:      String,    algorithm:  String,
+	                       prediction: String, probability: String,  timestamp:   String)
+case class PredictedRecords(records: Array[PredictedRecord])
 
 object RelPredictUtil extends GrammarDef {
 
@@ -38,10 +39,19 @@ object RelPredictUtil extends GrammarDef {
 	 *       The model definition will be loaded from the current version
 	 *       Each target will be loaded with the current trained algorithm
 	 */
-	def loadModel(modelName: String, isLocalMode: Boolean) = {
+	 def loadModel(modelName: String, isLocalMode: Boolean) : Model = {
+	 	loadModelDef(modelName, isLocalMode) match {
+	 		case Some(m: ModelDef) => {
+	 			
+	 		}
+	 		case _ => 
+	 	}
+
+	 }
+	def loadModelDef(modelName: String, isLocalMode: Boolean) : Option[ModelDef] = {
         /* Load the model def file                     */
       val testModel : Reader = {
-        if (isLocalMode()) {
+        if (isLocalMode) {
           new FileReader(fileName)
         }
         else {
@@ -50,22 +60,21 @@ object RelPredictUtil extends GrammarDef {
       }
       // modelDef is defined in GrammarDef
       val r = parse(modelDef,testModel)
-      r match {
+      var md = r match {
            case Success(matched,_) => {
                matched match {
-                  case (m : ModelDef) => {
-                       return Option(m)
-                  }
-               }
+                  case (m : ModelDef) => Option(m)
            } 
            case Failure(msg,_) => { 
-             ScalaUtil.terminal_error(s"Loading the model file $fileName failed with error $msg")
+             ScalaUtil.writeError(s"Loading the model file $fileName failed with error $msg")
+             None
            }
            case Error(msg,_) => { 
-             ScalaUtil.terminal_error(s"Loading the model file $fileName failed with error $msg")
+             ScalaUtil.writeError(s"Loading the model file $fileName failed with error $msg")
+             None
            }
       }
-      None
+      md
     }
 		/* Find current trained models for each target */
 
