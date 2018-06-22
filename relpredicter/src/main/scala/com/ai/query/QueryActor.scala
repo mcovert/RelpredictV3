@@ -11,6 +11,7 @@ final case class TableName(table_name: String)
 final case class TableList(table_list:Array[TableName])
 
 final case class TableRequest(source:String, schema:String)
+final case class QueryRequest(source:String, schema:String, table:String, limit:String)
 
 
 object QueryActor {

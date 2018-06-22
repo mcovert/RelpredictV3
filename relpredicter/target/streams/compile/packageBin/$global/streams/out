@@ -40,6 +40,8 @@
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/util/JsonConverter.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryRoutes$$anonfun$1$$anonfun$apply$1.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryRoutes$$anonfun$1$$anonfun$apply$1.class[0m
+[0m[[0mdebug[0m] [0m	com/ai/query/QueryRequest$.class[0m
+[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryRequest$.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryServer$delayedInit$body.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryServer$delayedInit$body.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/spark/QueryUtil$$anonfun$1.class[0m
@@ -112,6 +114,8 @@
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/spark/QueryUtil.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryRoutes$$anonfun$1.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryRoutes$$anonfun$1.class[0m
+[0m[[0mdebug[0m] [0m	com/ai/query/QueryRequest.class[0m
+[0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/query/QueryRequest.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/spark/QueryUtil$$anonfun$3$$anonfun$apply$1.class[0m
 [0m[[0mdebug[0m] [0m	  /home/vloewengart/rp-repo/RelpredictV3/relpredicter/target/scala-2.11/classes/com/ai/spark/QueryUtil$$anonfun$3$$anonfun$apply$1.class[0m
 [0m[[0mdebug[0m] [0m	com/ai/query/QueryActor$$anonfun$receive$1.class[0m

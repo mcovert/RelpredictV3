@@ -45,7 +45,7 @@ trait QueryRoutes extends JsonSupport {
       //#query-get      
         path("query")
         {
-          get 
+         /* get 
           {
             parameters("source", "schema", "table","limit")
             {(source,schema,table,limit)=>
@@ -53,7 +53,20 @@ trait QueryRoutes extends JsonSupport {
               val query: Future[QRows] = (queryActor ? GetRecords(source, schema, table, limit)).mapTo[QRows]
               complete(query)
             }
-          } 
+          } */
+
+          post
+          {
+            entity(as[QueryRequest]) {queryRequest =>
+              val source = queryRequest.source
+              val schema = queryRequest.schema
+              val table = queryRequest.table
+              val limit = queryRequest.limit
+              val query: Future[QRows] = (queryActor ? GetRecords(source, schema, table, limit)).mapTo[QRows]
+              complete(query)
+
+            }
+          }
         } ~
         path("tables")
         {
