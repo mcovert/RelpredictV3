@@ -56,6 +56,7 @@ case class Model(modelDef : ModelDef, ss : SparkSession, df : DataFrame, dm: Dat
      }
   }
   def saveModel(runDate : String) {
+    // To-do: Save target and feature maps if they exist, to .csv files in the trained model directory
      targets.foreach(t => {
         t.algorithms.foreach(a => {
            val fileName = RPConfig.getAlgorithmDir(this, runDate, t, a.get) 
@@ -63,5 +64,12 @@ case class Model(modelDef : ModelDef, ss : SparkSession, df : DataFrame, dm: Dat
            a.get.saveModel(ss, fileName)
         })
      })
+  }
+  /**
+   *  Load a full model from a directory. This includes all of the map files for features
+   *  and targets.
+   */
+  def this(dirName: String) {
+
   }
 }

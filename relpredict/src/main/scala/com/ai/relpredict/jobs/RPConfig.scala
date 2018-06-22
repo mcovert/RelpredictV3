@@ -5,8 +5,10 @@ import com.ai.relpredict.spark._
 import scala.collection.JavaConverters._
 
 object RPConfig {
-    private var baseDir = ""
-    private var jobDir  = ""
+    private var baseDir          = ""
+    private var jobDir           = ""
+    private var modelBaseDir     = ""
+    private var modelOutputDir   = ""
     private var config  : Config = Config()
     // Parse the command line. Order of prededence (highest to lowest priority) is:
     //     1. Command line args
@@ -76,7 +78,11 @@ object RPConfig {
     def setJobDir(dir : String) { 
       jobDir = if (dir.endsWith("/") || dir == "") dir else s"${dir}/"
       if (! new java.io.File(jobDir).exists) ScalaUtil.terminal_error(s"Job directory $jobDir does not exist")
-    }
+    }  
+    def setModelDir(model_class : String, model_name: String, model_version: String, model_run_date: String) { 
+      modelBaseDir = getBaseDir() + "/models/" + model_class + "/" + model_name + "/" + model_version + "/"
+      modelOutputDir = modelBaseDir + "/" + model_run_date
+    }  
     /**
      * Get the job directory. Note that all directories returned will have "/" appended to the end.
      */

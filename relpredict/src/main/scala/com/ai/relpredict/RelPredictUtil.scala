@@ -1,6 +1,16 @@
 package com.ai.relpredict
 
+import scala.util.parsing._
+import scala.util.parsing.combinator._
+import com.ai.relpredict.dsl._
+import java.io.FileReader
+import java.io.Reader
+import com.ai.relpredict.util._
+import org.apache.log4j.{Level, LogManager, PropertyConfigurator}
 import com.ai.relpredict.spark._
+import org.apache.spark.sql.SparkSession
+import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.ArrayBuffer
 
 case class PredictionRecordField(fieldName: String, fieldValue: Any)
 case class PredictionRecord(fields: Array[PredictionRecordField])
@@ -8,7 +18,7 @@ case class PredictedRecord(id:         String, target:     String,
 	                       prediction: String, probability: Double, 
 	                       algorithm:  String, timestamp:  Date)
 
-object RelPredictUtil {
+object RelPredictUtil extends GrammarDef {
 
 	var modelMap: Map[String, Model] = scala.collection.mutable.Map[String, Model]()
 	/**
@@ -28,9 +38,35 @@ object RelPredictUtil {
 	 *       The model definition will be loaded from the current version
 	 *       Each target will be loaded with the current trained algorithm
 	 */
-	def loadModel(modelName: String) = {
+	def loadModel(modelName: String, isLocalMode: Boolean) = {
         /* Load the model def file                     */
-
+      val testModel : Reader = {
+        if (isLocalMode()) {
+          new FileReader(fileName)
+        }
+        else {
+          SparkUtil.getHDFSFileReader(fileName).get
+        }
+      }
+      // modelDef is defined in GrammarDef
+      val r = parse(modelDef,testModel)
+      r match {
+           case Success(matched,_) => {
+               matched match {
+                  case (m : ModelDef) => {
+                       return Option(m)
+                  }
+               }
+           } 
+           case Failure(msg,_) => { 
+             ScalaUtil.terminal_error(s"Loading the model file $fileName failed with error $msg")
+           }
+           case Error(msg,_) => { 
+             ScalaUtil.terminal_error(s"Loading the model file $fileName failed with error $msg")
+           }
+      }
+      None
+    }
 		/* Find current trained models for each target */
 
 		/* Load trained model files                    */
