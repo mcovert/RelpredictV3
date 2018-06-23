@@ -63,6 +63,24 @@ object SparkUtil {
     */
    def invertMap(origMap : Map[String, Int]) : Map[Int, String] =  (Map() ++ origMap.map(_.swap))
    /**
+    * Save a map to an HDFS file
+    */
+   def saveMapToHDFSFile(map: Map[String, Int], fileName: String, ss: SparkSession) {
+      var sb = new StringBuilder()
+      sb.append("key,index\n")
+      map.foreach{
+        case (k, v) => sb.append(k + "," + v + "\n")
+      }
+      saveTextToHDFSFile(sb.toString, fileName, ss)
+   }
+   /**
+    * Load a map from an HDFS file using SparkSQL CSV loader
+    */
+   def LoadMapFromHDFSFile(fileName: String, ss: SparkSession) : Map[String, Int] = {
+       val map_df = ss.read.option("header","true").csv(fileName)
+       map_df.rdd.map(row => (row.getAs[String](0), row.getAs[Int](1))).collect.ToMap
+   }
+   /**
     * Count the number of distinct values in a DataFrame column
     */
    def getColumnValueCount(name : String, df : DataFrame) = df.select(name).distinct.count
