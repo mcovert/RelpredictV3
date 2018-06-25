@@ -76,7 +76,7 @@ object SparkUtil {
    /**
     * Load a map from an HDFS file using SparkSQL CSV loader
     */
-   def LoadMapFromHDFSFile(fileName: String, ss: SparkSession) : Map[String, Int] = {
+   def loadMapFromHDFSFile(fileName: String, ss: SparkSession) : Map[String, Int] = {
        val map_df = ss.read.option("header","true").csv(fileName)
        map_df.rdd.map(row => (row.getAs[String](0), row.getAs[Int](1))).collect.ToMap
    }
@@ -199,6 +199,17 @@ object SparkUtil {
    def getHDFSDirectoryList(path : String) = {
      val fs = FileSystem.get(new Configuration())
      fs.listStatus(new Path(path))
+   }
+   def hdfsFileExists(url : String, ss : SparkSession) : Boolean = {
+     try {
+        val path = new Path(url)
+        val conf = new Configuration(ss.sparkContext.hadoopConfiguration)
+        val fs = path.getFileSystem(conf)
+        fs.exists(path)
+     } catch {
+        case e : Throwable => ScalaUtil.terminal_error(s"Opening output HDFS file $url failed: ${e.printStackTrace()}")
+        false
+     }
    }
    /**
     * Find the most recently updated FileStatus object

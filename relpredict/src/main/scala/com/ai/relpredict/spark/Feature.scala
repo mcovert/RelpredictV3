@@ -24,6 +24,7 @@ abstract class Feature[A](name : String, columnMap : Datamap) extends Serializab
   def decode(v : Vector) : A
   def decodeID(pos : Int) : String
   def getVectorLength() = 1
+  def getMap() : Option[Map[String, Int]]
   def translate(in : String) : String = { 
     if (dataMap.isDefined) dataMap.get.getValue(in)
     else in
@@ -40,6 +41,7 @@ case class NullFeature() extends Feature[String]("", new Datamap("")) {
   def encode(r : Row) : Vector = Vectors.zeros(1)
   def decode(v : Vector) = ""
   def decodeID(pos : Int) = ""
+  def getMap() = None
 }
 /** 
  *  A TextFeature is a multi-hot encoded string. It encodes a variable number of strings into a single field separated by a delimiter.
@@ -56,8 +58,12 @@ case class TextFeature(name : String, desc : String, parms : Map[String, String]
        case unknown => { ScalaUtil.writeError(s"Unknown delimiter type $unknown. Using default.") ; "\\|" }
   }
   val map = {
-    if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
-    else dataMap.get.getUniqueValues().zipWithIndex.toMap
+    RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {
+       Some(m: Map[String, Int]) => m
+       None => {
+           if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
+           else dataMap.get.getUniqueValues().zipWithIndex.toMap
+       }
   }
   val invMap = SparkUtil.invertMap(map)
   def getCount() : Int = map.size
@@ -68,6 +74,7 @@ case class TextFeature(name : String, desc : String, parms : Map[String, String]
   }
   def decode(v : Vector) : String = VectorBuilder.decodeVectorToText(v, invMap, dlm)
   def decodeID(pos : Int) = if (pos >= 0 && pos < getCount()) s"$name=${invMap(pos)}" else s"$name"
+  def getMap() = map
 }
 /** 
  *  A StringFeature is one hot encoded by single field set of strings. StringFeatures are generally used with algorithms that need some sort
@@ -77,8 +84,12 @@ case class StringFeature(name : String, desc : String, parms : Map[String, Strin
                          df : DataFrame, column_map : Datamap) extends Feature[String](name, column_map) {
   import ss.sqlContext.implicits._
   val map = {
-    if (!dataMap.isDefined) df.select(name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap
-    else dataMap.get.getUniqueValues().zipWithIndex.toMap
+    RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {
+       Some(m: Map[String, Int]) => m
+       None => {
+           if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
+           else dataMap.get.getUniqueValues().zipWithIndex.toMap
+       }
   }
   val invMap = SparkUtil.invertMap(map)
   /* We need to know how to encode this feature. A string can be one hot encoded or it can be category encoded. */
@@ -93,6 +104,7 @@ case class StringFeature(name : String, desc : String, parms : Map[String, Strin
   }
   def decode(v : Vector) : String = VectorBuilder.decodeVectorToString(v, invMap)
   def decodeID(pos : Int) = if (pos >= 0 && pos < getCount()) s"$name=${invMap(pos)}" else s"$name"
+  def getMap() = map
 }
 /** 
  *  A StringCategoryFeature is single column category encoded as one column with an ordinal value. StringCategoryFeatures are generally used with algorithms that 
@@ -101,8 +113,12 @@ case class StringCategoryFeature(name : String, desc : String, parms : Map[Strin
                                  df : DataFrame, column_map : Datamap) extends Feature[String](name, column_map) {
   import ss.sqlContext.implicits._
   val map = {
-    if (!dataMap.isDefined) df.select(name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap
-    else dataMap.get.getUniqueValues().zipWithIndex.toMap
+    RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {
+       Some(m: Map[String, Int]) => m
+       None => {
+           if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
+           else dataMap.get.getUniqueValues().zipWithIndex.toMap
+       }
   }
   val invMap = SparkUtil.invertMap(map)
   /* We need to know how to encode this feature. A string can be one hot encoded or it can be category encoded. */
@@ -120,6 +136,7 @@ case class StringCategoryFeature(name : String, desc : String, parms : Map[Strin
      invMap(v(0).toInt)
   } 
   def decodeID(pos : Int) = if (pos >= 0 && pos < getCount()) s"$name=${invMap(pos)}" else s"$name"
+  def getMap() = map
 }
 /**
  * An IntegerFeature is represented by a set of Integers. They can be normalized through their encode parameter.
@@ -128,10 +145,10 @@ case class StringCategoryFeature(name : String, desc : String, parms : Map[Strin
 case class IntegerFeature(name : String, desc : String, parms : Map[String, String], ss: SparkSession, 
                           df : DataFrame, column_map : Datamap) extends Feature[Long](name, column_map) {
   import ss.sqlContext.implicits._
-  private val minVal = df.select(name).distinct.collect.map(r => r.getLong(0)).min 
-  private val maxVal = df.select(name).distinct.collect.map(r => r.getLong(0)).max 
-  private val numVal = df.select(name).distinct.collect.map(r => r.getLong(0)).length
-  private val sumVal = df.select(name).distinct.collect.map(r => r.getLong(0)).sum 
+  //private val minVal = df.select(name).distinct.collect.map(r => r.getLong(0)).min 
+  //private val maxVal = df.select(name).distinct.collect.map(r => r.getLong(0)).max 
+  //private val numVal = df.select(name).distinct.collect.map(r => r.getLong(0)).length
+  //private val sumVal = df.select(name).distinct.collect.map(r => r.getLong(0)).sum 
   def getCount() : Int = 0
   def getType() : String = "integer"
   def encode(r : Row) : Vector = {
@@ -141,6 +158,7 @@ case class IntegerFeature(name : String, desc : String, parms : Map[String, Stri
     v(0).toLong
   }
   def decodeID(pos : Int) = s"$name"
+  def getMap() = None
 }
 /**
  * A DoubleFeature is represented by a set of Doubles. They can be normalized through their encode parameter.
@@ -162,6 +180,7 @@ case class DoubleFeature(name : String, desc : String, parms : Map[String, Strin
     v(0)
   }
   def decodeID(pos : Int) = s"$name"
+  def getMap() = None
 }
 /**
  * A BooleanFeature is represented by a simple Boolean variable.
@@ -178,4 +197,5 @@ case class BooleanFeature(name : String, desc : String, parms : Map[String, Stri
     if (v(0) == 1.0) true else false
   }
   def decodeID(pos : Int) = s"$name"
+  def getMap() = None
 }

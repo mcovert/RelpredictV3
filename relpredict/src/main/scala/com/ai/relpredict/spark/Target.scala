@@ -30,6 +30,7 @@ abstract class Target[A](name : String, desc : String, algorithmDefs : Array[Alg
     if (dataMap.isDefined) dataMap.get.getValue(in)
     else in
   }
+  def getMap() : Option[Map[String, Int]]
   def getInvMap() : Map[Int, String]
   def getDatatype() = ""
 }
@@ -46,6 +47,7 @@ case class StringTarget(name : String, desc : String, algorithmDefs : Array[Algo
   override def encode(r : Row) : Double = map(translate(r.getAs[String](columnName))).toDouble
   override def getDatatype() = "string"
   def getInvMap() = invMap
+  def getMap() = Some(map)  
 }
 /** 
  *  A BooleanTarget encodes either true or false 
@@ -60,6 +62,7 @@ case class BooleanTarget(name : String, desc : String, algorithmDefs : Array[Alg
   override def encode(r : Row) : Double = if (r.getAs[Boolean](columnName)) 1.0 else 0.0
   override def getDatatype() = "boolean"
   def getInvMap() = invMap
+  def getMap() = None
 }
 /** 
  *  An IntegerTarget encodes a categorical set of integers. Integers are represented as a Long to handle short, int, and bigint. 
@@ -74,6 +77,7 @@ case class IntegerTarget(name : String, desc : String, algorithmDefs : Array[Alg
   override def encode(r : Row) : Double = r.getAs[Integer](columnName).toDouble
   override def getDatatype() = "integer"
   def getInvMap() = invMap
+  def getMap() = None
 }
 /** 
  *  A DoubleTarget encodes a categorical set of doubles 
@@ -88,4 +92,5 @@ case class DoubleTarget(name : String, desc : String, algorithmDefs : Array[Algo
   override def encode(r : Row) : Double = r.getAs[Double](columnName)
   override def getDatatype() = "double"
   def getInvMap() = invMap
+  def getMap() = None
 }

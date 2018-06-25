@@ -21,6 +21,21 @@ case class PredictedRecords(records: Array[PredictedRecord])
 
 object RelPredictUtil extends GrammarDef {
 
+	def loadTargetOrFeatureMap(name: String, ss: SparkSession) : Option[Map[String, Int]] = {
+		// Search trained model directory
+		var fileName = RPConfig.getTrainedModelDir() + name + ".csv"
+		if (hdfsFileExists(fileName)) {
+           return Some(SparkUtil.loadMapFromHDFSFile(fileName, ss))
+		}
+		else {
+           fileName = RPConfig.getVocabularyDir() + name + ".csv"
+           if (hdfsFileExists(fileName)) {
+              return Some(SparkUtil.loadMapFromHDFSFile(fileName, ss))
+	       }
+		}
+        None
+	}
+
 	var modelMap: Map[String, Model] = scala.collection.mutable.Map[String, Model]()
 	/**
 	 *  Get a model. If it is not in cache, try to load it and put it there.
@@ -76,12 +91,6 @@ object RelPredictUtil extends GrammarDef {
       }
       md
     }
-		/* Find current trained models for each target */
-
-		/* Load trained model files                    */
-
-		/* Return the loaded model                     */
-	}
 	/**
 	 *  Predict a single record using the current trained model
 	 */
