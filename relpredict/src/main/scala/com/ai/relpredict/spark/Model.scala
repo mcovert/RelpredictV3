@@ -14,7 +14,22 @@ case class Model(modelDef : ModelDef, ss : SparkSession, df : DataFrame, dm: Dat
   val description = modelDef.desc
   val featureSets = modelDef.featureSets.map(fsd => (fsd.name -> buildFeatureSet(fsd))).toMap
   val targets = buildTargets(modelDef.targets)
-  
+  /**
+   *  Load a full model from a directory. This includes all of the map files for features
+   *  and targets. 
+   *       1. Locate and load the modeldef and current files
+   *          a. The modeldef file contains the definition language for the model (model_class/model_name/model_version/model_name.modeldef)
+   *          b. The current file (model_class/model_name/model_version/model_name.current) designates the current training date and for each target, 
+   *             the algorithm (and ML model) that will be used (model_class/model_name/model_version/model_train_date/target/algorithm/model). 
+   *             Note that this designation is user specified using rpstudio. 
+   *       2. Create the model file from it and a SparkSession object
+   *          a. For each feature (text or string) and each target (string), find and load its map file into a data frame
+   *             i.  Search the trained model directory first
+   *             ii. Search data/vocabulary next
+   *          b. Call the builders in the model for each target and feature
+   *       3. Return the model.
+   *          a. Calling model.predict()
+   */
   def buildFeatureSet(featureSet : FeatureSetDef) = {
      new FeatureSet(featureSet.name, featureSet.features.map(f => buildFeature(f)), featureSet.idName)
   }
@@ -56,32 +71,17 @@ case class Model(modelDef : ModelDef, ss : SparkSession, df : DataFrame, dm: Dat
      }
   }
   def saveModel(runDate : String) {
-    // To-do: Save target and feature maps if they exist, to .csv files in the trained model directory
      targets.foreach(t => {
+        saveMap(t.name, t.getMap())
         t.algorithms.foreach(a => {
            val fileName = RPConfig.getAlgorithmDir(this, runDate, t, a.get) 
            ScalaUtil.controlMsg(s"Saving model ${fileName}.model")
            a.get.saveModel(ss, fileName)
         })
      })
+     features.foreach( f => saveMap(f.name, f.getMap()))
   }
-  /**
-   *  Load a full model from a directory. This includes all of the map files for features
-   *  and targets. 
-   *       1. Locate and load the modeldef and current files
-   *          a. The modeldef file contains the definition language for the model (model_class/model_name/model_version/model_name.modeldef)
-   *          b. The current file (model_class/model_name/model_version/model_name.current) designates the current training date and for each target, 
-   *             the algorithm (and ML model) that will be used (model_class/model_name/model_version/model_train_date/target/algorithm/model). 
-   *             Note that this designation is user specified using rpstudio. 
-   *       2. Create the model file from it and a SparkSession object
-   *          a. For each feature (text or string) and each target (string), find and load its map file into a data frame
-   *             i.  Search the trained model directory first
-   *             ii. Search data/vocabulary next
-   *          b. Call the builders in the model for each target and feature
-   *       3. Return the model.
-   *          a. Calling model.predict()
-   */
-  def this(dirName: String) {
-
+  def saveMap(name: String, map: Map[String, Int]) {
+    
   }
 }

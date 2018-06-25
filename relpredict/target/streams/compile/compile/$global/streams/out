@@ -1,3 +1,130 @@
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:26:18: not found: value RPConfig[0m
+[0m[[0m[31merror[0m] [0m[0m		var fileName = RPConfig.getTrainedModelDir() + name + ".csv"[0m
+[0m[[0m[31merror[0m] [0m[0m		               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:27:7: not found: value hdfsFileExists[0m
+[0m[[0m[31merror[0m] [0m[0m		if (hdfsFileExists(fileName)) {[0m
+[0m[[0m[31merror[0m] [0m[0m		    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:31:23: not found: value RPConfig[0m
+[0m[[0m[31merror[0m] [0m[0m           fileName = RPConfig.getVocabularyDir() + name + ".csv"[0m
+[0m[[0m[31merror[0m] [0m[0m                      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:32:16: not found: value hdfsFileExists[0m
+[0m[[0m[31merror[0m] [0m[0m           if (hdfsFileExists(fileName)) {[0m
+[0m[[0m[31merror[0m] [0m[0m               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:39:80: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : scala.collection.mutable.Map[String,com.ai.relpredict.spark.Model][0m
+[0m[[0m[31merror[0m] [0m[0m required: scala.collection.immutable.Map[String,com.ai.relpredict.spark.Model][0m
+[0m[[0m[31merror[0m] [0m[0m	var modelMap: Map[String, Model] = scala.collection.mutable.Map[String, Model]()[0m
+[0m[[0m[31merror[0m] [0m[0m	                                                                              ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:45:4: value update is not a member of Map[String,com.ai.relpredict.spark.Model][0m
+[0m[[0m[31merror[0m] [0m[0m			modelMap(modelName) = loadModel(modelName)[0m
+[0m[[0m[31merror[0m] [0m[0m			^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:45:35: not enough arguments for method loadModel: (modelName: String, isLocalMode: Boolean)com.ai.relpredict.spark.Model.[0m
+[0m[[0m[31merror[0m] [0m[0mUnspecified value parameter isLocalMode.[0m
+[0m[[0m[31merror[0m] [0m[0m			modelMap(modelName) = loadModel(modelName)[0m
+[0m[[0m[31merror[0m] [0m[0m			                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:59:31: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Unit[0m
+[0m[[0m[31merror[0m] [0m[0m required: com.ai.relpredict.spark.Model[0m
+[0m[[0m[31merror[0m] [0m[0m	 		case Some(m: ModelDef) => {[0m
+[0m[[0m[31merror[0m] [0m[0m	 		                          ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:62:12: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Unit[0m
+[0m[[0m[31merror[0m] [0m[0m required: com.ai.relpredict.spark.Model[0m
+[0m[[0m[31merror[0m] [0m[0m	 		case _ => [0m
+[0m[[0m[31merror[0m] [0m[0m	 		       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:70:26: not found: value fileName[0m
+[0m[[0m[31merror[0m] [0m[0m          new FileReader(fileName)[0m
+[0m[[0m[31merror[0m] [0m[0m                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:73:39: not found: value fileName[0m
+[0m[[0m[31merror[0m] [0m[0m          SparkUtil.getHDFSFileReader(fileName).get[0m
+[0m[[0m[31merror[0m] [0m[0m                                      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:85:61: not found: value fileName[0m
+[0m[[0m[31merror[0m] [0m[0m             ScalaUtil.writeError(s"Loading the model file $fileName failed with error $msg")[0m
+[0m[[0m[31merror[0m] [0m[0m                                                            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:89:61: not found: value fileName[0m
+[0m[[0m[31merror[0m] [0m[0m             ScalaUtil.writeError(s"Loading the model file $fileName failed with error $msg")[0m
+[0m[[0m[31merror[0m] [0m[0m                                                            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:100:31: value buildSingleVector is not a member of object com.ai.relpredict.spark.VectorBuilder[0m
+[0m[[0m[31merror[0m] [0m[0m		val vec     = VectorBuilder.buildSingleVector(predictionRecord)    [0m
+[0m[[0m[31merror[0m] [0m[0m		                            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:101:29: value predict is not a member of com.ai.relpredict.spark.Model[0m
+[0m[[0m[31merror[0m] [0m[0m        val results = model.predict(vec)[0m
+[0m[[0m[31merror[0m] [0m[0m                            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:113:34: value buildSingleVector is not a member of object com.ai.relpredict.spark.VectorBuilder[0m
+[0m[[0m[31merror[0m] [0m[0m  		     val vec = VectorBuilder.buildSingleVector(r)      [0m
+[0m[[0m[31merror[0m] [0m[0m  		                             ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:114:43: value predict is not a member of com.ai.relpredict.spark.Model[0m
+[0m[[0m[31merror[0m] [0m[0m             results.put("results", model.predict(vec))[0m
+[0m[[0m[31merror[0m] [0m[0m                                          ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/RelPredictUtil.scala:122:12: value clear is not a member of Map[String,com.ai.relpredict.spark.Model][0m
+[0m[[0m[31merror[0m] [0m[0m		modelMap.clear[0m
+[0m[[0m[31merror[0m] [0m[0m		         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/jobs/RPConfig.scala:118:42: overloaded method value getModelDir with alternatives:[0m
+[0m[[0m[31merror[0m] [0m[0m  (model: com.ai.relpredict.spark.Model,runID: String)String <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  ()String[0m
+[0m[[0m[31merror[0m] [0m[0m cannot be applied to (com.ai.relpredict.spark.Model)[0m
+[0m[[0m[31merror[0m] [0m[0m      if (runID == "") s"${getJobDir()}${getModelDir(model)}/current/"[0m
+[0m[[0m[31merror[0m] [0m[0m                                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/jobs/RPConfig.scala:119:30: overloaded method value getModelDir with alternatives:[0m
+[0m[[0m[31merror[0m] [0m[0m  (model: com.ai.relpredict.spark.Model,runID: String)String <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  ()String[0m
+[0m[[0m[31merror[0m] [0m[0m cannot be applied to (com.ai.relpredict.spark.Model)[0m
+[0m[[0m[31merror[0m] [0m[0m      else s"${getJobDir()}${getModelDir(model)}/${runID}/"[0m
+[0m[[0m[31merror[0m] [0m[0m                             ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/jobs/RPConfig.scala:126:16: overloaded method value getModelDir with alternatives:[0m
+[0m[[0m[31merror[0m] [0m[0m  (model: com.ai.relpredict.spark.Model,runID: String)String <and>[0m
+[0m[[0m[31merror[0m] [0m[0m  ()String[0m
+[0m[[0m[31merror[0m] [0m[0m cannot be applied to (com.ai.relpredict.spark.Model)[0m
+[0m[[0m[31merror[0m] [0m[0m      else s"${getModelDir(model)}/${runID}/${target.getName()}/"[0m
+[0m[[0m[31merror[0m] [0m[0m               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/spark/Feature.scala:61:5: not found: value RelPredictUtil[0m
+[0m[[0m[31merror[0m] [0m[0m    RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/spark/Feature.scala:62:21: non-variable type argument String in type pattern scala.collection.immutable.Map[String,Int] (the underlying of Map[String,Int]) is unchecked since it is eliminated by erasure[0m
+[0m[[0m[33mwarn[0m] [0m[0m       case Some(m: Map[String, Int]) => m[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/spark/Feature.scala:78:18: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Map[String,Int][0m
+[0m[[0m[31merror[0m] [0m[0m required: Option[Map[String,Int]][0m
+[0m[[0m[31merror[0m] [0m[0m  def getMap() = map[0m
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/spark/Feature.scala:88:5: not found: value RelPredictUtil[0m
+[0m[[0m[31merror[0m] [0m[0m    RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/spark/Feature.scala:89:21: non-variable type argument String in type pattern scala.collection.immutable.Map[String,Int] (the underlying of Map[String,Int]) is unchecked since it is eliminated by erasure[0m
+[0m[[0m[33mwarn[0m] [0m[0m       case Some(m: Map[String, Int]) => m[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/spark/Feature.scala:91:89: not found: value dlm[0m
+[0m[[0m[31merror[0m] [0m[0m           if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/spark/Feature.scala:91:107: value flatten is not a member of Array[Nothing][0m
+[0m[[0m[31merror[0m] [0m[0m           if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                                          ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/spark/Feature.scala:109:18: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Map[String,Int][0m
+[0m[[0m[31merror[0m] [0m[0m required: Option[Map[String,Int]][0m
+[0m[[0m[31merror[0m] [0m[0m  def getMap() = map[0m
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/spark/Feature.scala:118:5: not found: value RelPredictUtil[0m
+[0m[[0m[31merror[0m] [0m[0m    RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/spark/Feature.scala:119:21: non-variable type argument String in type pattern scala.collection.immutable.Map[String,Int] (the underlying of Map[String,Int]) is unchecked since it is eliminated by erasure[0m
+[0m[[0m[33mwarn[0m] [0m[0m       case Some(m: Map[String, Int]) => m[0m
+[0m[[0m[33mwarn[0m] [0m[0m                    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/spark/Feature.scala:121:89: not found: value dlm[0m
+[0m[[0m[31merror[0m] [0m[0m           if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/spark/Feature.scala:121:107: value flatten is not a member of Array[Nothing][0m
+[0m[[0m[31merror[0m] [0m[0m           if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                                          ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/spark/Feature.scala:142:18: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Map[String,Int][0m
+[0m[[0m[31merror[0m] [0m[0m required: Option[Map[String,Int]][0m
+[0m[[0m[31merror[0m] [0m[0m  def getMap() = map[0m
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/spark/SparkUtil.scala:81:81: value ToMap is not a member of Array[(String, Int)][0m
+[0m[[0m[31merror[0m] [0m[0m       map_df.rdd.map(row => (row.getAs[String](0), row.getAs[Int](1))).collect.ToMap[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                ^[0m
 [0m[[0m[33mwarn[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/util/Results.scala:36:16: non-variable type argument com.ai.relpredict.util.Results in type pattern scala.collection.mutable.ArrayBuffer[com.ai.relpredict.util.Results] is unchecked since it is eliminated by erasure[0m
 [0m[[0m[33mwarn[0m] [0m[0m      case ab: ArrayBuffer[Results] => Some(ab)[0m
 [0m[[0m[33mwarn[0m] [0m[0m               ^[0m
@@ -7,6 +134,5 @@
 [0m[[0m[33mwarn[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/util/Results.scala:72:19: non-variable type argument com.ai.relpredict.util.Results in type pattern scala.collection.mutable.ArrayBuffer[com.ai.relpredict.util.Results] is unchecked since it is eliminated by erasure[0m
 [0m[[0m[33mwarn[0m] [0m[0m         case ab: ArrayBuffer[Results] => ab.foreach{ r: Results => r.print(level + "   ")} [0m
 [0m[[0m[33mwarn[0m] [0m[0m                  ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mthere was one deprecation warning; re-run with -deprecation for details[0m
-[0m[[0m[33mwarn[0m] [0m[0mthere was one feature warning; re-run with -feature for details[0m
-[0m[[0m[33mwarn[0m] [0m[0m5 warnings found[0m
+[0m[[0m[33mwarn[0m] [0m[0m6 warnings found[0m
+[0m[[0m[31merror[0m] [0m[0m32 errors found[0m

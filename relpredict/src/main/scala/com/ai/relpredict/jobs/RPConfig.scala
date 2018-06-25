@@ -5,11 +5,17 @@ import com.ai.relpredict.spark._
 import scala.collection.JavaConverters._
 
 object RPConfig {
-    private var baseDir          = ""
-    private var jobDir           = ""
-    private var modelBaseDir     = ""
-    private var trainedModelDir  = ""
-    private var config  : Config = Config()
+    private var baseDir          = ""         // Base directory for RelPredict instance
+    private var jobDir           = ""         // Directory where job specific information is kept
+    private var modelBaseDir     = ""         // Base model directory where modeldef and current files are found
+                                              // current file has the following information:
+                                              //     current=<trained_model_dir>
+                                              //     <target>=<algorithm>
+                                              // so that <current>/<target>/<algorithm>/model will be loaded for predictions
+    private var trainedModelDir  = ""         // Directory where the current trained models are found
+                                              // This directory has subdirectories for each target, and each have subdirectories
+                                              // for each algorithm that has produced a trained model.
+    private var config  : Config = Config()   // The parsed command line information
     // Parse the command line. Order of prededence (highest to lowest priority) is:
     //     1. Command line args
     //     2. config file
@@ -61,6 +67,15 @@ object RPConfig {
         List("--" + kv(0), kv(1))
       }).flatMap(x => x).toArray
       parms
+    }
+    def loadConfigToMap(configFile: String) : Map[String, String] = {
+      val source = scala.io.Source.fromFile(configFile)
+      var map = new scala.collection.mutable.Map[String, String]()
+      source.getLines.foreach{l => {
+        val kv = l.split("=")
+        map(kv(0)) = kv(1)
+      }}
+      map.toMap
     }
     /**
      * Set up the base directory for RelPredict

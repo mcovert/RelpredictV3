@@ -5,6 +5,7 @@ import scala.util.parsing.combinator._
 import com.ai.relpredict.dsl._
 import java.io.FileReader
 import java.io.Reader
+import com.ai.relpredict.RelPredictUtil
 import com.ai.relpredict.util._
 import org.apache.log4j.{Level, LogManager, PropertyConfigurator}
 import com.ai.relpredict.spark._
@@ -79,6 +80,7 @@ object RelPredictUtil extends GrammarDef {
            case Success(matched,_) => {
                matched match {
                   case (m : ModelDef) => Option(m)
+               }
            } 
            case Failure(msg,_) => { 
              ScalaUtil.writeError(s"Loading the model file $fileName failed with error $msg")

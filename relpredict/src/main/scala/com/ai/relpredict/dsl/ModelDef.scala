@@ -4,6 +4,7 @@ import com.ai.relpredict.util.ScalaUtil
 
 case class ModelDef(name : String, version : String, desc : String, featureSets : List[FeatureSetDef], targets : List[TargetDef])
 {
+  var dirName: String = ""
   def getTarget(name : String) : Option[TargetDef] = {
     targets.foreach(t => {if (t.name == name) return Some(t)})
     None
@@ -17,4 +18,6 @@ case class ModelDef(name : String, version : String, desc : String, featureSets 
       featureSets.foreach(fs => fs.print())
       targets.foreach {t : TargetDef => t.print() }
   }
+  def setDirectory(dir: String) { dirName = dir }
+  def getDirectory() = dirName
 }

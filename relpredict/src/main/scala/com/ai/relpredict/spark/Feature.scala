@@ -59,11 +59,12 @@ case class TextFeature(name : String, desc : String, parms : Map[String, String]
   }
   val map = {
     RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {
-       Some(m: Map[String, Int]) => m
-       None => {
+       case Some(m: Map[String, Int]) => m
+       case None => {
            if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
            else dataMap.get.getUniqueValues().zipWithIndex.toMap
        }
+    }
   }
   val invMap = SparkUtil.invertMap(map)
   def getCount() : Int = map.size
@@ -85,11 +86,12 @@ case class StringFeature(name : String, desc : String, parms : Map[String, Strin
   import ss.sqlContext.implicits._
   val map = {
     RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {
-       Some(m: Map[String, Int]) => m
-       None => {
+       case Some(m: Map[String, Int]) => m
+       case None => {
            if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
            else dataMap.get.getUniqueValues().zipWithIndex.toMap
        }
+    }
   }
   val invMap = SparkUtil.invertMap(map)
   /* We need to know how to encode this feature. A string can be one hot encoded or it can be category encoded. */
@@ -114,11 +116,12 @@ case class StringCategoryFeature(name : String, desc : String, parms : Map[Strin
   import ss.sqlContext.implicits._
   val map = {
     RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {
-       Some(m: Map[String, Int]) => m
-       None => {
+       case Some(m: Map[String, Int]) => m
+       case None => {
            if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
            else dataMap.get.getUniqueValues().zipWithIndex.toMap
        }
+    }
   }
   val invMap = SparkUtil.invertMap(map)
   /* We need to know how to encode this feature. A string can be one hot encoded or it can be category encoded. */
