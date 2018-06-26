@@ -18,6 +18,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionParser$$anonfun$35.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/jobs/Config$$anonfun$2.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/jobs/Config$$anonfun$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/PredictionRecord.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/PredictionRecord.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/VectorBuilder$$anonfun$3.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/VectorBuilder$$anonfun$3.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/OptionParser$$anonfun$19.class[0m
@@ -30,8 +32,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/VectorBuilder$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/algorithms/LSVMAlgorithm$$anonfun$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/algorithms/LSVMAlgorithm$$anonfun$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/TextFeature$$anonfun$2.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/TextFeature$$anonfun$2.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/jobs/Config$$anonfun$5.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/jobs/Config$$anonfun$5.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/dsl/FeatureSetDef$.class[0m
@@ -88,8 +88,12 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionParser$$anonfun$commandExample$3.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/dsl/GrammarDef$$anonfun$modelDef$6$$anonfun$apply$2.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/dsl/GrammarDef$$anonfun$modelDef$6$$anonfun$apply$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/PredictionRecord$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/PredictionRecord$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/OptionDef$$anonfun$usageColumn1$3.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionDef$$anonfun$usageColumn1$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/PredictionRecordField.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/PredictionRecordField.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/jobs/CommandLineParser$$anon$1$$anonfun$7.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/jobs/CommandLineParser$$anon$1$$anonfun$7.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/OptionDef$$anonfun$keyValueString$1.class[0m
@@ -120,6 +124,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionParser$$anonfun$16.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/algorithms/GradientBoostedTreesAlgorithm.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/algorithms/GradientBoostedTreesAlgorithm.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/SparkUtil$$anonfun$saveMapToHDFSFile$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/SparkUtil$$anonfun$saveMapToHDFSFile$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/OptionParser$$anonfun$optionsForRender$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionParser$$anonfun$optionsForRender$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/AlgorithmUtil$$anonfun$getError$1.class[0m
@@ -140,6 +146,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/util/Results$$anonfun$print$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/VectorBuilder$$anonfun$decodeVectorToString$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/VectorBuilder$$anonfun$decodeVectorToString$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/PredictedRecords.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/PredictedRecords.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/Read$$anonfun$seqTupleRead$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/Read$$anonfun$seqTupleRead$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/util/JsonConverter$$anonfun$toJson$1.class[0m
@@ -158,6 +166,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/algorithms/LinearRegressionAlgorithm$$anonfun$test$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/VectorBuilder$$anonfun$1$$anonfun$apply$2.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/VectorBuilder$$anonfun$1$$anonfun$apply$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/SparkUtil$$anonfun$loadMapFromHDFSFile$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/SparkUtil$$anonfun$loadMapFromHDFSFile$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/util/BinaryTreeNode.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/util/BinaryTreeNode.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/AlgorithmUtil$$anonfun$getConfusionMatrix$1.class[0m
@@ -188,12 +198,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/OptionDef$$anonfun$apply$6.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionDef$$anonfun$apply$6.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/TextFeature$$anonfun$3.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/TextFeature$$anonfun$3.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/util/Datamap$$anonfun$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/util/Datamap$$anonfun$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/IntegerFeature$$anonfun$7.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/IntegerFeature$$anonfun$7.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/OptionDef$$anonfun$37.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionDef$$anonfun$37.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt[0m
@@ -278,6 +284,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/dsl/TargetDef.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/Head.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/Head.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/PredictedRecords$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/PredictedRecords$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/dsl/GrammarDef$$anonfun$sIdentifier$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/dsl/GrammarDef$$anonfun$sIdentifier$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/dsl/TargetDef$$anonfun$print$1.class[0m
@@ -294,6 +302,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/AlgorithmUtil$$anonfun$confusionToResultString$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/jobs/Config$$anonfun$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/jobs/Config$$anonfun$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/RelPredictUtil$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/RelPredictUtil$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/OptionParser$$anonfun$heads$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionParser$$anonfun$heads$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/jobs/CommandLineParser$$anon$1$$anonfun$3.class[0m
@@ -356,10 +366,14 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionDef$$anonfun$usage$3.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/algorithms/LogisticRegressionAlgorithm$$anonfun$test$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/algorithms/LogisticRegressionAlgorithm$$anonfun$test$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/RelPredictUtil.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/RelPredictUtil.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/SparkUtil$$anonfun$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/SparkUtil$$anonfun$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/NullFeature$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/NullFeature$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/PredictedRecord.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/PredictedRecord.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/Arg.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/Arg.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/Model$$anonfun$2.class[0m
@@ -388,12 +402,12 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/jobs/Config$$anonfun$12.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/jobs/TrainingJob$$anonfun$run$1$$anonfun$apply$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/jobs/TrainingJob$$anonfun$run$1$$anonfun$apply$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/jobs/RPConfig$$anonfun$createMapfromConfigFile$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/jobs/RPConfig$$anonfun$createMapfromConfigFile$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/dsl/GrammarDef$$anonfun$sFeatureSetStmt$4.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/dsl/GrammarDef$$anonfun$sFeatureSetStmt$4.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/Read$$anonfun$10.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/Read$$anonfun$10.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/TextFeature$$anonfun$2$$anonfun$apply$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/TextFeature$$anonfun$2$$anonfun$apply$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/VectorBuilder$$anonfun$buildSparseVectorFromString$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/VectorBuilder$$anonfun$buildSparseVectorFromString$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/Read$$anonfun$12.class[0m
@@ -450,8 +464,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionParser$$anonfun$checks$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/OptionDef$$anonfun$children$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionDef$$anonfun$children$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/StringCategoryFeature$$anonfun$5.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/StringCategoryFeature$$anonfun$5.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/dsl/GrammarDef$$anonfun$sTargetStmt$5.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/dsl/GrammarDef$$anonfun$sTargetStmt$5.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/dsl/GrammarDef$$anonfun$modelDef$4.class[0m
@@ -566,6 +578,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/algorithms/GradientBoostedTreesAlgorithm$$anonfun$2.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/dsl/GrammarDef$$anonfun$sFeatureStmt$7.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/dsl/GrammarDef$$anonfun$sFeatureStmt$7.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/PredictedRecord$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/PredictedRecord$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/OptionParser$$anonfun$parse$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionParser$$anonfun$parse$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/algorithms/GradientBoostedTreesAlgorithm$$anonfun$1.class[0m
@@ -598,6 +612,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/util/ConsoleLogger.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/OptionParser$$anonfun$26.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionParser$$anonfun$26.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/Model$$anonfun$getTargetOrFeatureMap$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/Model$$anonfun$getTargetOrFeatureMap$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/Read$$anonfun$mapRead$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/Read$$anonfun$mapRead$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/algorithms/LinearRegressionAlgorithm$$anonfun$2.class[0m
@@ -624,8 +640,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/jobs/Job$$anonfun$setupData$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/SparkUtil$$anonfun$com$ai$relpredict$spark$SparkUtil$$fillMap$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/SparkUtil$$anonfun$com$ai$relpredict$spark$SparkUtil$$fillMap$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/StringFeature$$anonfun$4.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/StringFeature$$anonfun$4.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/IntegerTarget.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/IntegerTarget.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/dsl/AlgorithmDef$.class[0m
@@ -646,6 +660,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionParser$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/jobs/CommandLineParser$$anon$1$$anonfun$17.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/jobs/CommandLineParser$$anon$1$$anonfun$17.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/PredictionRecordField$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/PredictionRecordField$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/OptionParser$$anonfun$commandExample$2.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionParser$$anonfun$commandExample$2.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/jobs/Config$$anonfun$11.class[0m
@@ -716,10 +732,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/jobs/RPConfig.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/jobs/CommandLineParser$$anon$1$$anonfun$21.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/jobs/CommandLineParser$$anon$1$$anonfun$21.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/IntegerFeature$$anonfun$9.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/IntegerFeature$$anonfun$9.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/DoubleFeature$$anonfun$10.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/DoubleFeature$$anonfun$10.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/OptionParser$$anonfun$commandName$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionParser$$anonfun$commandName$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/algorithms/LogisticRegressionAlgorithm.class[0m
@@ -734,8 +746,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/Read$$anon$4.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/jobs/CommandLineParser$$anon$1$$anonfun$22.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/jobs/CommandLineParser$$anon$1$$anonfun$22.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/IntegerFeature$$anonfun$6.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/IntegerFeature$$anonfun$6.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/dsl/GrammarDef$$anonfun$modelDef$2.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/dsl/GrammarDef$$anonfun$modelDef$2.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/util/Results$$anonfun$toString$1.class[0m
@@ -832,8 +842,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/FeatureSet$$anonfun$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/util/ScalaUtil$$anonfun$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/util/ScalaUtil$$anonfun$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/IntegerFeature$$anonfun$8.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/spark/IntegerFeature$$anonfun$8.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/OptionParser$$anonfun$24.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/scopt/OptionParser$$anonfun$24.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/util/Datamap$$anonfun$getValue$1.class[0m

@@ -40,7 +40,7 @@ object RPConfig {
         case Some(cfg) => {
             if (cfg.config != "") {
                 ScalaUtil.controlMsg("Loading config file from " + cfg.config)
-                cfgConfig = parser.parse(loadConfig(cfg.config), Config())
+                cfgConfig = parser.parse(createArgsFromConfigFile(cfg.config), Config())
                 //cfgConfig.get.print()
             }
         }
@@ -60,7 +60,7 @@ object RPConfig {
       setDirectories(config)
       Some(config)
     }
-    def loadConfig(configFile: String) : Array[String] = {
+    def createArgsFromConfigFile(configFile: String) : Array[String] = {
       val source = scala.io.Source.fromFile(configFile)
       val parms = source.getLines.map(l => {
         val kv = l.split("=")
@@ -68,9 +68,9 @@ object RPConfig {
       }).flatMap(x => x).toArray
       parms
     }
-    def loadConfigToMap(configFile: String) : Map[String, String] = {
+    def createMapfromConfigFile(configFile: String) : Map[String, String] = {
       val source = scala.io.Source.fromFile(configFile)
-      var map = new scala.collection.mutable.Map[String, String]()
+      var map = scala.collection.mutable.Map[String, String]()
       source.getLines.foreach{l => {
         val kv = l.split("=")
         map(kv(0)) = kv(1)
@@ -100,14 +100,16 @@ object RPConfig {
      * and a file that contains information about which trained models and algorithms are to be used.
      * The trained model directory is where all trained models are stored.
      */
-    def setModelDir(model_class : String, model_name: String, model_version: String, model_run_date: String) { 
+    def setModelDir(model_class : String, model_name: String, model_version: String) { 
       modelBaseDir = getBaseDir() + "/models/" + model_class + "/" + model_name + "/" + model_version + "/"
-      trainedModelDir = modelBaseDir + "/" + model_run_date
-    }  
+    } 
+    def setTrainedModelDir(model_train_date: String) {
+      trainedModelDir = getModelDir() + "/" + model_train_date
+    } 
     def setDirectories(conf: Config) {
       setBaseDir(conf.base_dir)
       setJobDir(getBaseDir() + "jobs/" + conf.run_id)
-      setModelDir(conf.model_class, conf.model_name, conf.model_version, conf.model_train_date)
+      setModelDir(conf.model_class, conf.model_name, conf.model_version)
     } 
     /**
      * Get the job directory. Note that all directories returned will have "/" appended to the end.
@@ -125,43 +127,20 @@ object RPConfig {
      * Get the model directory for a specific model
      */
     def getModelDir() : String = modelBaseDir
-    def getTrainedModelDir() : String = trainedModelDir
-    /**
-     * Get the model directory for a specific model and run ID. If none is specified, the current model is returned.
-     */
-    def getModelDir(model : Model, runID : String) : String = {
-      if (runID == "") s"${getJobDir()}${getModelDir(model)}/current/"
-      else s"${getJobDir()}${getModelDir(model)}/${runID}/"
-    }
+    def getTrainedModelDir() = trainedModelDir
     /**
      * Get the target directory for a named target within a model
      */
-    def getTargetDir(model : Model, runID : String, target : Target[_]) = {
-      if (runID == "") s"${getModelDir(model, runID)}/${target.getName()}/"
-      else s"${getModelDir(model)}/${runID}/${target.getName()}/"
+    def getTargetDir(target : Target[_]) = {
+      s"${getTrainedModelDir()}/${target.getName()}/"
     }
     /**
      * Get the algorithm directory for a specific algorithm used by a target within a model
      */
-    def getAlgorithmDir(model : Model, runID : String, target : Target[_], algorithm : Algorithm) = s"${getTargetDir(model,  runID, target)}${algorithm.name}"
+    def getAlgorithmDir(target : Target[_], algorithm : Algorithm) = s"${getTargetDir(target)}${algorithm.name}"
     /**
      * Get output directory for all saved data (from predict run).
      */
     def getDataDir() : String = s"${getBaseDir()}data/"
-    /**
-     * Get the output directory for a specific model
-     */
-    def getModelDataDir(model : Model) : String = s"${getDataDir()}${model.name}/${model.version}/"
-    /**
-     * Get the output directory for a model run
-     */
-    def getModelDataDir(model : Model, runID : String) : String = s"${getModelDataDir(model)}${runID}/"
-    /**
-     * Get the output directory for a model run target
-     */
-    def getTargetDataDir(model : Model, runID : String, target : Target[_]) = s"${getModelDataDir(model, runID)}${target.getName()}/"
-    /**
-     * Get the output directory for an algorithm and target for a model run
-     */
-    def getAlgorithmDataDir(model : Model, runID : String, target : Target[_], algorithm : Algorithm) = s"${getTargetDataDir(model,  runID, target)}${algorithm.name}"
+    def getVocabularyDir() : String = s"${getBaseDir()}data/vocabulary"
 }

@@ -38,7 +38,7 @@ case class PredictionJob(override val jobname: String, override val modelDef: co
                  val rDF = SparkUtil.getPredictedDataFrame(ss, jobname, t.getName(), a.get.name, x._2)
                  val dir = RPConfig.getBaseDir()
                  val runID = ScalaUtil.getDirectoryDate()
-                 rDF.write.save(RPConfig.getAlgorithmDataDir(modelDef, runID, t, a.get))
+                 rDF.write.save(RPConfig.getAlgorithmDir(t, a.get))
               }
             }
           })

@@ -36,16 +36,16 @@ case class Model(modelDef : ModelDef, ss : SparkSession, df : DataFrame, dm: Dat
   def buildFeature(feature : FeatureDef) : Feature[_] = {
      // Apply data map name transformation to the feature to optimize vector operations
      feature.varType match {
-        case "text" => new TextFeature(feature.name, feature.desc, feature.parms, ss, df, dm)
+        case "text" => new TextFeature(feature.name, feature.desc, feature.parms, ss, getTargetOrFeatureMap(feature.name, ss, df), dm)
         case "string" => {
           if (ScalaUtil.getParm("encode", "ohc", feature.parms) == "ohc")
-             new StringFeature(feature.name, feature.desc, feature.parms, ss, df, dm)
+             new StringFeature(feature.name, feature.desc, feature.parms, ss, getTargetOrFeatureMap(feature.name, ss, df), dm)
           else
-             new StringCategoryFeature(feature.name, feature.desc, feature.parms, ss, df, dm)
+             new StringCategoryFeature(feature.name, feature.desc, feature.parms, ss, getTargetOrFeatureMap(feature.name, ss, df), dm)
         }
-        case "double" => new DoubleFeature(feature.name, feature.desc, feature.parms, ss, df, dm)
-        case "integer" => new IntegerFeature(feature.name, feature.desc, feature.parms, ss, df, dm)
-        case "boolean" => new BooleanFeature(feature.name, feature.desc, feature.parms, ss, df, dm)
+        case "double" => new DoubleFeature(feature.name, feature.desc, feature.parms, ss, dm)
+        case "integer" => new IntegerFeature(feature.name, feature.desc, feature.parms, ss, dm)
+        case "boolean" => new BooleanFeature(feature.name, feature.desc, feature.parms, ss, dm)
         case unknown => { ScalaUtil.terminal_error(s"Unknown feature type $unknown"); new NullFeature }
      }         
   }
@@ -72,16 +72,32 @@ case class Model(modelDef : ModelDef, ss : SparkSession, df : DataFrame, dm: Dat
   }
   def saveModel(runDate : String) {
      targets.foreach(t => {
-        saveMap(t.name, t.getMap())
+        saveMap(t.getName(), t.getMap())
         t.algorithms.foreach(a => {
-           val fileName = RPConfig.getAlgorithmDir(this, runDate, t, a.get) 
+           val fileName = RPConfig.getAlgorithmDir(t, a.get) 
            ScalaUtil.controlMsg(s"Saving model ${fileName}.model")
            a.get.saveModel(ss, fileName)
         })
      })
-     features.foreach( f => saveMap(f.name, f.getMap()))
+     //features.foreach( f => saveMap(f.getName(), f.getMap()))
   }
-  def saveMap(name: String, map: Map[String, Int]) {
+  def saveMap(name: String, map: Option[Map[String, Int]]) {
     
+  }
+  def getTargetOrFeatureMap(name: String, ss: SparkSession, df: DataFrame) : Map[String, Int] = {
+    // Search trained model directory
+    var fileName = RPConfig.getTrainedModelDir() + name + ".csv"
+    if (SparkUtil.hdfsFileExists(fileName, ss)) {
+           return SparkUtil.loadMapFromHDFSFile(fileName, ss)
+    }
+    else {
+           fileName = RPConfig.getVocabularyDir() + name + ".csv"
+           if (SparkUtil.hdfsFileExists(fileName, ss)) {
+              return SparkUtil.loadMapFromHDFSFile(fileName, ss)
+           }
+           else {
+              return df.select(name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap
+           }
+    }
   }
 }

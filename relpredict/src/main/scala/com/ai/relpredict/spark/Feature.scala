@@ -48,7 +48,7 @@ case class NullFeature() extends Feature[String]("", new Datamap("")) {
  *  
  */
 case class TextFeature(name : String, desc : String, parms : Map[String, String], ss: SparkSession, 
-                       df : DataFrame, column_map : Datamap) extends Feature[String](name, column_map) {
+                       map: Map[String, Int], column_map : Datamap) extends Feature[String](name, column_map) {
   import ss.sqlContext.implicits._
   val dlm = parms.get("dlm").getOrElse("comma") match {
        case "comma" => ","
@@ -57,15 +57,15 @@ case class TextFeature(name : String, desc : String, parms : Map[String, String]
        case "semicolon" => ";"
        case unknown => { ScalaUtil.writeError(s"Unknown delimiter type $unknown. Using default.") ; "\\|" }
   }
-  val map = {
-    RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {
-       case Some(m: Map[String, Int]) => m
-       case None => {
-           if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
-           else dataMap.get.getUniqueValues().zipWithIndex.toMap
-       }
-    }
-  }
+  // val map = {
+  //   RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {
+  //      case Some(m: Map[String, Int]) => m
+  //      case None => {
+  //          if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
+  //          else dataMap.get.getUniqueValues().zipWithIndex.toMap
+  //      }
+  //   }
+  // }
   val invMap = SparkUtil.invertMap(map)
   def getCount() : Int = map.size
   def getType() : String = "text"
@@ -75,24 +75,24 @@ case class TextFeature(name : String, desc : String, parms : Map[String, String]
   }
   def decode(v : Vector) : String = VectorBuilder.decodeVectorToText(v, invMap, dlm)
   def decodeID(pos : Int) = if (pos >= 0 && pos < getCount()) s"$name=${invMap(pos)}" else s"$name"
-  def getMap() = map
+  def getMap() = Some(map)
 }
 /** 
  *  A StringFeature is one hot encoded by single field set of strings. StringFeatures are generally used with algorithms that need some sort
  *  of "distance" calculation to determine similarity. 
  */
 case class StringFeature(name : String, desc : String, parms : Map[String, String], ss: SparkSession, 
-                         df : DataFrame, column_map : Datamap) extends Feature[String](name, column_map) {
+                         map: Map[String, Int], column_map : Datamap) extends Feature[String](name, column_map) {
   import ss.sqlContext.implicits._
-  val map = {
-    RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {
-       case Some(m: Map[String, Int]) => m
-       case None => {
-           if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
-           else dataMap.get.getUniqueValues().zipWithIndex.toMap
-       }
-    }
-  }
+  // val map = {
+  //   RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {
+  //      case Some(m: Map[String, Int]) => m
+  //      case None => {
+  //          if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
+  //          else dataMap.get.getUniqueValues().zipWithIndex.toMap
+  //      }
+  //   }
+  // }
   val invMap = SparkUtil.invertMap(map)
   /* We need to know how to encode this feature. A string can be one hot encoded or it can be category encoded. */
   /* One hot encoded features will appear as multiple binary categories (one for each position in the vector.   */
@@ -106,23 +106,23 @@ case class StringFeature(name : String, desc : String, parms : Map[String, Strin
   }
   def decode(v : Vector) : String = VectorBuilder.decodeVectorToString(v, invMap)
   def decodeID(pos : Int) = if (pos >= 0 && pos < getCount()) s"$name=${invMap(pos)}" else s"$name"
-  def getMap() = map
+  def getMap() = Some(map)
 }
 /** 
  *  A StringCategoryFeature is single column category encoded as one column with an ordinal value. StringCategoryFeatures are generally used with algorithms that 
  *  rely on grouping and counting rather than distance.  */
 case class StringCategoryFeature(name : String, desc : String, parms : Map[String, String], ss: SparkSession, 
-                                 df : DataFrame, column_map : Datamap) extends Feature[String](name, column_map) {
+                                 map: Map[String, Int], column_map : Datamap) extends Feature[String](name, column_map) {
   import ss.sqlContext.implicits._
-  val map = {
-    RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {
-       case Some(m: Map[String, Int]) => m
-       case None => {
-           if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
-           else dataMap.get.getUniqueValues().zipWithIndex.toMap
-       }
-    }
-  }
+  // val map = {
+  //   RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {
+  //      case Some(m: Map[String, Int]) => m
+  //      case None => {
+  //          if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
+  //          else dataMap.get.getUniqueValues().zipWithIndex.toMap
+  //      }
+  //   }
+  // }
   val invMap = SparkUtil.invertMap(map)
   /* We need to know how to encode this feature. A string can be one hot encoded or it can be category encoded. */
   /* One hot encoded features will appear as multiple binary categories (one for each position in the vector.   */
@@ -139,19 +139,15 @@ case class StringCategoryFeature(name : String, desc : String, parms : Map[Strin
      invMap(v(0).toInt)
   } 
   def decodeID(pos : Int) = if (pos >= 0 && pos < getCount()) s"$name=${invMap(pos)}" else s"$name"
-  def getMap() = map
+  def getMap() = Some(map)
 }
 /**
  * An IntegerFeature is represented by a set of Integers. They can be normalized through their encode parameter.
  * Integers are represented by a Long to cover short, int, and bigint data types.
  */
 case class IntegerFeature(name : String, desc : String, parms : Map[String, String], ss: SparkSession, 
-                          df : DataFrame, column_map : Datamap) extends Feature[Long](name, column_map) {
+                          column_map : Datamap) extends Feature[Long](name, column_map) {
   import ss.sqlContext.implicits._
-  //private val minVal = df.select(name).distinct.collect.map(r => r.getLong(0)).min 
-  //private val maxVal = df.select(name).distinct.collect.map(r => r.getLong(0)).max 
-  //private val numVal = df.select(name).distinct.collect.map(r => r.getLong(0)).length
-  //private val sumVal = df.select(name).distinct.collect.map(r => r.getLong(0)).sum 
   def getCount() : Int = 0
   def getType() : String = "integer"
   def encode(r : Row) : Vector = {
@@ -167,13 +163,8 @@ case class IntegerFeature(name : String, desc : String, parms : Map[String, Stri
  * A DoubleFeature is represented by a set of Doubles. They can be normalized through their encode parameter.
  */
 case class DoubleFeature(name : String, desc : String, parms : Map[String, String],  ss: SparkSession, 
-                         df : DataFrame, column_map : Datamap) extends Feature[Double](name, column_map) {
+                         column_map : Datamap) extends Feature[Double](name, column_map) {
   import ss.sqlContext.implicits._
-  private val vals = df.select(name).distinct.collect.map(r => r.getDouble(0))
-  val minVal = vals.min 
-  val maxVal = vals.max 
-  val numVal = vals.length
-  val sumVal = vals.sum 
   def getCount() : Int = 0
   def getType() : String = "double"  
   def encode(r : Row) : Vector = {
@@ -189,7 +180,7 @@ case class DoubleFeature(name : String, desc : String, parms : Map[String, Strin
  * A BooleanFeature is represented by a simple Boolean variable.
  */
 case class BooleanFeature(name : String, desc : String, parms : Map[String, String], ss: SparkSession, 
-                          df : DataFrame, column_map : Datamap) extends Feature[Boolean](name, column_map) {
+                          column_map : Datamap) extends Feature[Boolean](name, column_map) {
   import ss.sqlContext.implicits._
   def getCount() : Int = 2
   def getType() : String = "boolean"  

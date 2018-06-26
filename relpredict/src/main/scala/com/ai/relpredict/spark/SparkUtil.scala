@@ -78,7 +78,7 @@ object SparkUtil {
     */
    def loadMapFromHDFSFile(fileName: String, ss: SparkSession) : Map[String, Int] = {
        val map_df = ss.read.option("header","true").csv(fileName)
-       map_df.rdd.map(row => (row.getAs[String](0), row.getAs[Int](1))).collect.ToMap
+       map_df.rdd.map(row => (row.getAs[String](0), row.getAs[Int](1))).collect.toMap
    }
    /**
     * Count the number of distinct values in a DataFrame column

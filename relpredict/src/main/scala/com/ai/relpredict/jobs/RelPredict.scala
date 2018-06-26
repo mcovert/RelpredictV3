@@ -109,6 +109,12 @@ object RelPredict extends GrammarDef {
       }
       ScalaUtil.end(sysName)
     }
+    def getModelDirName(conf: Config) : String = {
+      val cnv = conf.model_class      + "/" + 
+                conf.model_name       + "/" + 
+                conf.model_version    + "/" 
+      return conf.base_dir + "/models/" + cnv;
+    }
     def getModelFileName(conf: Config) : String = {
       val cnv = conf.model_class      + "/" + 
                 conf.model_name       + "/" + 
@@ -123,14 +129,6 @@ object RelPredict extends GrammarDef {
                 conf.model_train_date + "/" 
       return conf.base_dir + "/models/" + cnv;
     }
-    // def loadConfig(configFile: String) : Array[String] = {
-    //   val source = scala.io.Source.fromFile(configFile)
-    //   val parms = source.getLines.map(l => {
-    //     val kv = l.split("=")
-    //     List("--" + kv(0), kv(1))
-    //   }).flatMap(x => x).toArray
-    //   parms
-    // }
     // Generate a Job from command line parameters. 
     def getJob(conf : Config) : Option[Job] = {
       val jobParms = ScalaUtil.makeParms(conf.parms)
