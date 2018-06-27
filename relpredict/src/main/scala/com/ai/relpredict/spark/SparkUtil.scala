@@ -17,6 +17,10 @@ import org.apache.hadoop.io._
  * SparkUtil attempts to encapsulate all Spark specific activities into one model.
  */
 object SparkUtil {
+  var ss: SparkSession = null
+  def setSparkSession(sc: SparkSession) = {
+    ss = sc
+  }
   /**
    * Build a spark session 
    */
@@ -27,13 +31,15 @@ object SparkUtil {
           case _ => ScalaUtil.terminal_error("Unable to create SparkSession") 
         }
         sc.sparkContext.setLogLevel("WARN")
+        setSparkSession(sc)
         sc
    }
    /** 
     *  Build all of the string to index maps
     */
-   def buildStringMap(name : String)(implicit ss: SparkSession, df : DataFrame) : Map[String, Int] = {
-     import ss.sqlContext.implicits._
+   def buildStringMap(name : String)(df : DataFrame) : Map[String, Int] = {
+     val sc = ss
+     import sc.sqlContext.implicits._
      val map = df.select(name).distinct.filter(x => x.length > 0).map(r => r.getString(0)).collect.toArray.zipWithIndex.toMap
      val defValue = map.size
      val map2 = map + ("?" -> defValue)
@@ -42,8 +48,9 @@ object SparkUtil {
    /**
     * Build a text map collecting all specified strings in the delimited fields
     */
-   def buildTextMap(name : String, dlm : String)(implicit ss: SparkSession, df : DataFrame) : Map[String, Int] = {
-     import ss.sqlContext.implicits._
+   def buildTextMap(name : String, dlm : String)(df : DataFrame) : Map[String, Int] = {
+     val sc = ss
+     import sc.sqlContext.implicits._
      val map = df.select(name).flatMap(r => r.getString(0).split(dlm)).distinct.filter(x => x.length > 0).collect.toArray.zipWithIndex.toMap
      val defValue = map.size
      val map2 = map + ("?" -> defValue)
@@ -65,18 +72,18 @@ object SparkUtil {
    /**
     * Save a map to an HDFS file
     */
-   def saveMapToHDFSFile(map: Map[String, Int], fileName: String, ss: SparkSession) {
+   def saveMapToHDFSFile(map: Map[String, Int], fileName: String) {
       var sb = new StringBuilder()
       sb.append("key,index\n")
       map.foreach{
         case (k, v) => sb.append(k + "," + v + "\n")
       }
-      saveTextToHDFSFile(sb.toString, fileName, ss)
+      saveTextToHDFSFile(sb.toString, fileName)
    }
    /**
     * Load a map from an HDFS file using SparkSQL CSV loader
     */
-   def loadMapFromHDFSFile(fileName: String, ss: SparkSession) : Map[String, Int] = {
+   def loadMapFromHDFSFile(fileName: String) : Map[String, Int] = {
        val map_df = ss.read.option("header","true").csv(fileName)
        map_df.rdd.map(row => (row.getAs[String](0), row.getAs[Int](1))).collect.toMap
    }
@@ -131,8 +138,9 @@ object SparkUtil {
    /**
     * Build a predicted DataFrame (that can be persisted to either Hive or HDFS)
     */
-   def getPredictedDataFrame(ss: SparkSession, jobname : String, targetName : String, algorithmName : String, rdd : RDD[(String, Double)]) : DataFrame = {
-     import ss.sqlContext.implicits._
+   def getPredictedDataFrame(jobname : String, targetName : String, algorithmName : String, rdd : RDD[(String, Double)]) : DataFrame = {
+     val sc = ss
+     import sc.sqlContext.implicits._
      val dt = ScalaUtil.getDate()
      rdd.map(r => (jobname, targetName, algorithmName, dt, r._1, r._2)).toDF("jobname", "target", "algorithm", "date", "recid", "predicted")
    }
@@ -169,7 +177,7 @@ object SparkUtil {
    /**
     * Get and HDFS file writer
     */
-   def getHDFSFileWriter(url : String, ss : SparkSession, delete : Boolean = false) : Option[OutputStreamWriter] = {
+   def getHDFSFileWriter(url : String, delete : Boolean = false) : Option[OutputStreamWriter] = {
      try {
         val path = new Path(url)
         val conf = new Configuration(ss.sparkContext.hadoopConfiguration)
@@ -187,9 +195,9 @@ object SparkUtil {
    /**
     * Save text to an HDFS file
     */
-   def saveTextToHDFSFile(text : String, fileName : String, ss : SparkSession) {
+   def saveTextToHDFSFile(text : String, fileName : String) {
      ScalaUtil.controlMsg(s"Saving $fileName to HDFS")
-     val writer = getHDFSFileWriter(fileName, ss, false).get
+     val writer = getHDFSFileWriter(fileName, false).get
      writer.write(text)
      writer.close()
    }
@@ -200,7 +208,7 @@ object SparkUtil {
      val fs = FileSystem.get(new Configuration())
      fs.listStatus(new Path(path))
    }
-   def hdfsFileExists(url : String, ss : SparkSession) : Boolean = {
+   def hdfsFileExists(url : String) : Boolean = {
      try {
         val path = new Path(url)
         val conf = new Configuration(ss.sparkContext.hadoopConfiguration)

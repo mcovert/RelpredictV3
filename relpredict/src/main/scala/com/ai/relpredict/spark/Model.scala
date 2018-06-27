@@ -87,13 +87,13 @@ case class Model(modelDef : ModelDef, ss : SparkSession, df : DataFrame, dm: Dat
   def getTargetOrFeatureMap(name: String, ss: SparkSession, df: DataFrame) : Map[String, Int] = {
     // Search trained model directory
     var fileName = RPConfig.getTrainedModelDir() + name + ".csv"
-    if (SparkUtil.hdfsFileExists(fileName, ss)) {
-           return SparkUtil.loadMapFromHDFSFile(fileName, ss)
+    if (SparkUtil.hdfsFileExists(fileName)) {
+           return SparkUtil.loadMapFromHDFSFile(fileName)
     }
     else {
            fileName = RPConfig.getVocabularyDir() + name + ".csv"
-           if (SparkUtil.hdfsFileExists(fileName, ss)) {
-              return SparkUtil.loadMapFromHDFSFile(fileName, ss)
+           if (SparkUtil.hdfsFileExists(fileName)) {
+              return SparkUtil.loadMapFromHDFSFile(fileName)
            }
            else {
               return df.select(name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap

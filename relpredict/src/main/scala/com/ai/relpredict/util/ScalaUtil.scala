@@ -134,4 +134,7 @@ object ScalaUtil {
            fn(fn.length - 1)
        }
     }.toList
+    def printMap(map: Map[String, Any], indent: String) {
+      map.keys.foreach{ k => println(s"${indent} + ${k}=${map(k)}")}
+    }
 }

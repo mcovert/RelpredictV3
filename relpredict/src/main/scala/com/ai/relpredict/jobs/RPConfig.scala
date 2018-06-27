@@ -16,6 +16,7 @@ object RPConfig {
                                               // This directory has subdirectories for each target, and each have subdirectories
                                               // for each algorithm that has produced a trained model.
     private var config  : Config = Config()   // The parsed command line information
+    private var modelConfig : Map[String, String] = Map[String, String]()
     // Parse the command line. Order of prededence (highest to lowest priority) is:
     //     1. Command line args
     //     2. config file
@@ -68,7 +69,7 @@ object RPConfig {
       }).flatMap(x => x).toArray
       parms
     }
-    def createMapfromConfigFile(configFile: String) : Map[String, String] = {
+    def createMapFromConfigFile(configFile: String) : Map[String, String] = {
       val source = scala.io.Source.fromFile(configFile)
       var map = scala.collection.mutable.Map[String, String]()
       source.getLines.foreach{l => {
@@ -142,5 +143,20 @@ object RPConfig {
      * Get output directory for all saved data (from predict run).
      */
     def getDataDir() : String = s"${getBaseDir()}data/"
-    def getVocabularyDir() : String = s"${getBaseDir()}data/vocabulary"
+    def getVocabularyDir() : String = s"${baseDir}data/vocabulary"
+    def getRunId() = config.run_id
+    def loadModelConfig() : Option[Map[String, String]] = {
+      val modelConfigFile = getModelDir() + "current"
+      if (SparkUtil.hdfsFileExists(modelConfigFile))
+      {
+        modelConfig = createMapFromConfigFile(modelConfigFile)
+        ScalaUtil.writeInfo("Loaded ${modelConfigFile} with contents:")
+        ScalaUtil.printMap(modelConfig, "   ")
+        Some(modelConfig)
+      }
+      else {
+        ScalaUtil.writeWarning("No model configuration file found - ${modelConfigFile}")
+        None
+      }
+    } 
 }

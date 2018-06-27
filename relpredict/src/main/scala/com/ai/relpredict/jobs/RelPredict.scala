@@ -96,7 +96,7 @@ object RelPredict extends GrammarDef {
                     //println(jsonResults)
                     /* Save results  to file */
                     val dir = RPConfig.getJobDir()
-                    SparkUtil.saveTextToHDFSFile(jsonResults, s"${dir}results", sparkSession.get)
+                    SparkUtil.saveTextToHDFSFile(jsonResults, s"${dir}results")
                     ScalaUtil.controlMsg(s"Job ${j.jobname} completed with return code ${baseResults.getRC()}")
                   }
                   // Else write and error message and end
