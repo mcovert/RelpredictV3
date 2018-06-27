@@ -8,12 +8,20 @@ import com.ai.relpredict.jobs._
 /**
  * The Model class is an implementation of a ModelDef specification. It is the container for all components.
  */
-case class Model(modelDef : ModelDef, ss : SparkSession, df : DataFrame, dm: Datamap) {
-  val name = modelDef.name
-  val version = modelDef.version
+case class Model(modelDef : ModelDef, dm: Datamap) {
+  val name        = modelDef.name
+  val version     = modelDef.version
   val description = modelDef.desc
-  val featureSets = modelDef.featureSets.map(fsd => (fsd.name -> buildFeatureSet(fsd))).toMap
-  val targets = buildTargets(modelDef.targets)
+  var featureSets = modelDef.featureSets.map(fsd => (fsd.name -> buildFeatureSet(fsd))).toMap
+  var targets     = buildTargets(modelDef.targets)
+  val ss          = SparkUtil.getSparkSession()
+  var df: Option[DataFrame] = None
+  def this(modelDef : ModelDef, dataframe : DataFrame, dm: Datamap) {
+    this(modelDef, dm)
+    df = Some(dataframe)
+    featureSets = modelDef.featureSets.map(fsd => (fsd.name -> buildFeatureSet(fsd))).toMap
+    targets = buildTargets(modelDef.targets)
+  }
   /**
    *  Load a full model from a directory. This includes all of the map files for features
    *  and targets. 
@@ -57,7 +65,7 @@ case class Model(modelDef : ModelDef, ss : SparkSession, df : DataFrame, dm: Dat
      target.targetType match {
        case "string" => {
          /* TO-DO: Need to pre-map targets if a data map has been specified */
-         val map = df.select(target.name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap
+         val map = getTargetOrFeatureMap(target.name, ss, df)
          val invMap = SparkUtil.invertMap(map)
          new StringTarget(target.name, target.desc, target.algorithms, map, SparkUtil.invertMap(map), featureSets(target.featureSet), dm, target.parms)
        }
@@ -79,12 +87,12 @@ case class Model(modelDef : ModelDef, ss : SparkSession, df : DataFrame, dm: Dat
            a.get.saveModel(ss, fileName)
         })
      })
-     //features.foreach( f => saveMap(f.getName(), f.getMap()))
+     featureSets.keys.foreach{ k => featureSets(k).features.foreach{ f => saveMap(f.getName(), f.getMap())}}
   }
   def saveMap(name: String, map: Option[Map[String, Int]]) {
-    
+    SparkUtil.saveMapToHDFSFile(map.get, RPConfig.getTrainedModelDir() + name)
   }
-  def getTargetOrFeatureMap(name: String, ss: SparkSession, df: DataFrame) : Map[String, Int] = {
+  def getTargetOrFeatureMap(name: String, ss: SparkSession, df: Option[DataFrame]) : Map[String, Int] = {
     // Search trained model directory
     var fileName = RPConfig.getTrainedModelDir() + name + ".csv"
     if (SparkUtil.hdfsFileExists(fileName)) {
@@ -96,7 +104,10 @@ case class Model(modelDef : ModelDef, ss : SparkSession, df : DataFrame, dm: Dat
               return SparkUtil.loadMapFromHDFSFile(fileName)
            }
            else {
-              return df.select(name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap
+              df match {
+                case Some(d: DataFrame) => return d.select(name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap
+                case _ => { ScalaUtil.terminal_error(s"Unable to load target or feature map for $name. This is a fatal error."); Map[String, Int]() }
+              }
            }
     }
   }

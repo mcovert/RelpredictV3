@@ -21,6 +21,7 @@ object SparkUtil {
   def setSparkSession(sc: SparkSession) = {
     ss = sc
   }
+  def getSparkSession() = ss
   /**
    * Build a spark session 
    */
