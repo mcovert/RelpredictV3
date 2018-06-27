@@ -28,11 +28,17 @@ object RelPredictUtil extends GrammarDef {
 	 *  Get a model. If it is not in cache, try to load it and put it there.
 	 */
 	 def getTrainedModel(model_class: String, model_name: String, model_version: String) : Option[Model] = {
+	 	val modelName = makeModelNameString(model_class, model_name, model_version)
+	 	// See if it's cached
+	 	if (modelMap.contains(modelName))
+	 		return Some(modelMap(modelName))
 	 	var model : Option[Model] = None
 	 	getModelDef(model_class, model_name, model_version) match {
 	 	    case Some(modelDef: ModelDef) => model = Some(new Model(modelDef, new Datamap("")))
 	 	    case _ => ScalaUtil.writeError(s"Load of model definition for $model_class, $model_name, $model_version failed")	
 	 	}
+	 	// Cache it
+	 	modelMap(modelName) = model.get
 	 	model
 	 }
 	 // def getTrainedModelFromConfig(model_class: String, model_name: String, model_version: String) : Model = {
@@ -40,10 +46,10 @@ object RelPredictUtil extends GrammarDef {
 	 // }
 
 	 def getModelDef(model_class: String, model_name: String, model_version: String) : Option[ModelDef] = {
-        getModelDef(RPConfig.getModelDir() + "modeldef")
+        getModelDefFromFile(RPConfig.getModelDir() + "modeldef")
 	 }
     // Load the model definition file
-    def getModelDef(fileName : String) : Option[ModelDef] = {
+    def getModelDefFromFile(fileName : String) : Option[ModelDef] = {
       ScalaUtil.controlMsg(s"Loading model definition from $fileName")
       val testModel : Reader = {
         if (ScalaUtil.isLocalMode()) {
