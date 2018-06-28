@@ -102,10 +102,10 @@ object RPConfig {
      * The trained model directory is where all trained models are stored.
      */
     def setModelDir(model_class : String, model_name: String, model_version: String) { 
-      modelBaseDir = getBaseDir() + "/models/" + model_class + "/" + model_name + "/" + model_version + "/"
+      modelBaseDir = getBaseDir() + "models/" + model_class + "/" + model_name + "/" + model_version + "/"
     } 
     def setTrainedModelDir(model_train_date: String) {
-      trainedModelDir = getModelDir() + "/" + model_train_date
+      trainedModelDir = getModelDir() + model_train_date
     } 
     def setDirectories(conf: Config) {
       setBaseDir(conf.base_dir)
@@ -143,7 +143,7 @@ object RPConfig {
      * Get output directory for all saved data (from predict run).
      */
     def getDataDir() : String = s"${getBaseDir()}data/"
-    def getVocabularyDir() : String = s"${baseDir}data/vocabulary"
+    def getVocabularyDir() : String = s"${baseDir}data/vocabulary/"
     def getRunId() = config.run_id
     def loadModelConfig() : Option[Map[String, String]] = {
       val modelConfigFile = getModelDir() + "current"

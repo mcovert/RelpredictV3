@@ -137,4 +137,27 @@ object ScalaUtil {
     def printMap(map: Map[String, Any], indent: String) {
       map.keys.foreach{ k => println(s"${indent} + ${k}=${map(k)}")}
     }
+    def hash(word: String): Int = {
+        var hash = 0
+        for (ch <- word.toCharArray)
+           hash = 31 * hash + ch.toInt
+
+        hash = hash ^ (hash >> 20) ^ (hash >> 12)
+        hash ^ (hash >> 7) ^ (hash >> 4)
+    }
+    val identifiers = scala.collection.mutable.Map[String, scala.collection.mutable.HashSet[String]]()
+    def getStringIndexFromMap(identifier: String, s: String, map: Map[String, Int]) : Int = {
+      if (!identifiers.contains(identifier)) identifiers(identifier) = scala.collection.mutable.HashSet[String]()
+      var id_hm = identifiers(identifier)
+      if (map.contains(s)) map(s)
+      else {
+         if (!id_hm.contains(s)) {
+            ScalaUtil.writeWarning(s"Unknown string found in ${identifier} input: ${s}")
+            id_hm.add(s)
+         }
+         // Hash the string to fit into a pre-existing slot
+         hash(s) % map.size
+      }
+    }
+    def getUnknownStringMaps() = identifiers.toMap
 }

@@ -9,7 +9,7 @@ import org.apache.spark.sql._
 *
 *{{{
 * Command line formats:
-*     rp_vocab config_file
+*     rp_vocab output_dir config_file
 *}}}        
 */
 object RPVocabProcessor {

@@ -51,30 +51,30 @@ object VectorBuilder {
   /** 
    *  Build a dense Vector from delimited text. Apply data map to each element if it exists. 
    */
-  def buildDenseVectorFromText(colText : String, dMap : Map[String, Int], dlm : String, dataMap : Option[Datamap]) : Vector = {
-	    buildSparseVectorFromText(colText, dMap, dlm, dataMap).toDense
+  def buildDenseVectorFromText(colText : String, dMap : Map[String, Int], dlm : String, dataMap : Option[Datamap], name: String) : Vector = {
+	    buildSparseVectorFromText(colText, dMap, dlm, dataMap, name).toDense
   }
   /** 
    *  Build a dense Vector from a single string 
    */
-  def buildDenseVectorFromString(colText : String, dMap : Map[String, Int]) : Vector = {
-	    buildSparseVectorFromString(colText, dMap).toDense
+  def buildDenseVectorFromString(colText : String, dMap : Map[String, Int], name: String) : Vector = {
+	    buildSparseVectorFromString(colText, dMap, name).toDense
   }
   /** 
    *  Build a sparse Vector from delimited text. Apply data map to each element if it exists.  
    */
-  def buildSparseVectorFromText(colText : String, dMap : Map[String, Int], dlm : String, dataMap : Option[Datamap]) : Vector = {
+  def buildSparseVectorFromText(colText : String, dMap : Map[String, Int], dlm : String, dataMap : Option[Datamap], name: String) : Vector = {
 	    val l = colText.split(dlm).map(t => { 
-	      if (dataMap.isDefined) dMap(dataMap.get.getValue(t))
-	      else dMap(t)
+	      if (dataMap.isDefined) ScalaUtil.getStringIndexFromMap(name, dataMap.get.getValue(t), dMap)
+	      else ScalaUtil.getStringIndexFromMap(name, t, dMap)
 	    }).toArray.distinct
 	    Vectors.sparse(dMap.size, l, Array.fill[Double](l.size)(1.0))
   }
   /** 
    *  Build a sparse Vector from a single string 
    */
-  def buildSparseVectorFromString(colText : String, dMap : Map[String, Int]) : Vector = {
-	    val l = Array[Int](dMap(colText))
+  def buildSparseVectorFromString(colText : String, dMap : Map[String, Int], name: String) : Vector = {
+	    val l = Array[Int](ScalaUtil.getStringIndexFromMap(name, colText, dMap))
 	    Vectors.sparse(dMap.size, l, Array.fill[Double](l.size)(1.0))
   }
   /** 

@@ -57,21 +57,12 @@ case class TextFeature(name : String, desc : String, parms : Map[String, String]
        case "semicolon" => ";"
        case unknown => { ScalaUtil.writeError(s"Unknown delimiter type $unknown. Using default.") ; "\\|" }
   }
-  // val map = {
-  //   RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {
-  //      case Some(m: Map[String, Int]) => m
-  //      case None => {
-  //          if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
-  //          else dataMap.get.getUniqueValues().zipWithIndex.toMap
-  //      }
-  //   }
-  // }
   val invMap = SparkUtil.invertMap(map)
   def getCount() : Int = map.size
   def getType() : String = "text"
   override def getVectorLength() = map.size 
   def encode(r : Row) : Vector = {
-    VectorBuilder.buildDenseVectorFromText(r.getAs[String](columnName), map, dlm, dataMap)
+    VectorBuilder.buildDenseVectorFromText(r.getAs[String](columnName), map, dlm, dataMap, name)
   }
   def decode(v : Vector) : String = VectorBuilder.decodeVectorToText(v, invMap, dlm)
   def decodeID(pos : Int) = if (pos >= 0 && pos < getCount()) s"$name=${invMap(pos)}" else s"$name"
@@ -84,15 +75,6 @@ case class TextFeature(name : String, desc : String, parms : Map[String, String]
 case class StringFeature(name : String, desc : String, parms : Map[String, String], ss: SparkSession, 
                          map: Map[String, Int], column_map : Datamap) extends Feature[String](name, column_map) {
   import ss.sqlContext.implicits._
-  // val map = {
-  //   RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {
-  //      case Some(m: Map[String, Int]) => m
-  //      case None => {
-  //          if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
-  //          else dataMap.get.getUniqueValues().zipWithIndex.toMap
-  //      }
-  //   }
-  // }
   val invMap = SparkUtil.invertMap(map)
   /* We need to know how to encode this feature. A string can be one hot encoded or it can be category encoded. */
   /* One hot encoded features will appear as multiple binary categories (one for each position in the vector.   */
@@ -102,7 +84,7 @@ case class StringFeature(name : String, desc : String, parms : Map[String, Strin
   def getType() : String = "string"
   override def getVectorLength() = { if (encStyle == "ohc") map.size else 1 } 
   def encode(r : Row) : Vector = {
-      VectorBuilder.buildDenseVectorFromString(translate(r.getAs[String](columnName)), map)
+      VectorBuilder.buildDenseVectorFromString(translate(r.getAs[String](columnName)), map, name)
   }
   def decode(v : Vector) : String = VectorBuilder.decodeVectorToString(v, invMap)
   def decodeID(pos : Int) = if (pos >= 0 && pos < getCount()) s"$name=${invMap(pos)}" else s"$name"
@@ -114,15 +96,7 @@ case class StringFeature(name : String, desc : String, parms : Map[String, Strin
 case class StringCategoryFeature(name : String, desc : String, parms : Map[String, String], ss: SparkSession, 
                                  map: Map[String, Int], column_map : Datamap) extends Feature[String](name, column_map) {
   import ss.sqlContext.implicits._
-  // val map = {
-  //   RelPredictUtil.loadTargetOrFeatureMap(name, ss) match {
-  //      case Some(m: Map[String, Int]) => m
-  //      case None => {
-  //          if (!dataMap.isDefined) df.select(name).collect.map(r => r(0).toString.split(dlm).map(v => v)).flatten.distinct.zipWithIndex.toMap
-  //          else dataMap.get.getUniqueValues().zipWithIndex.toMap
-  //      }
-  //   }
-  // }
+  var newStrings = scala.collection.mutable.HashSet[String]()
   val invMap = SparkUtil.invertMap(map)
   /* We need to know how to encode this feature. A string can be one hot encoded or it can be category encoded. */
   /* One hot encoded features will appear as multiple binary categories (one for each position in the vector.   */
@@ -132,7 +106,8 @@ case class StringCategoryFeature(name : String, desc : String, parms : Map[Strin
   def getType() : String = "string"
   override def getVectorLength() = { if (encStyle == "ohc") map.size else 1 } 
   def encode(r : Row) : Vector = {
-      Vectors.dense(Array(map(translate(r.getAs[String](columnName))).toDouble))
+      val s = translate(r.getAs[String](columnName))
+      Vectors.dense(Array(ScalaUtil.getStringIndexFromMap(name, s, map).toDouble))
   }
   def decode(v : Vector) : String = {
     if (v.size != 1) ScalaUtil.writeError(s"Categorical String feature $name is not of length 1. Using first position.")

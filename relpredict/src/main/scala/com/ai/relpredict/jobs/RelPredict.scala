@@ -11,6 +11,7 @@ import com.ai.relpredict.spark._
 import org.apache.spark.sql.SparkSession
 import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.ArrayBuffer
+import com.ai.relpredict.RelPredictUtil
 
 /**
 *  The RelPredict job
@@ -76,6 +77,8 @@ object RelPredict extends GrammarDef {
              config.print()
              RPConfig.setBaseDir(config.base_dir)
              RPConfig.setJobDir(config.job_dir)
+             RPConfig.setModelDir(config.model_class, config.model_name, config.model_version)
+             RPConfig.setTrainedModelDir(config.model_train_date)
              ScalaUtil.setEnvironment(config.env)
              ScalaUtil.controlMsg("Building job...")
              val job = getJob(config)
@@ -138,7 +141,7 @@ object RelPredict extends GrammarDef {
       // Load any data maps into the global cache
       loadDataMap(conf.data_maps)
       val modelFileName = getModelFileName(conf)
-      val modelDef = getModelDef(modelFileName)
+      val modelDef = RelPredictUtil.getModelDefFromFile(modelFileName)
       if (modelDef.isEmpty) ScalaUtil.terminal_error(s"Model definition file ${modelFileName} was not specified")
       if (ScalaUtil.verbose) modelDef.get.print()
       // Create the SparkSession
@@ -165,37 +168,6 @@ object RelPredict extends GrammarDef {
           }
           case unknown => { ScalaUtil.terminal_error(s"Unknown run type: $unknown"); None }
       }
-    }
-    // Load the model definition file
-    def getModelDef(fileName : String) : Option[ModelDef] = {
-      ScalaUtil.controlMsg(s"Loading model definition from $fileName")
-      val testModel : Reader = {
-        if (ScalaUtil.isLocalMode()) {
-          ScalaUtil.controlMsg(s">>> Loading from local storage")
-          new FileReader(fileName)
-        }
-        else {
-          ScalaUtil.controlMsg(s">>> Loading from HDFS")
-          SparkUtil.getHDFSFileReader(fileName).get
-        }
-      }
-      val r = parse(modelDef,testModel)
-      r match {
-           case Success(matched,_) => {
-               matched match {
-                  case (m : ModelDef) => {
-                       return Option(m)
-                  }
-               }
-           } 
-           case Failure(msg,_) => { 
-             ScalaUtil.terminal_error(s"Loading the model file $fileName failed with error $msg")
-           }
-           case Error(msg,_) => { 
-             ScalaUtil.terminal_error(s"Loading the model file $fileName failed with error $msg")
-           }
-      }
-      None
     }
     // Load the data map if it was specified
     def getColumnMap(fileName : String) : Datamap = {

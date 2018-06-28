@@ -44,7 +44,7 @@ case class StringTarget(name : String, desc : String, algorithmDefs : Array[Algo
   override def decode(i : Int) : String = invMap(i)
   override def decode(i : Long) : String = invMap(i.toInt)
   override def decode(i : Double) : String = invMap(i.toInt)
-  override def encode(r : Row) : Double = map(translate(r.getAs[String](columnName))).toDouble
+  override def encode(r : Row) : Double = ScalaUtil.getStringIndexFromMap(name, translate(r.getAs[String](columnName)), map).toDouble
   override def getDatatype() = "string"
   def getInvMap() = invMap
   def getMap() = Some(map)  

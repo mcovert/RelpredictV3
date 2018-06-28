@@ -93,22 +93,37 @@ case class Model(modelDef : ModelDef, dm: Datamap) {
     SparkUtil.saveMapToHDFSFile(map.get, RPConfig.getTrainedModelDir() + name)
   }
   def getTargetOrFeatureMap(name: String, ss: SparkSession, df: Option[DataFrame]) : Map[String, Int] = {
+    ScalaUtil.writeInfo(s"Locating vocabulary map for ${name}")
     // Search trained model directory
     var fileName = RPConfig.getTrainedModelDir() + name + ".csv"
+    //ScalaUtil.writeInfo(s">>>Looking for ${fileName}")
     if (SparkUtil.hdfsFileExists(fileName)) {
+           ScalaUtil.writeInfo(s"Loading vocabulary map ${name} from trained model directory: ${fileName}")
            return SparkUtil.loadMapFromHDFSFile(fileName)
     }
-    else {
-           fileName = RPConfig.getVocabularyDir() + name + ".csv"
-           if (SparkUtil.hdfsFileExists(fileName)) {
-              return SparkUtil.loadMapFromHDFSFile(fileName)
-           }
-           else {
-              df match {
-                case Some(d: DataFrame) => return d.select(name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap
-                case _ => { ScalaUtil.terminal_error(s"Unable to load target or feature map for $name. This is a fatal error."); Map[String, Int]() }
-              }
-           }
+    // Search model directory
+    fileName = RPConfig.getModelDir() + name + ".csv"
+    //ScalaUtil.writeInfo(s">>>Looking for ${fileName}")
+    if (SparkUtil.hdfsFileExists(fileName)) {
+           ScalaUtil.writeInfo(s"Loading vocabulary map ${name} from model directory: ${fileName}")
+           return SparkUtil.loadMapFromHDFSFile(fileName)
     }
+    // Search global vocabulary directory
+    fileName = RPConfig.getVocabularyDir() + name + ".csv"
+    //ScalaUtil.writeInfo(s">>>Looking for ${fileName}")
+    if (SparkUtil.hdfsFileExists(fileName)) {
+           ScalaUtil.writeInfo(s"Loading vocabulary map ${name} from global directory: ${fileName}")
+           return SparkUtil.loadMapFromHDFSFile(fileName)
+    }
+    // Create vocabulary from SQL statement
+    //ScalaUtil.writeInfo(s">>>Creating from SQL")
+    df match {
+        case Some(d: DataFrame) => {
+            ScalaUtil.writeInfo(s"Generating vocabulary map ${name} from SQL statement")
+            return d.select(name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap
+        }
+        case _ => ScalaUtil.terminal_error(s"Unable to load target or feature map for $name. This is a fatal error.")
+    }
+    Map[String, Int]()
   }
 }
