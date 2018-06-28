@@ -145,6 +145,15 @@ object ScalaUtil {
         hash = hash ^ (hash >> 20) ^ (hash >> 12)
         hash ^ (hash >> 7) ^ (hash >> 4)
     }
+    def checkMap(map: Map[String, Int]) {
+        map.keys.foreach{ k =>  {
+          try {
+             val xxx : Int = map(k)
+          } catch {
+            case _ => println(s"Error: ${k}=${map(k)}")
+          }
+        }}
+    }
     val identifiers = scala.collection.mutable.Map[String, scala.collection.mutable.HashSet[String]]()
     def getStringIndexFromMap(identifier: String, s: String, map: Map[String, Int]) : Int = {
       ScalaUtil.writeInfo(s">>> ${identifier} ${s} ${map}")

@@ -155,7 +155,7 @@ object RelPredict extends GrammarDef {
       val df = ss.sqlContext.sql(conf.sql)
       df.cache
       ScalaUtil.controlMsg(s"SQL statement is ${conf.sql}")
-      val model = new com.ai.relpredict.spark.Model(modelDef.get, df, columnMap)
+      val model = new com.ai.relpredict.spark.Model(modelDef.get, Some(df), columnMap)
       // Check the run type and generate the appropriate job type
       conf.run_type match {
           case "train" => {

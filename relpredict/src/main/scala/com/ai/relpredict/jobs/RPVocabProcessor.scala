@@ -33,8 +33,8 @@ object RPVocabProcessor {
         val map = df.select(name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap
     	// Write Map to HDFS File 
     	val sb = new StringBuilder()
-    	map.keys.foreach{ k => sb.append(k + "," + map(k) + "\n")}
-        val file = new File(baseDir + name + ".csv")
+    	map.keys.foreach{ k => sb.append(k.replace("\t","") + "\t" + map(k) + "\n")}
+        val file = new File(baseDir + name + ".tsv")
         val bw = new BufferedWriter(new FileWriter(file))
         bw.write(sb.toString)
         bw.close   		

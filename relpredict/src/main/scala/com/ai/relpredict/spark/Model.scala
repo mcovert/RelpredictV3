@@ -8,20 +8,13 @@ import com.ai.relpredict.jobs._
 /**
  * The Model class is an implementation of a ModelDef specification. It is the container for all components.
  */
-case class Model(modelDef : ModelDef, dm: Datamap) {
+case class Model(modelDef : ModelDef, df : Option[DataFrame], dm: Datamap) {
   val name        = modelDef.name
   val version     = modelDef.version
   val description = modelDef.desc
   var featureSets = modelDef.featureSets.map(fsd => (fsd.name -> buildFeatureSet(fsd))).toMap
-  var targets     = buildTargets(modelDef.targets)
+  var targets     = buildTargets(modelDef.targets) 
   val ss          = SparkUtil.getSparkSession()
-  var df: Option[DataFrame] = None
-  def this(modelDef : ModelDef, dataframe : DataFrame, dm: Datamap) {
-    this(modelDef, dm)
-    df = Some(dataframe)
-    featureSets = modelDef.featureSets.map(fsd => (fsd.name -> buildFeatureSet(fsd))).toMap
-    targets = buildTargets(modelDef.targets)
-  }
   /**
    *  Load a full model from a directory. This includes all of the map files for features
    *  and targets. 
@@ -95,32 +88,40 @@ case class Model(modelDef : ModelDef, dm: Datamap) {
   def getTargetOrFeatureMap(name: String, ss: SparkSession, df: Option[DataFrame]) : Map[String, Int] = {
     ScalaUtil.writeInfo(s"Locating vocabulary map for ${name}")
     // Search trained model directory
-    var fileName = RPConfig.getTrainedModelDir() + name + ".csv"
+    var fileName = RPConfig.getTrainedModelDir() + name + ".tsv"
     //ScalaUtil.writeInfo(s">>>Looking for ${fileName}")
     if (SparkUtil.hdfsFileExists(fileName)) {
            ScalaUtil.writeInfo(s"Loading vocabulary map ${name} from trained model directory: ${fileName}")
-           return SparkUtil.loadMapFromHDFSFile(fileName)
+           val m = SparkUtil.loadMapFromHDFSFile(fileName)
+           ScalaUtil.checkMap(m)
+           return m
     }
     // Search model directory
-    fileName = RPConfig.getModelDir() + name + ".csv"
+    fileName = RPConfig.getModelDir() + name + ".tsv"
     //ScalaUtil.writeInfo(s">>>Looking for ${fileName}")
     if (SparkUtil.hdfsFileExists(fileName)) {
            ScalaUtil.writeInfo(s"Loading vocabulary map ${name} from model directory: ${fileName}")
-           return SparkUtil.loadMapFromHDFSFile(fileName)
+           val m = SparkUtil.loadMapFromHDFSFile(fileName)
+           ScalaUtil.checkMap(m)
+           return m
     }
     // Search global vocabulary directory
-    fileName = RPConfig.getVocabularyDir() + name + ".csv"
+    fileName = RPConfig.getVocabularyDir() + name + ".tsv"
     //ScalaUtil.writeInfo(s">>>Looking for ${fileName}")
     if (SparkUtil.hdfsFileExists(fileName)) {
            ScalaUtil.writeInfo(s"Loading vocabulary map ${name} from global directory: ${fileName}")
-           return SparkUtil.loadMapFromHDFSFile(fileName)
+           val m = SparkUtil.loadMapFromHDFSFile(fileName)
+           ScalaUtil.checkMap(m)
+           return m
     }
     // Create vocabulary from SQL statement
     //ScalaUtil.writeInfo(s">>>Creating from SQL")
     df match {
         case Some(d: DataFrame) => {
-            ScalaUtil.writeInfo(s"Generating vocabulary map ${name} from SQL statement")
-            return d.select(name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap
+           ScalaUtil.writeInfo(s"Generating vocabulary map ${name} from SQL statement")
+           val m = d.select(name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap
+           ScalaUtil.checkMap(m)
+           return m
         }
         case _ => ScalaUtil.terminal_error(s"Unable to load target or feature map for $name. This is a fatal error.")
     }

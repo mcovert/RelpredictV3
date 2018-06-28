@@ -34,7 +34,7 @@ object RelPredictUtil extends GrammarDef {
 	 		return Some(modelMap(modelName))
 	 	var model : Option[Model] = None
 	 	getModelDef(model_class, model_name, model_version) match {
-	 	    case Some(modelDef: ModelDef) => model = Some(new Model(modelDef, new Datamap("")))
+	 	    case Some(modelDef: ModelDef) => model = Some(new Model(modelDef, None, new Datamap("")))
 	 	    case _ => ScalaUtil.writeError(s"Load of model definition for $model_class, $model_name, $model_version failed")	
 	 	}
 	 	// Cache it
