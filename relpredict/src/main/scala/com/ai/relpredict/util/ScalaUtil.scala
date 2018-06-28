@@ -147,6 +147,7 @@ object ScalaUtil {
     }
     val identifiers = scala.collection.mutable.Map[String, scala.collection.mutable.HashSet[String]]()
     def getStringIndexFromMap(identifier: String, s: String, map: Map[String, Int]) : Int = {
+      ScalaUtil.writeInfo(s">>> ${identifier} ${s} ${map}")
       if (!identifiers.contains(identifier)) identifiers(identifier) = scala.collection.mutable.HashSet[String]()
       var id_hm = identifiers(identifier)
       if (map.contains(s)) map(s)
