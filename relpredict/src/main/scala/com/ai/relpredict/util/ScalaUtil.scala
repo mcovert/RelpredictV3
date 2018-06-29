@@ -146,11 +146,14 @@ object ScalaUtil {
         hash ^ (hash >> 7) ^ (hash >> 4)
     }
     def checkMap(map: Map[String, Int]) {
+        ScalaUtil.writeInfo(s"The map has ${map.size} entries")
         map.keys.foreach{ k =>  {
           try {
              val xxx : Int = map(k)
+             if (xxx < 0) ScalaUtil.writeError(s"A negative index was found in this map for key ${k}=${xxx}")
+             if (xxx >= map.size) ScalaUtil.writeError(s"An out of bounds index was found in this map for key ${k}=${xxx}")
           } catch {
-            case _ => println(s"Error: ${k}=${map(k)}")
+            case _ => ScalaUtil.writeError(s"A non-numeric value was found in this map for key ${k}=${map(k)}")
           }
         }}
     }
@@ -166,7 +169,7 @@ object ScalaUtil {
             id_hm.add(s)
          }
          // Hash the string to fit into a pre-existing slot
-         hash(s) % map.size
+         Math.abs(hash(s) % map.size)
       }
     }
     def getUnknownStringMaps() = identifiers.toMap

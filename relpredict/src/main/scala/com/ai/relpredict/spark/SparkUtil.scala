@@ -84,8 +84,11 @@ object SparkUtil {
    /**
     * Load a map from an HDFS file using SparkSQL CSV loader
     */
+    val schema = StructType(
+           StructField("term", StringType, true) :: 
+           StructField("index", IntegerType, true) :: Nil)
    def loadMapFromHDFSFile(fileName: String) : Map[String, Int] = {
-       val map_df = ss.read.option("header","true").option("delimiter", "\t").csv(fileName)
+       val map_df = ss.read.option("header","false").schema(schema).option("delimiter", "\t").csv(fileName)
        map_df.rdd.map(row => (row.getAs[String](0), row.getAs[Int](1).toInt)).collect.toMap
    }
    /**
