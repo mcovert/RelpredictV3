@@ -7,9 +7,6 @@
 [0m[[0m[33mwarn[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/util/Results.scala:72:19: non-variable type argument com.ai.relpredict.util.Results in type pattern scala.collection.mutable.ArrayBuffer[com.ai.relpredict.util.Results] is unchecked since it is eliminated by erasure[0m
 [0m[[0m[33mwarn[0m] [0m[0m         case ab: ArrayBuffer[Results] => ab.foreach{ r: Results => r.print(level + "   ")} [0m
 [0m[[0m[33mwarn[0m] [0m[0m                  ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/util/ScalaUtil.scala:156:18: This catches all Throwables. If this is really intended, use `case _ : Throwable` to clear this warning.[0m
-[0m[[0m[33mwarn[0m] [0m[0m            case _ => ScalaUtil.writeError(s"A non-numeric value was found in this map for key ${k}=${map(k)}")[0m
-[0m[[0m[33mwarn[0m] [0m[0m                 ^[0m
 [0m[[0m[33mwarn[0m] [0m[0mthere was one deprecation warning; re-run with -deprecation for details[0m
 [0m[[0m[33mwarn[0m] [0m[0mthere was one feature warning; re-run with -feature for details[0m
-[0m[[0m[33mwarn[0m] [0m[0m6 warnings found[0m
+[0m[[0m[33mwarn[0m] [0m[0m5 warnings found[0m

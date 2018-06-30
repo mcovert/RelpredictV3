@@ -71,7 +71,7 @@ case class Model(modelDef : ModelDef, df : Option[DataFrame], dm: Datamap) {
        }  
      }
   }
-  def saveModel(runDate : String) {
+  def saveModel() {
      targets.foreach(t => {
         saveMap(t.getName(), t.getMap())
         t.algorithms.foreach(a => {
@@ -82,8 +82,13 @@ case class Model(modelDef : ModelDef, df : Option[DataFrame], dm: Datamap) {
      })
      featureSets.keys.foreach{ k => featureSets(k).features.foreach{ f => saveMap(f.getName(), f.getMap())}}
   }
+  var saveStatus = scala.collection.mutable.HashSet[String]()
   def saveMap(name: String, map: Option[Map[String, Int]]) {
-    SparkUtil.saveMapToHDFSFile(map.get, RPConfig.getTrainedModelDir() + name)
+    if (!saveStatus.contains(name)) return
+    map match {
+      case Some(m : Map[String, Int]) => SparkUtil.saveMapToHDFSFile(m, RPConfig.getTrainedModelDir() + name + ".tsv")
+      case None =>
+    }
   }
   def getTargetOrFeatureMap(name: String, ss: SparkSession, df: Option[DataFrame]) : Map[String, Int] = {
     ScalaUtil.writeInfo(s"Locating vocabulary map for ${name}")
@@ -121,6 +126,7 @@ case class Model(modelDef : ModelDef, df : Option[DataFrame], dm: Datamap) {
            ScalaUtil.writeInfo(s"Generating vocabulary map ${name} from SQL statement")
            val m = d.select(name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap
            ScalaUtil.checkMap(m)
+           saveStatus += name
            return m
         }
         case _ => ScalaUtil.terminal_error(s"Unable to load target or feature map for $name. This is a fatal error.")

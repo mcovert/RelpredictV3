@@ -15,11 +15,11 @@ import org.apache.spark.sql.Row
 import scala.collection.mutable.ArrayBuffer
 
 
-case class TrainingJob(override val jobname: String, override val modelDef: com.ai.relpredict.spark.Model, 
+case class TrainingJob(override val jobname: String, override val model: com.ai.relpredict.spark.Model, 
                        override val config : Config, ss : SparkSession, df : DataFrame, 
                        override val dataMaps: Map[String, Datamap], override val columnMap: Datamap, 
                        override val jobParms : Map[String, String])
-   extends Job(jobname: String,  modelDef: Model, config: Config, jobParms : Map[String, String],
+   extends Job(jobname: String,  model: Model, config: Config, jobParms : Map[String, String],
                dataMaps: Map[String, Datamap], columnMap: Datamap) {
     import ss.sqlContext.implicits._
     def run() {
@@ -32,9 +32,9 @@ case class TrainingJob(override val jobname: String, override val modelDef: com.
         }
         else Array(sp, 1.0 - sp)
       }
-      val vecs = VectorBuilder.buildTargetDataFrames(ss, modelDef, df)
+      val vecs = VectorBuilder.buildTargetDataFrames(ss, model, df)
       var targNum = 0
-      modelDef.targets.foreach(t => {
+      model.targets.foreach(t => {
         var targetResults = new Results()
         targetResults.put("target_name", t.getName())
         targetResults.put("target_type", t.getDatatype())
@@ -58,6 +58,6 @@ case class TrainingJob(override val jobname: String, override val modelDef: com.
           }
         })
       })
-      modelDef.saveModel(jobID)
+      model.saveModel()
     }
 }

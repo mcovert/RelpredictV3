@@ -75,10 +75,11 @@ object RelPredict extends GrammarDef {
       config match {
           case Some(config) => {
              config.print()
-             RPConfig.setBaseDir(config.base_dir)
-             RPConfig.setJobDir(config.job_dir)
-             RPConfig.setModelDir(config.model_class, config.model_name, config.model_version)
-             RPConfig.setTrainedModelDir(config.model_train_date)
+             RPConfig.setDirectories(config)
+             //RPConfig.setBaseDir(config.base_dir)
+             //RPConfig.setJobDir(config.job_dir)
+             //RPConfig.setModelDir(config.model_class, config.model_name, config.model_version)
+             //RPConfig.setTrainedModelDir(config.model_train_date)
              ScalaUtil.setEnvironment(config.env)
              ScalaUtil.controlMsg("Building job...")
              val job = getJob(config)
@@ -125,6 +126,22 @@ object RelPredict extends GrammarDef {
                 conf.model_name + ".modeldef"
       return conf.base_dir + "/models/" + cnv;
     }
+    def createTrainedModelDir(conf: Config) : Boolean = {
+      val cnv = conf.model_class      + "/" + 
+                conf.model_name       + "/" + 
+                conf.model_version    + "/" + 
+                conf.model_train_date + "/"
+      if (SparkUtil.hdfsFileExists(cnv)) {
+        ScalaUtil.terminal_error(s"Trained model directory ${cnv} already exists. This is a terminal error.")
+        false
+      }
+      else {
+        ScalaUtil.controlMsg(s"Creating HDFS trained model directory ${cnv}")
+        SparkUtil.hdfsCreateDirectory(cnv)
+        RPConfig.setTrainedModelDir(cnv)
+      }
+      true
+    }
     def getTrainedModelDirectory(conf: Config) : String = {
       val cnv = conf.model_class      + "/" + 
                 conf.model_name       + "/" + 
@@ -159,11 +176,13 @@ object RelPredict extends GrammarDef {
       // Check the run type and generate the appropriate job type
       conf.run_type match {
           case "train" => {
-            ScalaUtil.controlMsg("Training job created") 
+            // Create and set the HDFS training output directory. If it exists already, this is a fatal error.
+            createTrainedModelDir(conf)
+            ScalaUtil.controlMsg(s"Training job ${conf.jobname} created") 
             Some(TrainingJob(conf.jobname, model, conf, ss, df, dataMaps, columnMap, jobParms))
           }
           case "predict" => {
-            ScalaUtil.controlMsg("Prediction job created")            
+            ScalaUtil.controlMsg(s"Prediction job  ${conf.jobname} created")            
             Some(PredictionJob(conf.jobname, model, conf, ss, df, dataMaps, columnMap, jobParms))
           }
           case unknown => { ScalaUtil.terminal_error(s"Unknown run type: $unknown"); None }

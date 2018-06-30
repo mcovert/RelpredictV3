@@ -95,6 +95,7 @@ object RPConfig {
     def setJobDir(dir : String) { 
       jobDir = if (dir.endsWith("/") || dir == "") dir else s"${dir}/"
       if (! new java.io.File(jobDir).exists) ScalaUtil.terminal_error(s"Job directory $jobDir does not exist")
+      ScalaUtil.controlMsg(s"Job output directory set to ${jobDir}")
     } 
     /**
      * Set up the model directories for RelPredict. The base model directory hold the model definition
@@ -103,14 +104,17 @@ object RPConfig {
      */
     def setModelDir(model_class : String, model_name: String, model_version: String) { 
       modelBaseDir = getBaseDir() + "models/" + model_class + "/" + model_name + "/" + model_version + "/"
+      ScalaUtil.controlMsg(s"Model base directory set to ${modelBaseDir}")
     } 
-    def setTrainedModelDir(model_train_date: String) {
-      trainedModelDir = getModelDir() + model_train_date
+    def setTrainedModelDir(dir: String) {
+      trainedModelDir = if (dir.endsWith("/") || dir == "") getModelDir() + dir else getModelDir() + s"${dir}/"
+      ScalaUtil.controlMsg(s"Model training output directory set to ${trainedModelDir}")
     } 
     def setDirectories(conf: Config) {
       setBaseDir(conf.base_dir)
       setJobDir(getBaseDir() + "jobs/" + conf.run_id)
       setModelDir(conf.model_class, conf.model_name, conf.model_version)
+      setTrainedModelDir(conf.model_train_date)
     } 
     /**
      * Get the job directory. Note that all directories returned will have "/" appended to the end.
@@ -143,7 +147,7 @@ object RPConfig {
      * Get output directory for all saved data (from predict run).
      */
     def getDataDir() : String = s"${getBaseDir()}data/"
-    def getVocabularyDir() : String = s"${baseDir}data/vocabulary/"
+    def getVocabularyDir() : String = s"${getBaseDir()}data/vocabulary/"
     def getRunId() = config.run_id
     def loadModelConfig() : Option[Map[String, String]] = {
       val modelConfigFile = getModelDir() + "current"
@@ -155,7 +159,7 @@ object RPConfig {
         Some(modelConfig)
       }
       else {
-        ScalaUtil.writeWarning("No model configuration file found - ${modelConfigFile}")
+        ScalaUtil.writeWarning(s"No model configuration file ${modelConfigFile} was found. The model cannot be used until a current model configuration is defined.")
         None
       }
     } 

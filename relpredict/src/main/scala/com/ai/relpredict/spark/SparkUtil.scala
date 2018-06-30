@@ -75,7 +75,6 @@ object SparkUtil {
     */
    def saveMapToHDFSFile(map: Map[String, Int], fileName: String) {
       var sb = new StringBuilder()
-      sb.append("key,index\n")
       map.foreach{
         case (k, v) => sb.append(k + "\t" + v + "\n")
       }
@@ -222,6 +221,17 @@ object SparkUtil {
         case e : Throwable => ScalaUtil.terminal_error(s"Opening output HDFS file $url failed: ${e.printStackTrace()}")
         false
      }
+   }
+   def hdfsCreateDirectory(url: String) : Boolean = {
+     try {
+        val path = new Path(url)
+        val conf = new Configuration(ss.sparkContext.hadoopConfiguration)
+        val fs = path.getFileSystem(conf)
+        fs.mkdirs(path)
+     } catch {
+        case e : Throwable => ScalaUtil.terminal_error(s"Creation of HDFS directory $url failed: ${e.printStackTrace()}")
+        false
+     } 
    }
    /**
     * Find the most recently updated FileStatus object

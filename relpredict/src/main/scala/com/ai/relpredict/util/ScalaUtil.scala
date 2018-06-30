@@ -153,7 +153,7 @@ object ScalaUtil {
              if (xxx < 0) ScalaUtil.writeError(s"A negative index was found in this map for key ${k}=${xxx}")
              if (xxx >= map.size) ScalaUtil.writeError(s"An out of bounds index was found in this map for key ${k}=${xxx}")
           } catch {
-            case _ => ScalaUtil.writeError(s"A non-numeric value was found in this map for key ${k}=${map(k)}")
+            case _ : Throwable => ScalaUtil.writeError(s"A non-numeric value was found in this map for key ${k}=${map(k)}")
           }
         }}
     }

@@ -7,7 +7,7 @@ import org.apache.spark.sql.SparkSession
 import com.ai.relpredict.util._
 import scala.collection.mutable.ArrayBuffer
 
-abstract class Job(val jobname: String, val modelDef: Model, val config: Config, 
+abstract class Job(val jobname: String, val model: Model, val config: Config, 
                    val jobParms : Map[String, String], val dataMaps: Map[String, Datamap], 
                    val columnMap: Datamap) {
   val starttime : java.util.Date          = ScalaUtil.getDate()
