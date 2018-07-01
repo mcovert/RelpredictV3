@@ -13,7 +13,7 @@ import com.ai.relpredict.spark.{VectorBuilder, SparkUtil, Target, AlgorithmFacto
 import org.apache.spark.sql.catalyst.encoders.RowEncoder
 import org.apache.spark.sql.Row
 import scala.collection.mutable.ArrayBuffer
-
+import com.ai.relpredict.util._
 
 case class TrainingJob(override val jobname: String, override val model: com.ai.relpredict.spark.Model, 
                        override val config : Config, ss : SparkSession, df : DataFrame, 
@@ -45,6 +45,7 @@ case class TrainingJob(override val jobname: String, override val model: com.ai.
         targNum += 1
         tVecs(0).cache()
         tVecs(1).cache
+        val tdir = RPConfig.getTargetDir(t)
         t.algorithms.foreach(a => {
           a match {
             case None => ScalaUtil.writeError(s"Target ${t.getName()} algorithm ${a.get.name} encountered an error.")
@@ -53,7 +54,12 @@ case class TrainingJob(override val jobname: String, override val model: com.ai.
               alg.train(tVecs(0).map(r => r._2))
               alg.test(tVecs(0), "training").get._1
               alg.test(tVecs(1), "holdback").get._1
-              targetResults.put("algorithms", alg.end())
+              // Get results from all algorithm phases and save them as json into the trained model target directory. Need to
+              // put it here because the lower level algorithm directory holds the saves trained model.
+              val alg_results = alg.end()
+              val jsonResults = JsonConverter.toJson(alg_results)
+              SparkUtil.saveTextToHDFSFile(jsonResults, s"${tdir}${alg.name}_results")              
+              targetResults.put("algorithms", alg_results)
             }
           }
         })
