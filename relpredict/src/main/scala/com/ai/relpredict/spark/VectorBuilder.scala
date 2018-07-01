@@ -14,14 +14,30 @@ import com.ai.relpredict._
  *  The VectorBuilder object contains encoder utilities for encoding and decoding machine learning vectors 
  */ 
 object VectorBuilder {
-  //var first = true
+  // Vectors can be sparse or dense depending on the size of the vector. The default is to always use a dense vector. But by setting a non-zero
+  // threshold, sparse vectors will be prodiced if the size of the vector exceeds this number. This can be used to reduce shuffle overhead. Note
+  // that the minimum value for this threshold is currently 100.
+  // TO-DO: this is not yet implemented.
+  var sparseThreshold = 0
+  val sparseThresholdMin = 100
+  def setSparseThreshold(sp_thresh: Int) { 
+    if (sp_thresh > sparseThresholdMin) {
+      sparseThreshold = sp_thresh
+      ScalaUtil.controlMsg(s"Vector sparse threshold set to ${sparseThreshold}")
+    }
+    else
+      ScalaUtil.controlMsg(s"Vector sparse threshold cannot be set to ${sp_thresh}. The minimum value is ${sparseThresholdMin}.")
+  }
+  def getSparseThreshold() = sparseThreshold
   /** 
    *  Build an array of data frames for train/test, one for each target. The DataFrame should be cached.
    *  TO-DO: Build these based on FeatureSets and map them back to targets!
    */ 
   def buildTargetDataFrames(ss : SparkSession, model : Model, df : DataFrame) : Array[RDD[(String, LabeledPoint)]] = {
     import ss.implicits._
-    val adf = model.targets.map(t => { ScalaUtil.controlMsg(s"Processing target ${t.getName()} with feature set ${t.featureSet.name}"); df.map(r => buildTargetVector(t, r)).rdd})
+    val adf = model.targets.map(t => { 
+      ScalaUtil.controlMsg(s"Processing target ${t.getName()} with feature set ${t.featureSet.name}"); df.map(r => buildTargetVector(t, r)).rdd
+    })
     adf.toArray
   } 
   /** 

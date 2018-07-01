@@ -84,6 +84,7 @@ object RPConfig {
     def setBaseDir(dir : String) { 
       baseDir = if (dir.endsWith("/") || dir == "") dir else s"${dir}/"
       if (! new java.io.File(baseDir).exists) ScalaUtil.terminal_error(s"Base directory $baseDir does not exist")
+      ScalaUtil.controlMsg(s"RelPredict directory set to ${baseDir}")
     }
     /**
      * Get the base directory. Note that all directories returned will have "/" appended to the end.
@@ -93,8 +94,8 @@ object RPConfig {
      * Set up the job directory for RelPredict
      */
     def setJobDir(dir : String) { 
-      jobDir = if (dir.endsWith("/") || dir == "") dir else s"${dir}/"
-      if (! new java.io.File(jobDir).exists) ScalaUtil.terminal_error(s"Job directory $jobDir does not exist")
+      jobDir = if (dir.endsWith("/")) dir else s"${dir}/"
+      if (! new java.io.File(jobDir).exists) ScalaUtil.terminal_error(s"Job directory ${jobDir} does not exist")
       ScalaUtil.controlMsg(s"Job output directory set to ${jobDir}")
     } 
     /**
@@ -106,15 +107,15 @@ object RPConfig {
       modelBaseDir = getBaseDir() + "models/" + model_class + "/" + model_name + "/" + model_version + "/"
       ScalaUtil.controlMsg(s"Model base directory set to ${modelBaseDir}")
     } 
-    def setTrainedModelDir(dir: String) {
-      trainedModelDir = if (dir.endsWith("/") || dir == "") getModelDir() + dir else getModelDir() + s"${dir}/"
+    def setTrainedModelDir(model_class : String, model_name: String, model_version: String, trained_model_date: String) {
+      trainedModelDir = getBaseDir() + "models/" + model_class + "/" + model_name + "/" + model_version + "/" + trained_model_date + "/"
       ScalaUtil.controlMsg(s"Model training output directory set to ${trainedModelDir}")
     } 
     def setDirectories(conf: Config) {
       setBaseDir(conf.base_dir)
-      setJobDir(getBaseDir() + "jobs/" + conf.run_id)
+      setJobDir(conf.job_dir)
       setModelDir(conf.model_class, conf.model_name, conf.model_version)
-      setTrainedModelDir(conf.model_train_date)
+      setTrainedModelDir(conf.model_class, conf.model_name, conf.model_version, conf.model_train_date)
     } 
     /**
      * Get the job directory. Note that all directories returned will have "/" appended to the end.
@@ -137,7 +138,7 @@ object RPConfig {
      * Get the target directory for a named target within a model
      */
     def getTargetDir(target : Target[_]) = {
-      s"${getTrainedModelDir()}/${target.getName()}/"
+      s"${getTrainedModelDir()}${target.getName()}/"
     }
     /**
      * Get the algorithm directory for a specific algorithm used by a target within a model

@@ -76,10 +76,6 @@ object RelPredict extends GrammarDef {
           case Some(config) => {
              config.print()
              RPConfig.setDirectories(config)
-             //RPConfig.setBaseDir(config.base_dir)
-             //RPConfig.setJobDir(config.job_dir)
-             //RPConfig.setModelDir(config.model_class, config.model_name, config.model_version)
-             //RPConfig.setTrainedModelDir(config.model_train_date)
              ScalaUtil.setEnvironment(config.env)
              ScalaUtil.controlMsg("Building job...")
              val job = getJob(config)
@@ -94,13 +90,9 @@ object RelPredict extends GrammarDef {
                     j.setup()
                     j.run()
                     var baseResults = j.cleanup()
-                    //baseResults.print("")
-                    //println(baseResults)
                     val jsonResults = JsonConverter.toJson(baseResults)
-                    //println(jsonResults)
-                    /* Save results  to file */
-                    val dir = RPConfig.getJobDir()
-                    SparkUtil.saveTextToHDFSFile(jsonResults, s"${dir}results")
+                    val jdir = RPConfig.getJobDir()
+                    SparkUtil.saveTextToHDFSFile(jsonResults, s"${jdir}results")
                     ScalaUtil.controlMsg(s"Job ${j.jobname} completed with return code ${baseResults.getRC()}")
                   }
                   // Else write and error message and end
@@ -138,7 +130,6 @@ object RelPredict extends GrammarDef {
       else {
         ScalaUtil.controlMsg(s"Creating HDFS trained model directory ${cnv}")
         SparkUtil.hdfsCreateDirectory(cnv)
-        RPConfig.setTrainedModelDir(cnv)
       }
       true
     }
