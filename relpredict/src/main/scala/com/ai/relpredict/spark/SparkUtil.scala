@@ -168,13 +168,24 @@ object SparkUtil {
          Some(new BufferedReader(new InputStreamReader(fs.open(pt))))  
      } catch {
          case ex: FileNotFoundException =>{
-            ScalaUtil.terminal_error(s"Missing file exception for model file $url")
+            ScalaUtil.terminal_error(s"Missing file exception for model file ${url}")
             None
          }
          case ex: IOException => {
-            ScalaUtil.terminal_error(s"IO Exception reading model file $url")
+            ScalaUtil.terminal_error(s"IO Exception reading model file ${url}")
             None
          }
+      }
+   }
+   def readHDFSFile(url: String) : Option[Array[String]] = {
+      getHDFSFileReader(url) match {
+        case Some(br: BufferedReader) => {
+            var arr = scala.collection.mutable.Array[String]()
+            while (br.ready()) arr.add(br.next())
+            br.close
+            arr.toArray
+        }
+        case _ => { ScalaUtil.writeError(s"The HDFS file ${url} could not be loaded"); None } 
       }
    }
    /**

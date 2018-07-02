@@ -34,19 +34,21 @@ object RelPredictUtil extends GrammarDef {
 	 		return Some(modelMap(modelName))
 	 	var model : Option[Model] = None
 	 	getModelDef(model_class, model_name, model_version) match {
-	 	    case Some(modelDef: ModelDef) => model = Some(new Model(modelDef, None, new Datamap("")))
+	 	    case Some(modelDef: ModelDef) => {
+	 	    	model = Some(new Model(modelDef, None, new Datamap("")))
+	 	    	val currentFile = RPConfig.getModelDir() + "current"
+	 	    	if (!SparkUtil.hdfsFileExists(currentFile))
+	 	    		ScalaUtil.terminal_error(s"The trained model configuration file ${currentFile} does not exists. This moel cannot be used. This is a terminal error.")
+	 	    	model.loadCurrent(currentFile)
+	 	    }
 	 	    case _ => ScalaUtil.writeError(s"Load of model definition for $model_class, $model_name, $model_version failed")	
 	 	}
 	 	// Cache it
 	 	modelMap(modelName) = model.get
 	 	model
 	 }
-	 // def getTrainedModelFromConfig(model_class: String, model_name: String, model_version: String) : Model = {
-
-	 // }
-
 	 def getModelDef(model_class: String, model_name: String, model_version: String) : Option[ModelDef] = {
-        getModelDefFromFile(RPConfig.getModelDir() + "modeldef")
+        getModelDefFromFile(RPConfig.getModelDir() + model_name + ".modeldef")
 	 }
     // Load the model definition file
     def getModelDefFromFile(fileName : String) : Option[ModelDef] = {
@@ -85,9 +87,9 @@ object RelPredictUtil extends GrammarDef {
 	// def predictSingleRecord(modelName: String, predictionRecord: PredictionRecord) : String = {
 	// 	val model   = getModel(modelName)
 	// 	val vec     = VectorBuilder.buildSingleVector(predictionRecord)    
- //        val results = model.predict(vec)
+    //        val results = model.predict(vec)
 
- //        JsonConverter.toJson(results)
+    //        JsonConverter.toJson(results)
 	// }
 	/**
 	 *  Predict one or more records using the current trained model
@@ -95,12 +97,12 @@ object RelPredictUtil extends GrammarDef {
 	// def predictRecords(modelName: String, predictionRecords: Array[PredictionRecord]) : String = {
 	// 	val model   = getModel(modelName)
 	// 	var results = new Results()
- //        results.addArray("results")
- //        predictionRecords.foreach{ r => {
- //  		     val vec = VectorBuilder.buildSingleVector(r)      
- //             results.put("results", model.predict(vec))
- //        }}
- //        JsonConverter.toJson(results)
+    //        results.addArray("results")
+    //        predictionRecords.foreach{ r => {
+    //  		     val vec = VectorBuilder.buildSingleVector(r)      
+    //             results.put("results", model.predict(vec))
+    //        }}
+    //        JsonConverter.toJson(results)
 	// }
 	/**
 	 *  Clear the model cache so that any updates will be reloaded
