@@ -24,22 +24,26 @@ case class PredictionJob(override val jobname: String, override val model: com.a
        import ss.implicits._
        val df = ss.sqlContext.sql(config.sql)
        df.cache
+       // Configure the model using the current trained model file. This will also load the trained models for each target.
+       val modelConfig = new ModelConfig(config.model_class, config.model_name, config.model_version)
+       modelConfig.configure(model, ss)
+
        val pVecs = VectorBuilder.buildPredictionDataFrames(ss, model, df)
        var vPos = 0
        val pred = model.targets.map(t => {
           val res = t.algorithms.map(a => { 
-            /* TO-DO: Load the saved model into the algorithm */
-            a.get.loadModel(ss, s"${model.name}/${model.version}/${config.run_id}/${t.getName()}/${a.get.name}")
-            a.get.start()
-            val res = a.get.predict(pVecs(vPos))
-            res match {
-              case None => ScalaUtil.writeError(s"Target ${t.getName()} algorithm ${a.get.name} encountered an error.")
-              case Some(x) => {
-                 val rDF = SparkUtil.getPredictedDataFrame(jobname, t.getName(), a.get.name, x._2)
-                 val dir = RPConfig.getBaseDir()
-                 val runID = ScalaUtil.getDirectoryDate()
-                 rDF.write.save(RPConfig.getAlgorithmDir(t, a.get))
-              }
+            if (modelConfig.runAlgorithm(t.getName(), a.get.name)) {
+               a.get.start()
+               val res = a.get.predict(pVecs(vPos))
+               res match {
+                 case None => ScalaUtil.writeError(s"Target ${t.getName()} algorithm ${a.get.name} encountered an error.")
+                 case Some(x) => {
+                    val rDF = SparkUtil.getPredictedDataFrame(jobname, t.getName(), a.get.name, x._2)
+                    rDF.show()
+                    // TO-DO: save predicted data frame to Hive table
+                 }
+               }
+               a.get.end().print("")
             }
           })
           vPos += 1

@@ -180,10 +180,10 @@ object SparkUtil {
    def readHDFSFile(url: String) : Option[Array[String]] = {
       getHDFSFileReader(url) match {
         case Some(br: BufferedReader) => {
-            var arr = scala.collection.mutable.Array[String]()
-            while (br.ready()) arr.add(br.next())
+            var arr = scala.collection.mutable.ArrayBuffer[String]()
+            while (br.ready()) arr +=  br.readLine
             br.close
-            arr.toArray
+            Some(arr.toArray)
         }
         case _ => { ScalaUtil.writeError(s"The HDFS file ${url} could not be loaded"); None } 
       }
