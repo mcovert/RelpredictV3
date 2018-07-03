@@ -30,7 +30,7 @@ case class PredictionJob(override val jobname: String, override val model: com.a
 
        val pVecs = VectorBuilder.buildPredictionDataFrames(ss, model, df)
        ScalaUtil.writeInfo(s"Prediction RDD array length is ${pVecs.size}")
-       pVecs.foreach{rdf => { rdf.collect.foreach{println}}}
+       //pVecs.foreach{rdf => { rdf.collect.foreach{println}}}
        var vPos = 0
        val pred = model.targets.map(t => {
           ScalaUtil.writeInfo(s"Processing target ${t.getName()}")
@@ -44,7 +44,7 @@ case class PredictionJob(override val jobname: String, override val model: com.a
                  case Some(x) => {
                     val rDF = SparkUtil.getPredictedDataFrame(jobname, config.model_class, config.model_name, config.model_version, 
                                                               modelConfig.getTrainedModelDate(), t, a.get, x._2)
-                    rDF.show(false)
+                    rDF.show(1000)
                     // TO-DO: save predicted data frame to Hive table
                  }
                }
