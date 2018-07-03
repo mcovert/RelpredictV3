@@ -36,7 +36,7 @@ object VectorBuilder {
   def buildTargetDataFrames(ss : SparkSession, model : Model, df : DataFrame) : Array[RDD[(String, LabeledPoint)]] = {
     import ss.implicits._
     val adf = model.targets.map(t => { 
-      ScalaUtil.controlMsg(s"Processing target ${t.getName()} with feature set ${t.featureSet.name}"); df.map(r => buildTargetVector(t, r)).rdd
+      df.map(r => buildTargetVector(t, r)).rdd
     })
     adf.toArray
   } 
@@ -48,14 +48,15 @@ object VectorBuilder {
     (r.getAs[String](target.getFeatureSet().id), LabeledPoint(target.encode(r), fv))
   }
   /** 
-   *  Build an array if data frames for prediction, one for each target. This optimizes data encoding by only passing 
+   *  Build an array of data frames for prediction, one for each target. This optimizes data encoding by only passing 
    *  over the features once for each target. 
    */  
   def buildPredictionDataFrames(ss : SparkSession, model : Model, df : DataFrame) : Array[RDD[(String, Vector)]] = {
     import ss.implicits._
-    val adf = Array[RDD[(String, Vector)]]()
-    model.targets.foreach(t => adf :+ df.map(r => buildPredictionVector(t, r)))
-    adf
+    val adf =  model.targets.map(t => {
+      df.map(r => buildPredictionVector(t, r)).rdd
+    })
+    adf.toArray
   }
   /** 
    *  Build the target prediction Vector based on the assigned FeatureSet 

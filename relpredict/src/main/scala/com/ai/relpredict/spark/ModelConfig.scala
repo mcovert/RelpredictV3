@@ -10,7 +10,7 @@ case class ModelConfig(model_class: String, model_name: String, model_version: S
 	var algMap = scala.collection.mutable.Map[String, scala.collection.mutable.HashSet[String]]()
 	var runAll = false
 
-	
+	def getTrainedModelDate() = trained_model
 	def addTargetAlgorithm(t: String, a: String) {
 		if (algMap.contains(t)) algMap(t) += a
         else {
@@ -33,7 +33,10 @@ case class ModelConfig(model_class: String, model_name: String, model_version: S
        	  		val line = br.readLine
        	  		val tokens = line.split("=")
        	  		tokens(0) match {
-       	  			case "trained_model" => trained_model = tokens(1)
+       	  			case "trained_model" => {
+       	  				trained_model = tokens(1)
+       	  				RPConfig.setTrainedModelDir(model_class, model_name, model_version, trained_model)
+       	  			}
        	  			case _ => addTargetAlgorithm(tokens(0), tokens(1))
        	  		}
        	  	}
@@ -41,6 +44,13 @@ case class ModelConfig(model_class: String, model_name: String, model_version: S
        	  }
        	  case None => ScalaUtil.terminal_error(s"Model configuration file ${currentFile}cannot be loaded. This is a fatal error.")
        }
+	}
+	def print() {
+		ScalaUtil.writeInfo(s"Trained model is ${trained_model}")
+		algMap.keys.foreach{ k => {
+			ScalaUtil.writeInfo(s">>> Target=${k}")
+			algMap(k).foreach{ s => ScalaUtil.writeInfo(s">>>>>> Algorithm=${s}")}
+		}}
 	}
 	def configure(model: Model, ss: SparkSession) {
 		model.targets.foreach{ t => {

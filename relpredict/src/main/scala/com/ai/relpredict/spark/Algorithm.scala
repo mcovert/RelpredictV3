@@ -42,6 +42,7 @@ abstract class Algorithm(val name : String) extends Serializable {
       case Some(m) => true
     }
   }
+  def getProbability(pred: Double) : Double = 0.0
   def start() { 
     starttime = ScalaUtil.getDate()
     results = new Results()

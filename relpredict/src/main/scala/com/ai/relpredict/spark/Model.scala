@@ -93,13 +93,17 @@ case class Model(modelDef : ModelDef, df : Option[DataFrame], dm: Datamap) {
   def getTargetOrFeatureMap(name: String, ss: SparkSession, df: Option[DataFrame]) : Map[String, Int] = {
     ScalaUtil.writeInfo(s"Locating vocabulary map for ${name}")
     // Search trained model directory
-    var fileName = RPConfig.getTrainedModelDir() + name + ".tsv"
-    //ScalaUtil.writeInfo(s">>>Looking for ${fileName}")
-    if (SparkUtil.hdfsFileExists(fileName)) {
+  var fileName = ""
+    val tmd = RPConfig.getTrainedModelDir()
+    if (!tmd.isEmpty()) {
+       fileName = tmd + name + ".tsv"
+       //ScalaUtil.writeInfo(s">>>Looking for ${fileName}")
+       if (SparkUtil.hdfsFileExists(fileName)) {
            ScalaUtil.writeInfo(s"Loading vocabulary map ${name} from trained model directory: ${fileName}")
            val m = SparkUtil.loadMapFromHDFSFile(fileName)
            ScalaUtil.checkMap(m)
            return m
+       }
     }
     // Search model directory
     fileName = RPConfig.getModelDir() + name + ".tsv"

@@ -22,24 +22,29 @@ case class PredictionJob(override val jobname: String, override val model: com.a
                dataMaps: Map[String, Datamap], columnMap: Datamap) {
     def run() {
        import ss.implicits._
-       val df = ss.sqlContext.sql(config.sql)
-       df.cache
        // Configure the model using the current trained model file. This will also load the trained models for each target.
        val modelConfig = new ModelConfig(config.model_class, config.model_name, config.model_version)
+       modelConfig.loadFromCurrent()
        modelConfig.configure(model, ss)
+       modelConfig.print()
 
        val pVecs = VectorBuilder.buildPredictionDataFrames(ss, model, df)
+       ScalaUtil.writeInfo(s"Prediction RDD array length is ${pVecs.size}")
+       pVecs.foreach{rdf => { rdf.collect.foreach{println}}}
        var vPos = 0
        val pred = model.targets.map(t => {
+          ScalaUtil.writeInfo(s"Processing target ${t.getName()}")
           val res = t.algorithms.map(a => { 
+            ScalaUtil.writeInfo(s"Processing algorithm ${a.get.name}")
             if (modelConfig.runAlgorithm(t.getName(), a.get.name)) {
                a.get.start()
                val res = a.get.predict(pVecs(vPos))
                res match {
                  case None => ScalaUtil.writeError(s"Target ${t.getName()} algorithm ${a.get.name} encountered an error.")
                  case Some(x) => {
-                    val rDF = SparkUtil.getPredictedDataFrame(jobname, t.getName(), a.get.name, x._2)
-                    rDF.show()
+                    val rDF = SparkUtil.getPredictedDataFrame(jobname, config.model_class, config.model_name, config.model_version, 
+                                                              modelConfig.getTrainedModelDate(), t, a.get, x._2)
+                    rDF.show(false)
                     // TO-DO: save predicted data frame to Hive table
                  }
                }

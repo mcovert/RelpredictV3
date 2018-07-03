@@ -141,11 +141,14 @@ object SparkUtil {
    /**
     * Build a predicted DataFrame (that can be persisted to either Hive or HDFS)
     */
-   def getPredictedDataFrame(jobname : String, targetName : String, algorithmName : String, rdd : RDD[(String, Double)]) : DataFrame = {
+   def getPredictedDataFrame(jobname : String, model_class: String, model_name: String, model_version: String, model_train_date: String, 
+                             target: Target[_], algorithm : Algorithm, rdd : RDD[(String, Double)]) : DataFrame = {
      val sc = ss
      import sc.sqlContext.implicits._
-     val dt = ScalaUtil.getDate()
-     rdd.map(r => (jobname, targetName, algorithmName, dt, r._1, r._2)).toDF("jobname", "target", "algorithm", "date", "recid", "predicted")
+     val dt = ScalaUtil.getDateTimeString(ScalaUtil.getDate())
+     rdd.map(r => (jobname, model_class, model_name, model_version, model_train_date, target.getName(), algorithm.name, 
+                   dt, r._1, target.decode(r._2).toString, algorithm.getProbability(r._2).toString)).toDF("jobname", "model_class", "model_name", "model_version", 
+                   "model_train_date", "target", "algorithm", "date", "record_id", "predicted", "probability")
    }
    /**
     * Save a data frame as a Hive table
