@@ -1,23 +1,22 @@
 package com.ai.spark.encoders
 
-import org.apache.spark.SparkSession
+import org.apache.spark.{SparkSession, SparkContext}
 import com.ai.spark._
 import org.apache.spark.ml.feature.Word2Vec
 import org.apache.spark.ml.linalg.Vector
 import org.apache.spark.sql.{Row, DataFrame}
 
-class w2v extends RPEncoder[String] {
+class w2v {
 	var model: Option[Word2Vec] = None
-    var words: Option[DataFrame] = None
 
-    // Need to convert this to a PairRDD and use the lookup extension function
-    // Note that this could also be precalculated with a join if the model was built
-    // and saved as a table. This is probably the best idea.
-	def encode(value: String) : Vector = {
-		case Some(wdf: DataFrame) => wdf.filter($"wordvec" === value) 
-		case None => ScalaUtil.writeError("Word2Vec model has not been built")
-
-		new SparseVector()
+	def encode(sentence: String, dlm: String) : Vector = {
+		model match {
+			case Some(m: Word2Vec) => {
+	            val words = sentence.split(dlm)
+	            avgWordFeatures(wordFeatures(words))
+			}
+			case None => { ScalaUtil.terminal_error("Word2Vec model has not been built"); new SparseVector() }
+		}
 	}
 	def buildModel(df: DataFrame, colName: String, size: Int) {
         val word2vec = new Word2vec()
@@ -26,11 +25,16 @@ class w2v extends RPEncoder[String] {
             .setVectorSize(size)
             .setMinCount(0)
         model = Some(word2vec.fit(df))
-        words = Some(model.transform(df)) 
 	}
 	def decode(v: Vector) : String = {""}
-	def saveModel(fileName: String) {}
-
+	def saveModel(ss: SparkSession, fileName: String) {
+		model match {
+			case Some(m: Word2Vec) => m.save(ss.sparkContext, fileName)
+			case None => { ScalaUtil.writeError("Word2Vec model has not been built and cannot be saved") }
+		}
+	}
+    def wordFeatures(words: Iterable[String]): Iterable[Vector] = words.map(w => Try(word2vecModel.transform(w))).filter(_.isSuccess).map(_.get)
+    def avgWordFeatures(wordFeatures: Iterable[Vector]): Vector = Vectors.fromBreeze(wordFeatures.map(_.toBreeze).reduceLeft(_ + _) / wordFeatures.size.toDouble)
 }
 // package org.apache.spark.mllib.linalg
 
