@@ -18,6 +18,7 @@ import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.regression.LinearRegressionModel
 import org.apache.spark.mllib.regression.LinearRegressionWithSGD;
 import org.apache.spark.mllib.evaluation.MulticlassMetrics;
+import com.ai.relpredict.{RelPredictUtil, PredictedRecord, PredictedRecords}
 
 /* Victoria's first commit */
 
@@ -110,6 +111,11 @@ class LinearRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val par
        (point._1, prediction)
     })
     Some((phaseResults, dfr))
+  }
+  /* Make a prediction based on a single record. The record consists of a string ID and a Vector of doubles. */
+  def predictOne(point: (String, Vector)) : (String, Double) = {
+       val prediction = lirmodel.get.predict(point._2)
+       (point._1, prediction)    
   }
   /** 
    *  Save the model file to disk 

@@ -1,40 +1,42 @@
 package com.ai.spark.encoders
 
-import org.apache.spark.{SparkSession, SparkContext}
-import com.ai.spark._
-import org.apache.spark.ml.feature.Word2Vec
-import org.apache.spark.ml.linalg.Vector
+import org.apache.spark._
+import org.apache.spark.sql._
+import com.ai.relpredict.spark._
+import com.ai.relpredict.util._
+import org.apache.spark.mllib.feature.Word2Vec
+import org.apache.spark.mllib.linalg.{Vector, Vectors}
 import org.apache.spark.sql.{Row, DataFrame}
 
 class w2v {
-	var model: Option[Word2Vec] = None
+	// var model: Option[Word2Vec] = None
 
-	def encode(sentence: String, dlm: String) : Vector = {
-		model match {
-			case Some(m: Word2Vec) => {
-	            val words = sentence.split(dlm)
-	            avgWordFeatures(wordFeatures(words))
-			}
-			case None => { ScalaUtil.terminal_error("Word2Vec model has not been built"); new SparseVector() }
-		}
-	}
-	def buildModel(df: DataFrame, colName: String, size: Int) {
-        val word2vec = new Word2Vec()
-            .setInputCol(colName)
-            .setOutputCol("wordvec")
-            .setVectorSize(size)
-            .setMinCount(0)
-        model = Some(word2vec.fit(df))
-	}
-	def decode(v: Vector) : String = {""}
-	def saveModel(ss: SparkSession, fileName: String) {
-		model match {
-			case Some(m: Word2Vec) => m.save(ss.sparkContext, fileName)
-			case None => { ScalaUtil.writeError("Word2Vec model has not been built and cannot be saved") }
-		}
-	}
-    def wordFeatures(words: Iterable[String]): Iterable[Vector] = words.map(w => Try(word2vecModel.transform(w))).filter(_.isSuccess).map(_.get)
-    def avgWordFeatures(wordFeatures: Iterable[Vector]): Vector = Vectors.fromBreeze(wordFeatures.map(_.toBreeze).reduceLeft(_ + _) / wordFeatures.size.toDouble)
+	// def encode(sentence: String, dlm: String) : Vector = {
+	// 	model match {
+	// 		case Some(m: Word2Vec) => {
+	//             val words = sentence.split(dlm)
+	//             avgWordFeatures(wordFeatures(words))
+	// 		}
+	// 		case None => { ScalaUtil.terminal_error("Word2Vec model has not been built"); new SparseVector() }
+	// 	}
+	// }
+	// def buildModel(df: DataFrame, colName: String, size: Int) {
+ //        val word2vec = new Word2Vec()
+ //            .setInputCol(colName)
+ //            .setOutputCol("wordvec")
+ //            .setVectorSize(size)
+ //            .setMinCount(0)
+ //        model = Some(word2vec.fit(df))
+	// }
+	// def decode(v: Vector) : String = {""}
+	// def saveModel(ss: SparkSession, fileName: String) {
+	// 	model match {
+	// 		case Some(m: Word2Vec) => m.save(ss.sparkContext, fileName)
+	// 		case None => { ScalaUtil.writeError("Word2Vec model has not been built and cannot be saved") }
+	// 	}
+	// }
+ //    def wordFeatures(words: Iterable[String]): Iterable[Vector] = words.map(w => Try(word2vecModel.transform(w))).filter(_.isSuccess).map(_.get)
+ //    def avgWordFeatures(wordFeatures: Iterable[Vector]): Vector = Vectors.fromBreeze(wordFeatures.map(_.toBreeze).reduceLeft(_ + _) / wordFeatures.size.toDouble)
 }
 // package org.apache.spark.mllib.linalg
 

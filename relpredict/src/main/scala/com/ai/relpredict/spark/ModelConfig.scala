@@ -9,7 +9,8 @@ case class ModelConfig(model_class: String, model_name: String, model_version: S
 	var trained_model = ""
 	var algMap = scala.collection.mutable.Map[String, scala.collection.mutable.HashSet[String]]()
 	var runAll = false
-
+    
+    def getModelString() = model_class + "/" + model_name + "/" + model_version + "/" + trained_model
 	def getTrainedModelDate() = trained_model
 	def addTargetAlgorithm(t: String, a: String) {
 		if (algMap.contains(t)) algMap(t) += a

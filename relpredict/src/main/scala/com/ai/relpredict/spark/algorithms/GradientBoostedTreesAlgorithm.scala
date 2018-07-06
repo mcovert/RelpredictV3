@@ -13,7 +13,7 @@ import org.apache.spark.mllib.tree.GradientBoostedTrees
 import org.apache.spark.mllib.tree.configuration.BoostingStrategy
 import org.apache.spark.mllib.tree.model.GradientBoostedTreesModel
 import org.apache.spark.mllib.util.MLUtils
-
+import com.ai.relpredict.{RelPredictUtil, PredictedRecord, PredictedRecords}
 import org.apache.spark.rdd._
 import com.ai.relpredict.util.{ScalaUtil, Results}
 import com.ai.relpredict.dsl._
@@ -89,6 +89,11 @@ class GradientBoostedTreesAlgorithm(val fs : FeatureSet, target : Target[_], val
        (point._1, prediction)
     })
     Some((phaseResults, dfr))
+  }
+  /* Make a prediction based on a single record. The record consists of a string ID and a Vector of doubles. */
+  def predictOne(point: (String, Vector)) : (String, Double) = {
+       val prediction = gbmodel.get.predict(point._2)
+       (point._1, prediction)    
   }
   /* Save the model file to disk */
   def saveModel(ss : SparkSession, fileName : String) {

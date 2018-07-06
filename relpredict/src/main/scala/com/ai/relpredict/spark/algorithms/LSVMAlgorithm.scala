@@ -15,6 +15,7 @@ import org.apache.spark.mllib.util.MLUtils
 import org.apache.spark.rdd._
 import com.ai.relpredict.util.{ScalaUtil, Results}
 import com.ai.relpredict.dsl._
+import com.ai.relpredict.{RelPredictUtil, PredictedRecord, PredictedRecords}
 
 /**
  * The Linear Support Vector Machine algorithm constructs an optimal hyperplane separating binary classes. 
@@ -89,6 +90,11 @@ class LSVMAlgorithm(val fs : FeatureSet, target : Target[_], val parms : Map[Str
        (point._1, prediction)
     })
     Some((phaseResults, dfr))
+  }
+  /* Make a prediction based on a single record. The record consists of a string ID and a Vector of doubles. */
+  def predictOne(point: (String, Vector)) : (String, Double) = {
+       val prediction = dtmodel.get.predict(point._2)
+       (point._1, prediction)    
   }
   /** 
    *  Save the model file to disk 

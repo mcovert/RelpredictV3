@@ -15,6 +15,7 @@ import org.apache.spark.mllib.util.MLUtils
 import org.apache.spark.rdd._
 import com.ai.relpredict.util.{ScalaUtil, Results}
 import com.ai.relpredict.dsl._
+import com.ai.relpredict.{RelPredictUtil, PredictedRecord, PredictedRecords}
 
 /**
  * Random forests train a set of decision trees separately, and the training is done in parallel. The algorithm creates randomness into the training process 
@@ -85,6 +86,11 @@ class RandomForestAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
        (point._1, prediction)
     })
     Some((phaseResults, dfr))
+  }
+  /* Make a prediction based on a single record. The record consists of a string ID and a Vector of doubles. */
+  def predictOne(point: (String, Vector)) : (String, Double) = {
+       val prediction = rfmodel.get.predict(point._2)
+       (point._1, prediction)    
   }
   /* Save the model file to disk */
   def saveModel(ss : SparkSession, fileName : String) {

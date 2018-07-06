@@ -6,7 +6,7 @@ import org.apache.spark.sql.DataFrame
 import org.apache.spark.mllib.linalg.{Vector, Vectors}
 import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.rdd._
-import com.ai.relpredict._
+import com.ai.relpredict.{RelPredictUtil, PredictedRecord, PredictedRecords}
 import com.ai.relpredict.spark._
 import com.ai.relpredict.util.{ScalaUtil, Results}
 import java.io.FileWriter
@@ -24,9 +24,11 @@ abstract class Algorithm(val name : String) extends Serializable {
   /**  Train a model on a LabeledPoint (label : Double, featureVector : Vector) */
   def train(df : RDD[LabeledPoint]) : Results
   /**  Test a model using an identifier string and a LabeledPoint*/
-  def test(df : RDD[(String, LabeledPoint)], suffix : String) : Option[(Results, RDD[TestedVector])]
+  def test(df : RDD[(String, LabeledPoint)], suffix : String) : Option[(Results, RDD[(String, Double, Double)])]
   /**  Predict using an identifier string and a Vector*/
-  def predict(df : RDD[(String, Vector)]) : Option[(Results, RDD[PredictedVector])] 
+  def predict(df : RDD[(String, Vector)]) : Option[(Results, RDD[(String, Double)])] 
+  /**  Predict based on a single record */
+  def predictOne(point: (String, Vector)) : (String, Double)
   /**  Persist the model*/
   def saveModel(ss : SparkSession, fileName : String)
   /**  Load a saved model*/

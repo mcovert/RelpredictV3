@@ -15,6 +15,8 @@ import org.apache.spark.rdd._
 import com.ai.relpredict.util.{ScalaUtil, Results}
 import com.ai.relpredict.dsl._
 import org.apache.spark.mllib.evaluation.MulticlassMetrics
+import com.ai.relpredict.{RelPredictUtil, PredictedRecord, PredictedRecords}
+
 /**
  * The decision tree is a greedy algorithm that performs a recursive binary partitioning of the feature space. The tree predicts the same label for each leaf partition. 
  * Each partition is chosen by selecting the best split from a set of possible splits maximizing the information gain at a tree node. 
@@ -97,6 +99,11 @@ class LogisticRegressionAlgorithm(val fs : FeatureSet, target : Target[_], val p
        (point._1, prediction)
     })
     Some((phaseResults, dfr))
+  }
+  /* Make a prediction based on a single record. The record consists of a string ID and a Vector of doubles. */
+  def predictOne(point: (String, Vector)) : (String, Double) = {
+       val prediction = lrmodel.get.predict(point._2)
+       (point._1, prediction)    
   }
   /** 
    *  Save the model file to disk 
