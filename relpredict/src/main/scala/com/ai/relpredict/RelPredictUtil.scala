@@ -84,29 +84,6 @@ object RelPredictUtil extends GrammarDef {
       None
     }
 	/**
-	 *  Predict a single record using the current trained model
-	 */
-	// def predictSingleRecord(modelName: String, predictionRecord: PredictionRecord) : String = {
-	// 	val model   = getModel(modelName)
-	// 	val vec     = VectorBuilder.buildSingleVector(predictionRecord)    
-    //        val results = model.predict(vec)
-
-    //        JsonConverter.toJson(results)
-	// }
-	/**
-	 *  Predict one or more records using the current trained model
-	 */
-	// def predictRecords(modelName: String, predictionRecords: Array[PredictionRecord]) : String = {
-	// 	val model   = getModel(modelName)
-	// 	var results = new Results()
-    //        results.addArray("results")
-    //        predictionRecords.foreach{ r => {
-    //  		     val vec = VectorBuilder.buildSingleVector(r)      
-    //             results.put("results", model.predict(vec))
-    //        }}
-    //        JsonConverter.toJson(results)
-	// }
-	/**
 	 *  Clear the model cache so that any updates will be reloaded
 	 */
 	def reload() {

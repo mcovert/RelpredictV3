@@ -19,7 +19,7 @@ class w2v {
 		}
 	}
 	def buildModel(df: DataFrame, colName: String, size: Int) {
-        val word2vec = new Word2vec()
+        val word2vec = new Word2Vec()
             .setInputCol(colName)
             .setOutputCol("wordvec")
             .setVectorSize(size)
