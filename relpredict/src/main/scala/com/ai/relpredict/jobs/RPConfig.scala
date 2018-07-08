@@ -129,6 +129,7 @@ object RPConfig {
      * Get the log directory
      */
     def getLogDir() = s"${baseDir}logs/"
+    def getEncoderModelDir() = s"${baseDir}encoder_models/"
     /**
      * Get the model directory for a specific model
      */

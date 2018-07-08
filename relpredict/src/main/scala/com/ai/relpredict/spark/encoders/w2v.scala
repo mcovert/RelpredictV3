@@ -1,48 +1,31 @@
-package com.ai.spark.encoders
+package org.apache.spark.mllib.linalg
+//package com.ai.spark.encoders
 
 import org.apache.spark._
 import org.apache.spark.sql._
 import com.ai.relpredict.spark._
 import com.ai.relpredict.util._
-import org.apache.spark.mllib.feature.Word2Vec
-import org.apache.spark.mllib.linalg.{Vector, Vectors, SparseVector}
+import com.ai.relpredict.jobs.RPConfig
+import org.apache.spark.mllib.feature.{Word2Vec, Word2VecModel}
+//import org.apache.spark.mllib.linalg.{Vector, Vectors}
 import org.apache.spark.sql.{Row, DataFrame}
-
+import scala.util.Try
 
 // We will use the ml version of word2vec. When the resulting vector is encoded, it will be converted to mllib
 // Vector format.
-class w2v {
-	var model: Option[Word2Vec] = None
+class w2v(name: String, ss: SparkSession) {
+	val model = Word2VecModel.load(ss.sparkContext, RPConfig.getEncoderModelDir() + name)
 
 	def encode(sentence: String, dlm: String) : Vector = {
-		model match {
-			case Some(m: Word2Vec) => {
-	            val words = sentence.split(dlm)
-	            SparseVector.fromML(avgWordFeatures(wordFeatures(words)))
-			}
-			case None => { ScalaUtil.terminal_error("Word2Vec model has not been built"); new SparseVector() }
-		}
-	}
-	def buildModel(df: DataFrame, colName: String, size: Int) {
-        val word2vec = new Word2Vec()
-            .setInputCol(colName)
-            .setOutputCol("wordvec")
-            .setVectorSize(size)
-            .setMinCount(0)
-        model = Some(word2vec.fit(df))
+        val words = sentence.split(dlm)
+        avgWordFeatures(wordFeatures(words))
 	}
 	// Strictly speaking, there is no decode function since encode is essentially a hash. Will need to account for this in 
 	// some algorithm translations. May need to construct an inverse based on record id, or maybe do a join later to the
 	// original record.
 	def decode(v: Vector) : String = {""}
-	def saveModel(ss: SparkSession, fileName: String) {
-		model match {
-			case Some(m: Word2Vec) => m.save(ss.sparkContext, fileName)
-			case None => { ScalaUtil.writeError("Word2Vec model has not been built and cannot be saved") }
-		}
-	}
-    def wordFeatures(words: Iterable[String]): Iterable[Vector] = words.map(w => Try(word2vecModel.transform(w))).filter(_.isSuccess).map(_.get)
-    def avgWordFeatures(wordFeatures: Iterable[Vector]): Vector = Vectors.fromBreeze(wordFeatures.map(_.toBreeze).reduceLeft(_ + _) / wordFeatures.size.toDouble)
+    def wordFeatures(words: Iterable[String]): Iterable[Vector] = words.map(w => Try(model.transform(w))).filter(_.isSuccess).map(_.get)
+    def avgWordFeatures(wordFeatures: Iterable[Vector]): Vector = Vectors.fromBreeze(wordFeatures.map(_.asBreeze).reduceLeft(_ + _) / wordFeatures.size.toDouble)
 }
 // package org.apache.spark.mllib.linalg
 
