@@ -1,19 +1,18 @@
 package org.apache.spark.mllib.linalg
 //package com.ai.spark.encoders
-
+// Note that 
 import org.apache.spark._
 import org.apache.spark.sql._
 import com.ai.relpredict.spark._
 import com.ai.relpredict.util._
 import com.ai.relpredict.jobs.RPConfig
 import org.apache.spark.mllib.feature.{Word2Vec, Word2VecModel}
-//import org.apache.spark.mllib.linalg.{Vector, Vectors}
 import org.apache.spark.sql.{Row, DataFrame}
 import scala.util.Try
 
 // We will use the ml version of word2vec. When the resulting vector is encoded, it will be converted to mllib
 // Vector format.
-class w2v(name: String, ss: SparkSession) {
+class w2v(name: String, ss: SparkSession) extends com.ai.relpredict.spark.RPEncoder[String](name, ss) {
 	val model = Word2VecModel.load(ss.sparkContext, RPConfig.getEncoderModelDir() + name)
 
 	def encode(sentence: String, dlm: String) : Vector = {
@@ -24,6 +23,12 @@ class w2v(name: String, ss: SparkSession) {
 	// some algorithm translations. May need to construct an inverse based on record id, or maybe do a join later to the
 	// original record.
 	def decode(v: Vector) : String = {""}
+	def buildModel(df: DataFrame, colName: String, size: Int) {
+
+	}
+	def saveModel(fileName: String, overwrite: Boolean) {
+		//if (overwrite) model.save(fileName)
+	}
     def wordFeatures(words: Iterable[String]): Iterable[Vector] = words.map(w => Try(model.transform(w))).filter(_.isSuccess).map(_.get)
     def avgWordFeatures(wordFeatures: Iterable[Vector]): Vector = Vectors.fromBreeze(wordFeatures.map(_.asBreeze).reduceLeft(_ + _) / wordFeatures.size.toDouble)
 }

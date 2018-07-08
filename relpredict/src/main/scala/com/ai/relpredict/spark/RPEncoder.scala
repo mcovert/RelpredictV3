@@ -1,4 +1,4 @@
-package com.ai.spark
+package com.ai.relpredict.spark
 
 import org.apache.spark.mllib.linalg.{Vector, Vectors}
 import org.apache.spark.sql._
@@ -10,9 +10,9 @@ import com.ai.relpredict.spark._
 import org.apache.spark.rdd._
 import com.ai.relpredict._
 
-abstract class RPEncoder[A] {
-	def encode(value: A) : Vector
-	def buildModel(df: DataFrame, colName: String, size: Int)
+abstract class RPEncoder[A](name: String, ss: SparkSession) {
+	def encode(value: A, dlm: String) : Vector
 	def decode(v: Vector) : A
-	def saveModel(fileName: String)
+	def buildModel(df: DataFrame, colName: String, size: Int)
+	def saveModel(fileName: String, overwrite: Boolean)
 }
