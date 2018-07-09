@@ -13,6 +13,5 @@ import com.ai.relpredict._
 abstract class RPEncoder[A](name: String, ss: SparkSession) {
 	def encode(value: A, dlm: String) : Vector
 	def decode(v: Vector) : A
-	def buildModel(df: DataFrame, colName: String, size: Int)
-	def saveModel(fileName: String, overwrite: Boolean)
+	def buildAndSaveModel(ss: SparkSession, df: DataFrame, colName: String, size: Int, dlm: String, fileName: String, overwrite: Boolean) 
 }

@@ -23,11 +23,13 @@ class w2v(name: String, ss: SparkSession) extends com.ai.relpredict.spark.RPEnco
 	// some algorithm translations. May need to construct an inverse based on record id, or maybe do a join later to the
 	// original record.
 	def decode(v: Vector) : String = {""}
-	def buildModel(df: DataFrame, colName: String, size: Int) {
-
-	}
-	def saveModel(fileName: String, overwrite: Boolean) {
-		//if (overwrite) model.save(fileName)
+	def buildAndSaveModel(ss: SparkSession, df: DataFrame, colName: String, size: Int, dlm: String, fileName: String, overwrite: Boolean) {
+        import ss.implicits._
+		if (!SparkUtil.hdfsFileExists(fileName) || overwrite) {
+           val word2vec = new Word2Vec()
+           word2vec.fit(df.map(r => (r.getAs[String](colName)).split(dlm).toSeq).rdd).save(ss.sparkContext, fileName)
+        }
+		else ScalaUtil.writeError(s"Word2Vec model ${fileName} exists and overwrite was not specified. The moel will not be saved.")
 	}
     def wordFeatures(words: Iterable[String]): Iterable[Vector] = words.map(w => Try(model.transform(w))).filter(_.isSuccess).map(_.get)
     def avgWordFeatures(wordFeatures: Iterable[Vector]): Vector = Vectors.fromBreeze(wordFeatures.map(_.asBreeze).reduceLeft(_ + _) / wordFeatures.size.toDouble)

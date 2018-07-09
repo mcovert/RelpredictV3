@@ -1,5 +1,7 @@
 [0m[[0m[0minfo[0m] [0m[0mPackaging /home/mcovert/rp-repo/relpredict/target/scala-2.11/relpredict_2.11-0.1-SNAPSHOT.jar ...[0m
 [0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/apache/spark/mllib/linalg/w2v$$anonfun$buildAndSaveModel$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/org/apache/spark/mllib/linalg/w2v$$anonfun$buildAndSaveModel$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/util/Results$$anonfun$print$1$$anonfun$apply$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/mcovert/rp-repo/relpredict/target/scala-2.11/classes/com/ai/relpredict/util/Results$$anonfun$print$1$$anonfun$apply$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/ai/relpredict/spark/algorithms/RandomForestAlgorithm$$anonfun$2.class[0m
