@@ -22,32 +22,29 @@ case class PredictedRecords(records: Array[PredictedRecord])
 
 object RelPredictUtil extends GrammarDef {
 
-	var modelMap: scala.collection.mutable.Map[String, Model] = scala.collection.mutable.Map[String, Model]()
+	var modelCache = new ModelCache()
 	def makeModelNameString(model_class: String, model_name: String, model_version: String) = model_class + "/" + model_name + "/" + model_version
 	def makeTrainedModelNameString(model_class: String, model_name: String, model_version: String, model_train_date: String) = 
 		  model_class + "/" + model_name + "/" + model_version + "/" + model_train_date
 	/**
 	 *  Get a model. If it is not in cache, try to load it and put it there.
 	 */
-	 def getTrainedModel(model_class: String, model_name: String, model_version: String) : Option[Model] = {
-	 	val modelName = makeModelNameString(model_class, model_name, model_version)
-	 	// See if it's cached
-	 	if (modelMap.contains(modelName))
-	 		return Some(modelMap(modelName))
-	 	var model : Option[Model] = None
-	 	getModelDef(model_class, model_name, model_version) match {
-	 	    case Some(modelDef: ModelDef) => {
-	 	    	model = Some(new Model(modelDef, None, new Datamap("")))
-	 	    	// val currentFile = RPConfig.getModelDir() + "current"
-	 	    	// if (!SparkUtil.hdfsFileExists(currentFile))
-	 	    	// 	ScalaUtil.terminal_error(s"The trained model configuration file ${currentFile} does not exists. This moel cannot be used. This is a terminal error.")
-	 	    	// model.get.loadCurrent(currentFile)
-	 	    }
-	 	    case _ => ScalaUtil.writeError(s"Load of model definition for $model_class, $model_name, $model_version failed")	
+	 def getModel(model_class: String, model_name: String, model_version: String, ss: SparkSession) : Option[Model] = {
+	 	modelCache.get(model_class, model_name, model_version) match {
+	 		case Some(m: Model) => return Some(m)
+	 		case _ => 
 	 	}
-	 	// Cache it
-	 	modelMap(modelName) = model.get
-	 	model
+	 	getModelDef(model_class, model_name, model_version) match {
+	 		case Some(md: ModelDef) => {
+	 			val model = new com.ai.relpredict.spark.Model(md, None, new Datamap(""))
+	 			val modelConfig = new ModelConfig(model_class, model_name, model_version)
+                modelConfig.loadFromCurrent()
+                modelConfig.configure(model, ss)
+                modelCache.add(model_class, model_name, model_version, model)
+                Some(model)
+	 		}
+	 	    case _ => None
+	 	}
 	 }
 	 def getModelDef(model_class: String, model_name: String, model_version: String) : Option[ModelDef] = {
         getModelDefFromFile(RPConfig.getModelDir() + model_name + ".modeldef")
@@ -87,6 +84,6 @@ object RelPredictUtil extends GrammarDef {
 	 *  Clear the model cache so that any updates will be reloaded
 	 */
 	def reload() {
-		modelMap.clear
+		modelCache.reset()
 	}
 }

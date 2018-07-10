@@ -16,8 +16,8 @@ case class Relpredicter(model_class : String, model_name: String, model_version:
     val modelDef:    Option[ModelDef] = RelPredictUtil.getModelDef(model_class, model_name, model_version)
     var model:       Option[Model]    = None
     val modelConfig: ModelConfig      = new ModelConfig(model_class, model_name, model_version)
-    var records_processed: Int    = 0
-    var processing_time:   Double = 0.0
+    var records_processed: Int        = 0
+    var processing_time:   Double     = 0.0
 
     modelDef match {
     	case Some(md: ModelDef) => {
