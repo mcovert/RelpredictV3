@@ -2,6 +2,7 @@ package com.ai.relpredict.jobs
 
 import java.io._
 import org.apache.spark.sql._
+import com.ai.relpredict.util._
 
 
 /**
@@ -21,6 +22,7 @@ object RPVocabProcessor {
       import ss.sqlContext.implicits._
       baseDir = if (args(0).endsWith("/")) args(0) else args(0) + "/"
       val configFile = args(1)
+      ScalaUtil.writeInfo(s"Creating vocabulary files in ${baseDir} using configuration from ${configFile}") 
       val source = scala.io.Source.fromFile(configFile)
       source.getLines.foreach{l => {
       	val tokens = l.split(",")
@@ -29,14 +31,15 @@ object RPVocabProcessor {
     }
     def createMapFile(name: String, sql: String) {
     	// Run sql Command to get Dataframe and convert to indexed map
-        val df = ss.sqlContext.sql(sql)
-        val map = df.select(name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap
+      val df = ss.sqlContext.sql(sql)
+      val map = df.select(name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap
     	// Write Map to HDFS File 
     	val sb = new StringBuilder()
     	map.keys.foreach{ k => sb.append(k.replace("\t","") + "\t" + map(k) + "\n")}
-        val file = new File(baseDir + name + ".tsv")
-        val bw = new BufferedWriter(new FileWriter(file))
-        bw.write(sb.toString)
-        bw.close   		
+      val file = new File(baseDir + name + ".tsv")
+      ScalaUtil.writeInfo(s"Creating ${file} with ${map.size} entries") 
+      val bw = new BufferedWriter(new FileWriter(file))
+      bw.write(sb.toString)
+      bw.close   		
     }
 }

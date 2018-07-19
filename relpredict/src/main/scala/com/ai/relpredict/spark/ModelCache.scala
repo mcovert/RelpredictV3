@@ -10,7 +10,7 @@ class ModelCache {
     }
 	def add(model_class: String, model_name: String, model_version: String, model: Model) {
         val key = makeKey(model_class, model_name, model_version)
-        if (cache.contains(key)) ScalaUtil.writeWarning(s"Model ${key} exists in cacahe and willbe replaced.")
+        if (cache.contains(key)) ScalaUtil.writeWarning(s"Model ${key} exists in cache and will be replaced.")
 		cache(key) = model
 	}
 	def reset() {

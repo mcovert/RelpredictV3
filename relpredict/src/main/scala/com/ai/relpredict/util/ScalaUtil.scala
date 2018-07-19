@@ -169,7 +169,9 @@ object ScalaUtil {
             id_hm.add(s)
          }
          // Hash the string to fit into a pre-existing slot
-         Math.abs(hash(s) % map.size)
+         val hashVal = hash(s) % map.size
+         ScalaUtil.writeWarning(s"String ${s} is hashed to ${hashVal}")
+         Math.abs(hashVal)
       }
     }
     def getUnknownStringMaps() = identifiers.toMap

@@ -8,6 +8,7 @@ object AlgorithmUtil {
    * Generate decision tree model text from input string by substituting feature names and values for vector indices.
    */
   def getTreeModelText(treeString : String, target : Target[_], dlm : String = "|") = {
+    ScalaUtil.writeInfo(s"${target.getName()}=${treeString}")
     val lines = treeString.split("\n")
     val sb = new StringBuilder(s"Decision tree for target ${target.getName()}$dlm")
     for (line <- lines) {
@@ -24,7 +25,9 @@ object AlgorithmUtil {
           sb.append(dlm)
         }
     }
-    sb.toString()
+    val dtm = sb.toString()
+    ScalaUtil.writeInfo(s"${target.getName()}=${dtm}")
+    dtm
   } 
   /** 
    *  Generate a confusion matrix

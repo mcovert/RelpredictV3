@@ -11,17 +11,32 @@ var predict_request =
 	option:         'best',    // 'best' = best algorithm, 'all' = all algorithms
 	records:		[
 	                     { record: [
-	                     	 { field: "claim_number", value: "111111" },
-	                     	 { field: "claim_amt",    value: "1234.00"},
-	                     	 { field: "payer",        value: "AETNA"},
-	                     	 { field: "state",        value: 'OH'}
+	                     	 { field: "claim_number",   value: "111111" },
+	                     	 { field: "claim_amt",      value: "1234.00"},
+	                     	 { field: "diag_codes",     value: "diag1|diag2|diag3"},
+	                     	 { field: "cpt_codes",      value: "cpt1|cpt2|cpt3"},
+	                     	 { field: "modifier_codes", value: "mod1|mod2|mod3"},
+	                     	 { field: "payers",         value: "payer1|payer2|payer3"},  // Encoded as neic_prov_id-claim_type, warp_payer_code,  
+//	                     	 { field: "payers",         value: "primary_payer"},         // payer_name, etc. Must be consistent across uses.
+	                     	 { field: "ins_type_code",  value: "CO"},
+	                     	 { field: "facility_type",  value: "facility_type"},
+	                     	 { field: "stay_length",    value: "3"},
+	                     	 { field: "referred",       value: "Y"},
+	                     	 { field: "state",          value: 'OH'}
 	                     ]},
 	                     { record: [
-	                     	 { field: "claim_number", value: "222222" },
-	                     	 { field: "claim_amt",    value: "2345.00"},
-	                     	 { field: "payer",        value: "AETNA"},
-	                     	 { field: "state",        value: 'KY'}
-	                     ]}
+	                     { record: [
+	                     	 { field: "claim_number",   value: "222222" },
+	                     	 { field: "claim_amt",      value: "2345.00"},
+	                     	 { field: "diag_codes",     value: "diag1|diag2|diag3"},
+	                     	 { field: "cpt_codes",      value: "cpt1|cpt2|cpt3"},
+	                     	 { field: "modifier_codes", value: "mod1|mod2|mod3"},
+	                     	 { field: "payers",         value: "payer1|payer2|payer3"},  // Encoded as neic_prov_id-claim_type, warp_payer_code,  
+	                     	 { field: "ins_type_code",  value: "PR"},
+	                     	 { field: "facility_type",  value: "facility_type"},
+	                     	 { field: "stay_length",    value: "4"},
+	                     	 { field: "referred",       value: "N"},
+	                     	 { field: "state",          value: 'KY'}	                     ]}
 	                ]
 };
 var predict_response =
@@ -29,7 +44,8 @@ var predict_response =
 	status: 		'OK',
 	model_class:	'claims',
 	model_name:		'claim_denials',
-	model_version:	1     // Specify 0 to use the current model
+	model_version:	1,
+	model_train_date: '201807151201270101'
 	predictions:    [
 	                   { 
 	                   	 id:        '111111',
