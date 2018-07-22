@@ -44,7 +44,7 @@ class RandomForestAlgorithm(val fs : FeatureSet, target : Target[_], val parms :
     val numTrees = ScalaUtil.getParm("trees", "5", parms).toInt
     val recLen = df.take(1)(0).features.size
     val featureSubsetStrategy = ScalaUtil.getParm("strategy", "auto", parms)
-    ScalaUtil.writeInfo(s"RandomForest training with (records=${df.count}, length=$recLen, impurity=$impurity, maxDepth=$maxDepth, maxBins=$maxBins, trees=$numTrees, strategy=$featureSubsetStrategy)")
+    ScalaUtil.writeInfo(s"RandomForest training with (records=${df.count}, length=$recLen, numclasses=${target.size} impurity=$impurity, maxDepth=$maxDepth, maxBins=$maxBins, trees=$numTrees, strategy=$featureSubsetStrategy)")
     rfmodel = Some(RandomForest.trainClassifier(df, target.size, categoryMap, numTrees, featureSubsetStrategy, impurity, maxDepth, maxBins))
     checkAlgorithmModel(rfmodel, true, "RandomForest - training failed to produce a model")
     phaseResults

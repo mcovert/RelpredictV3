@@ -62,7 +62,10 @@ case class TextFeature(name : String, desc : String, parms : Map[String, String]
   def getType() : String = "text"
   override def getVectorLength() = map.size 
   def encode(r : Row) : Vector = {
-    VectorBuilder.buildDenseVectorFromText(r.getAs[String](columnName), map, dlm, dataMap, name)
+    val txt = r.getAs[String](columnName)
+    val vv = VectorBuilder.buildDenseVectorFromText(txt, map, dlm, dataMap, name)
+    //ScalaUtil.writeInfo(s"Encode: $txt -> ${VectorBuilder.decodeVectorToText(vv, invMap, dlm)}")
+    vv
   }
   def decode(v : Vector) : String = VectorBuilder.decodeVectorToText(v, invMap, dlm)
   def decodeID(pos : Int) = if (pos >= 0 && pos < getCount()) s"$name=${invMap(pos)}" else s"$name"
@@ -104,7 +107,7 @@ case class StringCategoryFeature(name : String, desc : String, parms : Map[Strin
   val encStyle = ScalaUtil.getParm("encode", "ohc", parms)
   def getCount() : Int = map.size
   def getType() : String = "string"
-  override def getVectorLength() = { if (encStyle == "ohc") map.size else 1 } 
+  override def getVectorLength() = 1
   def encode(r : Row) : Vector = {
       val s = translate(r.getAs[String](columnName))
       Vectors.dense(Array(ScalaUtil.getStringIndexFromMap(name, s, map).toDouble))
@@ -113,7 +116,7 @@ case class StringCategoryFeature(name : String, desc : String, parms : Map[Strin
     if (v.size != 1) ScalaUtil.writeError(s"Categorical String feature $name is not of length 1. Using first position.")
      invMap(v(0).toInt)
   } 
-  def decodeID(pos : Int) = if (pos >= 0 && pos < getCount()) s"$name=${invMap(pos)}" else s"$name"
+  def decodeID(pos : Int) = /* if (pos >= 0 && pos < getCount()) s"$name=${invMap(pos)}" else */ s"$name"
   def getMap() = Some(map)
 }
 /**

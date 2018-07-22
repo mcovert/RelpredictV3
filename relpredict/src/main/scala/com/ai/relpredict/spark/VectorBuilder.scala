@@ -161,7 +161,8 @@ object VectorBuilder {
   def getFeatureAndValue(fs: FeatureSet, pos : Int) : String = {
     for (f <- fs.features) {
       if (pos >= f.getPosition() && pos <= (f.getPosition() + f.getVectorLength() - 1))
-          return f.decodeID(pos)
+          // Fix: decodeID needs a relative position within the feature.
+          return f.decodeID(pos - f.getPosition())
     }
     "?"
   }

@@ -15,6 +15,7 @@ case class Model(modelDef : ModelDef, df : Option[DataFrame], dm: Datamap) {
   var featureSets = modelDef.featureSets.map(fsd => (fsd.name -> buildFeatureSet(fsd))).toMap
   var targets     = buildTargets(modelDef.targets) 
   val ss          = SparkUtil.getSparkSession()
+  val vocabSuffix = ".vocab"
   /**
    *  Load a full model from a directory. This includes all of the map files for features
    *  and targets. 
@@ -86,18 +87,19 @@ case class Model(modelDef : ModelDef, df : Option[DataFrame], dm: Datamap) {
   def saveMap(name: String, map: Option[Map[String, Int]]) {
     if (!saveStatus.contains(name)) return
     map match {
-      case Some(m : Map[String, Int]) => SparkUtil.saveMapToHDFSFile(m, RPConfig.getTrainedModelDir() + name + ".tsv")
+      case Some(m : Map[String, Int]) => SparkUtil.saveMapToHDFSFile(m, RPConfig.getTrainedModelDir() + name + ".vocab")
       case None =>
     }
   }
   def getTargetOrFeatureMap(name: String, ss: SparkSession, df: Option[DataFrame]) : Map[String, Int] = {
-    ScalaUtil.writeInfo(s"Locating vocabulary map for ${name}")
     // Search trained model directory
-  var fileName = ""
+    var baseFileName = name + ".vocab"
+    var fileName = ""
+    ScalaUtil.writeInfo(s"Locating vocabulary map for ${name} as ${baseFileName}")
     val tmd = RPConfig.getTrainedModelDir()
     if (!tmd.isEmpty()) {
-       fileName = tmd + name + ".tsv"
-       //ScalaUtil.writeInfo(s">>>Looking for ${fileName}")
+       fileName = tmd + baseFileName
+       ScalaUtil.writeInfo(s"Searching for ${fileName}")
        if (SparkUtil.hdfsFileExists(fileName)) {
            ScalaUtil.writeInfo(s"Loading vocabulary map ${name} from trained model directory: ${fileName}")
            val m = SparkUtil.loadMapFromHDFSFile(fileName)
@@ -106,8 +108,8 @@ case class Model(modelDef : ModelDef, df : Option[DataFrame], dm: Datamap) {
        }
     }
     // Search model directory
-    fileName = RPConfig.getModelDir() + name + ".tsv"
-    //ScalaUtil.writeInfo(s">>>Looking for ${fileName}")
+    fileName = RPConfig.getModelDir() + baseFileName
+    ScalaUtil.writeInfo(s"Searching for ${fileName}")
     if (SparkUtil.hdfsFileExists(fileName)) {
            ScalaUtil.writeInfo(s"Loading vocabulary map ${name} from model directory: ${fileName}")
            val m = SparkUtil.loadMapFromHDFSFile(fileName)
@@ -115,8 +117,8 @@ case class Model(modelDef : ModelDef, df : Option[DataFrame], dm: Datamap) {
            return m
     }
     // Search global vocabulary directory
-    fileName = RPConfig.getVocabularyDir() + name + ".tsv"
-    //ScalaUtil.writeInfo(s">>>Looking for ${fileName}")
+    fileName = RPConfig.getVocabularyDir() + baseFileName
+    ScalaUtil.writeInfo(s"Searching for ${fileName}")
     if (SparkUtil.hdfsFileExists(fileName)) {
            ScalaUtil.writeInfo(s"Loading vocabulary map ${name} from global directory: ${fileName}")
            val m = SparkUtil.loadMapFromHDFSFile(fileName)
@@ -124,7 +126,6 @@ case class Model(modelDef : ModelDef, df : Option[DataFrame], dm: Datamap) {
            return m
     }
     // Create vocabulary from SQL statement
-    //ScalaUtil.writeInfo(s">>>Creating from SQL")
     df match {
         case Some(d: DataFrame) => {
            ScalaUtil.writeInfo(s"Generating vocabulary map ${name} from SQL statement")

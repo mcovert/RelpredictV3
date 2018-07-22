@@ -10,7 +10,7 @@ import com.ai.relpredict.spark._
 import org.apache.spark.rdd._
 import com.ai.relpredict._
 
-abstract class RPEncoder[A](name: String, ss: SparkSession) {
+abstract class RPEncoder[A](val name: String, ss: SparkSession) {
 	def encode(value: A, dlm: String) : Vector
 	def decode(v: Vector) : A
 	def buildAndSaveModel(ss: SparkSession, df: DataFrame, colName: String, size: Int, dlm: String, fileName: String, overwrite: Boolean) 

@@ -15,7 +15,9 @@ import com.ai.relpredict.util._
 */
 object RPVocabProcessor {
     private val ss      : SparkSession = SparkSession.builder().appName("rp_vocab").config("spark.master", "yarn").enableHiveSupport().getOrCreate() 
-    private var baseDir : String = "/tmp/"
+    private var baseDir : String       = "/tmp/"
+    val         vocabSuffix            = ".vocab"
+    val         datamapSuffix          = ".datamap"
 
     def main(args: Array[String]) {
       import ss.implicits._
@@ -26,20 +28,36 @@ object RPVocabProcessor {
       val source = scala.io.Source.fromFile(configFile)
       source.getLines.foreach{l => {
       	val tokens = l.split(",")
-       	createMapFile(tokens(0), tokens(1))
+        tokens(0) match {
+       	   case "vocab" => createVocabFile(tokens(1), tokens(2))
+           case "map"   => createDatamapFile(tokens(1), tokens(2))
+           case _       => ScalaUtil.writeError(s"Unknown statement: ${l}")
+        }
       }}
     }
-    def createMapFile(name: String, sql: String) {
+    def createVocabFile(name: String, sql: String) {
     	// Run sql Command to get Dataframe and convert to indexed map
       val df = ss.sqlContext.sql(sql)
       val map = df.select(name).collect.map(r => r.getString(0)).distinct.zipWithIndex.toMap
     	// Write Map to HDFS File 
     	val sb = new StringBuilder()
     	map.keys.foreach{ k => sb.append(k.replace("\t","") + "\t" + map(k) + "\n")}
-      val file = new File(baseDir + name + ".tsv")
+      val file = new File(baseDir + name + vocabSuffix)
       ScalaUtil.writeInfo(s"Creating ${file} with ${map.size} entries") 
       val bw = new BufferedWriter(new FileWriter(file))
       bw.write(sb.toString)
       bw.close   		
+    }
+    def createDatamapFile(name: String, sql: String) {
+      val df = ss.sqlContext.sql(sql)
+      val datamap = df.collect.map(r => (r.getString(0) -> r.getString(1))).toMap
+      // Write Map to HDFS File 
+      val sb = new StringBuilder()
+      datamap.keys.foreach{ k => sb.append(k.replace("\t","") + "\t" + datamap(k) + "\n")}
+      val file = new File(baseDir + name + datamapSuffix)
+      ScalaUtil.writeInfo(s"Creating datamap ${name} with ${datamap.size} entries") 
+      val bw = new BufferedWriter(new FileWriter(file))
+      bw.write(sb.toString)
+      bw.close      
     }
 }
