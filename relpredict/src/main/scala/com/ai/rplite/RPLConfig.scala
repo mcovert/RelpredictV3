@@ -8,14 +8,9 @@ import com.ai.relpredict.dsl._
 import org.apache.spark.sql.SparkSession
 
 class RPLConfig {
-  var modelClass                      = ""
-  var modelName                       = Array[String]()
-  val fsetName                        = "fset"
   var data      : String              = ""
-  var modelId   : String              = "id"
-  var model     : Option[Model]       = None
   var run       : ArrayBuffer[String] = ArrayBuffer[String]()
-  var modelDef  : Option[ModelDef]    = None
+  var modelDef  : RPLModel = null
 
   def getQuery() = data.toString
 
@@ -23,32 +18,35 @@ class RPLConfig {
   
   def load(fileName: String, ss: SparkSession) {
       // Load the configuration file
-      var flist = scala.collection.mutable.ListBuffer[FeatureDef]()
-      var tlist = scala.collection.mutable.ListBuffer[TargetDef]()
+      var flist = scala.collection.mutable.ListBuffer[RPLFeature]()
+      var tlist = scala.collection.mutable.ListBuffer[RPLTarget]()
       val source = scala.io.Source.fromFile(fileName)
       source.getLines.foreach{l => {
       	val tokens = l.split("[ ]+")
         tokens(0) match {
-       	   case "model"    => modelName = l.substring(6).trim().split("/")
-           case "id"       => modelId = l.substring(3).trim()
-           case "feature"  => flist += new FeatureDef(tokens(1), tokens(2), "", "")
-           case "target"   => tlist += new TargetDef(tokens(1), tokens(2), "", tokens(4), fsetName, "")
-           case "data"     => data = l.substring(5).trim()
-           case "run"      => l.substring(4).trim.split("[ ]+")
-           case "#"        => 
-           case _          => ScalaUtil.writeError(s"Unknown statement: ${l}")
+       	   case "model"     => modelDef = createModelDef(l.substring(6).trim())
+           case "id"        => modelDef.setId(l.substring(3).trim())
+           case "feature"   => modelDef.addFeature(RPLFeature(tokens(1), tokens(2)))
+           case "target"    => modelDef.addTarget(RPLTarget(tokens(1), tokens(2)))
+           case "algorithm" => {
+               modelDef.addAlgorithm(RPLAlgorithm(tokens(1)))
+               for (i <- 2 to (tokens.length - 1)) modelDef.addParm(tokens(i))
+           }
+           case "data"      => data = l.substring(5).trim()
+           case "run"       => l.substring(4).trim.split("[ ]+")
+           case "#"         => 
+           case _           => ScalaUtil.writeError(s"Unknown statement: ${l}")
         }
       }} 
-      // Build the ModelDef
-      modelClass = modelName(0)
-      val fset = FeatureSetDef(fsetName, flist.toList, modelId)
-      modelDef = Some(ModelDef(modelName(1), modelName(2), "", List(fset), tlist.toList))
-      // Build the model (which will load required data)
-      import ss.implicits._
-      import ss.sqlContext.implicits._
-      // Configure the model using the current trained model file. This will also load the trained models for each target.
-      val modelConfig = new ModelConfig(modelClass, modelName(1), modelName(2))
-      modelConfig.loadFromCurrent()
-      //modelConfig.configure(model, ss) 
+  }
+  private def createModelDef(mdef: String) : RPLModel = {
+      val mt = mdef.substring(6).trim().split("/")
+      if (mt.size < 2) ScalaUtil.terminal_error(s"Model name $mdef is invalid")
+      val modelClass                       = mt(0)
+      val modelName                        = mt(1)
+      val modelVersion = if (mt.size > 2) mt(2) else "1"
+      val modelTrainDate = if (mt.size > 3) mt(3) else ""
+      if (mt.size > 4) ScalaUtil.writeWarning(s"Too many model parameters. Some are ignored.")
+      RPLModel(modelClass, modelName, modelVersion, modelTrainDate)
   }
 }

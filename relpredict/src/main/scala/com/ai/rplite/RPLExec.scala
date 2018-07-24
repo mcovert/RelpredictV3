@@ -3,8 +3,9 @@ package com.ai.rplite
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Map
 import com.ai.relpredict.util.ScalaUtil
-import com.ai.relpredict.spark.Model
 import com.ai.relpredict.dsl._
+import org.apache.spark.ml.Pipeline
+import org.apache.spark.ml.Transformer
 import org.apache.spark.sql.{SparkSession, DataFrame}
 
 class RPLExec { 
@@ -24,6 +25,9 @@ class RPLExec {
    *
    */
   def buildPipeline(config: RPLConfig, df: DataFrame, ss: SparkSession) {
+    //var pipeArray = scala.collection.mutable.ArrayBuffer[Transformer]()
+    //config.modelDef.get.features.foreach{ f => pipeArray += buildFeature(f)}
+    //val pipeline = new Pipeline(pipeArray.toArray)
   } 
   def run(run: Array[String]) {
     // Run each requested phase (job)
@@ -38,7 +42,13 @@ class RPLExec {
     }
   }
   def predict() {}
-  def train() {}
+  /**
+   *  Train and save a model
+   *
+   */
+  def train() {
+    val traindir = ScalaUtil.getDirectoryDate()
+  }
   def display() {
 
   }
