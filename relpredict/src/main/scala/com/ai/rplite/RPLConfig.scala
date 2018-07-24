@@ -49,4 +49,10 @@ class RPLConfig {
       if (mt.size > 4) ScalaUtil.writeWarning(s"Too many model parameters. Some are ignored.")
       RPLModel(modelClass, modelName, modelVersion, modelTrainDate)
   }
+  def print() {
+      modelDef.print()
+      println(s"Data: $data")
+      val r = run.mkString(",")
+      println(s"Run: $r")
+  }
 }

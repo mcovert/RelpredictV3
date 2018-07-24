@@ -13,8 +13,7 @@ object RPLMain {
       config.load(args(0), ss) 
       val df = ss.sqlContext.sql(config.getQuery())
       df.cache
-      val rplExec = new RPLExec()
-      rplExec.buildPipeline(config, df, ss) 
-      rplExec.run(config.getJobs())
+      val rplExec = new RPLExec(config)
+      rplExec.display()
     }
 }

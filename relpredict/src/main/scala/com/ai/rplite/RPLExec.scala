@@ -8,7 +8,7 @@ import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.Transformer
 import org.apache.spark.sql.{SparkSession, DataFrame}
 
-class RPLExec { 
+class RPLExec(val config: RPLConfig) { 
   /**
    *  For each feuture type, build its encoder and chain it into the pipeline. Also add target processing
    *  which includes creating and haining the algorithms (estimators). Finall, add the result decoders.
@@ -50,6 +50,6 @@ class RPLExec {
     val traindir = ScalaUtil.getDirectoryDate()
   }
   def display() {
-
+    config.print()
   }
 }

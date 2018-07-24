@@ -24,17 +24,28 @@ case class RPLModel(val model_class:   String, val model_name: String,
    def addParm(kv: String) { lastParms.addParm(kv) }
    def addParm(k: String, v: String) { lastParms.addParm(k, v) }
    def setId(model_id: String) { id = model_id }
+   def getId() = id
+   def print() {
+   	println(s"Model       $model_class/$model_name/$model_version")
+   	println(s"Train date: $model_train_date")
+   	println(s"Id:         ${getId()}")
+   	features.foreach{ f => f.print()}
+   	targets.foreach{ t => t.print()}
+   }
 }
 case class RPLFeature(val feature_name: String, val feature_type: String) {
    var parms = RPLParameters()
+   def print() { println(s"  Feature: $feature_name $feature_type ${parms.print()}")}
 }
 case class RPLTarget(val target_name: String, val target_type: String) {
    var parms = RPLParameters()
    var algorithms : ArrayBuffer[RPLAlgorithm] = ArrayBuffer[RPLAlgorithm]()
    def addAlgorithm(algorithm: RPLAlgorithm) { algorithms += algorithm }
+   def print() { println(s"  Target: $target_name $target_type ${parms.print()}")}
 }
 case class RPLAlgorithm(val alg_name: String) {
    var parms = RPLParameters()
+   def print() { println(s"    Algorithm: $alg_name  ${parms.print()}")}
 }
 case class RPLParameters() {
 	var parms = scala.collection.mutable.Map[String, String]()
@@ -44,5 +55,10 @@ case class RPLParameters() {
 	}
 	def addParm(k: String, v: String) {
         parms(k) = v
+	}
+	def print() {
+		var sb = new StringBuilder("")
+		parms.keys.foreach{k => {sb.append(" "); sb.append(s"$k=${parms(k)} ")}}
+	    println(sb.toString())
 	}
 }
