@@ -33,7 +33,7 @@ class RPLConfig {
                for (i <- 2 to (tokens.length - 1)) modelDef.addParm(tokens(i))
            }
            case "data"      => data = l.substring(5).trim()
-           case "run"       => l.substring(4).trim.split("[ ]+")
+           case "run"       => run  = l.substring(4).trim.split("[ ]+")
            case "#"         => 
            case _           => ScalaUtil.writeError(s"Unknown statement: ${l}")
         }

@@ -58,7 +58,7 @@ case class RPLParameters() {
 	}
 	def print() {
 		var sb = new StringBuilder("")
-		parms.keys.foreach{k => {sb.append(" "); sb.append(s"$k=${parms(k)} ")}}
+		parms.keys.foreach{k => {sb ++= s" $k=${parms(k)} ")}}
 	    println(sb.toString())
 	}
 }
