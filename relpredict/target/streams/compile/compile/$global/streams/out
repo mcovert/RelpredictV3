@@ -7,10 +7,64 @@
 [0m[[0m[33mwarn[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/util/Results.scala:72:19: non-variable type argument com.ai.relpredict.util.Results in type pattern scala.collection.mutable.ArrayBuffer[com.ai.relpredict.util.Results] is unchecked since it is eliminated by erasure[0m
 [0m[[0m[33mwarn[0m] [0m[0m         case ab: ArrayBuffer[Results] => ab.foreach{ r: Results => r.print(level + "   ")} [0m
 [0m[[0m[33mwarn[0m] [0m[0m                  ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/relpredict/spark/ModelConfig.scala:31:35: match may not be exhaustive.[0m
-[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following input: Some((x: java.io.Reader forSome x not in java.io.BufferedReader))[0m
-[0m[[0m[33mwarn[0m] [0m[0m       SparkUtil.getHDFSFileReader(currentFile) match {[0m
-[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mthere was one deprecation warning; re-run with -deprecation for details[0m
-[0m[[0m[33mwarn[0m] [0m[0mthere was one feature warning; re-run with -feature for details[0m
-[0m[[0m[33mwarn[0m] [0m[0m6 warnings found[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLExec.scala:29:7: not found: value RPLMFactory[0m
+[0m[[0m[31merror[0m] [0m[0m      RPLMFactory.createTransformer(f.feature_name, f.feature_type, f.parms)[0m
+[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLMLFactory.scala:24:62: class Estimator takes type parameters[0m
+[0m[[0m[31merror[0m] [0m[0m	def createEstimator(target: RPLTarget, alg: RPLAlgorithm) : Estimator = {[0m
+[0m[[0m[31merror[0m] [0m[0m	                                                            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLExec.scala:34:64: value +: is not a member of Nothing[0m
+[0m[[0m[31merror[0m] [0m[0m    pipeTargets.map(e => new Pipeline().setStages(pipeFeatures +: e))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                               ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLExec.scala:35:5: a pure expression does nothing in statement position; you may be omitting necessary parentheses[0m
+[0m[[0m[33mwarn[0m] [0m[0m    pipeTargets[0m
+[0m[[0m[33mwarn[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLMLFactory.scala:14:23: value getParm is not a member of String[0m
+[0m[[0m[31merror[0m] [0m[0m		val encType = parms.getParm("encode")[0m
+[0m[[0m[31merror[0m] [0m[0m		                    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLMLFactory.scala:38:21: not found: value encType[0m
+[0m[[0m[31merror[0m] [0m[0m		val transformer = encType match {[0m
+[0m[[0m[31merror[0m] [0m[0m		                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLMLFactory.scala:16:53: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : String[0m
+[0m[[0m[31merror[0m] [0m[0m required: scala.collection.mutable.Map[String,String][0m
+[0m[[0m[31merror[0m] [0m[0m			case "text"    => createTextTransformer(name,    parms)[0m
+[0m[[0m[31merror[0m] [0m[0m			                                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLMLFactory.scala:17:22: not found: value createStringTransformer[0m
+[0m[[0m[31merror[0m] [0m[0m			case "string"  => createStringTransformer(name,  parms)[0m
+[0m[[0m[31merror[0m] [0m[0m			                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLMLFactory.scala:46:21: not found: value encType[0m
+[0m[[0m[31merror[0m] [0m[0m		val transformer = encType match {[0m
+[0m[[0m[31merror[0m] [0m[0m		                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLMLFactory.scala:47:26: not found: type MixMaxScaler[0m
+[0m[[0m[31merror[0m] [0m[0m			case "minmax"  => new MixMaxScaler()[0m
+[0m[[0m[31merror[0m] [0m[0m			                      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLMLFactory.scala:49:40: not found: value name_vector[0m
+[0m[[0m[31merror[0m] [0m[0m				                  .setOutputCol(s"$name_vector")[0m
+[0m[[0m[31merror[0m] [0m[0m				                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLMLFactory.scala:51:24: value getParm is not a member of scala.collection.mutable.Map[String,String][0m
+[0m[[0m[31merror[0m] [0m[0m				val splits = parms.getParm("buckets").split(",").map(v => v.toDouble)[0m
+[0m[[0m[31merror[0m] [0m[0m				                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLMLFactory.scala:52:56: not found: value name_vector[0m
+[0m[[0m[31merror[0m] [0m[0m				new Bucketizer().setInputCol(name).setOutputCol(s"$name_vector").setSplits(splits)[0m
+[0m[[0m[31merror[0m] [0m[0m				                                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLMLFactory.scala:18:53: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : String[0m
+[0m[[0m[31merror[0m] [0m[0m required: scala.collection.mutable.Map[String,String][0m
+[0m[[0m[31merror[0m] [0m[0m			case "double"  => createNumericTransformer(name, parms)[0m
+[0m[[0m[31merror[0m] [0m[0m			                                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLMLFactory.scala:19:53: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : String[0m
+[0m[[0m[31merror[0m] [0m[0m required: scala.collection.mutable.Map[String,String][0m
+[0m[[0m[31merror[0m] [0m[0m			case "integer" => createNumericTransformer(name, parms) [0m
+[0m[[0m[31merror[0m] [0m[0m			                                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLMLFactory.scala:20:53: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : String[0m
+[0m[[0m[31merror[0m] [0m[0m required: scala.collection.mutable.Map[String,String][0m
+[0m[[0m[31merror[0m] [0m[0m			case "boolean" => createBooleanTransformer(name, parms) [0m
+[0m[[0m[31merror[0m] [0m[0m			                                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/mcovert/rp-repo/relpredict/src/main/scala/com/ai/rplite/RPLMLFactory.scala:21:22: not found: value createdateTransformer[0m
+[0m[[0m[31merror[0m] [0m[0m			case "date"    => createdateTransformer(name,    parms) [0m
+[0m[[0m[31merror[0m] [0m[0m			                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mfour warnings found[0m
+[0m[[0m[31merror[0m] [0m[0m16 errors found[0m

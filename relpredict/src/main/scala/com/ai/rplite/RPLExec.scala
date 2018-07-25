@@ -25,9 +25,14 @@ class RPLExec(val config: RPLConfig) {
    *
    */
   def buildPipeline(config: RPLConfig, df: DataFrame, ss: SparkSession) {
-    //var pipeArray = scala.collection.mutable.ArrayBuffer[Transformer]()
-    //config.modelDef.get.features.foreach{ f => pipeArray += buildFeature(f)}
-    //val pipeline = new Pipeline(pipeArray.toArray)
+    val pipeFeatures = config.modelDef.features.map(f => {
+      RPLMFactory.createTransformer(f.feature_name, f.feature_type, f.parms)
+    })
+    val pipeTargets = config.modelDef.targets.flatMap( t => {
+        t.algorithms.map(a => RPLMLFactory.createEstimator(t, a))
+    })
+    pipeTargets.map(e => new Pipeline().setStages(pipeFeatures +: e))
+    pipeTargets
   } 
   def run(run: Array[String]) {
     // Run each requested phase (job)

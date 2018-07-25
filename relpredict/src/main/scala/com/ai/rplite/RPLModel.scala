@@ -33,15 +33,20 @@ case class RPLModel(val model_class:   String, val model_name: String,
    	targets.foreach{ t => t.print()}
    }
 }
-case class RPLFeature(val feature_name: String, val feature_type: String) {
+class ModelColumn(val col_name: String, val col_type: String) {
    var parms = RPLParameters()
-   def print() { println(s"  Feature: $feature_name $feature_type ${parms.print()}")}
+   def print() { println(s"  $col_name $col_type ${parms.print()}")}	
 }
-case class RPLTarget(val target_name: String, val target_type: String) {
-   var parms = RPLParameters()
+case class RPLFeature(val feature_name: String, val feature_type: String) 
+     extends ModelColumn(feature_name, feature_type) {
+   override def print() { println(s"  Feature: $feature_name $feature_type ${parms.print()}")}
+}	
+case class RPLTarget(val target_name: String, val target_type: String) 
+          extends ModelColumn(target_name, target_type)
+{
    var algorithms : ArrayBuffer[RPLAlgorithm] = ArrayBuffer[RPLAlgorithm]()
    def addAlgorithm(algorithm: RPLAlgorithm) { algorithms += algorithm }
-   def print() { println(s"  Target: $target_name $target_type ${parms.print()}")}
+   override def print() { println(s"  Target: $target_name $target_type ${parms.print()}")}
 }
 case class RPLAlgorithm(val alg_name: String) {
    var parms = RPLParameters()
@@ -58,7 +63,8 @@ case class RPLParameters() {
 	}
 	def print() {
 		var sb = new StringBuilder("")
-		parms.keys.foreach{k => {sb ++= s" $k=${parms(k)} ")}}
+		parms.keys.foreach{k => {sb ++= s" $k=${parms(k)} "}}
 	    println(sb.toString())
 	}
+	def getParm(key: String) = parms.getOrElse(key, "")
 }

@@ -9,7 +9,7 @@ import org.apache.spark.sql.SparkSession
 
 class RPLConfig {
   var data      : String              = ""
-  var run       : ArrayBuffer[String] = ArrayBuffer[String]()
+  var run       : Array[String] = Array[String]()
   var modelDef  : RPLModel = null
 
   def getQuery() = data.toString
