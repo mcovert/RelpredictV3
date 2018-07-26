@@ -11,7 +11,6 @@ case class EstimatorWrapper(val algorithm_name: String)
 
 object RPLMLFactory {
 	def createTransformer(name: String, dataType: String, parms: String) : Transformer = {
-		val encType = parms.getParm("encode")
 		dataType match {
 			case "text"    => createTextTransformer(name,    parms)
 			case "string"  => createStringTransformer(name,  parms)
@@ -35,8 +34,19 @@ object RPLMLFactory {
 		estimator
 	}
 	def createTextTransformer(name: String, parms: Map[String, String]) = {
+		val encType = parms.getParm("encode")
 		val transformer = encType match {
-			case "multi-hot" =>
+			case "multi-hot" => 
+			case "w2v"       =>
+			case _           => ScalaUtil.terminal_error(s"Unknown encoding for TEXT $name")
+		}
+		transformer
+	}
+	def createStringTransformer(name: String, parms: Map[String, String]) = {
+		val encType = parms.getParm("encode")
+		val transformer = encType match {
+			case "category"  =>
+			case "one-hot"   => 
 			case "w2v"       =>
 			case _           => ScalaUtil.terminal_error(s"Unknown encoding for TEXT $name")
 		}
@@ -46,10 +56,12 @@ object RPLMLFactory {
 		val transformer = encType match {
 			case "minmax"  => new MixMaxScaler()
 				                  .setInputCol(name)
-				                  .setOutputCol(s"$name_vector")
+				                  .setOutputCol(s"${name}_vector")
 			case "bucket"  =>  {
 				val splits = parms.getParm("buckets").split(",").map(v => v.toDouble)
-				new Bucketizer().setInputCol(name).setOutputCol(s"$name_vector").setSplits(splits)
+				new Bucketizer().setInputCol(name)
+				                .setOutputCol(s"${name}_vector")
+				                .setSplits(splits)
 			}
 			case _         => ScalaUtil.terminal_error(s"Unknown encoding for numeric $name")
 		}
