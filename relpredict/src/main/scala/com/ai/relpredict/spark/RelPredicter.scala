@@ -10,9 +10,18 @@ import org.apache.spark.mllib.linalg.{Vector, Vectors}
 
 /**
  * The Model class is an implementation of a ModelDef specification. It is the container for all components.
+ * Usage:
+ *         val rp = Relpredicter("Claims", "denials", "1")
+ *
+ *         val resultDf = dataFrame.map(r: row => rp.predict(r))
+ *         - or -
+ *         val resultArray = rp.predict(dataFrame.toArray)
+ *
+ *         val stats = rp.stats()   // Gives records processed and elapsed time
+ *         rp.reset()               // Resets all statistics
  */
 case class Relpredicter(model_class : String, model_name: String, model_version: String) {
-	val ss:          SparkSession     = SparkUtil.buildSparkSession("relpredicter", "yarn")
+	  val ss:          SparkSession     = SparkUtil.buildSparkSession("relpredicter", "yarn")
     val modelDef:    Option[ModelDef] = RelPredictUtil.getModelDef(model_class, model_name, model_version)
     var model:       Option[Model]    = None
     val modelConfig: ModelConfig      = new ModelConfig(model_class, model_name, model_version)
@@ -22,20 +31,20 @@ case class Relpredicter(model_class : String, model_name: String, model_version:
     modelDef match {
     	case Some(md: ModelDef) => {
     		model = Some(new Model(md, None, new Datamap("")))
-            modelConfig.loadFromCurrent()
-            modelConfig.configure(model.get, ss)
+        modelConfig.loadFromCurrent()
+        modelConfig.configure(model.get, ss)
     	}
-        case None => ScalaUtil.writeError(s"Model for ${model_class}/${model_name}/${model_version} could not be loaded.")
+      case None => ScalaUtil.writeError(s"Model for ${model_class}/${model_name}/${model_version} could not be loaded.")
     }
     def predict(rows: Array[Row]) : Array[PredictedRecord] = {
     	rows.flatMap(r => predict(r))
     }
     def predict(row: Row): Array[PredictedRecord] = {
     	val starttime = new Date()
-        var vectors	   = scala.collection.mutable.Map[String, (String, Vector)]()
-        var v: (String, Vector) = null
-        var predictions = scala.collection.mutable.ArrayBuffer[PredictedRecord]()
-        model.get.targets.foreach(t => {
+      var vectors	   = scala.collection.mutable.Map[String, (String, Vector)]()
+      var v: (String, Vector) = null
+      var predictions = scala.collection.mutable.ArrayBuffer[PredictedRecord]()
+      model.get.targets.foreach(t => {
        	  val target_name = t.getName()
        	  val fset_name = t.getFeatureSet().name
        	  if (vectors.contains(fset_name)) v = vectors(fset_name)
@@ -47,15 +56,20 @@ case class Relpredicter(model_class : String, model_name: String, model_version:
           	val alg = a.get
             if (modelConfig.runAlgorithm(target_name, alg.name)) {
                val pred_rec = alg.predictOne(v)
-               predictions += new PredictedRecord(pred_rec._1, modelConfig.getModelString(),  target_name,    alg.name,
-	                       pred_rec._2.toString, "0",  starttime.toString)
+               predictions += new PredictedRecord(pred_rec._1, 
+                                                  modelConfig.getModelString(),  
+                                                  target_name,    
+                                                  alg.name,
+	                                                pred_rec._2.toString, 
+                                                  "0",  
+                                                  starttime.toString)
                records_processed += 1
             }
           })
-        })
-        val endtime = new Date()
-        processing_time += ((endtime.getTime - starttime.getTime)/1000.0).toDouble
-        predictions.toArray
+      })
+      val endtime = new Date()
+      processing_time += ((endtime.getTime - starttime.getTime)/1000.0).toDouble
+      predictions.toArray
     }
     def stats() = (records_processed, processing_time)
     def reset() {

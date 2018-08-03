@@ -8,6 +8,15 @@ import org.apache.spark.sql.{SparkSession, DataFrame}
 import org.apache.spark.ml.feature._
 
 case class EstimatorWrapper(val algorithm_name: String) 
+abstract class RPTransformer[A](val name: String) {
+	val transformer : A
+	def preload(parm: String)
+	def fit()
+	def print() {
+        println(s"Transformer: $name")
+	}
+	def getTransformer() = transformer
+}
 
 object RPLMLFactory {
 	def createTransformer(name: String, dataType: String, parms: String) : Transformer = {
