@@ -1,0 +1,324 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>scopt - scopt</title>
+          <meta name="description" content="scopt - scopt" />
+          <meta name="keywords" content="scopt scopt" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../lib/template.js"></script>
+      <script type="text/javascript" src="../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../index.html';
+            var hash = 'scopt.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img alt="Package" src="../lib/package_big.png" />
+        
+        <h1>scopt</h1><span class="permalink">
+      <a href="../index.html#scopt.package" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">scopt</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        
+        
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="scopt.OptionDef" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="OptionDef[A,C]extendsAnyRef"></a>
+      <a id="OptionDef[A,C]:OptionDef[A,C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="OptionDef.html"><span class="name">OptionDef</span></a><span class="tparams">[<span name="A">A</span>, <span name="C">C</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.package@OptionDef[A,C]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scopt.OptionParser" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="OptionParser[C]extendsProductwithSerializable"></a>
+      <a id="OptionParser[C]:OptionParser[C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="OptionParser.html"><span class="name">OptionParser</span></a><span class="tparams">[<span name="C">C</span>]</span><span class="params">(<span name="programName">programName: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.package@OptionParser[C]extendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"><code>scopt.immutable.OptionParser</code> is instantiated within your object,
+set up by an (ordered) sequence of invocations of
+the various builder methods such as
+<a href="#opt[A](Char,String)(Read[A]):OptionDef[A,C]"><code>opt</code></a> method or
+<a href="#arg[A](String)(Read[A]):OptionDef[A,C]"><code>arg</code></a> method.</a></a></code></p><div class="fullcomment"><div class="comment cmt"><p><code>scopt.immutable.OptionParser</code> is instantiated within your object,
+set up by an (ordered) sequence of invocations of
+the various builder methods such as
+<a href="#opt[A](Char,String)(Read[A]):OptionDef[A,C]"><code>opt</code></a> method or
+<a href="#arg[A](String)(Read[A]):OptionDef[A,C]"><code>arg</code></a> method.</p><pre><span class="kw">val</span> parser = <span class="kw">new</span> scopt.OptionParser[Config](<span class="lit">"scopt"</span>) {
+  head(<span class="lit">"scopt"</span>, <span class="lit">"3.x"</span>)
+
+  opt[<span class="std">Int</span>](<span class="lit">'f'</span>, <span class="lit">"foo"</span>).action( (x, c) <span class="kw">=&gt;</span>
+    c.copy(foo = x) ).text(<span class="lit">"foo is an integer property"</span>)
+
+  opt[File](<span class="lit">'o'</span>, <span class="lit">"out"</span>).required().valueName(<span class="lit">"<file>"</span>).
+    action( (x, c) <span class="kw">=&gt;</span> c.copy(out = x) ).
+    text(<span class="lit">"out is a required file property"</span>)
+
+  opt[(<span class="std">String</span>, <span class="std">Int</span>)](<span class="lit">"max"</span>).action({
+      <span class="kw">case</span> ((k, v), c) <span class="kw">=&gt;</span> c.copy(libName = k, maxCount = v) }).
+    validate( x <span class="kw">=&gt;</span>
+      <span class="kw">if</span> (x._2 &gt; <span class="num">0</span>) success
+      <span class="kw">else</span> failure(<span class="lit">"Value <max> must be >0"</span>) ).
+    keyValueName(<span class="lit">"<libname>"</span>, <span class="lit">"<max>"</span>).
+    text(<span class="lit">"maximum count for <libname>"</span>)
+
+  opt[<span class="std">Seq</span>[File]](<span class="lit">'j'</span>, <span class="lit">"jars"</span>).valueName(<span class="lit">"<jar1>,<jar2>..."</span>).action( (x,c) <span class="kw">=&gt;</span>
+    c.copy(jars = x) ).text(<span class="lit">"jars to include"</span>)
+
+  opt[<span class="std">Map</span>[<span class="std">String</span>,<span class="std">String</span>]](<span class="lit">"kwargs"</span>).valueName(<span class="lit">"k1=v1,k2=v2..."</span>).action( (x, c) <span class="kw">=&gt;</span>
+    c.copy(kwargs = x) ).text(<span class="lit">"other arguments"</span>)
+
+  opt[<span class="std">Unit</span>](<span class="lit">"verbose"</span>).action( (_, c) <span class="kw">=&gt;</span>
+    c.copy(verbose = <span class="kw">true</span>) ).text(<span class="lit">"verbose is a flag"</span>)
+
+  opt[<span class="std">Unit</span>](<span class="lit">"debug"</span>).hidden().action( (_, c) <span class="kw">=&gt;</span>
+    c.copy(debug = <span class="kw">true</span>) ).text(<span class="lit">"this option is hidden in the usage text"</span>)
+
+  help(<span class="lit">"help"</span>).text(<span class="lit">"prints this usage text"</span>)
+
+  arg[File](<span class="lit">"<file>..."</span>).unbounded().optional().action( (x, c) <span class="kw">=&gt;</span>
+    c.copy(files = c.files :+ x) ).text(<span class="lit">"optional unbounded args"</span>)
+
+  note(<span class="lit">"some notes."</span>.newline)
+
+  cmd(<span class="lit">"update"</span>).action( (_, c) <span class="kw">=&gt;</span> c.copy(mode = <span class="lit">"update"</span>) ).
+    text(<span class="lit">"update is a command."</span>).
+    children(
+      opt[<span class="std">Unit</span>](<span class="lit">"not-keepalive"</span>).abbr(<span class="lit">"nk"</span>).action( (_, c) <span class="kw">=&gt;</span>
+        c.copy(keepalive = <span class="kw">false</span>) ).text(<span class="lit">"disable keepalive"</span>),
+      opt[<span class="std">Boolean</span>](<span class="lit">"xyz"</span>).action( (x, c) <span class="kw">=&gt;</span>
+        c.copy(xyz = x) ).text(<span class="lit">"xyz is a boolean property"</span>),
+      opt[<span class="std">Unit</span>](<span class="lit">"debug-update"</span>).hidden().action( (_, c) <span class="kw">=&gt;</span>
+        c.copy(debug = <span class="kw">true</span>) ).text(<span class="lit">"this option is hidden in the usage text"</span>),
+      checkConfig( c <span class="kw">=&gt;</span>
+        <span class="kw">if</span> (c.keepalive &amp;&amp; c.xyz) failure(<span class="lit">"xyz cannot keep alive"</span>)
+        <span class="kw">else</span> success )
+    )
+}
+
+<span class="cmt">// parser.parse returns Option[C]</span>
+parser.parse(args, Config()) <span class="kw">match</span> {
+  <span class="kw">case</span> <span class="std">Some</span>(config) <span class="kw">=&gt;</span>
+    <span class="cmt">// do stuff</span>
+
+  <span class="kw">case</span> <span class="std">None</span> <span class="kw">=&gt;</span>
+    <span class="cmt">// arguments are bad, error message will have been displayed</span>
+}</pre></div></div>
+    </li><li name="scopt.Read" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="Read[A]extendsAnyRef"></a>
+      <a id="Read[A]:Read[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Read.html"><span class="name">Read</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.package@Read[A]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scopt.RenderingMode" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="RenderingModeextendsAnyRef"></a>
+      <a id="RenderingMode:RenderingMode"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="RenderingMode.html"><span class="name">RenderingMode</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.package@RenderingModeextendsAnyRef" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scopt.Zero" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="Zero[A]extendsAnyRef"></a>
+      <a id="Zero[A]:Zero[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Zero.html"><span class="name">Zero</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.package@Zero[A]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scopt.Read" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Read"></a>
+      <a id="Read:Read"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Read$.html"><span class="name">Read</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.package@Read" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scopt.RenderingMode" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="RenderingMode"></a>
+      <a id="RenderingMode:RenderingMode"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="RenderingMode$.html"><span class="name">RenderingMode</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.package@RenderingMode" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scopt.Validation" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Validation"></a>
+      <a id="Validation:Validation"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Validation$.html"><span class="name">Validation</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.package@Validation" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="scopt.Zero" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Zero"></a>
+      <a id="Zero:Zero"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Zero$.html"><span class="name">Zero</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#scopt.package@Zero" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>

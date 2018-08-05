@@ -1,0 +1,21 @@
+model     Claims/claim_denial/1
+id        claimnumber
+feature   claim_amount  double
+feature   payer         single-category
+feature   cpt_groups    multi-category   
+feature   mdcs          multi-category
+feature   prior_auth    boolean
+feature   referred      boolean
+feature   len_of_stay   double
+feature   service_lines integer
+target    status        single-category 
+algorithm dtree         depth=6
+algorithm logreg        iter=100
+algorithm gbtree
+algorithm random_forest trees=11,depth=6
+target    days_to_pay   double 
+algorithm linreg
+target    expected_pay  double 
+algorithm linreg
+data      select * from relpredict.claim_status
+run       training 

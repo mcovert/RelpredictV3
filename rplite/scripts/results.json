@@ -1,0 +1,49 @@
+{
+    "job": {
+       "jobname": "",
+       "cmdline": "",
+       "run_date": "",
+       "run_duration": "",
+       "return_code": "",
+       "messages": [
+          {
+              "severity": "",
+              "msgtext":  "",
+              "issuer":   "",
+              "timestamp": ""
+          }
+       ]
+    },
+	  "model": {
+	     "model_class": "",
+	     "model_name":  "",
+	     "model_version": ""
+	  },
+	  "data": {
+	     "input": [
+          { "file_name": "",
+            "file_type": "",
+            "records":   ""
+          }
+	     ]
+	  },
+	  "targets": [
+	     {
+	   	   "target": {
+	          "target_name": "",
+	          "target_type": "",
+	          "algorithms": [
+               { "algorithm_name": "",
+                 "algorithm_type": "",
+                 "metrics": [
+                    { "metric_name": "",
+                      "metric_type": "",
+                      "metric_value": ""
+                    }
+                 ]
+               }
+	       ]
+	    }
+	  }
+	]
+}

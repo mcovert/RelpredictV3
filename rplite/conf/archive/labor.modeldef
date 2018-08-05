@@ -1,0 +1,12 @@
+model "labormodel" version "1.0" description "Model to predict expected salary level"
+
+   featureset "labordata" id "record_id"
+      feature "education" type "integer" description "Education level (years of schooling)" parameters ""
+      feature "gender"    type "string"  description "Gender (M or F)"   parameters ""
+      feature "city"      type "string"  description "City of residence" parameters ""
+      feature "industry"  type "string"  description "Chosen profession" parameters ""
+      feature "age"       type "integer" description "Age"               parameters ""
+      feature "skills"    type "text"    description "Skills"            parameters "dlm=pipe"
+
+   target "salary" type "string" description "Salary level (H or L)" predictedby "algorithm=lr,alpha=0.1,iter=100;algorithm=rf,iter=100" using "labordata" parameters ""
+   target "unemployment" type "string" description "Will this person experience unemplyment? (Y or N)" predictedby "algorithm=dt,depth=5" using "labordata" parameters ""

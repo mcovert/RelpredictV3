@@ -1,0 +1,276 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>jobs - com.ai.relpredict.jobs</title>
+          <meta name="description" content="jobs - com.ai.relpredict.jobs" />
+          <meta name="keywords" content="jobs com.ai.relpredict.jobs" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../index.html';
+            var hash = 'com.ai.relpredict.jobs.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img alt="Package" src="../../../../lib/package_big.png" />
+        <p id="owner"><a href="../../../package.html" class="extype" name="com">com</a>.<a href="../../package.html" class="extype" name="com.ai">ai</a>.<a href="../package.html" class="extype" name="com.ai.relpredict">relpredict</a></p>
+        <h1>jobs</h1><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.jobs.package" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">jobs</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        
+        
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="com.ai.relpredict.jobs.CommandLineParser" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="CommandLineParserextendsAnyRef"></a>
+      <a id="CommandLineParser:CommandLineParser"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="CommandLineParser.html"><span class="name">CommandLineParser</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.jobs.package@CommandLineParserextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.ai.relpredict.jobs.Config" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ConfigextendsProductwithSerializable"></a>
+      <a id="Config:Config"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Config.html"><span class="name">Config</span></a><span class="params">(<span name="jobname">jobname: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;relpredict&quot;</span></span>, <span name="sql">sql: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;select * from training&quot;</span></span>, <span name="split">split: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.8</span></span>, <span name="base_dir">base_dir: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;RelPredict&quot;</span></span>, <span name="run_type">run_type: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;train&quot;</span></span>, <span name="env">env: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;yarn-cluster&quot;</span></span>, <span name="model_def">model_def: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;model.modeldef&quot;</span></span>, <span name="model_id">model_id: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;&quot;</span></span>, <span name="data_maps">data_maps: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;&quot;</span></span>, <span name="column_map">column_map: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;&quot;</span></span>, <span name="verbose">verbose: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;false&quot;</span></span>, <span name="debug">debug: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;false&quot;</span></span>, <span name="parms">parms: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;&quot;</span></span>, <span name="run">run: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;true&quot;</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.jobs.package@ConfigextendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.ai.relpredict.jobs.Job" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="JobextendsAnyRef"></a>
+      <a id="Job:Job"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="Job.html"><span class="name">Job</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.jobs.package@JobextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.ai.relpredict.jobs.PredictionJob" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="PredictionJobextendsJobwithProductwithSerializable"></a>
+      <a id="PredictionJob:PredictionJob"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="PredictionJob.html"><span class="name">PredictionJob</span></a><span class="params">(<span name="jn">jn: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="model">model: <a href="../spark/Model.html" class="extype" name="com.ai.relpredict.spark.Model">Model</a></span>, <span name="conf">conf: <a href="Config.html" class="extype" name="com.ai.relpredict.jobs.Config">Config</a></span>, <span name="ss">ss: <span class="extype" name="org.apache.spark.sql.SparkSession">SparkSession</span></span>, <span name="df">df: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>, <span name="dm">dm: <a href="../util/Datamap.html" class="extype" name="com.ai.relpredict.util.Datamap">Datamap</a></span>, <span name="jobParms">jobParms: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <a href="Job.html" class="extype" name="com.ai.relpredict.jobs.Job">Job</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.jobs.package@PredictionJobextendsJobwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">The Prediction job uses a save trained model to predict targets on new data.</p>
+    </li><li name="com.ai.relpredict.jobs.Results" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ResultsextendsSerializablewithProduct"></a>
+      <a id="Results:Results"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Results.html"><span class="name">Results</span></a><span class="params">()</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span> with <span class="extype" name="scala.Product">Product</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.jobs.package@ResultsextendsSerializablewithProduct" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">The Results object encapsulates all returned values from any stage (setup, run, cleanup) of a Job.</p><div class="fullcomment"><div class="comment cmt"><p>The Results object encapsulates all returned values from any stage (setup, run, cleanup) of a Job. It is also used by Algorithms
+to return information. A Results object contains a return code and a set of key/value pairs that can store a variety of objects such
+as strings, integers, doubles, vectors and matrices. In addition, each value is actually an Option allowing null values to be stored.
+Results objects can be merged. Note: Maintaining key name spaces for merges Results objects is the responsibility of the user.
+</p></div></div>
+    </li><li name="com.ai.relpredict.jobs.TrainingJob" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="TrainingJobextendsJobwithProductwithSerializable"></a>
+      <a id="TrainingJob:TrainingJob"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="TrainingJob.html"><span class="name">TrainingJob</span></a><span class="params">(<span name="jn">jn: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="model">model: <a href="../spark/Model.html" class="extype" name="com.ai.relpredict.spark.Model">Model</a></span>, <span name="conf">conf: <a href="Config.html" class="extype" name="com.ai.relpredict.jobs.Config">Config</a></span>, <span name="ss">ss: <span class="extype" name="org.apache.spark.sql.SparkSession">SparkSession</span></span>, <span name="df">df: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>, <span name="dm">dm: <a href="../util/Datamap.html" class="extype" name="com.ai.relpredict.util.Datamap">Datamap</a></span>, <span name="jobParms">jobParms: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <a href="Job.html" class="extype" name="com.ai.relpredict.jobs.Job">Job</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.jobs.package@TrainingJobextendsJobwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="com.ai.relpredict.jobs.RPConfig" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="RPConfig"></a>
+      <a id="RPConfig:RPConfig"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="RPConfig$.html"><span class="name">RPConfig</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.jobs.package@RPConfig" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.ai.relpredict.jobs.RelPredict" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="RelPredict"></a>
+      <a id="RelPredict:RelPredict"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="RelPredict$.html"><span class="name">RelPredict</span></a><span class="result"> extends <a href="../dsl/GrammarDef.html" class="extype" name="com.ai.relpredict.dsl.GrammarDef">GrammarDef</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.jobs.package@RelPredict" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"> The RelPredict job</p><div class="fullcomment"><div class="comment cmt"><p> The RelPredict job</p><pre>Command line formats:
+    relpredict --run_type train  --split <span class="num">0.8</span>
+
+    relpredict --run_type predict --model saved_model.model --save_as format --output location
+               For predicted records, save_as format is hive or hdfs (the default is hive), and output location, <span class="kw">for</span> hive is the
+               output table name (must be of the proper format <span class="kw">for</span> predicted records), and <span class="kw">for</span> hdfs is the root directory
+               A predicted record format is:
+                     model           - model name (string)
+                     version         - model version (int)
+                     target          - name of predicted target (string)
+                     algorithm       - name of the alogorithm used (string)
+                     id              - record identifier (string)
+                     predicted       - predicted value (double)
+                     predicted_value - translated predicted value (string)
+                     probability     - probability that the prediction is correct (<span class="num">0.0</span> to <span class="num">1.0</span>, double)
+*
+ Both formats must specify:
+       --sql        <span class="lit">"select * from training"</span>
+       --model_def  model.modeldef
+
+ Either format can specify:
+       --column_map column_map_filename
+         A column map can be used to rename columns from thr input data frame to feature names
+       --data_map   map_name=map_file_name;map_name=map_file_name;...
+         A data map can be sepcified <span class="kw">with</span> the name of a feature or target translate values. Note: only translating <span class="std">String</span> (or Text) types is allowed.
+       --jobname    <span class="lit">"job name"</span> (default is relpredict)
+         The job name will be used by Spark
+       --env        [local | yarn-client | yarn-cluster] (default is yarn-cluster)
+         The run time environment specifies the mode that Spark will use
+       --parms      <span class="lit">"parm=val;parm=val; ... "</span>
+         Parameters that are passed to the job. They can be used symbolically in the model definition file
+       --verbose    [<span class="kw">true</span> | <span class="kw">false</span>] (default is <span class="kw">false</span>)
+         Log output level</pre></div></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>

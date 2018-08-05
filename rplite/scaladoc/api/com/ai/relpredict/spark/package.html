@@ -1,0 +1,602 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>spark - com.ai.relpredict.spark</title>
+          <meta name="description" content="spark - com.ai.relpredict.spark" />
+          <meta name="keywords" content="spark com.ai.relpredict.spark" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../index.html';
+            var hash = 'com.ai.relpredict.spark.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img alt="Package" src="../../../../lib/package_big.png" />
+        <p id="owner"><a href="../../../package.html" class="extype" name="com">com</a>.<a href="../../package.html" class="extype" name="com.ai">ai</a>.<a href="../package.html" class="extype" name="com.ai.relpredict">relpredict</a></p>
+        <h1>spark</h1><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">spark</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        
+        
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="com.ai.relpredict.spark.Algorithm" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="AlgorithmextendsSerializable"></a>
+      <a id="Algorithm:Algorithm"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="Algorithm.html"><span class="name">Algorithm</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@AlgorithmextendsSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">The Algorithm class is an abstract base class that is used as a wrapper for all algorithms.</p><div class="fullcomment"><div class="comment cmt"><p>The Algorithm class is an abstract base class that is used as a wrapper for all algorithms. This is necessary because all Spark MLLib and ML algorithms
+do not share a common ancestry.
+</p></div></div>
+    </li><li name="com.ai.relpredict.spark.BooleanFeature" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="BooleanFeatureextendsFeature[Boolean]withProductwithSerializable"></a>
+      <a id="BooleanFeature:BooleanFeature"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="BooleanFeature.html"><span class="name">BooleanFeature</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="desc">desc: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="parms">parms: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="ss">ss: <span class="extype" name="org.apache.spark.sql.SparkSession">SparkSession</span></span>, <span name="df">df: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>, <span name="column_map">column_map: <a href="../util/Datamap.html" class="extype" name="com.ai.relpredict.util.Datamap">Datamap</a></span>)</span><span class="result"> extends <a href="Feature.html" class="extype" name="com.ai.relpredict.spark.Feature">Feature</a>[<span class="extype" name="scala.Boolean">Boolean</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@BooleanFeatureextendsFeature[Boolean]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">A BooleanFeature is represented by a simple Boolean variable.</p>
+    </li><li name="com.ai.relpredict.spark.BooleanTarget" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="BooleanTargetextendsTarget[Boolean]withProductwithSerializable"></a>
+      <a id="BooleanTarget:BooleanTarget"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="BooleanTarget.html"><span class="name">BooleanTarget</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="desc">desc: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="algorithmDefs">algorithmDefs: <span class="extype" name="scala.Array">Array</span>[<a href="../dsl/AlgorithmDef.html" class="extype" name="com.ai.relpredict.dsl.AlgorithmDef">AlgorithmDef</a>]</span>, <span name="fs">fs: <a href="FeatureSet.html" class="extype" name="com.ai.relpredict.spark.FeatureSet">FeatureSet</a></span>, <span name="columnMap">columnMap: <a href="../util/Datamap.html" class="extype" name="com.ai.relpredict.util.Datamap">Datamap</a></span>, <span name="parms">parms: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <a href="Target.html" class="extype" name="com.ai.relpredict.spark.Target">Target</a>[<span class="extype" name="scala.Boolean">Boolean</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@BooleanTargetextendsTarget[Boolean]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"> A BooleanTarget encodes either true or false
+</p>
+    </li><li name="com.ai.relpredict.spark.DTNode" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="DTNodeextendsAnyRef"></a>
+      <a id="DTNode:DTNode"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="DTNode.html"><span class="name">DTNode</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@DTNodeextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.ai.relpredict.spark.DecisionTreeUtil" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="DecisionTreeUtilextendsAnyRef"></a>
+      <a id="DecisionTreeUtil:DecisionTreeUtil"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="DecisionTreeUtil.html"><span class="name">DecisionTreeUtil</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@DecisionTreeUtilextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.ai.relpredict.spark.DoubleFeature" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="DoubleFeatureextendsFeature[Double]withProductwithSerializable"></a>
+      <a id="DoubleFeature:DoubleFeature"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="DoubleFeature.html"><span class="name">DoubleFeature</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="desc">desc: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="parms">parms: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="ss">ss: <span class="extype" name="org.apache.spark.sql.SparkSession">SparkSession</span></span>, <span name="df">df: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>, <span name="column_map">column_map: <a href="../util/Datamap.html" class="extype" name="com.ai.relpredict.util.Datamap">Datamap</a></span>)</span><span class="result"> extends <a href="Feature.html" class="extype" name="com.ai.relpredict.spark.Feature">Feature</a>[<span class="extype" name="scala.Double">Double</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@DoubleFeatureextendsFeature[Double]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">A DoubleFeature is represented by a set of Doubles.</p><div class="fullcomment"><div class="comment cmt"><p>A DoubleFeature is represented by a set of Doubles. They can be normalized through their encode parameter.
+</p></div></div>
+    </li><li name="com.ai.relpredict.spark.DoubleTarget" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="DoubleTargetextendsTarget[Double]withProductwithSerializable"></a>
+      <a id="DoubleTarget:DoubleTarget"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="DoubleTarget.html"><span class="name">DoubleTarget</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="desc">desc: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="algorithmDefs">algorithmDefs: <span class="extype" name="scala.Array">Array</span>[<a href="../dsl/AlgorithmDef.html" class="extype" name="com.ai.relpredict.dsl.AlgorithmDef">AlgorithmDef</a>]</span>, <span name="fs">fs: <a href="FeatureSet.html" class="extype" name="com.ai.relpredict.spark.FeatureSet">FeatureSet</a></span>, <span name="columnMap">columnMap: <a href="../util/Datamap.html" class="extype" name="com.ai.relpredict.util.Datamap">Datamap</a></span>, <span name="parms">parms: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <a href="Target.html" class="extype" name="com.ai.relpredict.spark.Target">Target</a>[<span class="extype" name="scala.Double">Double</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@DoubleTargetextendsTarget[Double]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"> A DoubleTarget encodes a categorical set of doubles
+</p>
+    </li><li name="com.ai.relpredict.spark.ElseNode" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ElseNodeextendsDTNodewithProductwithSerializable"></a>
+      <a id="ElseNode:ElseNode"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="ElseNode.html"><span class="name">ElseNode</span></a><span class="params">(<span name="f">f: <span class="extype" name="scala.Int">Int</span></span>, <span name="o">o: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="v">v: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="n">n: <span class="extype" name="scala.Option">Option</span>[<a href="NodeMetrics.html" class="extype" name="com.ai.relpredict.spark.NodeMetrics">NodeMetrics</a>]</span>)</span><span class="result"> extends <a href="DTNode.html" class="extype" name="com.ai.relpredict.spark.DTNode">DTNode</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@ElseNodeextendsDTNodewithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.ai.relpredict.spark.Feature" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="Feature[A]extendsSerializable"></a>
+      <a id="Feature[A]:Feature[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="Feature.html"><span class="name">Feature</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@Feature[A]extendsSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"> A Feature is an abstract class representing a variable to be encoded and used for training and prediction.</p><div class="fullcomment"><div class="comment cmt"><p> A Feature is an abstract class representing a variable to be encoded and used for training and prediction. It is sub-typed through several
+ case classes to provide functionality. A Feature is mapped by default to a column with its own name. A Feature can be mapped to a different
+ name using a column map. A Feature can be transformed using a Datamap.
+</p></div></div>
+    </li><li name="com.ai.relpredict.spark.FeatureSet" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="FeatureSetextendsProductwithSerializable"></a>
+      <a id="FeatureSet:FeatureSet"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="FeatureSet.html"><span class="name">FeatureSet</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="features">features: <span class="extype" name="scala.List">List</span>[<a href="Feature.html" class="extype" name="com.ai.relpredict.spark.Feature">Feature</a>[_]]</span>, <span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@FeatureSetextendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">A FeatureSet is a named set of Features.</p><div class="fullcomment"><div class="comment cmt"><p>A FeatureSet is a named set of Features. They are assigned to a Target.
+</p></div></div>
+    </li><li name="com.ai.relpredict.spark.IfNode" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="IfNodeextendsDTNodewithProductwithSerializable"></a>
+      <a id="IfNode:IfNode"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="IfNode.html"><span class="name">IfNode</span></a><span class="params">(<span name="f">f: <span class="extype" name="scala.Int">Int</span></span>, <span name="o">o: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="v">v: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="n">n: <span class="extype" name="scala.Option">Option</span>[<a href="NodeMetrics.html" class="extype" name="com.ai.relpredict.spark.NodeMetrics">NodeMetrics</a>]</span>)</span><span class="result"> extends <a href="DTNode.html" class="extype" name="com.ai.relpredict.spark.DTNode">DTNode</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@IfNodeextendsDTNodewithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.ai.relpredict.spark.IntegerFeature" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="IntegerFeatureextendsFeature[Long]withProductwithSerializable"></a>
+      <a id="IntegerFeature:IntegerFeature"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="IntegerFeature.html"><span class="name">IntegerFeature</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="desc">desc: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="parms">parms: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="ss">ss: <span class="extype" name="org.apache.spark.sql.SparkSession">SparkSession</span></span>, <span name="df">df: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>, <span name="column_map">column_map: <a href="../util/Datamap.html" class="extype" name="com.ai.relpredict.util.Datamap">Datamap</a></span>)</span><span class="result"> extends <a href="Feature.html" class="extype" name="com.ai.relpredict.spark.Feature">Feature</a>[<span class="extype" name="scala.Long">Long</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@IntegerFeatureextendsFeature[Long]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">An IntegerFeature is represented by a set of Integers.</p><div class="fullcomment"><div class="comment cmt"><p>An IntegerFeature is represented by a set of Integers. They can be normalized through their encode parameter.
+Integers are represented by a Long to cover short, int, and bigint data types.
+</p></div></div>
+    </li><li name="com.ai.relpredict.spark.IntegerTarget" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="IntegerTargetextendsTarget[Long]withProductwithSerializable"></a>
+      <a id="IntegerTarget:IntegerTarget"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="IntegerTarget.html"><span class="name">IntegerTarget</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="desc">desc: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="algorithmDefs">algorithmDefs: <span class="extype" name="scala.Array">Array</span>[<a href="../dsl/AlgorithmDef.html" class="extype" name="com.ai.relpredict.dsl.AlgorithmDef">AlgorithmDef</a>]</span>, <span name="fs">fs: <a href="FeatureSet.html" class="extype" name="com.ai.relpredict.spark.FeatureSet">FeatureSet</a></span>, <span name="columnMap">columnMap: <a href="../util/Datamap.html" class="extype" name="com.ai.relpredict.util.Datamap">Datamap</a></span>, <span name="parms">parms: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <a href="Target.html" class="extype" name="com.ai.relpredict.spark.Target">Target</a>[<span class="extype" name="scala.Long">Long</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@IntegerTargetextendsTarget[Long]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"> An IntegerTarget encodes a categorical set of integers.</p><div class="fullcomment"><div class="comment cmt"><p> An IntegerTarget encodes a categorical set of integers. Integers are represented as a Long to handle short, int, and bigint.
+</p></div></div>
+    </li><li name="com.ai.relpredict.spark.Model" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ModelextendsProductwithSerializable"></a>
+      <a id="Model:Model"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Model.html"><span class="name">Model</span></a><span class="params">(<span name="modelDef">modelDef: <a href="../dsl/ModelDef.html" class="extype" name="com.ai.relpredict.dsl.ModelDef">ModelDef</a></span>, <span name="ss">ss: <span class="extype" name="org.apache.spark.sql.SparkSession">SparkSession</span></span>, <span name="df">df: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>, <span name="dm">dm: <a href="../util/Datamap.html" class="extype" name="com.ai.relpredict.util.Datamap">Datamap</a></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@ModelextendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">The Model class is an implementation of a ModelDef specification.</p><div class="fullcomment"><div class="comment cmt"><p>The Model class is an implementation of a ModelDef specification. It is the container for all components.
+</p></div></div>
+    </li><li name="com.ai.relpredict.spark.NodeMetrics" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="NodeMetricsextendsAnyRef"></a>
+      <a id="NodeMetrics:NodeMetrics"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="NodeMetrics.html"><span class="name">NodeMetrics</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@NodeMetricsextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.ai.relpredict.spark.NullFeature" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="NullFeatureextendsFeature[String]withProductwithSerializable"></a>
+      <a id="NullFeature:NullFeature"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="NullFeature.html"><span class="name">NullFeature</span></a><span class="params">()</span><span class="result"> extends <a href="Feature.html" class="extype" name="com.ai.relpredict.spark.Feature">Feature</a>[<span class="extype" name="scala.Predef.String">String</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@NullFeatureextendsFeature[String]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">A Null feature used generally when some sort of parse error has occurred.</p>
+    </li><li name="com.ai.relpredict.spark.PredictedNode" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="PredictedNodeextendsDTNodewithProductwithSerializable"></a>
+      <a id="PredictedNode:PredictedNode"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="PredictedNode.html"><span class="name">PredictedNode</span></a><span class="params">(<span name="predicted">predicted: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="n">n: <span class="extype" name="scala.Option">Option</span>[<a href="NodeMetrics.html" class="extype" name="com.ai.relpredict.spark.NodeMetrics">NodeMetrics</a>]</span>)</span><span class="result"> extends <a href="DTNode.html" class="extype" name="com.ai.relpredict.spark.DTNode">DTNode</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@PredictedNodeextendsDTNodewithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.ai.relpredict.spark.RootNode" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="RootNodeextendsDTNodewithProductwithSerializable"></a>
+      <a id="RootNode:RootNode"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="RootNode.html"><span class="name">RootNode</span></a><span class="params">()</span><span class="result"> extends <a href="DTNode.html" class="extype" name="com.ai.relpredict.spark.DTNode">DTNode</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@RootNodeextendsDTNodewithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.ai.relpredict.spark.StringCategoryFeature" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="StringCategoryFeatureextendsFeature[String]withProductwithSerializable"></a>
+      <a id="StringCategoryFeature:StringCategoryFeature"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="StringCategoryFeature.html"><span class="name">StringCategoryFeature</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="desc">desc: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="parms">parms: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="ss">ss: <span class="extype" name="org.apache.spark.sql.SparkSession">SparkSession</span></span>, <span name="df">df: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>, <span name="column_map">column_map: <a href="../util/Datamap.html" class="extype" name="com.ai.relpredict.util.Datamap">Datamap</a></span>)</span><span class="result"> extends <a href="Feature.html" class="extype" name="com.ai.relpredict.spark.Feature">Feature</a>[<span class="extype" name="scala.Predef.String">String</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@StringCategoryFeatureextendsFeature[String]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"> A StringCategoryFeature is single column category encoded as one column with an ordinal value.</p><div class="fullcomment"><div class="comment cmt"><p> A StringCategoryFeature is single column category encoded as one column with an ordinal value. StringCategoryFeatures are generally used with algorithms that
+ rely on grouping and counting rather than distance.</p></div></div>
+    </li><li name="com.ai.relpredict.spark.StringFeature" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="StringFeatureextendsFeature[String]withProductwithSerializable"></a>
+      <a id="StringFeature:StringFeature"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="StringFeature.html"><span class="name">StringFeature</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="desc">desc: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="parms">parms: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="ss">ss: <span class="extype" name="org.apache.spark.sql.SparkSession">SparkSession</span></span>, <span name="df">df: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>, <span name="column_map">column_map: <a href="../util/Datamap.html" class="extype" name="com.ai.relpredict.util.Datamap">Datamap</a></span>)</span><span class="result"> extends <a href="Feature.html" class="extype" name="com.ai.relpredict.spark.Feature">Feature</a>[<span class="extype" name="scala.Predef.String">String</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@StringFeatureextendsFeature[String]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"> A StringFeature is one hot encoded by single field set of strings.</p><div class="fullcomment"><div class="comment cmt"><p> A StringFeature is one hot encoded by single field set of strings. StringFeatures are generally used with algorithms that need some sort
+ of &quot;distance&quot; calculation to determine similarity.
+</p></div></div>
+    </li><li name="com.ai.relpredict.spark.StringTarget" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StringTargetextendsTarget[String]withProductwithSerializable"></a>
+      <a id="StringTarget:StringTarget"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="StringTarget.html"><span class="name">StringTarget</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="desc">desc: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="algorithmDefs">algorithmDefs: <span class="extype" name="scala.Array">Array</span>[<a href="../dsl/AlgorithmDef.html" class="extype" name="com.ai.relpredict.dsl.AlgorithmDef">AlgorithmDef</a>]</span>, <span name="map">map: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>]</span>, <span name="invMap">invMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Int">Int</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="fs">fs: <a href="FeatureSet.html" class="extype" name="com.ai.relpredict.spark.FeatureSet">FeatureSet</a></span>, <span name="columnMap">columnMap: <a href="../util/Datamap.html" class="extype" name="com.ai.relpredict.util.Datamap">Datamap</a></span>, <span name="parms">parms: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <a href="Target.html" class="extype" name="com.ai.relpredict.spark.Target">Target</a>[<span class="extype" name="scala.Predef.String">String</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@StringTargetextendsTarget[String]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"> A StringTarget encodes a categorical set of strings</p>
+    </li><li name="com.ai.relpredict.spark.Target" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="Target[A]extendsSerializable"></a>
+      <a id="Target[A]:Target[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="Target.html"><span class="name">Target</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@Target[A]extendsSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">A Target represents a variable to be predicted.</p><div class="fullcomment"><div class="comment cmt"><p>A Target represents a variable to be predicted. It is typed. A Target is mapped to a column, which by default is the same as its name. A Target (and all of its
+specified Algorithms) is assigned to a FeatureSet. If multiple algorithms that use different encodings are to be used on a single target,
+this can be accomplished by duplicating the target (and giving it a different name), assigning each to its required FeatureSet, and then mapping each Target to the
+same DataFrame column (using a column map). String Targets can also use Data maps to translate their values.
+</p></div></div>
+    </li><li name="com.ai.relpredict.spark.TextFeature" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="TextFeatureextendsFeature[String]withProductwithSerializable"></a>
+      <a id="TextFeature:TextFeature"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="TextFeature.html"><span class="name">TextFeature</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="desc">desc: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="parms">parms: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="ss">ss: <span class="extype" name="org.apache.spark.sql.SparkSession">SparkSession</span></span>, <span name="df">df: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>, <span name="column_map">column_map: <a href="../util/Datamap.html" class="extype" name="com.ai.relpredict.util.Datamap">Datamap</a></span>)</span><span class="result"> extends <a href="Feature.html" class="extype" name="com.ai.relpredict.spark.Feature">Feature</a>[<span class="extype" name="scala.Predef.String">String</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@TextFeatureextendsFeature[String]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"> A TextFeature is a multi-hot encoded string.</p><div class="fullcomment"><div class="comment cmt"><p> A TextFeature is a multi-hot encoded string. It encodes a variable number of strings into a single field separated by a delimiter.</p></div></div>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="com.ai.relpredict.spark.AlgorithmFactory" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="AlgorithmFactory"></a>
+      <a id="AlgorithmFactory:AlgorithmFactory"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="AlgorithmFactory$.html"><span class="name">AlgorithmFactory</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@AlgorithmFactory" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Produces Algorithms from a text string identifier.</p><div class="fullcomment"><div class="comment cmt"><p>Produces Algorithms from a text string identifier. All newly defined Algorithms must be registered here.
+</p></div></div>
+    </li><li name="com.ai.relpredict.spark.AlgorithmUtil" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="AlgorithmUtil"></a>
+      <a id="AlgorithmUtil:AlgorithmUtil"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="AlgorithmUtil$.html"><span class="name">AlgorithmUtil</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@AlgorithmUtil" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.ai.relpredict.spark.SparkUtil" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SparkUtil"></a>
+      <a id="SparkUtil:SparkUtil"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="SparkUtil$.html"><span class="name">SparkUtil</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@SparkUtil" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">SparkUtil attempts to encapsulate all Spark specific activities into one model.</p>
+    </li><li name="com.ai.relpredict.spark.VectorBuilder" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="VectorBuilder"></a>
+      <a id="VectorBuilder:VectorBuilder"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="VectorBuilder$.html"><span class="name">VectorBuilder</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@VectorBuilder" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"> The VectorBuilder object contains encoder utilities for encoding and decoding machine learning vectors
+</p>
+    </li><li name="com.ai.relpredict.spark.algorithms" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="algorithms"></a>
+      <a id="algorithms:algorithms"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a href="algorithms/package.html"><span class="name">algorithms</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#com.ai.relpredict.spark.package@algorithms" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>

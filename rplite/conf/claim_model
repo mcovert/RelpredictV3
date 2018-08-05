@@ -1,0 +1,17 @@
+model "claims" version "1.0" description "Model to predict claim status"
+
+   featureset "claims" id "casenumber"
+      feature "account"          type "string"  description "Account"                                parameters "encode=category"
+      feature "claim_amt"        type "double"  description "Amount of the claim"                    parameters ""
+      feature "appeal_count"     type "integer" description "Number of appeals"                      parameters ""
+      feature "cpt_codes"        type "text"    description "List of CPT codes"                      parameters "dlm=pipe"
+      feature "diag_codes"       type "text"    description "List of diagnosis codes"                parameters "dlm=pipe"
+      feature "payors"           type "text"    description "List of payors (insurers)"              parameters "dlm=pipe"
+      feature "plans"            type "text"    description "List of insurance plans"                parameters "dlm=pipe"
+      feature "npi"              type "string"  description "Provider number"                        parameters "encode=category"
+      feature "paid_amt"         type "double"  description "Amount of the claim paid"               parameters ""
+      feature "place_of_service" type "string"  description "Facility where service was performed"   parameters "encode=category"
+      feature "state"            type "string"  description "State where claim was filed"            parameters "encode=category"
+
+   target "status" type "string" description "Claim outcome status" predictedby "algorithm=dt,iterations=100;algorithm=gbt;algorithm=rf" using "claims" parameters ""
+

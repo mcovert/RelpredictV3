@@ -1,0 +1,12 @@
+{
+    name: "claim_query",
+    description: "Build claim vector for training and testing",
+    key: "claim_id",
+    query: "select claim_id, account, claim_amount, paid_amount, claim_state, filing_npi, place_of_service from claims",
+    encode: [
+       { name: "diag_code", encode_type: "mhc", parameters: [ { parm_name: "delimter", parm_value: "pipe" } ], query: "select claim_id, diag_code from claim_diag_codes" },
+       { name: "cpt_code",  encode_type: "mhc", parameters: [ { parm_name: "delimter", parm_value: "pipe" } ], query "select claim_id, cpt_code from claim_cpt_codes" },
+       { name: "payer",     encode_type: "mhc", parameters: [ { parm_name: "delimter", parm_value: "pipe" } ], query: "select claim_id, payer_id from claim_payers" }
+    ]
+}
+

@@ -28,13 +28,24 @@ case class Relpredicter(model_class : String, model_name: String, model_version:
     var records_processed: Int        = 0
     var processing_time:   Double     = 0.0
 
-    modelDef match {
-    	case Some(md: ModelDef) => {
-    		model = Some(new Model(md, None, new Datamap("")))
-        modelConfig.loadFromCurrent()
-        modelConfig.configure(model.get, ss)
-    	}
-      case None => ScalaUtil.writeError(s"Model for ${model_class}/${model_name}/${model_version} could not be loaded.")
+    def loadTrainedModel() {
+      modelDef match {
+      	case Some(md: ModelDef) => {
+      		model = Some(new Model(md, None, new Datamap("")))
+          modelConfig.loadFromCurrent()
+          modelConfig.configure(model.get, ss)
+      	}
+        case None => ScalaUtil.writeError(s"Model for ${model_class}/${model_name}/${model_version} could not be loaded.")
+      }
+    }
+    def getModel() : Model = {
+      model match {
+        case Some(m) => m
+        case None    => {
+          ScalaUtil.terminal_error(s"No model has been loaded. This error is terminal.")
+          model.get
+        }
+      }
     }
     def predict(rows: Array[Row]) : Array[PredictedRecord] = {
     	rows.flatMap(r => predict(r))
@@ -44,6 +55,10 @@ case class Relpredicter(model_class : String, model_name: String, model_version:
       var vectors	   = scala.collection.mutable.Map[String, (String, Vector)]()
       var v: (String, Vector) = null
       var predictions = scala.collection.mutable.ArrayBuffer[PredictedRecord]()
+      model match {
+        case Some(m) =>
+        case None    => loadTrainedModel()
+      }
       model.get.targets.foreach(t => {
        	  val target_name = t.getName()
        	  val fset_name = t.getFeatureSet().name
