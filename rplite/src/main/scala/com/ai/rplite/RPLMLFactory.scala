@@ -8,28 +8,27 @@ import org.apache.spark.sql.{SparkSession, DataFrame}
 import org.apache.spark.ml.feature._
 
 case class EstimatorWrapper(val algorithm_name: String) 
-abstract class RPTransformer[A](val name: String) {
-	val transformer : A
-	def preload(parm: String)
-	def fit()
+case class RPLPipeStage(val name: String) {
+	val pStage : Option[PipelineStage] = None
+	def loadStage(parms: Map[String, String])
 	def print() {
-        println(s"Transformer: $name")
+        println(s"Pipeline Stage: $name")
 	}
-	def getTransformer() = transformer
+	def getPipelineStage() = pStage
 }
 
 object RPLMLFactory {
-	def createTransformer(name: String, dataType: String, parms: String) : Transformer = {
+	def createPipelineStage(feature: RPLFeature) : PipelineStage = {
 		dataType match {
 			case "text"    => createTextTransformer(name,    parms)
 			case "string"  => createStringTransformer(name,  parms)
 			case "double"  => createNumericTransformer(name, parms)
 			case "integer" => createNumericTransformer(name, parms) 
 			case "boolean" => createBooleanTransformer(name, parms) 
-			case "date"    => createdateTransformer(name,    parms) 
+			case "date"    => createDateTransformer(name,    parms) 
 		}
 	}
-	def createEstimator(target: RPLTarget, alg: RPLAlgorithm) : Estimator = {
+	def createPipelineStage(target: RPLTarget, alg: RPLAlgorithm) : PipelineStage = {
 		val estimator = alg.alg_name match {
 	       case "dt"  | "decision_tree" => {}
 	       case "rf"  | "random_forest" => {}

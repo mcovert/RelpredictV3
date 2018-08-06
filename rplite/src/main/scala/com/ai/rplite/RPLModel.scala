@@ -3,12 +3,14 @@ package com.ai.rplite
 import scala.collection.mutable.ArrayBuffer
 
 case class RPLModel(val model_class:   String, val model_name: String, 
-	                val model_version: String, var model_train_date: String) {
+	                val model_version: String) {
    var features: ArrayBuffer[RPLFeature] = ArrayBuffer[RPLFeature]() 
    var targets:  ArrayBuffer[RPLTarget]  = ArrayBuffer[RPLTarget]()
    var id: String = "id"
    var parms = RPLParameters()
    var lastParms: RPLParameters = parms
+   var train_date: String = ""
+
    def addFeature(feature: RPLFeature) { 
    	  features += feature 
    	  lastParms = feature.parms
@@ -31,6 +33,21 @@ case class RPLModel(val model_class:   String, val model_name: String,
    	println(s"Id:         ${getId()}")
    	features.foreach{ f => f.print()}
    	targets.foreach{ t => t.print()}
+   }
+   def buildPipeline() {
+
+   }
+   def loadFeature(f: RPLFeature) {
+
+   }
+   def loadTarget(t: RPLTarget) {
+
+   }
+   def loadTrainedModel(t_date: String) {
+    train_date = t_date
+    features.foreach{ f => loadFeature(f) }
+    targets.foreach{ t => loadTarget(t) }
+    buildPipeline()
    }
 }
 class ModelColumn(val col_name: String, val col_type: String) {

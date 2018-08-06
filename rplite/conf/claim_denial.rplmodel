@@ -1,21 +1,19 @@
 model     Claims/claim_denial/1
 id        claimnumber
 feature   claim_amount  double
-feature   payer         single-category
-feature   cpt_groups    multi-category   
-feature   mdcs          multi-category
+feature   payer         string   encode=single-category
+feature   cpt_groups    string   encode=multi-category   
+feature   mdcs          string   encode=multi-category
 feature   prior_auth    boolean
 feature   referred      boolean
-feature   len_of_stay   double
-feature   service_lines integer
-target    status        single-category 
+feature   len_of_stay   double   bucket=10
+feature   service_lines integer  bucket=20
+target    status        string   encode=single-category 
 algorithm dtree         depth=6
 algorithm logreg        iter=100
 algorithm gbtree
-algorithm random_forest trees=11,depth=6
-target    days_to_pay   double 
+algorithm random_forest trees=11 depth=6
+target    days_to_pay   double   bucket=5
 algorithm linreg
-target    expected_pay  double 
+target    expected_pay  double   bucket=20   
 algorithm linreg
-data      select * from relpredict.claim_status
-run       training 
