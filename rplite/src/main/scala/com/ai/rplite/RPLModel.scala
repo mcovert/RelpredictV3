@@ -35,28 +35,37 @@ case class RPLModel(val model_class:   String, val model_name: String,
    	targets.foreach{ t => t.print()}
    }
    def buildPipeline() {
-
-   }
-   def loadFeature(f: RPLFeature) {
-
-   }
-   def loadTarget(t: RPLTarget) {
-
+      var pBuff = scala.collection.mutable.ArrayBuffer[PipelineStage]()
+      features.foreach{f => {
+        f.configure()
+        pBuff.add(f.getEncoder())
+      }
+      targets.foreach{t => {
+        t.configure()
+      }
    }
    def loadTrainedModel(t_date: String) {
     train_date = t_date
-    features.foreach{ f => loadFeature(f) }
-    targets.foreach{ t => loadTarget(t) }
     buildPipeline()
    }
 }
 class ModelColumn(val col_name: String, val col_type: String) {
    var parms = RPLParameters()
+   var encoder: Option[PipelineStage] = None
+   var decoder: Option[PipelineStage] = None
    def print() { println(s"  $col_name $col_type ${parms.print()}")}	
+   def getEncoder() = encoder.get
+   def setEncoder(ps: PipelineStage) { encoder = Some(ps) }
+   def getDecoder() = decoder.get
+   def setDecoder(ps: PipelineStage) { decoder = Some(ps) }
+   def configure() {}
 }
 case class RPLFeature(val feature_name: String, val feature_type: String) 
      extends ModelColumn(feature_name, feature_type) {
    override def print() { println(s"  Feature: $feature_name $feature_type ${parms.print()}")}
+   override def configure() {
+      encoder = RPLMLFactory.createPipelineStage(this)
+   }
 }	
 case class RPLTarget(val target_name: String, val target_type: String) 
           extends ModelColumn(target_name, target_type)
@@ -64,9 +73,10 @@ case class RPLTarget(val target_name: String, val target_type: String)
    var algorithms : ArrayBuffer[RPLAlgorithm] = ArrayBuffer[RPLAlgorithm]()
    def addAlgorithm(algorithm: RPLAlgorithm) { algorithms += algorithm }
    override def print() { println(s"  Target: $target_name $target_type ${parms.print()}")}
+   def configure() { algorithms.foreach{ a => }}
 }
-case class RPLAlgorithm(val alg_name: String) {
-   var parms = RPLParameters()
+case class RPLAlgorithm(val alg_name: String) 
+          extends ModelColumn(alg_name, "") {
    def print() { println(s"    Algorithm: $alg_name  ${parms.print()}")}
 }
 case class RPLParameters() {

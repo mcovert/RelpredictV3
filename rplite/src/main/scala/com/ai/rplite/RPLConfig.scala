@@ -11,7 +11,9 @@ case class RPLConfig {
   private var model : RPLModel = null
   private var configMap    = scala.collection.mutable.Map[String, String]()
   private var baseDir      = "/relpredict/"
-
+  var jobName: String      = "rplite"
+  var sparkMaster: String  = "yarn"
+  var ss: SparkSession     = null
   /**
    *    baseDir 
    *      +-/models/model_class/model_name/model_version
@@ -30,6 +32,10 @@ case class RPLConfig {
                                                  model_name + "/" + 
                                                  model_version + "/" 
   def getTrainedModelDir() = getModelDir()     + model_train_date + "/"
+
+  def getSparkSession(jobName: String, sparkMaster: String) = {
+    ss = SparkSession.builder().appName(jobName).config("spark.master", sparkMaster).enableHiveSupport().getOrCreate() 
+  }
 
   /**
    * Load a standard key=value pair configuration file
@@ -57,6 +63,8 @@ case class RPLConfig {
       if (configMap.contains("BASEDIR")) baseDir = configMap("BASEDIR")
       if (baseDir.endsWith("/")) baseDir
       else baseDir + "/"
+      if (configMap.contains("JOBNAME")) jobName = configMap("JOBNAME")
+      if (configMap.contains("SPARK_MASTER")) sparkMaster = configMap("SPARK_MASTER")
       configMap.toMap    
   }
   /**

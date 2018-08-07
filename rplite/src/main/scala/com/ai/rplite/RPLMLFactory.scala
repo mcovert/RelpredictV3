@@ -7,6 +7,25 @@ import org.apache.spark.ml._
 import org.apache.spark.sql.{SparkSession, DataFrame}
 import org.apache.spark.ml.feature._
 
+/**
+ *    Encoders and decoders
+ *
+ *    Data Type         Encode method         Vector Size   Class
+ *    =========         =============         ===========   =====
+ *    Text              multi-hot             #classes      
+ *                      w2v                   w2v window
+ *    String            category              1
+ *                      one-hot               #classes
+ *                      w2v                   w2v window
+ *    Double            normalized            1
+ *                      bucket                1
+ *    Integer           normalized            1
+ *                      bucket                1
+ *    Boolean           *none*                1
+ *    Date              bucket                1
+ *                      
+ */
+
 case class EstimatorWrapper(val algorithm_name: String) 
 case class RPLPipeStage(val name: String) {
 	val pStage : Option[PipelineStage] = None
