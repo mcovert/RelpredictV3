@@ -2,7 +2,6 @@ package com.ai.rplite
 
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Map
-import com.ai.relpredict.util.ScalaUtil
 import org.apache.spark.ml._
 import org.apache.spark.sql.{SparkSession, DataFrame}
 import org.apache.spark.ml.feature._
@@ -17,85 +16,54 @@ import org.apache.spark.ml.feature._
  *    String            category              1
  *                      one-hot               #classes
  *                      w2v                   w2v window
- *    Double            normalized            1
+ *    Double            normalize             1
  *                      bucket                1
- *    Integer           normalized            1
- *                      bucket                1
+ *    Integer           bucket                1
  *    Boolean           *none*                1
  *    Date              bucket                1
  *                      
  */
-
-case class EstimatorWrapper(val algorithm_name: String) 
-case class RPLPipeStage(val name: String) {
-	val pStage : Option[PipelineStage] = None
-	def loadStage(parms: Map[String, String])
-	def print() {
-        println(s"Pipeline Stage: $name")
-	}
-	def getPipelineStage() = pStage
-}
+class RPLCodec(encoder: PipelineStage, decoder: PipelineStage) 
+class RPLAlgModel(alg: RPLAlgorithm, target: RPLTarget, pStage: PipelineStage)
 
 object RPLMLFactory {
-	def createPipelineStage(feature: RPLFeature) : PipelineStage = {
-		dataType match {
-			case "text"    => createTextTransformer(name,    parms)
-			case "string"  => createStringTransformer(name,  parms)
-			case "double"  => createNumericTransformer(name, parms)
-			case "integer" => createNumericTransformer(name, parms) 
-			case "boolean" => createBooleanTransformer(name, parms) 
-			case "date"    => createDateTransformer(name,    parms) 
+	def createPipelineStage(name: String, dataType: String, encoder: String, parms: Map[String,String]) : Option[RPLCodec] = {
+		(dataType, encoder) match {
+			case ("text", "multi-hot")                      => createTextMultiHotEncoder(name,   parms)
+			case ("text", "w2v")                            => createTextWord2VecEncoder(name,   parms)
+			case ("string", "category")                     => createStringCategoryEncoder(name, parms)
+			case ("string", "one-hot")                      => createStringOneHotEncoder(name,   parms)
+			case ("string", "w2v")                          => createStringWord2VecEncoder(name, parms)
+			case ("double", "normalize")                    => createNumericBucketEncoder(name,  parms)
+			case ("double" | "integer" | "date", "bucket")  => createNumericBucketEncoder(name,  parms)
+			case ( _ , "")                                  => None     /* No encoder will be used */
 		}
 	}
-	def createPipelineStage(target: RPLTarget, alg: RPLAlgorithm) : PipelineStage = {
+	def createPipelineStage(target: RPLTarget, alg: RPLAlgorithm) : Option[RPLAlgModel] = {
 		val estimator = alg.alg_name match {
-	       case "dt"  | "decision_tree" => {}
-	       case "rf"  | "random_forest" => {}
-	       case "gbt" | "gradient_boosted_trees" => {}
-	       case "svm" | "support_vector_machine" => {}
-	       case "nb"  | "naive_bayes" => {}
-	       case "nn"  | "neural_network" => {}
-	       case "lr"  | "logisitic_regression" => {}
-	       case _ => ScalaUtil.terminal_error(s"The algorithm ${alg.alg_name} is unknown. This error is terminal.") 
+	       case "dt"  | "decision_tree"          => createDecisionTree(alg.parms)
+	       case "rf"  | "random_forest"          => createRandomForest(alg.parms)
+	       case "gbt" | "gradient_boosted_trees" => createGBTree(alg.parms)
+	       case "svm" | "support_vector_machine" => createSVM(alg.parms)
+	       case "nb"  | "naive_bayes"            => createSVM(alg.parms)
+	       case "nn"  | "neural_network"         => createNN(alg.parms)
+	       case "lr"  | "logisitic_regression"   => createLogReg(alg.parms)
+	       case _ => { println(s"The algorithm ${alg.alg_name} is unknown. It is ignored."); None } 
 		}
 		estimator
 	}
-	def createTextTransformer(name: String, parms: Map[String, String]) = {
-		val encType = parms.getParm("encode")
-		val transformer = encType match {
-			case "multi-hot" => 
-			case "w2v"       =>
-			case _           => ScalaUtil.terminal_error(s"Unknown encoding for TEXT $name")
-		}
-		transformer
-	}
-	def createStringTransformer(name: String, parms: Map[String, String]) = {
-		val encType = parms.getParm("encode")
-		val transformer = encType match {
-			case "category"  =>
-			case "one-hot"   => 
-			case "w2v"       =>
-			case _           => ScalaUtil.terminal_error(s"Unknown encoding for TEXT $name")
-		}
-		transformer
-	}
-	def createNumericTransformer(name: String, parms: Map[String, String]) = {
-		val transformer = encType match {
-			case "minmax"  => new MixMaxScaler()
-				                  .setInputCol(name)
-				                  .setOutputCol(s"${name}_vector")
-			case "bucket"  =>  {
-				val splits = parms.getParm("buckets").split(",").map(v => v.toDouble)
-				new Bucketizer().setInputCol(name)
-				                .setOutputCol(s"${name}_vector")
-				                .setSplits(splits)
-			}
-			case _         => ScalaUtil.terminal_error(s"Unknown encoding for numeric $name")
-		}
-		transformer
-	}
-	def createBooleanTransformer(name: String, parms: Map[String, String]) = {
-	}
-	def createDateTransformer(name: String, parms: Map[String, String]) = {
-	}
+	def createTextMultiHotEncoder(name: String,   parms: Map[String,String]) : Option[RPLCodec] = { None }
+	def createTextWord2vecEncoder(name: String,   parms: Map[String,String]) : Option[RPLCodec] = { None }
+	def createStringCategoryEncoder(name: String, parms: Map[String,String]) : Option[RPLCodec] = { None }
+	def createStringOneHotEncoder(name: String,   parms: Map[String,String]) : Option[RPLCodec] = { None }
+	def createStringWord2VecEncoder(name: String, parms: Map[String,String]) : Option[RPLCodec] = { None }
+	def createNumericBucketEncoder(name: String,  parms: Map[String,String]) : Option[RPLCodec] = { None }
+
+	def createDecisionTree(parms: Map[String, String]) : Option[RPLAlgModel] = { None }
+	def createRandomForest(parms: Map[String, String]) : Option[RPLAlgModel] = { None }
+	def createGBTree(parms: Map[String, String])       : Option[RPLAlgModel] = { None }
+	def createSVM(parms: Map[String, String])          : Option[RPLAlgModel] = { None }
+	def createSVM(parms: Map[String, String])          : Option[RPLAlgModel] = { None }
+	def createNN(parms: Map[String, String])           : Option[RPLAlgModel] = { None }
+	def createLogReg(parms: Map[String, String])       : Option[RPLAlgModel] = { None }
 }
