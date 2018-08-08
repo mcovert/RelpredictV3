@@ -24,7 +24,6 @@ import org.apache.spark.ml.feature._
  *                      
  */
 class RPLCodec(encoder: PipelineStage, decoder: PipelineStage) 
-class RPLAlgModel(alg: RPLAlgorithm, target: RPLTarget, pStage: PipelineStage)
 
 object RPLMLFactory {
 	def createPipelineStage(name: String, dataType: String, encoder: String, parms: Map[String,String]) : Option[RPLCodec] = {
@@ -59,11 +58,11 @@ object RPLMLFactory {
 	def createStringWord2VecEncoder(name: String, parms: Map[String,String]) : Option[RPLCodec] = { None }
 	def createNumericBucketEncoder(name: String,  parms: Map[String,String]) : Option[RPLCodec] = { None }
 
-	def createDecisionTree(parms: Map[String, String]) : Option[RPLAlgModel] = { None }
-	def createRandomForest(parms: Map[String, String]) : Option[RPLAlgModel] = { None }
-	def createGBTree(parms: Map[String, String])       : Option[RPLAlgModel] = { None }
-	def createSVM(parms: Map[String, String])          : Option[RPLAlgModel] = { None }
-	def createSVM(parms: Map[String, String])          : Option[RPLAlgModel] = { None }
-	def createNN(parms: Map[String, String])           : Option[RPLAlgModel] = { None }
-	def createLogReg(parms: Map[String, String])       : Option[RPLAlgModel] = { None }
+	def createDecisionTree(parms: Map[String, String]) : Option[RPLCodec] = { None }
+	def createRandomForest(parms: Map[String, String]) : Option[RPLCodec] = { None }
+	def createGBTree(parms: Map[String, String])       : Option[RPLCodec] = { None }
+	def createSVM(parms: Map[String, String])          : Option[RPLCodec] = { None }
+	def createSVM(parms: Map[String, String])          : Option[RPLCodec] = { None }
+	def createNN(parms: Map[String, String])           : Option[RPLCodec] = { None }
+	def createLogReg(parms: Map[String, String])       : Option[RPLCodec] = { None }
 }

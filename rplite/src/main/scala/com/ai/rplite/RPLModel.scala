@@ -2,14 +2,17 @@ package com.ai.rplite
 
 import scala.collection.mutable.ArrayBuffer
 
-case class RPLModel(val model_class:   String, val model_name: String, 
-	                val model_version: String) {
-   var features: ArrayBuffer[RPLFeature] = ArrayBuffer[RPLFeature]() 
-   var targets:  ArrayBuffer[RPLTarget]  = ArrayBuffer[RPLTarget]()
-   var id: String = "id"
-   var parms = RPLParameters()
-   var lastParms: RPLParameters = parms
-   var train_date: String = ""
+/**
+ *  RPLModel encapsulates all model related configuration information. It is used to construct a
+ *  trained model instance during training, and to load an existing traned model during prediction.
+ */
+case class RPLModel(val model_class:   String, val model_name: String, val model_version: String) {
+   var features:   ArrayBuffer[RPLFeature] = ArrayBuffer[RPLFeature]() 
+   var targets:    ArrayBuffer[RPLTarget]  = ArrayBuffer[RPLTarget]()
+   var id:         String                  = "id"
+   var parms:      RPLParameters           = RPLParameters()
+   var lastParms:  RPLParameters           = parms
+   var train_date: String                  = ""
 
    def addFeature(feature: RPLFeature) { 
    	  features += feature 
@@ -34,31 +37,14 @@ case class RPLModel(val model_class:   String, val model_name: String,
    	features.foreach{ f => f.print()}
    	targets.foreach{ t => t.print()}
    }
-   def buildPipeline() {
-      var pBuff = scala.collection.mutable.ArrayBuffer[PipelineStage]()
-      features.foreach{f => {
-        f.configure()
-        pBuff.add(f.getEncoder())
-      }
-      targets.foreach{t => {
-        t.configure()
-      }
-   }
-   def loadTrainedModel(t_date: String) {
-    train_date = t_date
-    buildPipeline()
-   }
+   def setTrainedModelDate(t_date: String) { train_date = t_date }
 }
 class ModelColumn(val col_name: String, val col_type: String) {
    var parms = RPLParameters()
-   var encoder: Option[PipelineStage] = None
-   var decoder: Option[PipelineStage] = None
+   var codec: Option[RPLCodec] = None
    def print() { println(s"  $col_name $col_type ${parms.print()}")}	
-   def getEncoder() = encoder.get
-   def setEncoder(ps: PipelineStage) { encoder = Some(ps) }
-   def getDecoder() = decoder.get
-   def setDecoder(ps: PipelineStage) { decoder = Some(ps) }
-   def configure() {}
+   def setEncoder(c: Option[RPLCodec]) { codec = c }
+   def getEncoder() = codec
 }
 case class RPLFeature(val feature_name: String, val feature_type: String) 
      extends ModelColumn(feature_name, feature_type) {

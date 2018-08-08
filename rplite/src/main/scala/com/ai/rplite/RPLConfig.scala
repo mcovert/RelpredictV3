@@ -8,12 +8,12 @@ import com.ai.relpredict.dsl._
 import org.apache.spark.sql.SparkSession
 
 case class RPLConfig {
-  private var model : RPLModel = null
-  private var configMap    = scala.collection.mutable.Map[String, String]()
-  private var baseDir      = "/relpredict/"
-  var jobName: String      = "rplite"
-  var sparkMaster: String  = "yarn"
-  var ss: SparkSession     = null
+  private var model : RPLModel     = null
+  private var configMap            = scala.collection.mutable.Map[String, String]()
+  private var baseDir              = "/relpredict/"
+  var jobName:        String       = "rplite"
+  var sparkMaster:    String       = "yarn"
+  var ss:             SparkSession = null
   /**
    *    baseDir 
    *      +-/models/model_class/model_name/model_version
@@ -101,7 +101,18 @@ case class RPLConfig {
         }
       }} 
   }
-  def loadModelFromCurrent() {
+    /**
+   * Load the model from what is specified in the "current" file:
+   *      trained_model=<model_train_date>
+   *      target=algorithm
+   *      target=algorithm
+   *      ...
+   *
+   * This load process will create a set of Pipeline objects that can be used to predict.
+   *      A Pipeline object consists of a set of transformers (feature encoders) that transforms
+   *      and input record () 
+   */
+   def loadModelFromCurrent() {
        val currentFile = s"${getModelDir()}current"
        SparkUtil.getHDFSFileReader(currentFile) match {
           case Some(br: BufferedReader) => {
