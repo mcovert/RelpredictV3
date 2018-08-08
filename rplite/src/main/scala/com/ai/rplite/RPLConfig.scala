@@ -2,14 +2,17 @@ package com.ai.rplite
 
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Map
-import com.ai.relpredict.util.ScalaUtil
-import com.ai.relpredict.spark.{Model, ModelConfig}
-import com.ai.relpredict.dsl._
 import org.apache.spark.sql.SparkSession
+import java.io._
+import java.net._
+import org.apache.hadoop.fs._
+import org.apache.hadoop.conf._
+import org.apache.hadoop.io._
 
-case class RPLConfig {
+case class RPLConfig() {
   private var model:  RPLModel     = null
   private var configMap            = scala.collection.mutable.Map[String, String]()
+  private var runMap               = scala.collection.mutable.Map[String, String]()
   private var baseDir              = "/relpredict/"
   var jobName:        String       = "rplite"
   var sparkMaster:    String       = "yarn"
@@ -31,17 +34,17 @@ case class RPLConfig {
    */
   def getBaseDir()         = baseDir
   def getModelBaseDir()    = getBaseDir()      + "models/" 
-  def getModelDir()        = getModelBaseDir() + model_class + "/" + 
-                                                 model_name + "/" + 
-                                                 model_version + "/" 
-  def getTrainedModelDir() = getModelDir()     + model_train_date + "/"
+  def getModelDir()        = getModelBaseDir() + model.model_class + "/" + 
+                                                 model.model_name + "/" + 
+                                                 model.model_version + "/" 
+  def getTrainedModelDir() = getModelDir()     + model.model_train_date + "/"
 
   def getSparkSession(jobName: String, sparkMaster: String) = {
     ss = SparkSession.builder().appName(jobName).config("spark.master", sparkMaster).enableHiveSupport().getOrCreate() 
   }
 
   /**
-   * Load a standard key=value pair configuration file
+   * Load a standard key=value pair configuration file. 
    *      MODEL=<model_class/model_name/model_version>
    *      RUN_TYPE= train | predict
    *      INPUT=<sql select statement> | <file_name>
@@ -53,22 +56,22 @@ case class RPLConfig {
    *      JOBNAME=rplite
    */
   def loadConfigFile(fileName: String) : Map[String, String] = {
-    var configMap = scala.collection.mutable.Map[String, String]()
+      var configMap = scala.collection.mutable.Map[String, String]()
       val source = scala.io.Source.fromFile(fileName)
       source.getLines.foreach{l => {
       	val tokens = l.split("=")
-      	if (tokens.size() == 2)
-      	  configMap(tokens(0).toUpperCase(), tokens(1))
-      	else if (tokens.size() == 1)
-      	  configMap(tokens(0).toUpperCase(), "")
-      	else if (tokens.size() == 0 || tokens.size() > 2) {}
-      }
+      	if (tokens.length == 2)
+      	  configMap(tokens(0).toUpperCase()) = tokens(1)
+      	else if (tokens.length == 1)
+      	  configMap(tokens(0).toUpperCase()) = ""
+      	else if (tokens.length == 0 || tokens.length > 2) {}
+      }}
       if (configMap.contains("BASEDIR")) baseDir = configMap("BASEDIR")
       if (baseDir.endsWith("/")) baseDir
       else baseDir + "/"
       if (configMap.contains("JOBNAME")) jobName = configMap("JOBNAME")
       if (configMap.contains("SPARK_MASTER")) sparkMaster = configMap("SPARK_MASTER")
-      configMap.toMap    
+      configMap    
   }
   /**
    * Load minimal model definition file:
@@ -78,11 +81,11 @@ case class RPLConfig {
    *      target    name type p1=v1 p2=v2 ...
    *      algorithm name p1=v1 p2=v2 ...
    */
-  def loadModelFile(fileName: String) : RPLModel {
+  def loadModelFile(fileName: String) {
       var flist = scala.collection.mutable.ListBuffer[RPLFeature]()
       var tlist = scala.collection.mutable.ListBuffer[RPLTarget]()
       val source = scala.io.Source.fromFile(fileName)
-      source.getLines.foreach{l => {
+      source.getLines.foreach{ l => {
       	val tokens = l.split("[ ]+")
         tokens(0) match {
        	   case "model"     => model = createModel(l.substring(6).trim())
@@ -100,7 +103,7 @@ case class RPLConfig {
                for (i <- 2 to (tokens.length - 1)) model.addParm(tokens(i))
            }
            case "#"         => 
-           case _           => ScalaUtil.writeError(s"Unknown statement: ${l}")
+           case _           => println(s"Unknown statement: ${l}")
         }
       }} 
   }
@@ -128,16 +131,11 @@ case class RPLConfig {
          if (!line.isEmpty()) {            
            val tokens = line.split("=")
            tokens(0) match {
-              case "trained_model" => {
-                  trained_model = tokens(1)
-                  model.loadTrainedModel(trained_model)
-              }
-              case _ => addTargetAlgorithm(tokens(0), tokens(1))
-            }
-          }
-       }
-          case None => ScalaUtil.terminal_error(s"Model configuration file ${currentFile}cannot be loaded. This is a fatal error.")
-       }
+              case "trained_model" => 
+              case _ => runMap(tokens(0).toUpperCase()) = tokens(1).toUpperCase()
+           }
+         }
+        }}
   }
   /**
    *   Create an RPLModel object from a model definition string ("model_class/model_name/model_version"). Note that model_train_date
@@ -145,12 +143,42 @@ case class RPLConfig {
    */
   private def createModel(mdef: String) : RPLModel = {
       val mt = mdef.substring(6).trim().split("/")
-      if (mt.size < 2) ScalaUtil.terminal_error(s"Model name $mdef is invalid")
+      if (mt.size < 2) {
+        println(s"Model name $mdef is invalid")
+        System.exit(-1)
+      }
       val modelClass                       = mt(0)
       val modelName                        = mt(1)
       val modelVersion = if (mt.size > 2) mt(2) else "1"
       val modelTrainDate = if (mt.size > 3) mt(3) else ""
-      if (mt.size > 4) ScalaUtil.writeWarning(s"Too many model parameters. Some are ignored.")
-      RPLModel(modelClass, modelName, modelVersion, modelTrainDate)
+      if (mt.size > 4) {
+        println(s"Too many model parameters. Some are ignored.")
+      }
+      new RPLModel(modelClass, modelName, modelVersion, modelTrainDate)
   }
+	def fileExists(fileName: String) : Boolean = {
+		isLocalMode() match  {
+			case true  => {
+				try {
+				   val f = new File(fileName)
+				   if (f.exists() && ! f.isDirectory()) true
+				   else false
+				} catch {
+			        case e : Throwable => println(s"Accessing local file $fileName failed: ${e.printStackTrace()}")
+			        false
+			    }
+			}
+			case false => {
+			     try {
+			        val path = new Path(fileName)
+			        val conf = new Configuration(ss.sparkContext.hadoopConfiguration)
+			        val fs = path.getFileSystem(conf)
+			        fs.exists(path)
+			     } catch {
+			        case e : Throwable => println(s"Accessing HDFS file $fileName failed: ${e.printStackTrace()}")
+			        false
+			     }
+			}
+		}
+	}
 }

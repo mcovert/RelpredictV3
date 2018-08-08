@@ -12,7 +12,12 @@ case class RPLModel(val model_class:   String, val model_name: String, val model
    var id:         String                  = "id"
    var parms:      RPLParameters           = RPLParameters()
    var lastParms:  RPLParameters           = parms
-   var train_date: String                  = ""
+   var model_train_date: String                  = ""
+   
+   def this(model_class:   String, model_name: String, model_version: String, train_date: String) {
+     this(model_class, model_name, model_version)
+     setTrainedModelDate(train_date)
+   }
 
    def addFeature(feature: RPLFeature) { 
    	  features += feature 
@@ -37,7 +42,7 @@ case class RPLModel(val model_class:   String, val model_name: String, val model
    	features.foreach{ f => f.print()}
    	targets.foreach{ t => t.print()}
    }
-   def setTrainedModelDate(t_date: String) { train_date = t_date }
+   def setTrainedModelDate(t_date: String) { model_train_date = t_date }
 }
 class ModelColumn(val col_name: String, val col_type: String) {
    var parms = RPLParameters()
@@ -49,9 +54,6 @@ class ModelColumn(val col_name: String, val col_type: String) {
 case class RPLFeature(val feature_name: String, val feature_type: String) 
      extends ModelColumn(feature_name, feature_type) {
    override def print() { println(s"  Feature: $feature_name $feature_type ${parms.print()}")}
-   override def configure() {
-      encoder = RPLMLFactory.createPipelineStage(this)
-   }
 }	
 case class RPLTarget(val target_name: String, val target_type: String) 
           extends ModelColumn(target_name, target_type)
@@ -59,11 +61,10 @@ case class RPLTarget(val target_name: String, val target_type: String)
    var algorithms : ArrayBuffer[RPLAlgorithm] = ArrayBuffer[RPLAlgorithm]()
    def addAlgorithm(algorithm: RPLAlgorithm) { algorithms += algorithm }
    override def print() { println(s"  Target: $target_name $target_type ${parms.print()}")}
-   def configure() { algorithms.foreach{ a => }}
 }
 case class RPLAlgorithm(val alg_name: String) 
           extends ModelColumn(alg_name, "") {
-   def print() { println(s"    Algorithm: $alg_name  ${parms.print()}")}
+   override def print() { println(s"    Algorithm: $alg_name  ${parms.print()}")}
 }
 case class RPLParameters() {
 	var parms = scala.collection.mutable.Map[String, String]()
@@ -80,4 +81,8 @@ case class RPLParameters() {
 	    println(sb.toString())
 	}
 	def getParm(key: String) = parms.getOrElse(key, "")
+	def getOrElse(key: String, value: String) = {
+	  if (parms.contains(key)) parms(key)
+	  else value
+	}
 }
