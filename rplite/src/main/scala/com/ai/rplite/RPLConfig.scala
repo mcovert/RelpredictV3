@@ -27,6 +27,9 @@ case class RPLConfig() {
    *         - current
    *         - results
    *         +-/model_train_date
+   *            +-encoders
+   *               +-encoder_name
+   *                - saved parquet files...
    *            +-/target
    *               +-/algorithm
    *                -results

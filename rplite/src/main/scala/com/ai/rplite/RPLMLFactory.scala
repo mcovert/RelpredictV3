@@ -51,18 +51,18 @@ object RPLMLFactory {
 		}
 		estimator
 	}
-	def createTextMultiHotEncoder(mc: ModelColumn) : Option[RPLCodec] = { None }
-	def createTextWord2VecEncoder(mc: ModelColumn) : Option[RPLCodec] = { None }
+	def createTextMultiHotEncoder(mc: ModelColumn)   : Option[RPLCodec] = { None }
+	def createTextWord2VecEncoder(mc: ModelColumn)   : Option[RPLCodec] = { None }
 	def createStringCategoryEncoder(mc: ModelColumn) : Option[RPLCodec] = { None }
-	def createStringOneHotEncoder(mc: ModelColumn) : Option[RPLCodec] = { None }
+	def createStringOneHotEncoder(mc: ModelColumn)   : Option[RPLCodec] = { None }
 	def createStringWord2VecEncoder(mc: ModelColumn) : Option[RPLCodec] = { None }
-	def createNumericBucketEncoder(mc: ModelColumn) : Option[RPLCodec] = { None }
+	def createNumericBucketEncoder(mc: ModelColumn)  : Option[RPLCodec] = { None }
 
-	def createDecisionTree(parms: RPLParameters) : Option[RPLCodec] = { None }
-	def createRandomForest(parms: RPLParameters) : Option[RPLCodec] = { None }
-	def createGBTree(parms: RPLParameters)       : Option[RPLCodec] = { None }
-	def createSVM(parms: RPLParameters)          : Option[RPLCodec] = { None }
-	def createNB(parms: RPLParameters)           : Option[RPLCodec] = { None }
-	def createNN(parms: RPLParameters)           : Option[RPLCodec] = { None }
-	def createLogReg(parms: RPLParameters)       : Option[RPLCodec] = { None }
+	def createDecisionTree(parms: RPLParameters)     : Option[RPLCodec] = { None }
+	def createRandomForest(parms: RPLParameters)     : Option[RPLCodec] = { None }
+	def createGBTree(parms: RPLParameters)           : Option[RPLCodec] = { None }
+	def createSVM(parms: RPLParameters)              : Option[RPLCodec] = { None }
+	def createNB(parms: RPLParameters)               : Option[RPLCodec] = { None }
+	def createNN(parms: RPLParameters)               : Option[RPLCodec] = { None }
+	def createLogReg(parms: RPLParameters)           : Option[RPLCodec] = { None }
 }
