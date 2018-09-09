@@ -24,7 +24,7 @@ var predict_request =
 	                     	 { field: "referred",       value: "Y"},
 	                     	 { field: "state",          value: 'OH'}
 	                     ]},
-	                     { record: [
+	                  
 	                     { record: [
 	                     	 { field: "claim_number",   value: "222222" },
 	                     	 { field: "claim_amt",      value: "2345.00"},
