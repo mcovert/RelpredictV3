@@ -9,9 +9,9 @@ import org.apache.spark.sql.functions._
 
 
 
-object RPyUtil
+object RPUtil
 {
-	def json2Df  (rp_record: String) : DataFrame
+	def json2Df  (jsonStr: String) : DataFrame
     = 
 	{
 		val sc = SparkSession.builder().appName("SparkQuery").config("spark.master", "local").enableHiveSupport()
@@ -20,9 +20,14 @@ object RPyUtil
 		.getOrCreate() 
 		import sc.implicits._
 		
-		val rdd =sc.sparkContext.parellelize(Seq(jsonStr))
+		val rdd =sc.sparkContext.parallelize(Seq(jsonStr))
 		val df = sc.read.json(rdd)
-		df
+		val dfRecords = df.select(explode(df("records"))).toDF("records")
+		val dfFinal = dfRecords.select("records.identifier", "records.edi_payer_code", "records.insurance_type", "records.claim_amount",
+			"records.patient_responsibility_amount", "records.procedure_codes", "records.diagnosis_codes", "records.client", 
+			"records.facility", "records.state", "records.zip_code", "records.provider", "records.patient_referred", "records.claim_filing_type", 
+			"records.patient_precert", "records.patient_type")
+		dfFinal
 	 }
 	
 }
